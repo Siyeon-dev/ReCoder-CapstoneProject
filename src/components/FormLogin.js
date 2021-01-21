@@ -8,8 +8,6 @@ const api  =  axios.create({
     }
 })
 
-
-
 const FormLogin = () => {
     const [userId, setUserId] = useState()
     const [userPasswd, setUserPasswd] = useState()
@@ -63,6 +61,8 @@ const FormLogin = () => {
                 s_password : userPasswd
             };
             setData(data);
+        } else {
+            alert("선생님과 학생 중 선택해주세요.");
         }
 
 
