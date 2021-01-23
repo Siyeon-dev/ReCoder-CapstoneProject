@@ -21,22 +21,24 @@ const NavMenu = () => {
                         <p>나의 클래스</p>
                         <div className="nav_tit_btn">
                                 {/* <Link to="" onClick={openModal}><img src="./img/nav_plus_btn.gif" alt="클래스 추가" /></Link> */}
-                                <button onClick={openModal}>Open Modal</button>
+                                <button onClick={openModal}><img src="./img/nav_plus_btn.gif" alt="클래스 추가" /></button>
                                 <Modal
                                     isOpen={modalIsOpen}
                                     onRequestClose={closeModal}
-                                    contentLabel="Example Modal"
                                     className="create_class"
                                 >
                                     
-                                    <div className="modal_head">
-                                        <p>클래스 생성하기</p>
+                                    <div className="modal_area create_class">
+                                        <div className="modal_head">
+                                            <p className="tit">클래스 생성하기</p>
+                                            <p className="txt">학생 및 시험을 생성한 클래스별로 관리할 수 있습니다. </p>
+                                        </div>
+                                        <form>
+                                            <input type="text" placeholder="클래스명을 입력해주세요."  />
+                                            <button type="submit" className="bg">생성하기</button>
+                                        </form>
+                                        <button onClick={closeModal} className="modal_close"><img src="./img/modal_close.gif" alt="모달 닫기"/></button>
                                     </div>
-                                    <form>
-                                        <input type="text" placeholder="클래스명을 입력해주세요."  />
-                                        <button type="submitBtn">클래스 만들기</button>
-                                        <button onClick={closeModal} className="closeBtn">닫기</button>
-                                    </form>
                                 </Modal>
                                 <Link to=""><img src="./img/nav_setting_btn.gif" alt="메뉴 설정" /></Link>
                         </div>
