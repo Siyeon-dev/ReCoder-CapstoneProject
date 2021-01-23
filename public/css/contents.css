@@ -231,3 +231,15 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 /********************************* Footer *********************************/
 #foot {width:100%; text-align: center; border-top:1px solid #dae0e6; letter-spacing:1;}
 #foot p {color:#a4aab2; font-family:'Lato', sans-serif; font-weight:600; height:80px; line-height: 80px; font-size:14px;}
+
+
+.ReactModal__Overlay {background-color:rgba(0, 0, 0, 0.75) !important;}
+.create_class {position:absolute; top:50%; left:50%; bottom:auto; right:auto; margin-right:-50%; transform : translate(-50%, -50%); box-sizing: border-box; padding:0 40px 20px 40px; border-radius:10px; background: #fff; outline: none;}
+.create_class .modal_head {width:100%; color:#29155c; box-sizing: border-box; margin:20px 0; font-weight: 600; text-align: left; font-size:18px;}
+.create_class form  {position: relative; text-align: right;}
+.create_class input[type="text"] {width:100%; margin-bottom:15px; border-radius:4px; border:2px solid #e3def0; padding:10px; box-sizing: border-box;}
+
+.create_class button {background:#29155c;
+-webkit-box-shadow: 3px 3px 7px 0px rgba(114, 62, 163, 0.6);
+-moz-box-shadow: 3px 3px 7px 0px  rgba(114, 62, 163, 0.6);
+box-shadow: 3px 3px 7px 0px  rgba(114, 62, 163, 0.6); border-radius: 8px; color: #fff; padding:0 20px; height:40px; line-height:40px; font-weight:600; font-size: 12px; cursor: pointer; margin-left:5px;}

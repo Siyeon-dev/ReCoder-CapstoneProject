@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Modal from 'react-modal';
+
 
 const NavMenu = () => {
+
+    const [modalIsOpen, setIsOpen] = useState(false);
+    function openModal() {
+        setIsOpen(true);
+    }
+    function closeModal(){
+        setIsOpen(false);
+    }
+
     return (
         <div id="nav_menu">
             <ul>
@@ -9,7 +20,24 @@ const NavMenu = () => {
                     <div className="nav_tit">
                         <p>나의 클래스</p>
                         <div className="nav_tit_btn">
-                                <Link to=""><img src="./img/nav_plus_btn.gif" alt="클래스 추가" /></Link>
+                                {/* <Link to="" onClick={openModal}><img src="./img/nav_plus_btn.gif" alt="클래스 추가" /></Link> */}
+                                <button onClick={openModal}>Open Modal</button>
+                                <Modal
+                                    isOpen={modalIsOpen}
+                                    onRequestClose={closeModal}
+                                    contentLabel="Example Modal"
+                                    className="create_class"
+                                >
+                                    
+                                    <div className="modal_head">
+                                        <p>클래스 생성하기</p>
+                                    </div>
+                                    <form>
+                                        <input type="text" placeholder="클래스명을 입력해주세요."  />
+                                        <button type="submitBtn">클래스 만들기</button>
+                                        <button onClick={closeModal} className="closeBtn">닫기</button>
+                                    </form>
+                                </Modal>
                                 <Link to=""><img src="./img/nav_setting_btn.gif" alt="메뉴 설정" /></Link>
                         </div>
                     </div>
@@ -26,4 +54,4 @@ const NavMenu = () => {
     )
 }
 
-export default NavMenu
+export default NavMenu;
