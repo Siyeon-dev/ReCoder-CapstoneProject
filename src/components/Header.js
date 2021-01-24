@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import {useCookies} from 'react-cookie';
 import { Link, useHistory } from 'react-router-dom'
 
 const Header = () => {
+    const [cookies, setCookie, removeCookie] = useCookies(["t_email"]);
 
     
   const [loginText, setLoginText] = useState("로그인");

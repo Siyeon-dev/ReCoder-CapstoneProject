@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Modal from 'react-modal';
-
+import {useCookies} from 'react-cookie';
+import axios from 'axios';
 
 const NavMenu = () => {
-
+    const [newClassName, setnewClassName] = useState();
     const [modalIsOpen, setIsOpen] = useState(false);
     function openModal() {
         setIsOpen(true);
@@ -12,6 +13,33 @@ const NavMenu = () => {
     function closeModal(){
         setIsOpen(false);
     }
+
+
+const [cookies, setCookie, removeCookie] = useCookies();
+const [createClassList, setcreateClassList] = useState();
+
+const handleSubmit = async e => {
+    e.preventDefault();
+
+    let newClassData;
+
+    newClassData ={
+        class_name : newClassName,
+        t_email : cookies.t_email
+    };
+
+    await axios.post('classcreate', newClassData).then(res => {
+        setcreateClassList(res);
+    })
+    .catch(err => {
+
+    })
+
+    closeModal();
+}
+
+// setcreateClassList = classData.map((classList) => (<li><Link to="" className="on">{classList.class_name}</Link></li>));
+// console.log(setcreateClassList);
 
     return (
         <div id="nav_menu">
@@ -33,8 +61,8 @@ const NavMenu = () => {
                                             <p className="tit">클래스 생성하기</p>
                                             <p className="txt">학생 및 시험을 생성한 클래스별로 관리할 수 있습니다. </p>
                                         </div>
-                                        <form>
-                                            <input type="text" placeholder="클래스명을 입력해주세요."  />
+                                        <form onSubmit={handleSubmit}>
+                                            <input type="text" name="newClassName" placeholder="클래스명을 입력해주세요."  onChange={e => {setnewClassName(e.target.value)}}   />
                                             <button type="submit" className="bg">생성하기</button>
                                         </form>
                                         <button onClick={closeModal} className="modal_close"><img src="./img/modal_close.gif" alt="모달 닫기"/></button>
@@ -44,9 +72,9 @@ const NavMenu = () => {
                         </div>
                     </div>
                     <ul className="dep2">
-                        <li><Link to="">일본어 특강 A반</Link></li>
+                        {/* <li><Link to="">일본어 특강 A반</Link></li>
                         <li><Link to="">일본어 특강 B반</Link></li>
-                        <li><Link to="" className="on">우당탕탕 웹디제이</Link></li>
+                        <li><Link to="" className="on">우당탕탕 웹디제이</Link></li> */}
                     </ul>
                 </li>
                 <li><Link to="">시험통계</Link></li>

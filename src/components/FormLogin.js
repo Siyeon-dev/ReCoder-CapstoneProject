@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react'
 import { Link, useHistory } from 'react-router-dom'
+import {useCookies} from 'react-cookie';
 
 const api  =  axios.create({
     headers:{
@@ -8,12 +9,15 @@ const api  =  axios.create({
     }
 })
 
+
 const FormLogin = () => {
     const [userId, setUserId] = useState()
     const [userPasswd, setUserPasswd] = useState()
     const [status, setStatus] = useState(null)
     const history = useHistory();
     const [data, setData] = useState();
+    const [cookies, setCookie, removeCookie] = useCookies();
+  
 
     
     const [loginType, setloginType] = useState("");
@@ -55,6 +59,7 @@ const FormLogin = () => {
                 t_password : userPasswd
             };
             setData(data);
+            setCookie('t_email', data.t_email); // 쿠키 저장
         } else if (loginType === "student"){
             data = {
                 s_email : userId,
@@ -65,11 +70,9 @@ const FormLogin = () => {
             alert("선생님과 학생 중 선택해주세요.");
         }
 
-
         console.log(data);
 
         axios.post('login', data).then(res => {
-            console.log("asdasdasd" + data);
             
             localStorage.setItem('token', res.data.token);
             console.log(res.data.login);
@@ -80,10 +83,9 @@ const FormLogin = () => {
 
             if(res.data.login === "success" && res.data.token){
                 console.log(res.data)
-                // console.log(res.data.check)
-                // console.log(res.data.type)
                 alert("로그인되었습니다.");
                 setStatus(res.status)
+                setCookie('t_name', res.data.t_name); // 쿠키 저장
 
                 if(loginType === "teacher") {
                     history.push("/TchclassMember")
@@ -91,11 +93,6 @@ const FormLogin = () => {
                     history.push("/stdTestList")
                 }
 
-                // if(res.data.type === "student") {
-                //     history.push("/stdTestList")
-                // } else if(res.data.type === "teacher") {
-                //     history.push("/TchclassMember")
-                // }
             }  else {
                 alert("로그인에 실패하였습니다.\n아이디와 비밀번호를 확인해 주세요.");
                 history.push("/")
@@ -112,10 +109,9 @@ const FormLogin = () => {
     //     status == 200 && history.push("/stdList")
     // },[status])
 
+    console.log(cookies);
 
     return (
-
-        
         <div id="wrapper" className="bg">
             <div id="container">
                 <div className="top_txt">

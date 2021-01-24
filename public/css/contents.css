@@ -238,7 +238,7 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 .ReactModal__Overlay {background-color:rgba(0, 0, 0, 0.75) !important;}
 .modal_area.create_class {position:absolute; top:50%; left:50%; bottom:auto; right:auto; margin-right:-50%; transform : translate(-50%, -50%); box-sizing: border-box; padding:45px; border-radius:15px; background: #fff; outline: none;}
 .modal_area .modal_head {width:100%; margin-bottom:25px; padding-top:70px; background-position: left 0px;}
-.modal_area .modal_head p.tit {font-size:21px; color:#000; font-weight:600; margin-bottom:4px;}
+.modal_area .modal_head p.tit {font-size:23px; color:#000; font-weight:600; margin-bottom:4px;}
 .modal_area .modal_head p.txt {font-size:13px; color:#868791;}
 .modal_area .modal_close {cursor:pointer; position:absolute; right:15px; top:15px; background:none;}
 /* 선생님 - 클래스 생성 */
