@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Modal from 'react-modal';
 import {useCookies} from 'react-cookie';
@@ -14,9 +14,26 @@ const NavMenu = () => {
         setIsOpen(false);
     }
 
-
-const [cookies, setCookie, removeCookie] = useCookies();
 const [createClassList, setcreateClassList] = useState();
+const [cookies, setCookie, removeCookie] = useCookies();
+const [classList, setclassList] = useState();
+
+const readClass = async () => {
+    let data = {
+        t_email : cookies.t_email
+    };
+    await axios.post('classinfo', data).then(res => {
+        const classList = res.data.map(classList => <li><Link to="">{classList.class_name}</Link></li>);
+        setclassList(classList);
+    })
+    .catch(err => {
+
+    })
+}
+
+useEffect(() => {
+    readClass();
+}, []);
 
 const handleSubmit = async e => {
     e.preventDefault();
@@ -30,11 +47,11 @@ const handleSubmit = async e => {
 
     await axios.post('classcreate', newClassData).then(res => {
         setcreateClassList(res);
+        readClass();
     })
     .catch(err => {
 
     })
-
     closeModal();
 }
 
@@ -75,6 +92,7 @@ const handleSubmit = async e => {
                         {/* <li><Link to="">일본어 특강 A반</Link></li>
                         <li><Link to="">일본어 특강 B반</Link></li>
                         <li><Link to="" className="on">우당탕탕 웹디제이</Link></li> */}
+                        {classList}
                     </ul>
                 </li>
                 <li><Link to="">시험통계</Link></li>
