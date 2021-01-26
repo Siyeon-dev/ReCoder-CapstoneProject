@@ -236,7 +236,7 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 
 /********************************* Modal *********************************/
 .ReactModal__Overlay {background-color:rgba(0, 0, 0, 0.75) !important;}
-.modal_area.create_class {position:absolute; top:50%; left:50%; bottom:auto; right:auto; margin-right:-50%; transform : translate(-50%, -50%); box-sizing: border-box; padding:45px; border-radius:15px; background: #fff; outline: none;}
+.modal_area {position:absolute; top:50%; left:50%; bottom:auto; right:auto; margin-right:-50%; transform : translate(-50%, -50%); box-sizing: border-box; padding:45px; border-radius:15px; background: #fff; outline: none;}
 .modal_area .modal_head {width:100%; margin-bottom:25px; padding-top:70px; background-position: left 0px;}
 .modal_area .modal_head p.tit {font-size:23px; color:#000; font-weight:600; margin-bottom:4px;}
 .modal_area .modal_head p.txt {font-size:13px; color:#868791;}
@@ -248,3 +248,10 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 .create_class input[type="text"]::placeholder  {color:#a4a5b1; font-weight:500; letter-spacing: -0.05em;}
 .create_class input[type="text"] {width:265px; padding:0 15px;  border:1px solid #e5e5e5; border-radius: 5px;}
 .create_class button[type="submit"] {width:85px; margin-left:5px; background:#3f50e5; text-align: center; color:#fff; font-weight:600;}
+/* 선생님 - 클래스 삭제 */
+.delete_class .modal_head {background:url(../img/modal_classdel_ico.gif) no-repeat;}
+.delete_class .class_list_check {display: block;}
+.delete_class .class_list_check input[type="checkbox"] {display: none;}
+.delete_class .class_list_check input[type="checkbox"] + label {display: inline-block; width:350px; height:60px; line-height:55px; cursor: pointer; border-radius: 7px; border:1px solid #dbdbdb; box-sizing: border-box; transition-duration:0.3s; padding:0 20px; font-size: 15px; font-weight:600; color:#666; background:url(../img/classdel_check_off.gif) no-repeat 305px 50%; margin-bottom:7px;}
+.delete_class .class_list_check input[type="checkbox"]:checked + label {background:#fffdf9; border:1px solid #f96c1e; color:#000; background:url(../img/classdel_check_on.gif) no-repeat 305px 50%;}
+.delete_class button[type="submit"] {width:350px; background:#f96c1e; color:#fff; text-align: center; height:50px; line-height:50px; margin-top:20px; font-weight:600;}

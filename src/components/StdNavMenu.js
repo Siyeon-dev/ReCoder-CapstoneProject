@@ -7,11 +7,19 @@ import axios from 'axios';
 const NavMenu = () => {
     const [newClassName, setnewClassName] = useState();
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [delClassModal, setdelClassModalOpen] = useState(false);
     function openModal() {
         setIsOpen(true);
     }
     function closeModal(){
         setIsOpen(false);
+    }
+
+    function openModal2() {
+        setdelClassModalOpen(true);
+    }
+    function closeModal2(){
+        setdelClassModalOpen(false);
     }
 
 const [createClassList, setcreateClassList] = useState();
@@ -54,10 +62,6 @@ const handleSubmit = async e => {
     })
     closeModal();
 }
-
-// setcreateClassList = classData.map((classList) => (<li><Link to="" className="on">{classList.class_name}</Link></li>));
-// console.log(setcreateClassList);
-
     return (
         <div id="nav_menu">
             <ul>
@@ -65,7 +69,6 @@ const handleSubmit = async e => {
                     <div className="nav_tit">
                         <p>나의 클래스</p>
                         <div className="nav_tit_btn">
-                                {/* <Link to="" onClick={openModal}><img src="./img/nav_plus_btn.gif" alt="클래스 추가" /></Link> */}
                                 <button onClick={openModal}><img src="./img/nav_plus_btn.gif" alt="클래스 추가" /></button>
                                 <Modal
                                     isOpen={modalIsOpen}
@@ -73,19 +76,49 @@ const handleSubmit = async e => {
                                     className="create_class"
                                 >
                                     
-                                    <div className="modal_area create_class">
+                                    <div className="modal_area">
                                         <div className="modal_head">
                                             <p className="tit">클래스 생성하기</p>
                                             <p className="txt">학생 및 시험을 생성한 클래스별로 관리할 수 있습니다. </p>
                                         </div>
                                         <form onSubmit={handleSubmit}>
                                             <input type="text" name="newClassName" placeholder="클래스명을 입력해주세요."  onChange={e => {setnewClassName(e.target.value)}}   />
-                                            <button type="submit" className="bg">생성하기</button>
+                                            <button type="submit">생성하기</button>
                                         </form>
                                         <button onClick={closeModal} className="modal_close"><img src="./img/modal_close.gif" alt="모달 닫기"/></button>
                                     </div>
                                 </Modal>
-                                <Link to=""><img src="./img/nav_setting_btn.gif" alt="메뉴 설정" /></Link>
+                                {/* */}
+                                <button onClick={openModal2}><img src="./img/nav_setting_btn.gif" alt="클래스 삭제" /></button>
+                                <Modal
+                                    isOpen={delClassModal}
+                                    onRequestClose={closeModal2}
+                                    className="delete_class"
+                                >
+                                    
+                                    <div className="modal_area">
+                                        <div className="modal_head">
+                                            <p className="tit">클래스 삭제하기</p>
+                                            <p className="txt">클래스 삭제 시 복구하실 수 없습니다.</p>
+                                        </div>
+                                        <form onSubmit={handleSubmit}>
+                                            <div className="class_list_check">
+                                                <input type="checkbox" id="delClass1" name="우당탕탕 웹디제이" />
+                                                <label for="delClass1">우당탕탕 웹디제이</label>
+                                            </div>
+                                            <div className="class_list_check">
+                                                <input type="checkbox" id="delClass2" name="우당탕탕 웹디제이" />
+                                                <label for="delClass2">우당탕탕 웹디제이</label>
+                                            </div>
+                                            <div className="class_list_check">
+                                                <input type="checkbox" id="delClass3" name="우당탕탕 웹디제이" />
+                                                <label for="delClass3">우당탕탕 웹디제이</label>
+                                            </div>
+                                            <button type="submit">삭제하기</button>
+                                        </form>
+                                        <button onClick={closeModal2} className="modal_close"><img src="./img/modal_close.gif" alt="모달 닫기"/></button>
+                                    </div>
+                                </Modal>
                         </div>
                     </div>
                     <ul className="dep2">
