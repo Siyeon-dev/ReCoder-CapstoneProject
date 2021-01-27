@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const TchContTitle = () => {
     return (
         <div className="cont_tit">
-            <p className="eng_txt">className Name :</p>
+            <p className="eng_txt">className :</p>
             <p className="class_name">우당탕탕 웹디제이</p>
 
             <div className="test_info">

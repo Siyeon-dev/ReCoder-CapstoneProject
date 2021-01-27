@@ -3,74 +3,103 @@ import { Link } from 'react-router-dom'
 import Modal from 'react-modal';
 import {useCookies} from 'react-cookie';
 import axios from 'axios';
+import CreateClass from 'components/modal/CreateClass';
 
-const NavMenu = () => {
-    const [newClassName, setnewClassName] = useState();
-    const [modalIsOpen, setIsOpen] = useState(false);
-    const [delClassModal, setdelClassModalOpen] = useState(false);
-    function openModal() {
-        setIsOpen(true);
+const NavMenu = ({ userClassInfo }) => {
+
+    console.log(userClassInfo);
+    const classList  = userClassInfo.map((currElement, index) => <li><Link to="">{currElement.class_name}</Link></li>)
+    
+    const [showModal, setShowModal] = useState(false);
+
+    const openModal = () => {
+      setShowModal(true);
     }
-    function closeModal(){
-        setIsOpen(false);
+  
+    const closeModal = () => {
+      setShowModal(false);
     }
+    
+//     const [showModal, setShowModal] = useState(false);
 
-    function openModal2() {
-        setdelClassModalOpen(true);
-    }
-    function closeModal2(){
-        setdelClassModalOpen(false);
-    }
+//   const openModalTest = () => {
+//     setShowModal(true);
+//   }
 
-const [createClassList, setcreateClassList] = useState();
-const [cookies, setCookie, removeCookie] = useCookies();
-const [classList, setclassList] = useState();
+//   const closeModalTest = () => {
+//     setShowModal(false);
+//   }
 
-const readClass = async () => {
-    let data = {
-        t_email : cookies.t_email
-    };
-    await axios.post('classinfo', data).then(res => {
-        const classList = res.data.map(classList => <li><Link to="">{classList.class_name}</Link></li>);
-        setclassList(classList);
-    })
-    .catch(err => {
 
-    })
-}
+//     const [newClassName, setnewClassName] = useState();
+//     const [modalIsOpen, setIsOpen] = useState(false);
+//     const [delClassModal, setdelClassModalOpen] = useState(false);
+//     function openModal() {
+//         setIsOpen(true);
+//     }
+//     function closeModal(){
+//         setIsOpen(false);
+//     }
 
-useEffect(() => {
-    readClass();
-}, []);
+//     function openModal2() {
+//         setdelClassModalOpen(true);
+//     }
+//     function closeModal2(){
+//         setdelClassModalOpen(false);
+//     }
 
-const handleSubmit = async e => {
-    e.preventDefault();
+// const [createClassList, setcreateClassList] = useState();
+// const [cookies, setCookie, removeCookie] = useCookies();
+// const [classList, setclassList] = useState();
 
-    let newClassData;
+// const readClass = async () => {
+//     let data = {
+//         t_email : cookies.t_email
+//     };
+//     await axios.post('classinfo', data).then(res => {
+//         const classList = res.data.map(classList => <li><Link to="">{classList.class_name}</Link></li>);
+//         setclassList(classList);
+//     })
+//     .catch(err => {
 
-    newClassData ={
-        class_name : newClassName,
-        t_email : cookies.t_email
-    };
+//     })
+// }
 
-    await axios.post('classcreate', newClassData).then(res => {
-        setcreateClassList(res);
-        readClass();
-    })
-    .catch(err => {
+// useEffect(() => {
+//     readClass();
+// }, []);
 
-    })
-    closeModal();
-}
+// const handleSubmit = async e => {
+//     e.preventDefault();
+
+//     let newClassData;
+
+//     newClassData ={
+//         class_name : newClassName,
+//         t_email : cookies.t_email
+//     };
+
+//     await axios.post('classcreate', newClassData).then(res => {
+//         setcreateClassList(res);
+//         readClass();
+//     })
+//     .catch(err => {
+
+//     })
+//     closeModal();
+// }
     return (
         <div id="nav_menu">
             <ul>
                 <li>
                     <div className="nav_tit">
                         <p>나의 클래스</p>
+                        {/* {userClassInfo.map( a => console.log(a.class_name))} */}
                         <div className="nav_tit_btn">
+                                {/* <button onClick={openModal}><img src="./img/nav_plus_btn.gif" alt="클래스 추가" /></button> */}
                                 <button onClick={openModal}><img src="./img/nav_plus_btn.gif" alt="클래스 추가" /></button>
-                                <Modal
+                                {showModal && <CreateClass closeModal={closeModal} />}
+                                {/* <Modal
                                     isOpen={modalIsOpen}
                                     onRequestClose={closeModal}
                                     className="create_class"
@@ -87,12 +116,12 @@ const handleSubmit = async e => {
                                         </form>
                                         <button onClick={closeModal} className="modal_close"><img src="./img/modal_close.gif" alt="모달 닫기"/></button>
                                     </div>
-                                </Modal>
+                                </Modal> */}
                                 {/* */}
-                                <button onClick={openModal2}><img src="./img/nav_setting_btn.gif" alt="클래스 삭제" /></button>
+                                {/* <button onClick={}><img src="./img/nav_setting_btn.gif" alt="클래스 삭제" /></button>
                                 <Modal
-                                    isOpen={delClassModal}
-                                    onRequestClose={closeModal2}
+                                    isOpen={}
+                                    onRequestClose={}
                                     className="delete_class"
                                 >
                                     
@@ -101,7 +130,7 @@ const handleSubmit = async e => {
                                             <p className="tit">클래스 삭제하기</p>
                                             <p className="txt">클래스 삭제 시 복구하실 수 없습니다.</p>
                                         </div>
-                                        <form onSubmit={handleSubmit}>
+                                        <form onSubmit={}>
                                             <div className="class_list_check">
                                                 <input type="checkbox" id="delClass1" name="우당탕탕 웹디제이" />
                                                 <label for="delClass1">우당탕탕 웹디제이</label>
@@ -116,9 +145,9 @@ const handleSubmit = async e => {
                                             </div>
                                             <button type="submit">삭제하기</button>
                                         </form>
-                                        <button onClick={closeModal2} className="modal_close"><img src="./img/modal_close.gif" alt="모달 닫기"/></button>
+                                        <button onClick={} className="modal_close"><img src="./img/modal_close.gif" alt="모달 닫기"/></button>
                                     </div>
-                                </Modal>
+                                </Modal> */}
                         </div>
                     </div>
                     <ul className="dep2">
@@ -128,7 +157,7 @@ const handleSubmit = async e => {
                         {classList}
                     </ul>
                 </li>
-                <li><Link to="">시험통계</Link></li>
+                <li><Link to="">시험 통계</Link></li>
                 <li><Link to="">시험 체험하기</Link></li>
             </ul>
         </div>

@@ -19,12 +19,12 @@
 #nav_menu {float:left; width:250px;}
 #nav_menu .nav_tit {text-align:left;width:100%;display: inline-block;margin: 15px 0 20px 0;}
 #nav_menu ul li {margin-bottom: 30px;display: inline-block;width: 100%;}
-#nav_menu .nav_tit  p,
+#nav_menu .nav_tit > p,
 #nav_menu ul li > a  {display: inline-block; font-weight:600; color:#232e3c; font-size:20px; line-height: 100%;}
 #nav_menu .nav_tit_btn {float: right;}
 #nav_menu .nav_tit_btn a,
-#nav_menu .nav_tit_btn button {margin-right:10px;}
-#nav_menu .nav_tit_btn button {background:none; cursor: pointer;}
+#nav_menu .nav_tit_btn > button {margin-right:10px;}
+#nav_menu .nav_tit_btn > button {background:none; cursor: pointer;}
 #nav_menu ul li ul.dep2{margin-bottom: 10px;}
 #nav_menu ul li ul.dep2 li {margin-bottom: 12px;line-height: 100%;width: 100%;}
 #nav_menu ul li ul.dep2 li a{font-size: 14px; color:#86909d;}
@@ -236,17 +236,17 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 
 /********************************* Modal *********************************/
 .ReactModal__Overlay {background-color:rgba(0, 0, 0, 0.75) !important;}
-.modal_area {position:absolute; top:50%; left:50%; bottom:auto; right:auto; margin-right:-50%; transform : translate(-50%, -50%); box-sizing: border-box; padding:45px; border-radius:15px; background: #fff; outline: none;}
-.modal_area .modal_head {width:100%; margin-bottom:25px; padding-top:70px; background-position: left 0px;}
-.modal_area .modal_head p.tit {font-size:23px; color:#000; font-weight:600; margin-bottom:4px;}
-.modal_area .modal_head p.txt {font-size:13px; color:#868791;}
-.modal_area .modal_close {cursor:pointer; position:absolute; right:15px; top:15px; background:none;}
+.modal .modal_area {box-sizing: border-box; padding:45px; outline: none;}
+.modal .modal_area .modal_head {width:100%; margin-bottom:25px; padding-top:70px; background-position: left 0px;}
+.modal .modal_area .modal_head p.tit {font-size:23px; color:#000; font-weight:600; margin-bottom:4px;}
+.modal .modal_area .modal_head p.txt {font-size:13px; color:#868791;}
+.modal .modal_area .modal_close {cursor:pointer; position:absolute; right:15px; top:15px; background:none;}
 /* 선생님 - 클래스 생성 */
 .create_class .modal_head {background:url(../img/modal_class_ico.gif) no-repeat;}
 .create_class input,
 .create_class button {height:45px; line-height:45px; font-size:13px;}
 .create_class input[type="text"]::placeholder  {color:#a4a5b1; font-weight:500; letter-spacing: -0.05em;}
-.create_class input[type="text"] {width:265px; padding:0 15px;  border:1px solid #e5e5e5; border-radius: 5px;}
+.create_class input[type="text"] {float:left; width:265px; padding:0 15px;  border:1px solid #e5e5e5; border-radius: 5px;}
 .create_class button[type="submit"] {width:85px; margin-left:5px; background:#3f50e5; text-align: center; color:#fff; font-weight:600;}
 /* 선생님 - 클래스 삭제 */
 .delete_class .modal_head {background:url(../img/modal_classdel_ico.gif) no-repeat;}
