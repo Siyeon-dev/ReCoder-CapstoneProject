@@ -5,40 +5,11 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 
 const TchclassNameMem = () => {
-
-    const [cookies, setCookie, removeCookie] = useCookies();
-    const [userClassInfo, setUserClassInfo] = useState();
-
-    const readClass = async () => {
-
-        let userEmail;
-
-        if(cookies.t_email) {
-            userEmail = { t_email : cookies.t_email };
-        } else if (cookies.s_email) {
-            userEmail = { s_email : cookies.s_email };
-        } else {
-            return null;
-        }
-        // 클래스 정보
-        await axios.post('classinfo', userEmail).then(res => {
-            setUserClassInfo(res.data);
-            console.log(userClassInfo);
-        })
-        .catch(err => {
-            console.log("Asdasdasdasdasd");
-            console.log(err);
-        })
-    }
-
-    useEffect(() => {
-        readClass();
-    }, []);
     
     return (
         <div id="wrapper">
         <div id="container">
-            <StdNavMenu userClassInfo={userClassInfo} />
+            <StdNavMenu />
             <div id="contents">
                 <div className="cont_visual">
                     <p className="eng small">Welcome.</p>
