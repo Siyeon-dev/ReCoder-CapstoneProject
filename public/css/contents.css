@@ -40,9 +40,9 @@
 #contents .cont_visual p.eng.big {font-weight:800; font-size:70px; letter-spacing: -0.01em;}
 #contents .cont_visual p.kor {margin-top:25px; font-weight:600; font-size:18px; color:#138c6a;}
 /* SubTitle */
-#contents .cont_tit {position:relative; margin:40px 0 25px 0; border-bottom:1px solid #dadada;}
+#contents .cont_tit {position:relative;margin: 40px 0;/* border-bottom:1px solid #dadada; */}
 #contents .cont_tit .eng_txt {font-size:15px; color:#152842; font-weight:800; font-style: italic;}
-#contents .cont_tit .class_name {font-size:34px; font-weight:600; padding-bottom:45px;}
+#contents .cont_tit .class_name {font-size:34px;font-weight:600;/* padding-bottom:45px; */}
 #contents .cont_tit .test_info {position:absolute; top:25px; right:0;}
 #contents .cont_tit .test_info p {float:left; height:35px; line-height:35px; border-radius: 100px; border:1px solid #d8e3ee; font-size:12px; color:#152842; font-weight:600; padding:0 20px 0 45px; margin-left:10px;}
 #contents .cont_tit .test_info p span {font-family: 'Roboto', sans-serif; font-size:13px;}
@@ -51,11 +51,17 @@
 #contents .cont_tit .test_info p span.mint {color:#0bc390;}
 #contents .cont_tit .test_info p span.blue {color:#6277f5;}
 #contents .cont_tit .teacher_info {position:absolute; top:20px; right:0; padding-left:70px; font-weight:600; background: url(../img/content_teacher_ico.gif) no-repeat left 50%;}
-.cont_tit_tab {line-height: 100%; margin-bottom: -1px;}
+/* .cont_tit_tab {line-height: 100%; margin-bottom: -1px;}
 .cont_tit_tab ul {display: inline-block;}
 .cont_tit_tab ul li {float: left;}
 .cont_tit_tab ul li a {display:inline-block;font-size:14px;color:#979797;padding: 0 5px 15px 5px;margin:0 15px;font-weight: 600;}
-.cont_tit_tab ul li a.on {color:#152842;border-bottom: 3px solid #152842;}
+.cont_tit_tab ul li a.on {color:#152842;border-bottom: 3px solid #152842;} */
+.react-tabs {line-height: 100%; margin-bottom: -1px;}
+.react-tabs ul {display: inline-block;width: 100%;border-bottom: 1px solid #dadada;margin-bottom: 25px;}
+.react-tabs ul li {float: left; cursor:pointer; display:inline-block;font-size:14px;color:#979797;padding: 0 5px 15px 5px;margin:0 15px;font-weight: 600;}
+.react-tabs ul li.react-tabs__tab--selected { color:#152842;border-bottom: 3px solid #152842;}
+.react-tabs__tab-panel {opacity:0;}
+.react-tabs__tab-panel.react-tabs__tab-panel--selected {opacity:1; transition-duration:0.6s;}
 /* SubContent */
 #contents .cont_wrap {width:100%; min-height: 400px; padding-bottom:50px;}
 

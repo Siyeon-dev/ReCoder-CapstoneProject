@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import FormSignUpFir from "./Components/User/FormSignUpFir";
 import TestList from "./Components/Student/TestList";
 import FormSignUp from "./Components/User/FormSignUp";
-import ClassMemList from "./Components/Teacher/ClassMemList";
+import Teacher from "./Components/Teacher/";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
           <Route exact path="/signup" component={FormSignUpFir} />
           <Route exact path="/stdTestList" component={TestList} />
           <Route exact path="/FormSignUp" component={FormSignUp} />
-          <Route exact path="/TchclassMember" component={ClassMemList} />
+          <Route exact path="/Teacher" component={Teacher} />
 
           <Redirect from="*" to="/" />
         </Switch>

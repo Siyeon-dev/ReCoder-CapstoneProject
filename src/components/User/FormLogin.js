@@ -71,7 +71,7 @@ const FormLogin = () => {
           setCookie("t_name", res.data.t_name); // 쿠키 저장
 
           if (loginType === "teacher") {
-            history.push("/TchclassMember");
+            history.push("/Teacher");
           } else if (loginType === "student") {
             history.push("/stdTestList");
           }

@@ -16,7 +16,7 @@ const ContTitle = () => {
         </p>
       </div>
 
-      <div className="cont_tit_tab tab_b">
+      {/* <div className="cont_tit_tab tab_b">
         <ul className="no3">
           <li>
             <Link className="on">회원관리</Link>
@@ -28,7 +28,7 @@ const ContTitle = () => {
             <Link>클래스 통계</Link>
           </li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };
