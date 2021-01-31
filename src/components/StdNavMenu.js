@@ -22,12 +22,10 @@ const NavMenu = () => {
         } else {
             return null;
         }
-        // 클래스 정보
          axios.post('classinfo', userEmail).then(res => {
             setUserClassInfo(res.data);
         })
         .catch(err => {
-            console.log("Asdasdasdasdasd");
             console.log(err);
         })
     }
@@ -46,7 +44,7 @@ const NavMenu = () => {
                         <p>나의 클래스</p>
                         <div className="nav_tit_btn">
                             <CreateClass readClass={readClass} classListUpdate={classListUpdate}  />
-                            <DeleteClass />
+                            <DeleteClass readClass={readClass} classListUpdate={classListUpdate} userClassInfo={userClassInfo} />
                         </div>
                     </div>
                     <ul className="dep2">

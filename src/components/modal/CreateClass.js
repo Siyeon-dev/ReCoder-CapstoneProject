@@ -23,7 +23,7 @@ const CreateClass = ({readClass, classListUpdate}) => {
             setcreateClassList(res);
         })
         .catch(err => {
-        console.log(err);
+            console.log(err);
         }).then(() => readClass(), classListUpdate, setIsOpen(!isOpen))
     }
 
