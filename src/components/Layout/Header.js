@@ -1,21 +1,27 @@
 import React, { useState } from 'react'
-import {useCookies} from 'react-cookie';
+import { cookies, useCookies } from 'react-cookie';
 import { Link, useHistory } from 'react-router-dom'
 
 const Header = () => {
-    const [cookies, setCookie, removeCookie] = useCookies(["t_email"]);
-
+  const [cookies, setCookie, removeCookie] = useCookies();
     
   const [loginText, setLoginText] = useState("로그인");
   const history = useHistory();
 
-  const loginState = () => {
+        //임시
+  const loginState = (props) => {
       if(localStorage.getItem('token')) {
         alert("로그아웃 되었습니다.");
           setLoginText("로그아웃");
           localStorage.removeItem('token');
+            
+            removeCookie("t_email");
+            removeCookie("t_name");
+            removeCookie("s_email");
+            removeCookie("s_name");
+            removeCookie("isLogin");
           history.push("/")
-      } else {
+          
           setLoginText("로그인");
       }
   }

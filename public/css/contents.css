@@ -27,6 +27,7 @@
 #nav_menu .nav_tit_btn > button {background:none; cursor: pointer;}
 #nav_menu ul li ul.dep2{margin-bottom: 10px;}
 #nav_menu ul li ul.dep2 li {margin-bottom: 12px;line-height: 100%;width: 100%;}
+#nav_menu ul li ul.dep2 li.no_class_list {font-size: 14px; color:#86909d; font-weight:500; text-decoration: underline;}
 #nav_menu ul li ul.dep2 li a{font-size: 14px; color:#86909d;}
 #nav_menu ul li ul.dep2 li a:hover,
 #nav_menu ul li ul.dep2 li a.on{font-weight:600; padding-left:20px; color:#232e3c; background: url(../img/nav_on_bar.gif) no-repeat left 50%; transition-duration: 0.3s;}
@@ -57,13 +58,16 @@
 .cont_tit_tab ul li a {display:inline-block;font-size:14px;color:#979797;padding: 0 5px 15px 5px;margin:0 15px;font-weight: 600;}
 .cont_tit_tab ul li a.on {color:#152842;border-bottom: 3px solid #152842;} */
 .react-tabs {line-height: 100%; margin-bottom: -1px;}
-.react-tabs ul {display: inline-block;width: 100%;border-bottom: 1px solid #dadada;margin-bottom: 25px;}
-.react-tabs ul li {float: left; cursor:pointer; display:inline-block;font-size:14px;color:#979797;padding: 0 5px 15px 5px;margin:0 15px;font-weight: 600;}
-.react-tabs ul li.react-tabs__tab--selected { color:#152842;border-bottom: 3px solid #152842;}
+.react-tabs > ul {display: inline-block;width: 100%;border-bottom: 1px solid #dadada;margin-bottom: 25px;}
+.react-tabs > ul li {float: left; cursor:pointer; display:inline-block;font-size:14px;color:#979797;padding: 0 5px 15px 5px;margin:0 15px;font-weight: 600;}
+.react-tabs > ul li.react-tabs__tab--selected { color:#152842;border-bottom: 3px solid #152842;}
 .react-tabs__tab-panel {opacity:0;}
 .react-tabs__tab-panel.react-tabs__tab-panel--selected {opacity:1; transition-duration:0.6s;}
 /* SubContent */
 #contents .cont_wrap {width:100%; min-height: 400px; padding-bottom:50px;}
+.cont_top_btn {float:right; overflow: hidden; margin-bottom:20px; }
+.cont_top_btn button {cursor:pointer; font-size:14px; float:left; color:#3956e5; font-weight:500;margin-left:15px;}
+.cont_top_btn button:hover {text-decoration: underline;}
 
 /* 로그인, 회원가입 공용 */
 .login_input_wrap {float:right;width:485px;border:1px solid #7083c8;padding: 70px 0;border-radius: 20px;text-align: center;}
@@ -229,10 +233,11 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 #contents .my_test_box a.test_btn.red span {padding-right:25px; line-height:53px; background:url(../img/testBtn_red.png) no-repeat right 50%;}
 
 /* Teacher :: 나의 클래스 - 시험리스트 */
-.class_member_list  {width:100%; display: inline-block;}
-.class_member_list .mem_check_box  {float:left; margin: 0 0 20px 20px;}
+.class_member_list  {width:100%;display: inline-block;overflow: hidden;}
+.class_member_list .all_member {margin-left:-26px;}
+.class_member_list .mem_check_box  {float:left;margin: 0px 0 20px 26px;}
 .class_member_list .mem_check_box input[type="checkbox"] {display: none;}
-.class_member_list .mem_check_box input[type="checkbox"] + label { display: inline-block; width:150px; height:195px; background:#fff url(../img/class_mem_off.png) no-repeat center 30px; cursor: pointer; border-radius: 7px; border:2px solid #d9e0e7; box-sizing: border-box; transition-duration:0.3s; text-align: center; font-size: 15px; padding-top:130px; font-weight:600; color:#152842;}
+.class_member_list .mem_check_box input[type="checkbox"] + label {display: inline-block;width: 155px;height:195px;background:#fff url(../img/class_mem_off.png) no-repeat center 30px;cursor: pointer;border-radius: 7px;border:2px solid #d9e0e7;box-sizing: border-box;transition-duration:0.3s;text-align: center;font-size: 15px;padding-top:130px;font-weight:600;color:#152842;}
 .class_member_list .mem_check_box input[type="checkbox"] + label span {font-family: 'Montserrat', sans-serif; font-size:13px; font-weight:700; display: block;}
 .class_member_list .mem_check_box input[type="checkbox"]:checked + label {background:#eff3f8 url(../img/class_mem_on.png) no-repeat center 30px; border:2px solid #3d4b65;}
 
@@ -268,8 +273,29 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 	background-color: #e1e1ea;
 	border-radius: 10px;
 }
+.delete_class .class_list_area .no_class_list {text-align: center; height: 285px; line-height: 285px; background: #eee; border-radius: 5px; font-size: 13px;}
 .delete_class .class_list_check {display: block;}
 .delete_class .class_list_check input[type="checkbox"] {display: none;}
 .delete_class .class_list_check input[type="checkbox"] + label {display: inline-block; width:350px; height:60px; line-height:55px; cursor: pointer; border-radius: 7px; border:1px solid #dbdbdb; box-sizing: border-box; transition-duration:0.3s; padding:0 20px; font-size: 15px; font-weight:600; color:#666; background:url(../img/classdel_check_off.gif) no-repeat 305px 50%; margin:5px 0;}
 .delete_class .class_list_check input[type="checkbox"]:checked + label {background:#fffdf9; border:1px solid #f96c1e; color:#000; background:url(../img/classdel_check_on.gif) no-repeat 305px 50%;}
 .delete_class button[type="submit"] {width:350px; background:#f96c1e; color:#fff; text-align: center; height:50px; line-height:50px; margin-top:20px; font-weight:600;}
+/* 선생님 - 신청학생승인 */
+.std_class_app .modal_head {background:url(../img/modal_stdclass_app_ico.gif) no-repeat;}
+.std_class_app .class_list_area {height:285px; overflow-x: hidden; overflow-y: auto; padding-right: 10px;}
+.std_class_app .class_list_area::-webkit-scrollbar {
+	width: 5px;
+}
+.std_class_app .class_list_area::-webkit-scrollbar-thumb {
+	background-color: #373a44;
+	border-radius: 10px;
+}
+.std_class_app .class_list_area::-webkit-scrollbar-track {
+	background-color: #e1e1ea;
+	border-radius: 10px;
+}
+.std_class_app .class_list_area .no_class_list {text-align: center; height: 285px; line-height: 285px; background: #eee; border-radius: 5px; font-size: 13px;}
+.std_class_app .class_list_check {display: block;}
+.std_class_app .class_list_check input[type="checkbox"] {display: none;}
+.std_class_app .class_list_check input[type="checkbox"] + label {display: inline-block; width:350px; height:60px; line-height:55px; cursor: pointer; border-radius: 7px; border:1px solid #dbdbdb; box-sizing: border-box; transition-duration:0.3s; padding:0 20px; font-size: 15px; font-weight:600; color:#666; background:url(../img/classdel_check_off.gif) no-repeat 305px 50%; margin:5px 0;}
+.std_class_app .class_list_check input[type="checkbox"]:checked + label {background:#fffdf9; border:1px solid #0eb582; color:#000; background:url(../img/classdel_check_on.gif) no-repeat 305px 50%;}
+.std_class_app button[type="submit"] {width:350px; background:#f96c1e; color:#fff; text-align: center; height:50px; line-height:50px; margin-top:20px; font-weight:600;}

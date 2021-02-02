@@ -16,15 +16,19 @@ const FormLogin = () => {
   const history = useHistory();
   const [data, setData] = useState();
   const [cookies, setCookie, removeCookie] = useCookies();
-
   const [loginType, setloginType] = useState("");
 
+    // 처음 시작 시 cookies 지우기
+    useEffect(() => {
+      removeCookie("t_email");
+      removeCookie("t_name");
+      removeCookie("s_email");
+      removeCookie("s_name");
+      removeCookie("isLogin");
+    }, [])
+
   const handleOptionChange = (e) => {
-    if (!e.target.value) {
-      setloginType("teacher");
-    } else {
-      setloginType(e.target.value);
-    }
+    e.target.value ? setloginType(e.target.value) : setloginType("");
     console.log(e.target.value);
   };
 
@@ -39,7 +43,6 @@ const FormLogin = () => {
         t_password: userPasswd,
       };
       setData(data);
-      setCookie("t_email", data.t_email); // 쿠키 저장
     } else if (loginType === "student") {
       data = {
         s_email: userId,
@@ -68,13 +71,18 @@ const FormLogin = () => {
           console.log(res.data);
           alert("로그인되었습니다.");
           setStatus(res.status);
-          setCookie("t_name", res.data.t_name); // 쿠키 저장
 
           if (loginType === "teacher") {
-            history.push("/Teacher");
+            setCookie("t_email", data.t_email);
+            setCookie("t_name", res.data.t_name);
+            history.push("/teacher");
           } else if (loginType === "student") {
-            history.push("/stdTestList");
+            setCookie("s_email", data.s_email);
+            setCookie("s_name", res.data.s_name);
+            history.push("/student");
           }
+
+          setCookie("isLogin", true);
         } else {
           alert("로그인에 실패하였습니다.\n아이디와 비밀번호를 확인해 주세요.");
           history.push("/");
@@ -87,7 +95,6 @@ const FormLogin = () => {
       });
   };
 
-  console.log(cookies);
 
   return (
     <div id="wrapper" className="bg">

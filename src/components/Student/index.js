@@ -1,5 +1,5 @@
 import React from "react";
-import ContSideMenu from "../Teacher/ContSideMenu";
+import ContSideMenu from "./ContSideMenu";
 import ContTitle from "./ContTitle";
 import TestList from "./TestList";
 

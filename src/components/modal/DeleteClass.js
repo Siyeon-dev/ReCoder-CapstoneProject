@@ -6,6 +6,8 @@ const DeleteModal = ({ readClass, classListUpdate, userClassInfo }) => {
   const aaa = [];
   const uniqueArr = [];
 
+  console.log(userClassInfo);
+
   const handleCheck = (e) => {
     aaa.push(e.target.name);
 
@@ -64,7 +66,9 @@ const DeleteModal = ({ readClass, classListUpdate, userClassInfo }) => {
               <p className="txt">클래스 삭제 시 복구하실 수 없습니다.</p>
             </div>
             <form onSubmit={delClassListSubmit}>
-              <div className="class_list_area">{delClassListSetUp}</div>
+              <div className="class_list_area">
+                {userClassInfo.length === 0 ? <p className="no_class_list">생성된 클래스가 없습니다.</p> : delClassListSetUp}
+              </div>
               <button type="submit">삭제하기</button>
             </form>
             <button onClick={() => setIsOpen(false)} className="modal_close">

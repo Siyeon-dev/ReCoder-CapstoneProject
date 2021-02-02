@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import CreateClass from "Components/Modal/CreateClass";
+import JoinClass from "Components/Modal/JoinClass";
 import DeleteClass from "Components/Modal/DeleteClass";
 
 const ContSideMenu = () => {
@@ -19,6 +19,7 @@ const ContSideMenu = () => {
     } else {
       return null;
     }
+    console.log(userEmail);
     axios
       .post("classlist", userEmail)
       .then((res) => {
@@ -33,18 +34,11 @@ const ContSideMenu = () => {
     readClass();
   }, []);
 
-  const classListUpdate = () => {
-    if (userClassInfo.length === 0) {
-      return <li className="no_class_list">생성된 클래스가 없습니다.</li>;
-    } else {
-      const ListUpdate = userClassInfo.map((currElement) => (
-        <li>
-          <Link to="">{currElement.class_name}</Link>
-        </li>
-      ));
-      return ListUpdate;
-    }
-  };
+  const classListUpdate = userClassInfo.map((currElement) => (
+    <li>
+      <Link to="">{currElement.class_name}</Link>
+    </li>
+  ));
 
   return (
     <div id="nav_menu">
@@ -53,9 +47,10 @@ const ContSideMenu = () => {
           <div className="nav_tit">
             <p>나의 클래스</p>
             <div className="nav_tit_btn">
-              <CreateClass
+              <JoinClass
                 readClass={readClass}
                 classListUpdate={classListUpdate}
+                userClassInfo={userClassInfo}
               />
               <DeleteClass
                 readClass={readClass}
@@ -64,13 +59,10 @@ const ContSideMenu = () => {
               />
             </div>
           </div>
-          <ul className="dep2">{classListUpdate()}</ul>
+          <ul className="dep2">{classListUpdate}</ul>
         </li>
         <li>
           <Link to="">시험 통계</Link>
-        </li>
-        <li>
-          <Link to="">시험 체험하기</Link>
         </li>
       </ul>
     </div>
