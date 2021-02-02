@@ -39,7 +39,9 @@ const ContSideMenu = () => {
     } else {
       const ListUpdate = userClassInfo.map((currElement) => (
         <li>
-          <Link to="">{currElement.class_name}</Link>
+          <Link to="">
+            {currElement.class_name} <span>{currElement.class_code}</span>
+          </Link>
         </li>
       ));
       return ListUpdate;

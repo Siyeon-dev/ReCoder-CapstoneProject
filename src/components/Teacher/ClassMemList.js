@@ -4,6 +4,7 @@ import axios from "axios";
 
 const ClassMemList = () => {
   const [appllyStdList, setAppllyStdList] = useState([]);
+  const [appStdNum, setAppStdNum] = useState(0);
 
   const classCode = {
     class_code: 805760,
@@ -15,7 +16,9 @@ const ClassMemList = () => {
       .post("usermanagement", classCode)
       .then((res) => {
         setAppllyStdList(res.data);
+        setAppStdNum(setAppllyStdList.length);
         console.log(res.data);
+        console.log(appStdNum);
       })
       .catch((err) => {
         console.log(err);
@@ -26,10 +29,18 @@ const ClassMemList = () => {
     appllyStdListApi();
   }, []);
 
-  console.log(appllyStdList);
+  console.log(appStdNum);
   return (
     <>
+      {console.log(setAppStdNum)}
       <div className="cont_top_btn">
+        {appStdNum === 0 ? (
+          <span></span>
+        ) : (
+          <div className="app_std_info">
+            {appStdNum}개의 가입 신청이 있습니다.
+          </div>
+        )}
         <StdClassJoinApp appllyStdList={appllyStdList} />
         <button>학생삭제</button>
       </div>

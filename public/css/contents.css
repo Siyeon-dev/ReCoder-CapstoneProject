@@ -10,13 +10,13 @@
 #head .head_area ul li:first-child {border:none;}
 
 /********************************* Layout *********************************/
-#wrapper {width:100%;}
+#wrapper {width:100%;text-align: center;}
 #wrapper.bg {background:#4c64ba;} /* Login / Sign Up */
-#wrapper #container {width:1200px; margin:30px auto 0 auto; overflow: hidden;}
+#wrapper #container {width:1200px;margin:30px auto 0 auto;/* overflow: hidden; */display: inline-block;}
 #wrapper.bg #container {margin:0 auto; padding:80px 0; background: url(../img/login_visual_img.jpg) no-repeat 1% bottom;}
 
 /********************************* SubMenu *********************************/
-#nav_menu {float:left; width:250px;}
+#nav_menu {float:left;width:250px;text-align: left;}
 #nav_menu .nav_tit {text-align:left;width:100%;display: inline-block;margin: 15px 0 20px 0;}
 #nav_menu ul li {margin-bottom: 30px;display: inline-block;width: 100%;}
 #nav_menu .nav_tit > p,
@@ -33,7 +33,7 @@
 #nav_menu ul li ul.dep2 li a.on{font-weight:600; padding-left:20px; color:#232e3c; background: url(../img/nav_on_bar.gif) no-repeat left 50%; transition-duration: 0.3s;}
 
 /********************************* SubContents *********************************/
-#contents {float:right; width:880px;}
+#contents {float:right;width:880px;text-align: left;}
 /* Visual */
 #contents .cont_visual {width:100%; height:278px; padding:60px 0 0 70px; box-sizing:border-box; background: url(../img/content_visual_bg.gif) no-repeat left 0px;}
 #contents .cont_visual p.eng {font-family: 'Montserrat', sans-serif; line-height:100%; color:#152842; font-style: italic;}
@@ -57,7 +57,7 @@
 .cont_tit_tab ul li {float: left;}
 .cont_tit_tab ul li a {display:inline-block;font-size:14px;color:#979797;padding: 0 5px 15px 5px;margin:0 15px;font-weight: 600;}
 .cont_tit_tab ul li a.on {color:#152842;border-bottom: 3px solid #152842;} */
-.react-tabs {line-height: 100%; margin-bottom: -1px;}
+/* .react-tabs {line-height: 100%; margin-bottom: -1px;} */
 .react-tabs > ul {display: inline-block;width: 100%;border-bottom: 1px solid #dadada;margin-bottom: 25px;}
 .react-tabs > ul li {float: left; cursor:pointer; display:inline-block;font-size:14px;color:#979797;padding: 0 5px 15px 5px;margin:0 15px;font-weight: 600;}
 .react-tabs > ul li.react-tabs__tab--selected { color:#152842;border-bottom: 3px solid #152842;}
@@ -65,9 +65,10 @@
 .react-tabs__tab-panel.react-tabs__tab-panel--selected {opacity:1; transition-duration:0.6s;}
 /* SubContent */
 #contents .cont_wrap {width:100%; min-height: 400px; padding-bottom:50px;}
-.cont_top_btn {float:right; overflow: hidden; margin-bottom:20px; }
-.cont_top_btn button {cursor:pointer; font-size:14px; float:left; color:#3956e5; font-weight:500;margin-left:15px;}
+.cont_top_btn {float:right;overflow: hidden;margin-bottom: 15px;}
+.cont_top_btn button {cursor:pointer;font-size: 13px;float:left;color:#3956e5;line-height: 21px;font-weight:500;margin-left: 5px;background:none;font-family:'Noto Sans KR', sans-serif;}
 .cont_top_btn button:hover {text-decoration: underline;}
+.app_std_info {float:left;font-size:12px;background:#3956e5 url(../img/app_std_info_ico.png) no-repeat 7px center; border-radius: 20px;height: 25px;line-height: 25px;color:#fff;padding: 0 10px 0 27px;}
 
 /* 로그인, 회원가입 공용 */
 .login_input_wrap {float:right;width:485px;border:1px solid #7083c8;padding: 70px 0;border-radius: 20px;text-align: center;}
@@ -232,7 +233,7 @@ box-shadow: 3px 3px 10px 0px rgba(22,189,142,0.6);}
 box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);} 
 #contents .my_test_box a.test_btn.red span {padding-right:25px; line-height:53px; background:url(../img/testBtn_red.png) no-repeat right 50%;}
 
-/* Teacher :: 나의 클래스 - 시험리스트 */
+/* Teacher :: 나의 클래스 - 회원관리 */
 .class_member_list  {width:100%;display: inline-block;overflow: hidden;}
 .class_member_list .all_member {margin-left:-26px;}
 .class_member_list .mem_check_box  {float:left;margin: 0px 0 20px 26px;}
@@ -241,13 +242,45 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 .class_member_list .mem_check_box input[type="checkbox"] + label span {font-family: 'Montserrat', sans-serif; font-size:13px; font-weight:700; display: block;}
 .class_member_list .mem_check_box input[type="checkbox"]:checked + label {background:#eff3f8 url(../img/class_mem_on.png) no-repeat center 30px; border:2px solid #3d4b65;}
 
+/* Teacher :: 나의 클래스 - 시험관리 */
+.tch_class_list_table {width:100%;}
+.tch_class_list_table thead {background:#f4f8fb; font-size:13px; color:#152842; text-align: center;}
+.tch_class_list_table thead th {padding:15px 0;}
+.tch_class_list_table thead th:first-child {border-radius:8px 0 0 8px;}
+.tch_class_list_table thead th:last-child {border-radius:0 8px 8px 0;}
+.tch_class_list_table tbody th {font-weight:600; color:#152842; font-size:14px; text-decoration: underline;}
+.tch_class_list_table tbody th,
+.tch_class_list_table tbody td {padding:30px 0; font-size:13px; text-align:center; border-bottom:1px solid #f1f3f6;}
+.tch_class_list_table tbody td {color:#53646e;}
+.tch_class_list_table tbody td p.tch_test_state {width:120px; box-sizing:border-box; cursor:pointer; display:inline-block; padding-left:15px; height:35px; line-height:35px; color:#fff; font-weight:500; border-radius:8px; text-align: left;}
+.tch_class_list_table tbody td p.tch_test_state.complete {background:#fcbe2d url(../img/tch_test_complete_ico.gif) no-repeat 90px 50%;-webkit-box-shadow: 3px 3px 10px 0px rgba(233,172,29,0.6);
+-moz-box-shadow: 3px 3px 10px 0px rgba(233,172,29,0.6);
+box-shadow: 3px 3px 10px 0px rgba(233,172,29,0.6);}
+.tch_class_list_table tbody td p.tch_test_state.start {background:#37d4a8 url(../img/tch_test_start_ico.gif) no-repeat 90px 50%;-webkit-box-shadow: 3px 3px 10px 0px rgba(22,189,142,0.6);
+-moz-box-shadow: 3px 3px 10px 0px rgba(22,189,142,0.6);
+box-shadow: 3px 3px 10px 0px rgba(22,189,142,0.6);}
+.create_test_btn {width:100%; text-align: center; height:40px; line-height:40px;   border-radius:8px; cursor:pointer; font-size:13px; background:#6277f5; -webkit-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);
+-moz-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);
+box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);}
+.create_test_btn span {display: inline-block; background:#6277f5 url(../img/create_test_btn_ico.gif) no-repeat right 50%; color:#fff; padding-right:20px;}
+
+/* Teacher :: 시험생성 */
+.col-3{float: left; width: 27.33%; margin: 40px 3%; position: relative;} 
+.col-3 input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width: 100%; box-sizing: border-box; letter-spacing: 1px;}
+.effect-16 {border: 0; padding: 4px 0; border-bottom: 1px solid #ccc; background-color: transparent;}
+.effect-16 ~ .focus-border{position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: #4caf50; transition: 0.4s;}
+.effect-16:focus ~ .focus-border,
+.has-content.effect-16 ~ .focus-border{width: 100%; transition: 0.4s;}
+.effect-16 ~ label{position: absolute; left: 0; width: 100%; top: 9px; color: #aaa; transition: 0.3s; z-index: -1; letter-spacing: 0.5px;}
+.effect-16:focus ~ label, .has-content.effect-16 ~ label{top: -16px; font-size: 12px; color: #4caf50; transition: 0.3s;}
+
 /********************************* Footer *********************************/
 #foot {width:100%; text-align: center; border-top:1px solid #dae0e6; letter-spacing:1;}
 #foot p {color:#a4aab2; font-family:'Lato', sans-serif; font-weight:600; height:80px; line-height: 80px; font-size:14px;}
 
 /********************************* Modal *********************************/
 .ReactModal__Overlay {background-color:rgba(0, 0, 0, 0.75) !important;}
-.modal .modal_area {box-sizing: border-box; padding:45px; outline: none;}
+.modal .modal_area {box-sizing: border-box; padding:45px; outline: none; display: inline-block;}
 .modal .modal_area .modal_head {width:100%; margin-bottom:25px; padding-top:70px; background-position: left 0px;}
 .modal .modal_area .modal_head p.tit {font-size:23px; color:#000; font-weight:600; margin-bottom:4px;}
 .modal .modal_area .modal_head p.txt {font-size:13px; color:#868791;}
@@ -297,5 +330,7 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 .std_class_app .class_list_check {display: block;}
 .std_class_app .class_list_check input[type="checkbox"] {display: none;}
 .std_class_app .class_list_check input[type="checkbox"] + label {display: inline-block; width:350px; height:60px; line-height:55px; cursor: pointer; border-radius: 7px; border:1px solid #dbdbdb; box-sizing: border-box; transition-duration:0.3s; padding:0 20px; font-size: 15px; font-weight:600; color:#666; background:url(../img/classdel_check_off.gif) no-repeat 305px 50%; margin:5px 0;}
-.std_class_app .class_list_check input[type="checkbox"]:checked + label {background:#fffdf9; border:1px solid #0eb582; color:#000; background:url(../img/classdel_check_on.gif) no-repeat 305px 50%;}
-.std_class_app button[type="submit"] {width:350px; background:#f96c1e; color:#fff; text-align: center; height:50px; line-height:50px; margin-top:20px; font-weight:600;}
+.std_class_app .class_list_check input[type="checkbox"] + label .std_email {color:#999; margin-left:5px; font-size:13px; font-family: 'Montserrat', sans-serif; font-weight:600; letter-spacing:0.05em; font-weight:600; text-decoration: underline;}
+.std_class_app .class_list_check input[type="checkbox"]:checked + label {background:#fffdf9; border:1px solid #0eb582; color:#000; background:url(../img/classdel_check_on2.gif) no-repeat 305px 50%;}
+.std_class_app .class_list_check input[type="checkbox"]:checked + label .std_email {color:#444;}
+.std_class_app button[type="submit"] {width:350px; background:#0eb582; color:#fff; text-align: center; height:50px; line-height:50px; margin-top:20px; font-weight:600;}

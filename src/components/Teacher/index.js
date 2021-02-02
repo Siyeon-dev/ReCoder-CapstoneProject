@@ -1,6 +1,7 @@
 import React from "react";
 import ContTitle from "./ContTitle";
 import ClassMemList from "./ClassMemList";
+import ClassTestList from "./ClassTestList";
 import ContSideMenu from "./ContSideMenu";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
@@ -27,11 +28,9 @@ const index = () => {
               <TabPanel>
                 <ClassMemList />
               </TabPanel>
-              <TabPanel>
-                <div>
-                  <img src="../img/tab_page2.png" alt="시험관리_예시" />
-                </div>
-              </TabPanel>
+            <TabPanel>
+              <ClassTestList />
+            </TabPanel>
               <TabPanel>
                 <img src="../img/tab_page3.png" alt="클래스통계_예시" />
               </TabPanel>

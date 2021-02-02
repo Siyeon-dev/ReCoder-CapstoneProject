@@ -36,7 +36,9 @@ const ContSideMenu = () => {
 
   const classListUpdate = userClassInfo.map((currElement) => (
     <li>
-      <Link to="">{currElement.class_name}</Link>
+      <Link to="">
+        {currElement.class_name} <span>{currElement.recognize === 0 ? "(가입승인중)" : ""} </span>
+      </Link>
     </li>
   ));
 

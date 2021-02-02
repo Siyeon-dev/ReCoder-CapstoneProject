@@ -40,5 +40,5 @@ input[type="image"]{-webkit-border-radius:5px; -webkit-appearance:none; border:n
 input[type="submit"]{-webkit-border-radius:5px; -webkit-appearance:none; border:none; outline: none;}
 input[type="password"]{-webkit-border-radius:5px; -webkit-appearance:none; border:none; outline: none;}
 input[type="email"]{-webkit-border-radius:5px; -webkit-appearance:none; border:none; outline: none;}
-button{-webkit-border-radius:5px; -webkit-appearance:none; border:none; outline: none; cursor: pointer;}
+button{-webkit-border-radius:5px; -webkit-appearance:none; border:none; outline: none; cursor: pointer; background: none;}
 body {font-family:'Noto Sans KR', sans-serif;}
