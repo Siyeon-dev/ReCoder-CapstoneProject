@@ -29,7 +29,7 @@ const Header = () => {
     return (
         <div id="head">
             <div className="head_area">
-                <div className="logo"><Link to="/"><img src="./img/logo.gif" alt="Re:Coder 상단로고" /></Link></div>
+                <div className="logo"><Link to="/"><img src="/img/logo.gif" alt="Re:Coder 상단로고" /></Link></div>
                 <ul>
                     <li><Link to="/" onClick={loginState}>{loginText}</Link></li>
                     <li><Link to="/signup">회원가입</Link></li>

@@ -5,33 +5,36 @@ import axios from "axios";
 import CreateClass from "Components/Modal/CreateClass";
 import DeleteClass from "Components/Modal/DeleteClass";
 
-const ContSideMenu = () => {
-  const [cookies, setCookie, removeCookie] = useCookies();
-  const [userClassInfo, setUserClassInfo] = useState([]);
 
-  const readClass = () => {
-    let userEmail;
+const ContSideMenu = ({ userClassInfo, setclassCode, readClass }) => {
+  // const [cookies, setCookie, removeCookie] = useCookies();
+  // const [userClassInfo, setUserClassInfo] = useState([]);
 
-    if (cookies.t_email) {
-      userEmail = { t_email: cookies.t_email };
-    } else if (cookies.s_email) {
-      userEmail = { s_email: cookies.s_email };
-    } else {
-      return null;
-    }
-    axios
-      .post("classlist", userEmail)
-      .then((res) => {
-        setUserClassInfo(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const readClass = async () => {
+  //   let userEmail;
 
-  useEffect(() => {
-    readClass();
-  }, []);
+  //   if (cookies.t_email) {
+  //     userEmail = { t_email: cookies.t_email };
+  //   } else if (cookies.s_email) {
+  //     userEmail = { s_email: cookies.s_email };
+  //   } else {
+  //     return null;
+  //   }
+  //   await axios
+  //     .post("/classlist", userEmail)
+  //     .then((res) => {
+  //       setUserClassInfo(res.data);
+  //       setclassCode(res.data[0].class_code);
+  //       console.log(res.data[0].class_code);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   readClass();
+  // }, []);
 
   const classListUpdate = () => {
     if (userClassInfo.length === 0) {
@@ -39,8 +42,13 @@ const ContSideMenu = () => {
     } else {
       const ListUpdate = userClassInfo.map((currElement) => (
         <li>
-          <Link to="">
-            {currElement.class_name} <span>{currElement.class_code}</span>
+          <Link
+            to={`/teacher/${currElement.class_code}`}
+            onClick={() => {
+              setclassCode(currElement.class_code);
+            }}
+          >
+            {currElement.class_name}
           </Link>
         </li>
       ));

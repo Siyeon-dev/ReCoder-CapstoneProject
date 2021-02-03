@@ -6,7 +6,7 @@ import FormSignUpFir from "./Components/User/FormSignUpFir";
 import FormSignUp from "./Components/User/FormSignUp";
 import Teacher from "./Components/Teacher/";
 import Student from "./Components/Student";
-import CreateTest from "./Components/Teacher/Exam/CreateTest";
+import CreateTestForm from "./Components/Teacher/Exam/CreateTestForm";
 
 function App() {
   return (
@@ -19,7 +19,9 @@ function App() {
           <Route exact path="/formSignUp" component={FormSignUp} />
           <Route exact path="/student" component={Student} />
           <Route exact path="/teacher" component={Teacher} />
-          <Route exact path="/createtest" component={CreateTest} />
+          <Route path="/teacher/:classCode" component={ Teacher} />
+
+          <Route exact path="/createtest" component={CreateTestForm} />
 
           <Redirect from="*" to="/" />
         </Switch>

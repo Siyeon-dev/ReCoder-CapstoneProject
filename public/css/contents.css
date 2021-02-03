@@ -13,7 +13,7 @@
 #wrapper {width:100%;text-align: center;}
 #wrapper.bg {background:#4c64ba;} /* Login / Sign Up */
 #wrapper #container {width:1200px;margin:30px auto 0 auto;/* overflow: hidden; */display: inline-block;}
-#wrapper.bg #container {margin:0 auto; padding:80px 0; background: url(../img/login_visual_img.jpg) no-repeat 1% bottom;}
+#wrapper.bg #container {margin:0 auto; padding:80px 0; background: url(../img/login_visual_img.jpg) no-repeat 1% bottom; text-align:left;}
 
 /********************************* SubMenu *********************************/
 #nav_menu {float:left;width:250px;text-align: left;}
@@ -250,7 +250,7 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 .tch_class_list_table thead th:last-child {border-radius:0 8px 8px 0;}
 .tch_class_list_table tbody th {font-weight:600; color:#152842; font-size:14px; text-decoration: underline;}
 .tch_class_list_table tbody th,
-.tch_class_list_table tbody td {padding:30px 0; font-size:13px; text-align:center; border-bottom:1px solid #f1f3f6;}
+.tch_class_list_table tbody td {padding: 25px 0;font-size:13px;text-align:center;border-bottom:1px solid #f1f3f6;}
 .tch_class_list_table tbody td {color:#53646e;}
 .tch_class_list_table tbody td p.tch_test_state {width:120px; box-sizing:border-box; cursor:pointer; display:inline-block; padding-left:15px; height:35px; line-height:35px; color:#fff; font-weight:500; border-radius:8px; text-align: left;}
 .tch_class_list_table tbody td p.tch_test_state.complete {background:#fcbe2d url(../img/tch_test_complete_ico.gif) no-repeat 90px 50%;-webkit-box-shadow: 3px 3px 10px 0px rgba(233,172,29,0.6);
@@ -265,14 +265,144 @@ box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);}
 .create_test_btn span {display: inline-block; background:#6277f5 url(../img/create_test_btn_ico.gif) no-repeat right 50%; color:#fff; padding-right:20px;}
 
 /* Teacher :: 시험생성 */
-.col-3{float: left; width: 27.33%; margin: 40px 3%; position: relative;} 
-.col-3 input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width: 100%; box-sizing: border-box; letter-spacing: 1px;}
-.effect-16 {border: 0; padding: 4px 0; border-bottom: 1px solid #ccc; background-color: transparent;}
-.effect-16 ~ .focus-border{position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: #4caf50; transition: 0.4s;}
-.effect-16:focus ~ .focus-border,
-.has-content.effect-16 ~ .focus-border{width: 100%; transition: 0.4s;}
-.effect-16 ~ label{position: absolute; left: 0; width: 100%; top: 9px; color: #aaa; transition: 0.3s; z-index: -1; letter-spacing: 0.5px;}
-.effect-16:focus ~ label, .has-content.effect-16 ~ label{top: -16px; font-size: 12px; color: #4caf50; transition: 0.3s;}
+.create_class_container {width:100%; text-align: center; background:url(../img/create_test_form_bg.jpg) no-repeat 50% 0px;}
+.create_class_container .form_contents {width:1200px; display:inline-block; text-align: left;}
+.test_name_form {width:100%; height:240px; overflow: hidden;}
+.field__input{
+  background-color: transparent;
+  border-radius: 0;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-size: 38px;
+  color:#fff;
+  padding: 30px 5px;
+}
+
+.field{
+  --uiFieldBorderWidth: var(--fieldBorderWidth, 2px);
+  --uiFieldPaddingRight: var(--fieldPaddingRight, 1rem);
+  --uiFieldPaddingLeft: var(--fieldPaddingLeft, 1rem);
+  --uiFieldBorderColorActive: var(--fieldBorderColorActive, rgba(255, 255, 255, 1));
+  display: var(--fieldDisplay, inline-flex);
+  position: relative;
+  font-size:48px;
+  width: 100%;
+  color: #fff;
+  margin-top: 60px;
+  font-weight:100;
+}
+
+.field__input{
+  box-sizing: border-box;
+  width: var(--fieldWidth, 100%);
+  border-bottom: var(--uiFieldBorderWidth) solid var(--fieldBorderColor, rgba(255, 255, 255, 0.25));
+  padding-bottom:10px;
+}
+
+.field__input:focus{
+  outline: none;
+}
+
+.field__input::-webkit-input-placeholder{
+  opacity: 0;
+  transition: opacity .3s ease-out;
+}
+
+.field__input::-moz-placeholder{
+  opacity: 0;
+  transition: opacity .3s ease-out;
+}
+
+.field__input:focus::-webkit-input-placeholder{
+  opacity: 1;
+  transition-delay: .3s;
+}
+
+.field__input:focus::-moz-placeholder{
+  opacity: 1;
+  transition-delay: .3s;
+}
+
+.field__label-wrap{
+  box-sizing: border-box;
+  pointer-events: none;
+  cursor: text;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.field__label-wrap::after{
+  content: "";
+  box-sizing: border-box;
+  width: 100%;
+  height: 0;
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.field__input:focus ~ .field__label-wrap::after{
+  opacity: 1;
+}
+
+.field__label{
+  position: absolute;
+  left:0;
+  top: calc(50% - .5em);
+  line-height: 1;
+  font-size: var(--fieldHintFontSize, inherit);
+  transition: top .3s cubic-bezier(0.9, -0.15, 0.1, 1.15), opacity .3s ease-out, font-size .3s ease-out;
+  will-change: bottom, opacity, font-size;
+  padding-left:70px;
+  background:url(../img/create_test_form_search.png) no-repeat 0 50%;
+}
+
+.field__input:focus ~ .field__label-wrap .field__label,
+.field__input:not(:placeholder-shown) ~ .field__label-wrap .field__label{
+  --fieldHintFontSize: var(--fieldHintFontSizeFocused, .35em);
+  top: var(--fieldHintTopHover, .1em);
+  left:5px;
+  padding-left:30px;
+  background-position: 0 50%;
+  background-size:16px;
+}
+.field_v1 .field__label-wrap::after{
+  border-bottom: var(--uiFieldBorderWidth) solid var(--uiFieldBorderColorActive);
+  transition: opacity .3s ease-out;
+  will-change: opacity;
+}
+.select_wrap{
+  display: inline-block;
+  position: relative;
+}
+.select_wrap:after{
+  content:'';
+  display: block;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: 20px;
+  transform: translate(0,-50%);
+  width: 0;
+  height: 0;
+  border:10px solid red;
+  border-left:7px solid transparent;
+  border-right:7px solid transparent;
+  border-bottom:none;
+}
+
+/* Teacher :: 생성된 시험이 없을 때 */
+.no_test_guide {width:100%; margin:30px 0 60px 0; padding-top:240px; background:url(../img/no_test_img.jpg) no-repeat 50% 0px; color:#232e3c; font-weight:200; text-align: center; font-size:25px;}
+.no_test_guide span {display:block; font-weight:600;}
+.no_test_guide button {margin-top:30px; background:#6277f5 url(../img/no_test_arrow.gif) no-repeat 125px 50%; border-radius:8px; padding:10px 70px 10px 20px; color:#fff; font-weight:600; font-size:12px; -webkit-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6); -moz-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6); box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);}
+
 
 /********************************* Footer *********************************/
 #foot {width:100%; text-align: center; border-top:1px solid #dae0e6; letter-spacing:1;}

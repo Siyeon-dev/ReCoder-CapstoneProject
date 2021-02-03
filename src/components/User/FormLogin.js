@@ -16,7 +16,7 @@ const FormLogin = () => {
   const history = useHistory();
   const [data, setData] = useState();
   const [cookies, setCookie, removeCookie] = useCookies();
-  const [loginType, setloginType] = useState("");
+  const [loginType, setloginType] = useState("teacher");
 
     // 처음 시작 시 cookies 지우기
     useEffect(() => {
@@ -124,6 +124,7 @@ const FormLogin = () => {
                   name="login_type"
                   type="radio"
                   value="teacher"
+                  defaultChecked={true}
                   onChange={handleOptionChange}
                 />
                 <label for="login_teacher" data-text="선생님"></label>

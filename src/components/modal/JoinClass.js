@@ -23,7 +23,7 @@ const JoinClass = ({ readClass, classListUpdate, userClassInfo }) => {
 
     console.log(newClassData);
     axios
-      .post("classjoin", newClassData)
+      .post("/classjoin", newClassData)
       .then((res) => {
         setcreateClassList(res);
       })
@@ -36,7 +36,7 @@ const JoinClass = ({ readClass, classListUpdate, userClassInfo }) => {
   return (
     <>
       <button onClick={() => setIsOpen(!isOpen)}>
-        <img src="./img/nav_plus_btn.gif" alt="클래스 가입하기" />
+        <img src="/img/nav_plus_btn.gif" alt="클래스 가입하기" />
       </button>
       <Modal>
         <div className="modal create_class">
@@ -57,7 +57,7 @@ const JoinClass = ({ readClass, classListUpdate, userClassInfo }) => {
               <button type="submit">가입하기</button>
             </form>
             <button onClick={() => setIsOpen(false)} className="modal_close">
-              <img src="./img/modal_close.gif" alt="모달 닫기" />
+              <img src="/img/modal_close.gif" alt="모달 닫기" />
             </button>
           </div>
         </div>

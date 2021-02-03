@@ -31,7 +31,7 @@ const DeleteModal = ({ readClass, classListUpdate, userClassInfo }) => {
     console.log(ArrClassCode);
 
     axios
-      .post("classdelete", ArrClassCode)
+      .post("/classdelete", ArrClassCode)
       .then((res) => {
         console.log(res);
       })
@@ -56,7 +56,7 @@ const DeleteModal = ({ readClass, classListUpdate, userClassInfo }) => {
   return (
     <>
       <button onClick={() => setIsOpen(!isOpen)}>
-        <img src="./img/nav_setting_btn.gif" alt="클래스 삭제" />
+        <img src="/img/nav_setting_btn.gif" alt="클래스 삭제" />
       </button>
       <Modal>
         <div className="modal delete_class">
@@ -72,7 +72,7 @@ const DeleteModal = ({ readClass, classListUpdate, userClassInfo }) => {
               <button type="submit">삭제하기</button>
             </form>
             <button onClick={() => setIsOpen(false)} className="modal_close">
-              <img src="./img/modal_close.gif" alt="모달 닫기" />
+              <img src="/img/modal_close.gif" alt="모달 닫기" />
             </button>
           </div>
         </div>

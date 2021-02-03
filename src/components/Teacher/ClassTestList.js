@@ -1,7 +1,61 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
-const ClassTestList = () => {
-    return (
+const ClassTestList = (classCode) => {
+  const [selectClassTestInfo, setSelectClassTestInfo] = useState([]);
+  const [flag, setFlag] = useState(false);
+  console.log(classCode);
+
+  const MenuSelect = e => {
+
+    const data = {
+      class_code : e.classCode,
+    };
+
+    console.log(data);
+
+    axios
+      .post("/classinfo", data)
+      .then((res) => {
+        console.log("asdasd");
+        setSelectClassTestInfo(res.data);
+        setFlag(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    MenuSelect(classCode);
+  }, [classCode]);
+
+  console.log(selectClassTestInfo);
+
+  const ListUpdate = selectClassTestInfo.map((currElement) => (
+    <tr>
+      <th scope="row">{currElement.test_name}</th>
+      <td>{currElement.questioncount}문항</td>
+      <td>
+        {currElement.test_start} ~{currElement.test_end}
+      </td>
+      <td>
+        {currElement.t_test_status === 1 ? (
+          <p className="tch_test_state complete">시험완료</p>
+        ) : (
+          <p className="tch_test_state start">시험시작</p>
+        )}
+      </td>
+      <td>
+        <button>
+          <img src="/img/tch_test_delete_btn.png" alt="시험 삭제 버튼" />
+        </button>
+      </td>
+    </tr>
+  ));
+
+  return flag === true ? (
+    selectClassTestInfo.length !== 0 ? (
       <div>
         <table className="tch_class_list_table">
           <colgroup>
@@ -20,94 +74,21 @@ const ClassTestList = () => {
               <th scope="col">삭제</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <th scope="row">2020학년도 1학기 중간고사</th>
-              <td>10문항</td>
-              <td>2020-07-26 11:00 ~ 2020-07-26 11:50</td>
-              <td>
-                <p className="tch_test_state complete">시험완료</p>
-              </td>
-              <td>
-                <button>
-                  <img
-                    src="./img/tch_test_delete_btn.png"
-                    alt="시험 삭제 버튼"
-                  />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2020학년도 1학기 기말고사</th>
-              <td>10문항</td>
-              <td>2020-07-26 11:00 ~ 2020-07-26 11:50</td>
-              <td>
-                <p className="tch_test_state start">시험시작</p>
-              </td>
-              <td>
-                <button>
-                  <img
-                    src="./img/tch_test_delete_btn.png"
-                    alt="시험 삭제 버튼"
-                  />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Laravel 조편성 프로그램 작성</th>
-              <td>10문항</td>
-              <td>2020-07-26 11:00 ~ 2020-07-26 11:50</td>
-              <td>
-                <p className="tch_test_state start">시험시작</p>
-              </td>
-              <td>
-                <button>
-                  <img
-                    src="./img/tch_test_delete_btn.png"
-                    alt="시험 삭제 버튼"
-                  />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Laravel 조편성 프로그램 작성</th>
-              <td>10문항</td>
-              <td>2020-07-26 11:00 ~ 2020-07-26 11:50</td>
-              <td>
-                <p className="tch_test_state start">시험시작</p>
-              </td>
-              <td>
-                <button>
-                  <img
-                    src="./img/tch_test_delete_btn.png"
-                    alt="시험 삭제 버튼"
-                  />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">Laravel 조편성 프로그램 작성</th>
-              <td>10문항</td>
-              <td>2020-07-26 11:00 ~ 2020-07-26 11:50</td>
-              <td>
-                <p className="tch_test_state start">시험시작</p>
-              </td>
-              <td>
-                <button>
-                  <img
-                    src="./img/tch_test_delete_btn.png"
-                    alt="시험 삭제 버튼"
-                  />
-                </button>
-              </td>
-            </tr>
-          </tbody>
+          <tbody>{ListUpdate}</tbody>
         </table>
         <div className="create_test_btn">
           <span>시험 등록하기</span>
         </div>
       </div>
-    );
-}
+    ) : (
+      <div className="no_test_guide">
+          생성된 시험이 없습니다. <span>먼저 시험을 생성해주세요.</span>
+          <button>시험 생성하기</button>
+      </div>
+    )
+  ) : (
+    <div></div>
+  );
+};
 
 export default ClassTestList

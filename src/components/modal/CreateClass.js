@@ -19,7 +19,7 @@ const CreateClass = ({readClass, classListUpdate}) => {
             t_email : cookies.t_email
         };
 
-        axios.post('classcreate', newClassData).then(res => {
+        axios.post('/classcreate', newClassData).then(res => {
             setcreateClassList(res);
         })
         .catch(err => {
@@ -28,7 +28,7 @@ const CreateClass = ({readClass, classListUpdate}) => {
     }
 
     return <>
-        <button onClick={() => setIsOpen(!isOpen)}><img src="./img/nav_plus_btn.gif" alt="클래스 추가" /></button>
+        <button onClick={() => setIsOpen(!isOpen)}><img src="/img/nav_plus_btn.gif" alt="클래스 추가" /></button>
         <Modal>
             <div className="modal create_class">
                 <div className="modal_area">
@@ -40,7 +40,7 @@ const CreateClass = ({readClass, classListUpdate}) => {
                         <input ref={inputTag} type="text" name="newClassName" placeholder="클래스명을 입력해주세요."  />
                         <button type="submit">생성하기</button>
                     </form>
-                    <button onClick={() => setIsOpen(false)} className="modal_close"><img src="./img/modal_close.gif" alt="모달 닫기"/></button>
+                    <button onClick={() => setIsOpen(false)} className="modal_close"><img src="/img/modal_close.gif" alt="모달 닫기"/></button>
                 </div>
             </div>
         </Modal>
