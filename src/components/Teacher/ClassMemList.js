@@ -19,6 +19,7 @@ const ClassMemList = ( classCode ) => {
         setAppllyStdList(res.data);
         setAppStdNum(setAppllyStdList.length);
       })
+      
       .catch((err) => {
         console.log(err);
       });

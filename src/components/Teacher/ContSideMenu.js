@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import CreateClass from "Components/Modal/CreateClass";
@@ -7,34 +7,13 @@ import DeleteClass from "Components/Modal/DeleteClass";
 
 
 const ContSideMenu = ({ userClassInfo, setclassCode, readClass }) => {
-  // const [cookies, setCookie, removeCookie] = useCookies();
-  // const [userClassInfo, setUserClassInfo] = useState([]);
 
-  // const readClass = async () => {
-  //   let userEmail;
-
-  //   if (cookies.t_email) {
-  //     userEmail = { t_email: cookies.t_email };
-  //   } else if (cookies.s_email) {
-  //     userEmail = { s_email: cookies.s_email };
-  //   } else {
-  //     return null;
-  //   }
-  //   await axios
-  //     .post("/classlist", userEmail)
-  //     .then((res) => {
-  //       setUserClassInfo(res.data);
-  //       setclassCode(res.data[0].class_code);
-  //       console.log(res.data[0].class_code);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   readClass();
-  // }, []);
+  const MenuState = useParams();
+  console.log(MenuState);
+  const test =
+    userClassInfo.length !== 0 && MenuState.classCode === undefined
+      ? userClassInfo[0].class_code
+      : MenuState.classCode;
 
   const classListUpdate = () => {
     if (userClassInfo.length === 0) {
@@ -43,6 +22,7 @@ const ContSideMenu = ({ userClassInfo, setclassCode, readClass }) => {
       const ListUpdate = userClassInfo.map((currElement) => (
         <li>
           <Link
+            className={currElement.class_code === test ? "on" : ""}
             to={`/teacher/${currElement.class_code}`}
             onClick={() => {
               setclassCode(currElement.class_code);

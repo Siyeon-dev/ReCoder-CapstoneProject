@@ -12,7 +12,7 @@ const Index = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [classCode, setclassCode] = useState(""); //  해당 클래스 시험 정보
   const [userClassInfo, setUserClassInfo] = useState([]);
-  console.log(classCode);
+  const SetClassCode = useParams();
 
     const readClass = async () => {
       let userEmail;
@@ -29,7 +29,6 @@ const Index = () => {
         .then((res) => {
           setUserClassInfo(res.data);
           setclassCode(res.data[0].class_code);
-          console.log(res.data[0].class_code);
         })
         .catch((err) => {
           console.log(err);
@@ -54,7 +53,23 @@ const Index = () => {
             <p className="eng big">Re:Coder</p>
             <p className="kor">공정한 시험 문화를 위한 코딩 테스트 프로그램</p>
           </div>
-          <ContTitle />
+          <div className="cont_tit">
+            <p className="eng_txt">className :</p>
+            <p className="class_name">
+              {userClassInfo.map((v) =>
+                v.class_code === classCode ? v.class_name : ""
+              )}
+            </p>
+
+            <div className="test_info">
+              <p className="test_num">
+                전체 시험 수 <span className="mint">10</span>개
+              </p>
+              <p className="test_std">
+                전체 학생 수 <span className="blue">30</span>명
+              </p>
+            </div>
+          </div>
           <div className="cont_wrap">
             <Tabs>
               <TabList>
@@ -78,6 +93,6 @@ const Index = () => {
       </div>
     </div>
   );
-};;
+};
 
 export default Index;

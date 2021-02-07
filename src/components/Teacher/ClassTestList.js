@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 const ClassTestList = (classCode) => {
   const [selectClassTestInfo, setSelectClassTestInfo] = useState([]);
@@ -76,14 +77,14 @@ const ClassTestList = (classCode) => {
           </thead>
           <tbody>{ListUpdate}</tbody>
         </table>
-        <div className="create_test_btn">
-          <span>시험 등록하기</span>
-        </div>
+        <Link to="/createtestform" className="create_test_btn">
+          <span>시험 생성하기</span>
+        </Link>
       </div>
     ) : (
       <div className="no_test_guide">
-          생성된 시험이 없습니다. <span>먼저 시험을 생성해주세요.</span>
-          <button>시험 생성하기</button>
+        생성된 시험이 없습니다. <span>먼저 시험을 생성해주세요.</span>
+        <Link to="/createtestform">시험 생성하기</Link>
       </div>
     )
   ) : (

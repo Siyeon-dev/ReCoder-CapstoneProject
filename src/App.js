@@ -19,10 +19,9 @@ function App() {
           <Route exact path="/formSignUp" component={FormSignUp} />
           <Route exact path="/student" component={Student} />
           <Route exact path="/teacher" component={Teacher} />
-          <Route path="/teacher/:classCode" component={ Teacher} />
+          <Route path="/teacher/:classCode" component={Teacher} />
 
-          <Route exact path="/createtest" component={CreateTestForm} />
-
+          <Route exact path="/createtestform" component={CreateTestForm} />
           <Redirect from="*" to="/" />
         </Switch>
         <Footer />
