@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom';
+import Loading from 'Components/User/Loading';
 
 const ClassTestList = (classCode) => {
   const [selectClassTestInfo, setSelectClassTestInfo] = useState([]);
   const [flag, setFlag] = useState(false);
-  console.log(classCode);
 
-  const MenuSelect = e => {
 
+  const MenuSelect =  (e) => {
+    setFlag(false)
     const data = {
       class_code : e.classCode,
     };
 
-    console.log(data);
-
-    axios
+     axios
       .post("/classinfo", data)
       .then((res) => {
-        console.log("asdasd");
         setSelectClassTestInfo(res.data);
         setFlag(true);
       })
@@ -30,8 +28,6 @@ const ClassTestList = (classCode) => {
   useEffect(() => {
     MenuSelect(classCode);
   }, [classCode]);
-
-  console.log(selectClassTestInfo);
 
   const ListUpdate = selectClassTestInfo.map((currElement) => (
     <tr>
@@ -56,7 +52,12 @@ const ClassTestList = (classCode) => {
   ));
 
   return flag === true ? (
-    selectClassTestInfo.length !== 0 ? (
+    selectClassTestInfo.length === 0 ? (
+      <div className="no_test_guide">
+        생성된 시험이 없습니다. <span>먼저 시험을 생성해주세요.</span>
+        <Link to="/createtestform">시험 생성하기</Link>
+      </div>
+    ) : (
       <div>
         <table className="tch_class_list_table">
           <colgroup>
@@ -81,14 +82,11 @@ const ClassTestList = (classCode) => {
           <span>시험 생성하기</span>
         </Link>
       </div>
-    ) : (
-      <div className="no_test_guide">
-        생성된 시험이 없습니다. <span>먼저 시험을 생성해주세요.</span>
-        <Link to="/createtestform">시험 생성하기</Link>
-      </div>
     )
   ) : (
-    <div></div>
+    <>
+      <Loading />
+    </>
   );
 };
 

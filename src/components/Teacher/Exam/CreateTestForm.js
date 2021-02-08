@@ -1,5 +1,6 @@
 import React from 'react'
 import Footer from "../../Layout/Footer";
+import BoardEditor from "../Editor/BoardEditor"
 
 const CreateTestForm = () => {
     return (
@@ -81,6 +82,11 @@ const CreateTestForm = () => {
               </div>
               {/**/}
               <div className="test_width_input">
+                <p className="width_input_tit">주의사항</p>
+                <BoardEditor />
+              </div>
+              {/**/}
+              <div className="test_width_input">
                 <p className="width_input_tit">시험대기시간</p>
                 <div className="select">
                   <select name="slct" id="slct">
@@ -157,11 +163,25 @@ const CreateTestForm = () => {
                   </div>
                 </div>
               </div>
+              {/**/}
+              <div className="test_width_input">
+                <p className="width_input_tit">개발언어</p>
+                <div className="select">
+                  <select name="slct" id="slct">
+                    <option value="PHP">PHP</option>
+                    <option value="Python">Python</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="Java">Java</option>
+                  </select>
+                </div>
+              </div>
             </form>
 
             <div className="questions_list">
-              <p className="tit">추가된 문제</p>
-              <div className="add_questions_btn">문제 추가하기</div>
+              <div className="add_questions">
+                <p className="tit">추가된 문제</p>
+                <div className="add_questions_btn">문제 추가하기</div>
+              </div>
               <div className="add_questions_list">
                 <div className="questions_box">
                   <p className="tit">두직선의 교차 여부 확률 계산</p>

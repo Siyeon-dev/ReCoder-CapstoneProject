@@ -4,16 +4,16 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 
 
-  const ClassJoinStdList = ({ appllyStdList, classCode }) => {
+  const ClassJoinStdList = ({ appllyStdList, classCode, setIsOpen }) => {
     const [stdList, setStdList] = useState([]);
     const [stdData, setstdData] = useState([]);
 
     const appllyStdListSubmit = () => {
       let data = {
-        class_code: '',
-        s_email: ''
+        class_code: "",
+        s_email: "",
       };
-      
+
       stdList.map((v) => {
         data = { class_code: classCode.classCode, s_email: v.s_email };
         stdData.push(data);
@@ -26,9 +26,10 @@ import { useCookies } from "react-cookie";
         })
         .catch((err) => {
           console.log(err);
-        });
+        })
+        .then(() => setIsOpen(false));
     };
-   
+
     return (
       <form
         onSubmit={(e) => {
@@ -41,25 +42,26 @@ import { useCookies } from "react-cookie";
             <p className="no_class_list">가입 신청한 학생이 없습니다.</p>
           ) : (
             appllyStdList &&
-            appllyStdList.map((v, index) => (
-              <div className="class_list_check">
-                <input
-                  type="checkbox"
-                  id={`stdLikt-${index}`}
-                  name={v.s_email}
-                  onChange={(e) => {
-                    e.target.checked
-                      ? setStdList([...stdList, v])
-                      : setStdList(stdList.filter((value) => value !== v));
-                  }}
-                />
-                <label for={`stdLikt-${index}`}>
-                  {" "}
-                  {v.s_name}
-                  <span className="std_email">{v.s_email}</span>
-                </label>
-              </div>
-            ))
+            appllyStdList.map((v, index) =>
+              v.recognize === 0 ? (
+                <div className="class_list_check">
+                  <input
+                    type="checkbox"
+                    id={`stdLikt-${index}`}
+                    name={v.s_email}
+                    onChange={(e) => {
+                      e.target.checked
+                        ? setStdList([...stdList, v])
+                        : setStdList(stdList.filter((value) => value !== v));
+                    }}
+                  />
+                  <label for={`stdLikt-${index}`}>
+                    {v.s_name}
+                    <span className="std_email">{v.s_email}</span>
+                  </label>
+                </div>
+              ) : null
+            )
           )}
         </div>
         <button type="submit">가입승인</button>
@@ -99,6 +101,7 @@ const StdClassJoinApp = ({ appllyStdList, classCode }) => {
             <ClassJoinStdList
               appllyStdList={appllyStdList}
               classCode={classCode}
+              setIsOpen={setIsOpen}
             />
             <button onClick={() => setIsOpen(false)} className="modal_close">
               <img src="/img/modal_close.gif" alt="모달 닫기" />

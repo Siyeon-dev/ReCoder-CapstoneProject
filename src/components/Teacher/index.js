@@ -12,11 +12,10 @@ const Index = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [classCode, setclassCode] = useState(""); //  해당 클래스 시험 정보
   const [userClassInfo, setUserClassInfo] = useState([]);
-  const SetClassCode = useParams();
-
+  const params = useParams();
     const readClass = async () => {
       let userEmail;
-
+    
       if (cookies.t_email) {
         userEmail = { t_email: cookies.t_email };
       } else if (cookies.s_email) {
@@ -28,7 +27,7 @@ const Index = () => {
         .post("/classlist", userEmail)
         .then((res) => {
           setUserClassInfo(res.data);
-          setclassCode(res.data[0].class_code);
+          !params.classCode && setclassCode(res.data[0].class_code);
         })
         .catch((err) => {
           console.log(err);
