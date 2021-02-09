@@ -8,8 +8,12 @@ const ClassTestList = (classCode) => {
   const [flag, setFlag] = useState(false);
 
 
+  useEffect(() => {
+    MenuSelect(classCode);
+  }, [classCode]);
+
   const MenuSelect =  (e) => {
-    setFlag(false)
+    flag === true && setFlag(false);
     const data = {
       class_code : e.classCode,
     };
@@ -18,16 +22,12 @@ const ClassTestList = (classCode) => {
       .post("/classinfo", data)
       .then((res) => {
         setSelectClassTestInfo(res.data);
-        setFlag(true);
+        res.data && setFlag(true);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  useEffect(() => {
-    MenuSelect(classCode);
-  }, [classCode]);
 
   const ListUpdate = selectClassTestInfo.map((currElement) => (
     <tr>

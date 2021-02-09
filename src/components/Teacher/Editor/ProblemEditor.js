@@ -3,33 +3,24 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState } from "draft-js";
 import { Component } from "react";
-import draftToHtml from "draftjs-to-html";
 
-
-
-export default class BoardEditor extends Component {
-  
+export default class ProblemEditor extends Component {
   state = {
-    editorState: EditorState.createEmpty(),
+    problemState: EditorState.createEmpty(),
   };
 
-  onEditorStateChange = (editorState) => {
+  onEditorStateChange = (problemState) => {
     this.setState({
-      editorState,
+      problemState,
     });
   };
 
   render() {
-    const { editorState } = this.state;
-
-    //const rawContentState = EditorState(editorState.getCurrentContent());
-    // const markup = draftToHtml(rawContentState);
-    // rawContentState && console.log(rawContentState);
-
+    const { problemState } = this.state;
     return (
       <div>
         <Editor
-          editorState={editorState}
+          editorState={problemState}
           toolbarClassName="toolbarClassName"
           wrapperClassName="wrapperClassName"
           editorClassName="editorClassName"

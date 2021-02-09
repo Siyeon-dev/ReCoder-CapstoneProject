@@ -406,47 +406,26 @@ box-shadow: 3px 3px 10px 0px rgba(22,189,142,0.6);}
 box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);} 
 
 /* Text Editor */
-.rdw-editor-main {
-  height: 100%;
-  overflow: auto;
-  box-sizing: border-box;
+.form_contents .rdw-editor-main {
   height: 300px !important;
   border: 1px solid #dce2f1;
   padding: 10px;
+  border-radius: 5px;
 }
-.rdw-editor-toolbar {
-  padding: 6px 5px 0;
-  border-radius: 2px;
+.form_contents .rdw-editor-toolbar {
   border: 1px solid #dce2f1 !important;
-  display: flex;
-  justify-content: flex-start;
-  background: white;
-  flex-wrap: wrap;
-  font-size: 15px;
-  margin-bottom: 5px;
-  user-select: none;
+  border-radius:5px;
 }
-.public-DraftStyleDefault-block {
-  margin: 1em 0;
+.form_contents .public-DraftStyleDefault-block {
+  margin:5px;
 }
-.rdw-editor-wrapper:focus {
+.form_contents .rdw-editor-wrapper:focus {
   outline: none;
 }
-.rdw-editor-wrapper {
-  box-sizing: content-box;
+.form_contents .rdw-editor-wrapper {
   width: 985px;
   float: right;
 }
-.rdw-editor-main blockquote {
-  border-left: 5px solid #f1f1f1;
-  padding-left: 5px;
-}
-.rdw-editor-main pre {
-  background: #f1f1f1;
-  border-radius: 3px;
-  padding: 1px 10px;
-}
-
 
 
 /* Teacher :: 생성된 시험이 없을 때 */
@@ -515,3 +494,37 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 .std_class_app .class_list_check input[type="checkbox"]:checked + label {background:#fffdf9; border:1px solid #0eb582; color:#000; background:url(../img/classdel_check_on2.gif) no-repeat 305px 50%;}
 .std_class_app .class_list_check input[type="checkbox"]:checked + label .std_email {color:#444;}
 .std_class_app button[type="submit"] {width:350px; background:#0eb582; color:#fff; text-align: center; height:50px; line-height:50px; margin-top:20px; font-weight:600;}
+
+/* 선생님 - 문제 생성 */
+.create_problem p.tit {text-align: center;font-size: 20px;padding-top:95px;margin-bottom: 30px;background:url(../img/create_problem_ico.gif) no-repeat 50% 0px;}
+.create_problem input,
+.create_problem button {height:45px; line-height:45px; font-size:13px;}
+.create_problem label {float:left; font-size:14px; line-height:45px; width:75px; text-align:center; color:#152842; font-weight:600;}
+.create_problem input[type="text"]::placeholder  {color:#a4a5b1; font-weight:500; letter-spacing: -0.05em;}
+.create_problem input[type="text"] {padding:0 15px;  border:1px solid #e5e5e5; border-radius: 5px;}
+.input_area {display:inline-block;}
+.input_area input.new_problem_name {width:330px;}
+.input_area input.new_problem_score {width:85px;}
+.create_problem .rdw-editor-wrapper {clear: both;width: 630px;margin-top: 10px;}
+.create_problem .rdw-editor-toolbar,
+.create_problem .rdw-editor-main {border:1px solid #e5e5e5 !important; border-radius:5px;}
+.create_problem .rdw-editor-main {height:190px !important;}
+.text_area {width:100%; overflow: hidden;}
+.text_area p {border-radius:5px;padding: 8px 0;font-weight: 600;background: #d5e1ff;color: #152842;text-align: center;margin: 10px 0 0px 0;font-size: 15px;}
+.text_area textarea {border-radius:5px; width:630px; margin-top: 5px; padding:10px; box-sizing: border-box; border:1px solid #e5e5e5;}
+
+.create_problem_area {height:500px; overflow-x: hidden; overflow-y: auto; padding-right: 10px;}
+.create_problem .create_problem_area::-webkit-scrollbar {
+	width: 5px;
+}
+.create_problem .create_problem_area::-webkit-scrollbar-thumb {
+	background-color: #373a44;
+	border-radius: 10px;
+}
+.create_problem .create_problem_area::-webkit-scrollbar-track {
+	background-color: #e1e1ea;
+	border-radius: 10px;
+}
+
+/*로딩중*/
+.loading {width:100%; text-align: center;}

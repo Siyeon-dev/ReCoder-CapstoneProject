@@ -40,9 +40,7 @@ import { useCookies } from "react-cookie";
         <div className="class_list_area">
           {appllyStdList.length === 0 ? (
             <p className="no_class_list">가입 신청한 학생이 없습니다.</p>
-          ) : (
-            appllyStdList &&
-            appllyStdList.map((v, index) =>
+          ) : (appllyStdList.map((v, index) =>
               v.recognize === 0 ? (
                 <div className="class_list_check">
                   <input
