@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Loading from 'Components/User/Loading';
 
-const ClassTestList = (classCode) => {
+const ClassTestList = (classCode, { readClass }) => {
   const [selectClassTestInfo, setSelectClassTestInfo] = useState([]);
   const [testCode, setTestCode] = useState("");
+  const classCodeParams = useParams();
   const [flag, setFlag] = useState(false);
 
   console.log(classCode);
 
   useEffect(() => {
-    MenuSelect(classCode);
-  }, [classCode]);
+    MenuSelect(classCodeParams);
+  }, [classCodeParams]);
 
   const MenuSelect = (e) => {
     flag === true && setFlag(false);
@@ -31,9 +32,6 @@ const ClassTestList = (classCode) => {
       });
   };
 
-
-  console.log(selectClassTestInfo);
-
   const ListUpdate = selectClassTestInfo.map((currElement) => (
     <tr>
       <th scope="row">{currElement.test_name}</th>
@@ -49,12 +47,30 @@ const ClassTestList = (classCode) => {
         )}
       </td>
       <td>
-        <button>
+        <button onClick={() => TestListDelete(currElement.test_id)}>
           <img src="/img/tch_test_delete_btn.png" alt="시험 삭제 버튼" />
         </button>
       </td>
     </tr>
   ));
+
+  const TestListDelete = (props) => {
+    let data = {
+      test_id: props,
+    };
+    console.log(data);
+
+    axios
+      .post("/examdelete", data)
+      .then((res) => {
+        console.log(res.data);
+        alert("삭제되었습니다.");
+        window.location.replace(`/teacher/${classCodeParams}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return flag === true ? (
     selectClassTestInfo.length === 0 ? (
@@ -84,7 +100,7 @@ const ClassTestList = (classCode) => {
           <tbody>{ListUpdate}</tbody>
         </table>
         <Link
-          to={`/createtestform/${classCode.classCode}`}
+          to={`/createtestform/${classCodeParams}`}
           className="create_test_btn"
         >
           <span>시험 생성하기</span>
