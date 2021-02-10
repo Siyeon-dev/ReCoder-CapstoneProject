@@ -6,23 +6,19 @@ import CreateProblem from "Components/Modal/CreateProblem";
 import DatePicker from "react-date-picker";
 import "react-date-picker/dist/DatePicker.css";
 import { useParams } from 'react-router';
+import axios from 'axios';
 
 const CreateTestForm = () => {
   const [selectDate, setSelectDate] = useState(new Date());
   const [boardFormHtml, setBoardFormHtml] = useState(null);
+
+  const [quizList, setQuizList] = useState([])
+
   const ParamsClassCode = useParams();
 
   // useEffect(() => {
-  //   problemFormInfoList.push(ProblemFormInfo);
-  //   console.log(problemFormInfoList);
-  // }, [ProblemFormInfo]);
-
-  // // 문제 정보
-  // let ProblemFormInfo = {
-  //   question_name : "",
-  //   question_score: "",
-  //   question_text: "",
-  // };
+  //   console.log(quizList)
+  // },[quizList])
 
   // 시험지 정보
   let TestFormInfo = {
@@ -45,16 +41,18 @@ const CreateTestForm = () => {
     TestFormInfo.test_name = e.target.text_name.value;
     TestFormInfo.test_start =
       e.target.test_date.value +
-      ":" +
+      " " +
       e.target.test_start_time.value +
       ":" +
-      e.target.test_start_min.value;
+      e.target.test_start_min.value +
+      ":00";
     TestFormInfo.test_end =
       e.target.test_date.value +
-      ":" +
+      " " +
       e.target.test_end_time.value +
       ":" +
-      e.target.test_end_min.value;
+      e.target.test_end_min.value+
+      ":00";
     TestFormInfo.test_wait = "00:" + e.target.test_wait.value + ":00";
     TestFormInfo.test_caution = boardFormHtml;
     TestFormInfo.test_retake = e.target.test_retake.value;
@@ -63,6 +61,24 @@ const CreateTestForm = () => {
     TestFormInfo.test_lang = e.target.test_lang.value;
 
     console.log(TestFormInfo);
+    console.log(quizList);
+
+    const AllTestInfoArr = [];
+
+    AllTestInfoArr.push(TestFormInfo);
+    //testArr.push(quizList.map((v, index) => quizList[index]));
+    quizList.map((v, index) => AllTestInfoArr.push(quizList[index]));
+
+    console.log(AllTestInfoArr);
+
+
+    axios.post("/examcreate", AllTestInfoArr)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
     return (
@@ -89,7 +105,7 @@ const CreateTestForm = () => {
                       {/* <option selected disabled>
                         Choose an option
                       </option> */}
-                      <option value="9">9시</option>
+                      <option value="09">9시</option>
                       <option value="10">10시</option>
                       <option value="11">11시</option>
                       <option value="12">12시</option>
@@ -105,7 +121,6 @@ const CreateTestForm = () => {
                   </div>
                   <div className="select">
                     <select name="test_start_min" id="slct">
-                      <option value="00">00분</option>
                       <option value="10">10분</option>
                       <option value="20">20분</option>
                       <option value="30">30분</option>
@@ -121,7 +136,7 @@ const CreateTestForm = () => {
                       {/* <option selected disabled>
                         Choose an option
                       </option> */}
-                      <option value="9">9시</option>
+                      <option value="09">9시</option>
                       <option value="10">10시</option>
                       <option value="11">11시</option>
                       <option value="12">12시</option>
@@ -157,7 +172,6 @@ const CreateTestForm = () => {
                 <p className="width_input_tit">시험대기시간</p>
                 <div className="select">
                   <select name="test_wait" id="slct">
-                    <option value="00">00분</option>
                     <option value="10">10분</option>
                     <option value="20">20분</option>
                     <option value="30">30분</option>
@@ -246,19 +260,24 @@ const CreateTestForm = () => {
               <div className="questions_list">
                 <div className="add_questions">
                   <p className="tit">추가된 문제</p>
-                  <CreateProblem />
+                  <CreateProblem quizList={quizList} setQuizList={setQuizList} />
                 </div>
                 <div className="add_questions_list">
-                  <div className="questions_box">
-                    <p className="tit">두직선의 교차 여부 확률 계산</p>
-                    <p className="score">
-                      <span>20</span>점
-                    </p>
-                    <div className="btn_wrap">
-                      <button className="questions_modify">수정하기</button>
-                      <button className="questions_delete">삭제하기</button>
-                    </div>
-                  </div>
+                  {quizList &&
+                    quizList.map((v) => (
+                      <div className="questions_box">
+                        <p className="tit">{v.question_name}</p>
+                        <p className="score">
+                          <span>{v.question_score}</span>점
+                        </p>
+                        <div className="btn_wrap">
+                          <button className="questions_modify">수정하기</button>
+                          <button className="questions_delete">삭제하기</button>
+                        </div>
+                      </div>
+                    ))}
+                 
+                 
                 </div>
               </div>
 

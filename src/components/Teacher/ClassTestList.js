@@ -5,6 +5,7 @@ import Loading from 'Components/User/Loading';
 
 const ClassTestList = (classCode) => {
   const [selectClassTestInfo, setSelectClassTestInfo] = useState([]);
+  const [testCode, setTestCode] = useState("");
   const [flag, setFlag] = useState(false);
 
   console.log(classCode);
@@ -29,6 +30,9 @@ const ClassTestList = (classCode) => {
         console.log(err);
       });
   };
+
+
+  console.log(selectClassTestInfo);
 
   const ListUpdate = selectClassTestInfo.map((currElement) => (
     <tr>

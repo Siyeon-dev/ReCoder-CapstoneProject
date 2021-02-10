@@ -1,10 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useModal from "./useModal";
 import ProblemEditor from "../Teacher/Editor/ProblemEditor";
 
-const CreateProblemInfo = ({ setIsOpen }) => {
+const CreateProblemInfo = ({ setIsOpen, quizList, setQuizList }) => {
   const [problemBoartHtml, setProblemBoartHtml] = useState(null);
-  const { questionName, questionScore, questionCode } = useRef("");
+  const [questionName, setQuestionName] = useState("");
+  const [questionScore, setQuestionSocre] = useState("");
+  const [questionText, setQuestionText] = useState("");
+  const [questionCode, setQuestionCode] = useState("");
 
   const CreateProblemList = e => {
     e.preventDefault();
@@ -25,25 +28,47 @@ const CreateProblemInfo = ({ setIsOpen }) => {
     console.log(ProblemData);
   };
 
+  const handleCreate = (e) => {
+    setQuizList([...quizList, {
+      question_name: questionName,
+      question_score:questionScore,
+      question_text:problemBoartHtml,
+      question_code:questionCode
+    }])
+  }
+
+  const handleChange = (e, setFunction) => {
+    e.preventDefault();
+    setFunction(e.target.value);
+  }
+
+  useEffect(() => {
+    console.log(questionName, questionScore, problemBoartHtml, questionCode)
+  })
+
   return (
     <div className="create_problem_area">
       <form onSubmit={CreateProblemList}>
         <div className="input_area">
           <label>문제명</label>
           <input
-            ref="questionName"
             type="text"
             name="newClassName"
             className="new_problem_name"
+            onChange={e => {
+            handleChange(e, setQuestionName)
+          }}
           />
         </div>
         <div className="input_area">
           <label>배점</label>
           <input
-            ref="questionScore"
             type="text"
             name="newClassScore"
             className="new_problem_score"
+            onChange={e => {
+              handleChange(e, setQuestionSocre)
+            }}
           />
         </div>
         <div className="text_area">
@@ -53,21 +78,24 @@ const CreateProblemInfo = ({ setIsOpen }) => {
         <div className="text_area">
           <p>기본제공코드</p>
           <textarea
-            ref="questionCode"
             name="new_problem_default_code"
             cols="30"
             rows="10"
             placeholder="시험에 제공되는 기본 코드를 입력해주세요."
+            onChange={ e=>{handleChange(e, setQuestionCode)}}
           ></textarea>
+          <button onClick={(e) => {
+            handleCreate();
+            setIsOpen(false)
+          }}>click!</button>
         </div>
-        <button type="submit">문제등록하기</button>
       </form>
     </div>
   );
 };
 
 
-const CreateProblem = () => {
+const CreateProblem = ({quizList, setQuizList}) => {
   const [isOpen, setIsOpen, Modal] = useModal();
 
   console.log(isOpen);
@@ -81,7 +109,10 @@ const CreateProblem = () => {
           <div className="modal_area">
             <p className="tit">새로운 문제 추가하기</p>
 
-            <CreateProblemInfo setIsOpen={setIsOpen} />
+            <CreateProblemInfo setIsOpen={setIsOpen}
+              setQuizList={setQuizList}
+              quizList={quizList}
+            />
 
             <button onClick={() => setIsOpen(false)} className="modal_close">
               <img src="/img/modal_close.gif" alt="모달 닫기" />
