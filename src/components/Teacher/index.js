@@ -27,7 +27,7 @@ const Index = () => {
         .post("/classlist", userEmail)
         .then((res) => {
           setUserClassInfo(res.data);
-          !params.classCode && setclassCode(res.data[0].class_code);
+          !params.hasOwnProperty('classCode') && setclassCode(res.data[0].class_code);
         })
         .catch((err) => {
           console.log(err);

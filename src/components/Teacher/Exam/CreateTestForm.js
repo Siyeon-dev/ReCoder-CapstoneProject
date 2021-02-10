@@ -1,11 +1,30 @@
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from "../../Layout/Footer";
 import BoardEditor from "../Editor/BoardEditor"
 import CreateProblem from "Components/Modal/CreateProblem";
+import DatePicker from "react-date-picker";
+import "react-date-picker/dist/DatePicker.css";
+import { useParams } from 'react-router';
 
 const CreateTestForm = () => {
+  const [selectDate, setSelectDate] = useState(new Date());
+  const [boardFormHtml, setBoardFormHtml] = useState(null);
+  const ParamsClassCode = useParams();
 
+  // useEffect(() => {
+  //   problemFormInfoList.push(ProblemFormInfo);
+  //   console.log(problemFormInfoList);
+  // }, [ProblemFormInfo]);
+
+  // // 문제 정보
+  // let ProblemFormInfo = {
+  //   question_name : "",
+  //   question_score: "",
+  //   question_text: "",
+  // };
+
+  // 시험지 정보
   let TestFormInfo = {
     class_code: "",
     test_name: "",
@@ -22,12 +41,22 @@ const CreateTestForm = () => {
   const CreateTestFormSubmit = e => {
     e.preventDefault();
     //console.log(e.target.test_start_time.value);
+    TestFormInfo.class_code = ParamsClassCode.classCode;
     TestFormInfo.test_name = e.target.text_name.value;
     TestFormInfo.test_start =
-      e.target.test_start_time.value + ":" + e.target.test_start_min.value;
+      e.target.test_date.value +
+      ":" +
+      e.target.test_start_time.value +
+      ":" +
+      e.target.test_start_min.value;
     TestFormInfo.test_end =
-      e.target.test_end_time.value + ":" + e.target.test_end_min.value;
+      e.target.test_date.value +
+      ":" +
+      e.target.test_end_time.value +
+      ":" +
+      e.target.test_end_min.value;
     TestFormInfo.test_wait = "00:" + e.target.test_wait.value + ":00";
+    TestFormInfo.test_caution = boardFormHtml;
     TestFormInfo.test_retake = e.target.test_retake.value;
     TestFormInfo.test_shuffle = e.target.test_shuffle.value;
     TestFormInfo.test_escape = e.target.test_escape.value;
@@ -47,7 +76,13 @@ const CreateTestForm = () => {
               {/**/}
               <div className="test_width_input">
                 <p className="width_input_tit">응시기간</p>
-                <div className="date_select">2021-02-08</div>
+                <DatePicker
+                  name="test_date"
+                  onChange={(date) => setSelectDate(date)}
+                  dateFormat="yyyy/MM/dd"
+                  value={selectDate}
+                  minDate={new Date()}
+                />
                 <div className="select_wrap">
                   <div className="select">
                     <select name="test_start_time" id="slct">
@@ -115,7 +150,7 @@ const CreateTestForm = () => {
               {/**/}
               <div className="test_width_input">
                 <p className="width_input_tit">주의사항</p>
-                <BoardEditor />
+                <BoardEditor setBoardFormHtml={setBoardFormHtml} />
               </div>
               {/**/}
               <div className="test_width_input">

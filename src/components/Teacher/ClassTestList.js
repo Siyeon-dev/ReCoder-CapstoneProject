@@ -7,22 +7,23 @@ const ClassTestList = (classCode) => {
   const [selectClassTestInfo, setSelectClassTestInfo] = useState([]);
   const [flag, setFlag] = useState(false);
 
+  console.log(classCode);
 
   useEffect(() => {
     MenuSelect(classCode);
   }, [classCode]);
 
-  const MenuSelect =  (e) => {
+  const MenuSelect = (e) => {
     flag === true && setFlag(false);
     const data = {
-      class_code : e.classCode,
+      class_code: e.classCode,
     };
 
-     axios
+    axios
       .post("/classinfo", data)
       .then((res) => {
         setSelectClassTestInfo(res.data);
-        res.data && setFlag(true);
+        setFlag(true);
       })
       .catch((err) => {
         console.log(err);
@@ -78,7 +79,10 @@ const ClassTestList = (classCode) => {
           </thead>
           <tbody>{ListUpdate}</tbody>
         </table>
-        <Link to="/createtestform" className="create_test_btn">
+        <Link
+          to={`/createtestform/${classCode.classCode}`}
+          className="create_test_btn"
+        >
           <span>시험 생성하기</span>
         </Link>
       </div>

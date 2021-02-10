@@ -21,7 +21,11 @@ function App() {
           <Route exact path="/teacher" component={Teacher} />
           <Route path="/teacher/:classCode" component={Teacher} />
 
-          <Route exact path="/createtestform" component={CreateTestForm} />
+          <Route
+            exact
+            path="/createtestform/:classCode"
+            component={CreateTestForm}
+          />
           <Redirect from="*" to="/" />
         </Switch>
         <Footer />
