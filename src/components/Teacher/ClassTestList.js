@@ -3,22 +3,28 @@ import axios from 'axios'
 import { Link, useParams } from 'react-router-dom';
 import Loading from 'Components/User/Loading';
 
-const ClassTestList = (classCode, { readClass }) => {
+const ClassTestList = (classCode) => {
   const [selectClassTestInfo, setSelectClassTestInfo] = useState([]);
   const [testCode, setTestCode] = useState("");
   const classCodeParams = useParams();
   const [flag, setFlag] = useState(false);
 
-  console.log(classCode);
+  // classCode.classCode.length === 0
+  //   ? console.log("prams쓰면 됨")
+  //   : console.log(classCode.classCode.length);
+  // console.log(classCodeParams.classCode.length);
 
   useEffect(() => {
-    MenuSelect(classCodeParams);
-  }, [classCodeParams]);
+    window.scrollTo(0, 0);
+    classCode.classCode.length === 0
+      ? MenuSelect(classCodeParams.classCode)
+      : MenuSelect(classCode.classCode);
+  }, [classCode]);
 
-  const MenuSelect = (e) => {
+  const MenuSelect = e => {
     flag === true && setFlag(false);
     const data = {
-      class_code: e.classCode,
+      class_code: e,
     };
 
     axios
@@ -65,7 +71,7 @@ const ClassTestList = (classCode, { readClass }) => {
       .then((res) => {
         console.log(res.data);
         alert("삭제되었습니다.");
-        window.location.replace(`/teacher/${classCodeParams}`);
+        window.location.replace(`/teacher/${classCodeParams.classCode}`);
       })
       .catch((err) => {
         console.log(err);
@@ -99,8 +105,8 @@ const ClassTestList = (classCode, { readClass }) => {
           </thead>
           <tbody>{ListUpdate}</tbody>
         </table>
-        <Link
-          to={`/createtestform/${classCodeParams}`}
+          <Link
+          to={`/createtestform/${classCodeParams.classCode}`}
           className="create_test_btn"
         >
           <span>시험 생성하기</span>

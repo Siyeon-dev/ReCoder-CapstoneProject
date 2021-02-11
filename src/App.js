@@ -22,7 +22,6 @@ function App() {
           <Route path="/teacher/:classCode" component={Teacher} />
 
           <Route
-            exact
             path="/createtestform/:classCode"
             component={CreateTestForm}
           />

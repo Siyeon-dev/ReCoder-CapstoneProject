@@ -12,8 +12,9 @@ const Index = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [classCode, setclassCode] = useState(""); //  해당 클래스 시험 정보
   const [userClassInfo, setUserClassInfo] = useState([]);
-  const params = useParams();
-    const readClass = async () => {
+  const classCodeParams = useParams();
+
+    const readClass = () => {
       let userEmail;
     
       if (cookies.t_email) {
@@ -23,13 +24,17 @@ const Index = () => {
       } else {
         return null;
       }
-      await axios
+
+      console.log(userEmail);
+      axios
         .post("/classlist", userEmail)
         .then((res) => {
           setUserClassInfo(res.data);
-          !params.hasOwnProperty('classCode') && setclassCode(res.data[0].class_code);
+          !classCodeParams.hasOwnProperty("classCode")
+            ? setclassCode(res.data[0].class_code)
+            : setclassCode(classCodeParams.classCode);
         })
-        .catch((err) => {
+        .catch((err) => { 
           console.log(err);
         });
     };
@@ -55,6 +60,7 @@ const Index = () => {
           <div className="cont_tit">
             <p className="eng_txt">className :</p>
             <p className="class_name">
+              {console.log(classCode)}
               {userClassInfo.map((v) =>
                 v.class_code === classCode ? v.class_name : ""
               )}

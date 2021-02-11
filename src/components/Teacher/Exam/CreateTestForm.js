@@ -5,20 +5,19 @@ import BoardEditor from "../Editor/BoardEditor"
 import CreateProblem from "Components/Modal/CreateProblem";
 import DatePicker from "react-date-picker";
 import "react-date-picker/dist/DatePicker.css";
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import axios from 'axios';
 
 const CreateTestForm = () => {
   const [selectDate, setSelectDate] = useState(new Date());
   const [boardFormHtml, setBoardFormHtml] = useState(null);
-
+  const history = useHistory();
   const [quizList, setQuizList] = useState([])
-
   const ParamsClassCode = useParams();
 
-  // useEffect(() => {
-  //   console.log(quizList)
-  // },[quizList])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
 
   // 시험지 정보
   let TestFormInfo = {
@@ -36,7 +35,6 @@ const CreateTestForm = () => {
 
   const CreateTestFormSubmit = e => {
     e.preventDefault();
-    //console.log(e.target.test_start_time.value);
     TestFormInfo.class_code = ParamsClassCode.classCode;
     TestFormInfo.test_name = e.target.text_name.value;
     TestFormInfo.test_start =
@@ -66,7 +64,6 @@ const CreateTestForm = () => {
     const AllTestInfoArr = [];
 
     AllTestInfoArr.push(TestFormInfo);
-    //testArr.push(quizList.map((v, index) => quizList[index]));
     quizList.map((v, index) => AllTestInfoArr.push(quizList[index]));
 
     console.log(AllTestInfoArr);
@@ -75,6 +72,9 @@ const CreateTestForm = () => {
     axios.post("/examcreate", AllTestInfoArr)
       .then((res) => {
         console.log(res.data);
+        !alert(`[${TestFormInfo.test_name}] 시험 생성이 완료되었습니다.`) &&
+          history.push(`/teacher/${ParamsClassCode.classCode}`);
+        
       })
       .catch((err) => {
         console.log(err);
@@ -87,7 +87,11 @@ const CreateTestForm = () => {
           <div className="form_contents">
             <form onSubmit={CreateTestFormSubmit}>
               <div className="exam_name_form">
-                <input name="text_name" placeholder="시험명을 입력하세요." />
+                <input
+                  name="text_name"
+                  autocomplete="off"
+                  placeholder="시험명을 입력하세요."
+                />
               </div>
               {/**/}
               <div className="test_width_input">
@@ -102,9 +106,9 @@ const CreateTestForm = () => {
                 <div className="select_wrap">
                   <div className="select">
                     <select name="test_start_time" id="slct">
-                      {/* <option selected disabled>
-                        Choose an option
-                      </option> */}
+                      <option selected disabled>
+                        시작시간(시)
+                      </option>
                       <option value="09">9시</option>
                       <option value="10">10시</option>
                       <option value="11">11시</option>
@@ -121,6 +125,10 @@ const CreateTestForm = () => {
                   </div>
                   <div className="select">
                     <select name="test_start_min" id="slct">
+                      <option selected disabled>
+                        시작시간(분)
+                      </option>
+                      <option value="00">00분</option>
                       <option value="10">10분</option>
                       <option value="20">20분</option>
                       <option value="30">30분</option>
@@ -133,9 +141,9 @@ const CreateTestForm = () => {
                 <div className="select_wrap">
                   <div className="select">
                     <select name="test_end_time" id="slct">
-                      {/* <option selected disabled>
-                        Choose an option
-                      </option> */}
+                      <option selected disabled>
+                        종료시간(시)
+                      </option>
                       <option value="09">9시</option>
                       <option value="10">10시</option>
                       <option value="11">11시</option>
@@ -152,6 +160,9 @@ const CreateTestForm = () => {
                   </div>
                   <div className="select">
                     <select name="test_end_min" id="slct">
+                      <option selected disabled>
+                        종료시간(분)
+                      </option>
                       <option value="00">00분</option>
                       <option value="10">10분</option>
                       <option value="20">20분</option>
@@ -186,7 +197,12 @@ const CreateTestForm = () => {
                 <div className="radio_wrap">
                   <div className="light">
                     <label>
-                      <input type="radio" name="test_shuffle" value="1" />
+                      <input
+                        type="radio"
+                        name="test_shuffle"
+                        value="1"
+                        defaultChecked
+                      />
                       <span class="design"></span>
                       <span class="text">허용</span>
                     </label>
@@ -204,7 +220,12 @@ const CreateTestForm = () => {
                 <div className="radio_wrap">
                   <div className="light">
                     <label>
-                      <input type="radio" name="test_escape" value="1" />
+                      <input
+                        type="radio"
+                        name="test_escape"
+                        value="1"
+                        defaultChecked
+                      />
                       <span class="design"></span>
                       <span class="text">허용</span>
                     </label>
@@ -222,7 +243,12 @@ const CreateTestForm = () => {
                 <div className="radio_wrap">
                   <div className="light">
                     <label>
-                      <input type="radio" name="test_retake" value="3" />
+                      <input
+                        type="radio"
+                        name="test_retake"
+                        value="3"
+                        defaultChecked
+                      />
                       <span class="design"></span>
                       <span class="text">무제한</span>
                     </label>
@@ -260,10 +286,13 @@ const CreateTestForm = () => {
               <div className="questions_list">
                 <div className="add_questions">
                   <p className="tit">추가된 문제</p>
-                  <CreateProblem quizList={quizList} setQuizList={setQuizList} />
+                  <CreateProblem
+                    quizList={quizList}
+                    setQuizList={setQuizList}
+                  />
                 </div>
                 <div className="add_questions_list">
-                  {quizList &&
+                  {quizList.length !== 0 ? (
                     quizList.map((v) => (
                       <div className="questions_box">
                         <p className="tit">{v.question_name}</p>
@@ -271,17 +300,19 @@ const CreateTestForm = () => {
                           <span>{v.question_score}</span>점
                         </p>
                         <div className="btn_wrap">
-                          <button className="questions_modify">수정하기</button>
-                          <button className="questions_delete">삭제하기</button>
+                          <div className="btn questions_modify">수정하기</div>
+                          <div className="btn questions_delete">삭제하기</div>
                         </div>
                       </div>
-                    ))}
-                 
-                 
+                    ))
+                  ) : (
+                    <div className="questions_box">생성된 문제가 없습니다.</div>
+                  )}
                 </div>
               </div>
-
-              <button type="submit">시험 저장하기</button>
+              <div className="test_save_btn">
+                <button type="submit">시험 저장하기</button>
+              </div>
             </form>
           </div>
         </div>

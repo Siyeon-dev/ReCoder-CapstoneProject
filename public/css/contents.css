@@ -392,15 +392,15 @@ select::-ms-expand {display: none;}
 .add_questions_list .questions_box {display:inline-block; width:100%; background:#fff; border-radius: 5px; height:75px; line-height:75px; box-sizing: border-box; padding:0 40px; -webkit-box-shadow: 1px 1px 10px 1px rgba(206,214,232,0.6);
 -moz-box-shadow: 1px 1px 10px 1px rgba(206,214,232,0.6);
 box-shadow: 1px 1px 10px 1px rgba(206,214,232,0.6);}
-.add_questions_list .questions_box .tit {float:left;width: 420px;font-size:16px;color:#152842;text-align: center;}
+.add_questions_list .questions_box .tit {float:left;width: 400px;font-size:16px;color:#152842;text-align: center;}
 .add_questions_list .questions_box .score  {float:left; font-size:15px;}
 .add_questions_list .questions_box .score span {font-family: 'Roboto', sans-serif; font-size: 30px; font-weight:300;}
 .add_questions_list .questions_box .btn_wrap {float:right;}
-.add_questions_list .questions_box button {width:120px; box-sizing:border-box; cursor:pointer; display:inline-block; padding-left:15px; height:35px; line-height:35px; color:#fff; font-weight:600; border-radius:8px; text-align: left; margin-left:10px;}
-.add_questions_list .questions_box button.questions_modify {background:#37d4a8 url(../img/tch_test_start_ico.gif) no-repeat 90px 50%;-webkit-box-shadow: 3px 3px 10px 0px rgba(22,189,142,0.6);
+.add_questions_list .questions_box .btn {cursor: pointer;width:120px;box-sizing:border-box;cursor:pointer;display:inline-block;padding-left:15px;height: 38px;line-height: 38px;color:#fff;font-weight:600;border-radius:8px;text-align: left;margin-left:10px;font-size: 13px;}
+.add_questions_list .questions_box .questions_modify {background:#37d4a8 url(../img/tch_test_start_ico.gif) no-repeat 90px 50%;-webkit-box-shadow: 3px 3px 10px 0px rgba(22,189,142,0.6);
 -moz-box-shadow: 3px 3px 10px 0px rgba(22,189,142,0.6);
 box-shadow: 3px 3px 10px 0px rgba(22,189,142,0.6);}
-.add_questions_list .questions_box button.questions_delete {background:#fc5454;
+.add_questions_list .questions_box .questions_delete {background:#fc5454;
 -webkit-box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);
 -moz-box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);
 box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);} 
@@ -428,6 +428,8 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 }
 .react-date-picker {float:left;}
 .react-date-picker__wrapper {border:none !important;height: 45px;line-height: 45px;background: #eef1f7;font-weight: 600;padding: 0 15px 0 20px;border-radius: 5px;font-size: 14px;margin-right: 5px;}
+.test_save_btn {width:100%; text-align: center; margin-top:40px;}
+.test_save_btn button {display: inline-block; width:280px; font-size:17px; background:#6277f5; border-radius:8px; color:#fff; font-weight: 600; padding:20px 0; letter-spacing:-0.05em;}
 
 /* Teacher :: 생성된 시험이 없을 때 */
 .no_test_guide {width:100%; margin:30px 0 60px 0; padding-top:240px; background:url(../img/no_test_img.jpg) no-repeat 50% 0px; color:#232e3c; font-weight:200; text-align: center; font-size:25px;}
@@ -511,7 +513,7 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 .create_problem .rdw-editor-main {border:1px solid #e5e5e5 !important; border-radius:5px;}
 .create_problem .rdw-editor-main {height:190px !important;}
 .text_area {width:100%; overflow: hidden;}
-.text_area p {border-radius:5px;padding: 8px 0;font-weight: 600;background: #d5e1ff;color: #152842;text-align: center;margin: 10px 0 0px 0;font-size: 15px;}
+.text_area p {border-radius:5px;padding:10px 0;font-weight: 600;background: #d5e1ff;color: #152842;text-align: center;margin: 10px 0 0px 0;font-size: 15px;}
 .text_area textarea {outline:none; border-radius:5px; width:630px; margin-top: 5px; padding:10px; box-sizing: border-box; border:1px solid #e5e5e5;}
 
 .create_problem_area {height:500px; overflow-x: hidden; overflow-y: auto; padding-right: 10px;}
@@ -526,6 +528,8 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 	background-color: #e1e1ea;
 	border-radius: 10px;
 }
+.create_problem_area .btn_wrap {display:block; width:100%; text-align: center; margin:20px 0;}
+.create_problem_area .btn_wrap button.create_problem_btn {background:#6277f5; border-radius:30px; padding:10px 30px; color:#fff; font-size:15px; font-weight:600; line-height:0;}
 
 /*로딩중*/
 .loading {width:100%; text-align: center;}

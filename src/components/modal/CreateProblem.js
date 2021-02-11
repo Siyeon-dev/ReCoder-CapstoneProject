@@ -6,7 +6,6 @@ const CreateProblemInfo = ({ setIsOpen, quizList, setQuizList }) => {
   const [problemBoartHtml, setProblemBoartHtml] = useState(null);
   const [questionName, setQuestionName] = useState("");
   const [questionScore, setQuestionSocre] = useState("");
-  const [questionText, setQuestionText] = useState("");
   const [questionCode, setQuestionCode] = useState("");
 
   const CreateProblemList = e => {
@@ -55,9 +54,9 @@ const CreateProblemInfo = ({ setIsOpen, quizList, setQuizList }) => {
             type="text"
             name="newClassName"
             className="new_problem_name"
-            onChange={e => {
-            handleChange(e, setQuestionName)
-          }}
+            onChange={(e) => {
+              handleChange(e, setQuestionName);
+            }}
           />
         </div>
         <div className="input_area">
@@ -66,8 +65,8 @@ const CreateProblemInfo = ({ setIsOpen, quizList, setQuizList }) => {
             type="text"
             name="newClassScore"
             className="new_problem_score"
-            onChange={e => {
-              handleChange(e, setQuestionSocre)
+            onChange={(e) => {
+              handleChange(e, setQuestionSocre);
             }}
           />
         </div>
@@ -82,12 +81,21 @@ const CreateProblemInfo = ({ setIsOpen, quizList, setQuizList }) => {
             cols="30"
             rows="10"
             placeholder="시험에 제공되는 기본 코드를 입력해주세요."
-            onChange={ e=>{handleChange(e, setQuestionCode)}}
+            onChange={(e) => {
+              handleChange(e, setQuestionCode);
+            }}
           ></textarea>
-          <button onClick={(e) => {
-            handleCreate();
-            setIsOpen(false)
-          }}>click!</button>
+          <div className="btn_wrap">
+            <button
+              className="create_problem_btn"
+              onClick={(e) => {
+                handleCreate();
+                setIsOpen(false);
+              }}
+            >
+              생성하기
+            </button>
+          </div>
         </div>
       </form>
     </div>
