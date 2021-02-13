@@ -38,27 +38,31 @@ const ClassTestList = (classCode) => {
       });
   };
 
-  const ListUpdate = selectClassTestInfo.map((currElement) => (
-    <tr>
-      <th scope="row">{currElement.test_name}</th>
-      <td>{currElement.questioncount}문항</td>
-      <td>
-        {currElement.test_start} ~{currElement.test_end}
-      </td>
-      <td>
-        {currElement.t_test_status === 1 ? (
-          <p className="tch_test_state complete">시험완료</p>
-        ) : (
-          <p className="tch_test_state start">시험시작</p>
-        )}
-      </td>
-      <td>
-        <button onClick={() => TestListDelete(currElement.test_id)}>
-          <img src="/img/tch_test_delete_btn.png" alt="시험 삭제 버튼" />
-        </button>
-      </td>
-    </tr>
-  ));
+  const ListUpdate = selectClassTestInfo ? (
+    selectClassTestInfo.map((currElement) => (
+      <tr>
+        <th scope="row">{currElement.test_name}</th>
+        <td>{currElement.questioncount}문항</td>
+        <td>
+          {currElement.test_start} ~{currElement.test_end}
+        </td>
+        <td>
+          {currElement.t_test_status === 1 ? (
+            <p className="tch_test_state complete">시험완료</p>
+          ) : (
+            <p className="tch_test_state start">시험시작</p>
+          )}
+        </td>
+        <td>
+          <button onClick={() => TestListDelete(currElement.test_id)}>
+            <img src="/img/tch_test_delete_btn.png" alt="시험 삭제 버튼" />
+          </button>
+        </td>
+      </tr>
+    ))
+  ) : (
+    <Loading />
+  );
 
   const TestListDelete = (props) => {
     let data = {
@@ -71,7 +75,7 @@ const ClassTestList = (classCode) => {
       .then((res) => {
         console.log(res.data);
         alert("삭제되었습니다.");
-        window.location.replace(`/teacher/${classCodeParams.classCode}`);
+        window.location.replace(`/teacher/${classCode.classCode}`);
       })
       .catch((err) => {
         console.log(err);

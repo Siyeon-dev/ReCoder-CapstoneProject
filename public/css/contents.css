@@ -436,6 +436,77 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 .no_test_guide span {display:block; font-weight:600;}
 .no_test_guide button {margin-top:30px; background:#6277f5 url(../img/no_test_arrow.gif) no-repeat 125px 50%; border-radius:8px; padding:10px 70px 10px 20px; color:#fff; font-weight:600; font-size:12px; -webkit-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6); -moz-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6); box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);}
 
+/* Student :: 시험 시 주의사항 */
+#test_warning_container {width: 100%; background:#f4f7fa;}
+#test_warning_container .wrap {width:1000px;margin:0 auto;padding: 95px 0 100px 0;background:url(../img/test_warning_img.gif) no-repeat 565px 50px;}
+#test_warning_container .wrap .std_test_info {width:100%; font-weight:600;}
+#test_warning_container .wrap .std_test_info ul {display:inline-block;}
+#test_warning_container .wrap .std_test_info ul li {float:left; color:#fff; height:42px; line-height: 42px; background:#152842; padding:0 20px; border-radius:30px; margin-right:5px; font-size:13px;}
+#test_warning_container .wrap .std_test_info ul li .eng {display:inline-block; font-family:'Lato', sans-serif; font-size:17px;}
+#test_warning_container .wrap .std_test_info ul li .eng span {color:#ffa525; font-size:20px;}
+#test_warning_container .wrap .std_test_info ul li.time {font-family:'Lato', sans-serif; font-size:18px; padding-left:50px; background:#152842 url(../img/test_warning_time_ico.gif) no-repeat 18px 50%;}
+#test_warning_container .wrap .std_test_info .test_tit {font-size:36px; color:#152842; letter-spacing:-0.02em; margin:40px 0 10px 0;}
+#test_warning_container .wrap .std_test_info .test_date {color:#6277f5; font-size:16px; font-family:'Lato', sans-serif; font-weight: 800; }
+#test_warning_container .wrap ul.std_test_info_tab {margin-top:50px; width:100%; overflow: hidden; height:50px; line-height:50px; background:#fff; border:1px solid #d6daed; border-radius: 5px; font-weight:600; font-size: 14px;
+-webkit-box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);
+-moz-box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);
+box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);}
+#test_warning_container .wrap ul.std_test_info_tab li {float:left; width:16.5%; text-align: center; border-left:1px solid #d6daed; color:#152842;}
+#test_warning_container .wrap ul.std_test_info_tab li:first-child {border-left: none;}
+#test_warning_container .wrap ul.std_test_info_tab li:nth-child(2n) {background: #f7f9fb;}
+#test_warning_container .wrap .std_test_txt {width:100%; background:#fff; border:1px solid #d6daed; border-radius: 5px; margin-top:10px; padding:40px 100px; box-sizing: border-box; height: 390px; overflow-x: hidden; overflow-y: auto;
+-webkit-box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);
+-moz-box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);
+box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);}
+#test_warning_container .wrap .std_test_txt p.tit {font-size:35px; font-weight: 600; text-align: center; margin-bottom:30px;}
+.std_test_txt::-webkit-scrollbar {
+	width: 5px;
+}
+.std_test_txt::-webkit-scrollbar-thumb {
+	background-color: #373a44;
+	border-radius: 10px;
+}
+.std_test_txt::-webkit-scrollbar-track {
+	background-color: #e1e1ea;
+	border-radius: 10px;
+}
+.std_video_view {width:100%; margin-top:25px; display: inline-block;}
+.std_video_view .view_area {float:left;max-height:200px;overflow: hidden;border-radius: 5px;margin: 0 0 0 24px;border:1px solid #d6daed;line-height: 0;padding: 0;
+-webkit-box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);
+-moz-box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);
+box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);}
+.std_video_view .view_area video {border-radius: 5px;}
+.std_video_view .view_area:first-child {margin-left:0;}
+
+/* Teacher :: 시험 진행시 감독 페이지 */
+.proctor_exam_container {width:100%; background:#152842; display: inline-block;}
+.proctor_exam_container .side_list_area {position:fixed; float:left; width: 350px; height:100%;  background: #fff;}
+.proctor_exam_container .video_area {width:80%; float:right; height: 100vh;box-sizing: border-box;}
+.proctor_exam_container .video_area .tit_area {width: 90%;display: inline-block;color:#fff;font-weight:600;margin:80px 0 70px 0;}
+.proctor_exam_container .video_area .tit_area p {display:inline-block; font-size:25px; padding-left:40px; line-height:30px; background:url(../img/proctor_exam_tit_ico.gif) no-repeat 0 50%;}
+ul.status_desc {float:right; font-size:19px; overflow: hidden;}
+ul.status_desc li {float:left; padding-left:20px;}
+.video_area_align {display: inline-block; margin-left:-20px; height:630px; overflow-x: hidden; overflow-y: auto; padding-right: 10px;}
+.video_area_align::-webkit-scrollbar {
+	width: 5px;
+}
+.video_area_align::-webkit-scrollbar-thumb {
+	background-color: #fff;
+	border-radius: 10px;
+}
+.video_area_align::-webkit-scrollbar-track {
+	background-color: #253e60;
+	border-radius: 10px;
+}
+
+.proctor_exam_container .video_area .std_video_set {float:left; width:440px;height: 370px;border-radius:10px;border:1px solid #b0bdce;overflow:hidden; background:#fff;}
+.proctor_exam_container .video_area .std_video_set {padding:0;line-height:0;font-size:0;margin: 0 0 20px 20px;}
+.proctor_exam_container .video_area .std_video_set .monitor_view {border-bottom:1px solid #b0bdce;}
+.proctor_exam_container .video_area .std_video_set .web_mobile_cam {width:100%; display:inline-block;}
+.proctor_exam_container .video_area .std_video_set .web_mobile_cam video {float:left; margin:0; padding:0; line-height: 0; letter-spacing: 0; font-size: 0; border:0;}
+.proctor_exam_container .video_area .std_video_set .web_mobile_cam video:first-child {border-right: 1px solid #b0bdce; }
+
+
 
 /********************************* Footer *********************************/
 #foot {width:100%; text-align: center; border-top:1px solid #dae0e6; letter-spacing:1;}

@@ -4,9 +4,11 @@ import FormLogin from "./Components/User/FormLogin";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import FormSignUpFir from "./Components/User/FormSignUpFir";
 import FormSignUp from "./Components/User/FormSignUp";
-import Teacher from "./Components/Teacher/";
-import Student from "./Components/Student";
+import Teacher from "./Components/Teacher/Index";
+import Student from "./Components/Student/Index";
 import CreateTestForm from "./Components/Teacher/Exam/CreateTestForm";
+import TestPrecautions from "./Components/Student/Exam/TestPrecautions";
+import ProctorExamView from "./Components/Teacher/Exam/ProctorExamView";
 
 function App() {
   return (
@@ -20,11 +22,13 @@ function App() {
           <Route exact path="/student" component={Student} />
           <Route exact path="/teacher" component={Teacher} />
           <Route path="/teacher/:classCode" component={Teacher} />
-
+          <Route path="/student/testprecautions" component={TestPrecautions} />
           <Route
-            path="/createtestform/:classCode"
-            component={CreateTestForm}
+            path="/proctorexamview"
+            component={ProctorExamView}
           />
+
+          <Route path="/createtestform/:classCode" component={CreateTestForm} />
           <Redirect from="*" to="/" />
         </Switch>
         <Footer />

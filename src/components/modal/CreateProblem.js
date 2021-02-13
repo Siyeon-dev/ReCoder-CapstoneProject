@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import useModal from "./useModal";
-import ProblemEditor from "../Teacher/Editor/ProblemEditor";
+import QuizEditor from "../Teacher/Editor/QuizEditor";
 
 const CreateProblemInfo = ({ setIsOpen, quizList, setQuizList }) => {
   const [problemBoartHtml, setProblemBoartHtml] = useState(null);
@@ -72,7 +72,7 @@ const CreateProblemInfo = ({ setIsOpen, quizList, setQuizList }) => {
         </div>
         <div className="text_area">
           <p>문제지문입력</p>
-          <ProblemEditor setProblemBoartHtml={setProblemBoartHtml} />
+          <QuizEditor setProblemBoartHtml={setProblemBoartHtml} />
         </div>
         <div className="text_area">
           <p>기본제공코드</p>
