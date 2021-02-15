@@ -3,7 +3,6 @@ import Janus from './janus/janus';
 let server = null;
 let janus = null;
 
-let screenHandle = null;
 let videoHandlerOnPC = null;
 
 let myId = 35;
