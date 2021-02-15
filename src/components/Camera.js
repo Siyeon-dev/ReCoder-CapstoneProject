@@ -4,6 +4,8 @@ import Header from './Header';
 import '../css.css';
 import Video from '../media/sample_v_1.mp4';
 
+import * as janus from '../module/examCandidateMobile';
+
 function Test() {
     return (
         <div className="TestBox">
@@ -33,11 +35,19 @@ function Camera() {
                     카메라 접근 허용을 해야 정상적으로 시험에 응시가 가능합니다.
                 </span>
                 {isVisible ?  null : <Test />}
-                <button className="TestButton" onClick={() => changeVisible(!isVisible)}>
+                <button className="TestButton" onClick={() => janus.runJanusMobile()}>
                     임시 허용 버튼
                 </button>
                 <div className="VideoBox">
-                    <video style={{width:'90%'}} src={Video} type="video/mp4" autoPlay muted loop/>
+                <video
+				    className="rounded centered"
+				    id="myvideo"
+				    width="300px"
+				    height="300px"
+				    autoPlay
+				    playsInline
+				    muted="muted"
+			    />
                 </div>
             </div>
         </div>
