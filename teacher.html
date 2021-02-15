@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+        <div class="userWebCamVideo">
+			<video
+				class="rounded centered"
+				id="remote1"
+				width="150px"
+				height="150px"
+				autoplay
+				playsinline
+				muted="muted"
+			>
+		</div>
+		<div class="userScreenVideo">
+			<video
+				class="rounded centered"
+				id="remote2"
+				width="150px"
+				height="150px"
+				autoplay
+				playsinline
+				muted="muted"
+			>
+		</div>
+		<div class="userMobileVideo">
+			<video
+				class="rounded centered"
+				id="remote3"
+				width="150px"
+				height="150px"
+				autoplay
+				playsinline
+				muted="muted"
+			>
+		</div>
+    
+		<script
+			type="text/javascript"
+			src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/7.4.0/adapter.min.js"
+		></script>
+		<script
+			type="text/javascript"
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+		></script>
+		<script src="./module/janus/janus.js"></script>
+		<script src="./module/examPromoter.js"></script>
+	</body>
+</html>
