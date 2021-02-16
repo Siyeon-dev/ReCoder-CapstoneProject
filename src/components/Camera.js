@@ -42,8 +42,8 @@ function Camera() {
                 <video
 				    className="rounded centered"
 				    id="myvideo"
-				    width="300px"
-				    height="300px"
+				    width="80%"
+                    height="80%"
 				    autoPlay
 				    playsInline
 				    muted="muted"
