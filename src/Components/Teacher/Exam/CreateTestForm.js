@@ -1,12 +1,13 @@
 
 import React, { useEffect, useState } from 'react'
-import Footer from "../../Layout/Footer";
 import BoardEditor from "../Editor/BoardEditor"
 import CreateProblem from "Components/Modal/CreateProblem";
 import DatePicker from "react-date-picker";
 import "react-date-picker/dist/DatePicker.css";
 import { useHistory, useParams } from 'react-router';
 import axios from 'axios';
+import Header from 'Components/Layout/Header';
+import Footer from 'Components/Layout/Footer';
 
 const CreateTestForm = () => {
   const [selectDate, setSelectDate] = useState(new Date());
@@ -81,7 +82,9 @@ const CreateTestForm = () => {
       });
   }
 
-    return (
+  return (
+    <>
+      <Header />
       <div id="wrapper">
         <div className="create_class_container">
           <div className="form_contents">
@@ -317,7 +320,9 @@ const CreateTestForm = () => {
           </div>
         </div>
       </div>
-    );
+      <Footer />
+    </>
+  );
 }
 
 export default CreateTestForm;

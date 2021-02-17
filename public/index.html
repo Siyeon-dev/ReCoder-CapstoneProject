@@ -19,6 +19,39 @@
     <link rel="stylesheet" href="%PUBLIC_URL%/css/template.css" />
     <link rel="stylesheet" href="%PUBLIC_URL%/css/contents.css" />
 
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script>
+      $(document).ready(function () {
+        starting_mouse_pos = 0;
+        mouse_down = false;
+
+        $('.middle_bar').on('mousedown', function (event) {
+          starting_mouse_pos = event.pageX;
+          mouse_down = true;
+          $('#overlay_div').css('z-index', '2');
+          $('#my_iframe').css('z-index', '1');
+        });
+        $('.std_test_wrapper').on('mouseup', function () {
+          mouse_down = false;
+          $('#overlay_div').css('z-index', '1');
+          $('#my_iframe').css('z-index', '2');
+        });
+        $('.std_test_wrapper').on('mousemove', function (event) {
+          if (mouse_down) {
+            var ending_mouse_pos = event.pageX;
+            update_the_sizes(ending_mouse_pos);
+            starting_mouse_pos = ending_mouse_pos;
+          }
+        });
+        function update_the_sizes(ending_mouse_pos) {
+          var length_of_move = starting_mouse_pos - ending_mouse_pos;
+          $('.test_guide_section').css('width', '-=' + length_of_move);
+          $('.code_editor_section').css('width', '+=' + length_of_move);
+          $('#my_iframe').css('width', '+=' + length_of_move);
+        }
+      }); 
+    </script>
+
     <title>Re:Coder</title>
   </head>
   <body>
