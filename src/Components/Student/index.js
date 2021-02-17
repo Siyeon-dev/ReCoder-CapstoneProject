@@ -1,11 +1,13 @@
 import Footer from "Components/Layout/Footer";
 import Header from "Components/Layout/Header";
 import React from "react";
+import { Cookies } from "react-cookie";
 import ContSideMenu from "./ContSideMenu";
 import ContTitle from "./ContTitle";
 import TestList from "./TestList";
 
-const index = () => {
+const Index = () => {
+
   return (
     <>
       <Header />
@@ -32,4 +34,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
