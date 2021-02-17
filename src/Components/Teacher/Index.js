@@ -7,6 +7,8 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useParams } from "react-router";
 import axios from 'axios'
 import { Cookies, useCookies } from "react-cookie";
+import Header from "Components/Layout/Header";
+import Footer from "Components/Layout/Footer";
 
 const Index = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -44,59 +46,65 @@ const Index = () => {
     }, []);
 
   return (
-    <div id="wrapper">
-      <div id="container">
-        <ContSideMenu
-          setclassCode={setclassCode}
-          userClassInfo={userClassInfo}
-          readClass={readClass}
-        />
-        <div id="contents">
-          <div className="cont_visual">
-            <p className="eng small">Welcome.</p>
-            <p className="eng big">Re:Coder</p>
-            <p className="kor">공정한 시험 문화를 위한 코딩 테스트 프로그램</p>
-          </div>
-          <div className="cont_tit">
-            <p className="eng_txt">className :</p>
-            <p className="class_name">
-              {console.log(classCode)}
-              {userClassInfo.map((v) =>
-                v.class_code === classCode ? v.class_name : ""
-              )}
-            </p>
-
-            <div className="test_info">
-              <p className="test_num">
-                전체 시험 수 <span className="mint">10</span>개
-              </p>
-              <p className="test_std">
-                전체 학생 수 <span className="blue">30</span>명
+    <>
+      <Header />
+      <div id="wrapper">
+        <div id="container">
+          <ContSideMenu
+            setclassCode={setclassCode}
+            userClassInfo={userClassInfo}
+            readClass={readClass}
+          />
+          <div id="contents">
+            <div className="cont_visual">
+              <p className="eng small">Welcome.</p>
+              <p className="eng big">Re:Coder</p>
+              <p className="kor">
+                공정한 시험 문화를 위한 코딩 테스트 프로그램
               </p>
             </div>
-          </div>
-          <div className="cont_wrap">
-            <Tabs>
-              <TabList>
-                <Tab>시험관리</Tab>
-                <Tab>회원관리</Tab>
-                <Tab>클래스 통계</Tab>
-              </TabList>
+            <div className="cont_tit">
+              <p className="eng_txt">className :</p>
+              <p className="class_name">
+                {console.log(classCode)}
+                {userClassInfo.map((v) =>
+                  v.class_code === classCode ? v.class_name : ""
+                )}
+              </p>
 
-              <TabPanel>
-                <ClassTestList classCode={classCode} />
-              </TabPanel>
-              <TabPanel>
-                <ClassMemList classCode={classCode} />
-              </TabPanel>
-              <TabPanel>
-                <img src="../img/tab_page3.png" alt="클래스통계_예시" />
-              </TabPanel>
-            </Tabs>
+              <div className="test_info">
+                <p className="test_num">
+                  전체 시험 수 <span className="mint">10</span>개
+                </p>
+                <p className="test_std">
+                  전체 학생 수 <span className="blue">30</span>명
+                </p>
+              </div>
+            </div>
+            <div className="cont_wrap">
+              <Tabs>
+                <TabList>
+                  <Tab>시험관리</Tab>
+                  <Tab>회원관리</Tab>
+                  <Tab>클래스 통계</Tab>
+                </TabList>
+
+                <TabPanel>
+                  <ClassTestList classCode={classCode} />
+                </TabPanel>
+                <TabPanel>
+                  <ClassMemList classCode={classCode} />
+                </TabPanel>
+                <TabPanel>
+                  <img src="../img/tab_page3.png" alt="클래스통계_예시" />
+                </TabPanel>
+              </Tabs>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

@@ -9,12 +9,12 @@ import Student from "./Components/Student/Index";
 import CreateTestForm from "./Components/Teacher/Exam/CreateTestForm";
 import TestPrecautions from "./Components/Student/Exam/TestPrecautions";
 import ProctorExamView from "./Components/Teacher/Exam/ProctorExamView";
+import TestScreen from "Components/Student/Exam/TestScreen";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header />
         <Switch>
           <Route exact path="/" component={FormLogin} />
           <Route exact path="/signup" component={FormSignUpFir} />
@@ -23,15 +23,12 @@ function App() {
           <Route exact path="/teacher" component={Teacher} />
           <Route path="/teacher/:classCode" component={Teacher} />
           <Route path="/student/testprecautions" component={TestPrecautions} />
-          <Route
-            path="/proctorexamview"
-            component={ProctorExamView}
-          />
+          <Route path="/student/testscreen" component={TestScreen} />
+          <Route path="/proctorexamview" component={ProctorExamView} />
 
           <Route path="/createtestform/:classCode" component={CreateTestForm} />
           <Redirect from="*" to="/" />
         </Switch>
-        <Footer />
       </div>
     </BrowserRouter>
   );
