@@ -15,7 +15,6 @@ const Guide = () => {
     const [userNumber, setUserNumber]           = useState();
     const [cookies, setCookie, removeCookie]    = useCookies(["token"]);
     const [isLogin, setLogin]                   = useState(cookies.isLogin);
-    const [data, setData]                       = useState();
     const history                               = useHistory();
 
     useEffect(() => {
@@ -28,14 +27,21 @@ const Guide = () => {
         setUserId(cookies.s_email);
         setUserName(cookies.s_name);
         setUserNumber(cookies.s_number);    
-    });
+    }, []);
+
+    const onClickLogout = () => {
+        localStorage.removeItem("token");
+        alert("로그아웃 되었습니다");
+        history.push("/");
+    }
 
     return (
         <div>
             <Header />
-            <p>{userName}님 환영합니다!</p>
-            <p>email : {userId}</p>
-            <p>s_number : {userNumber}</p>
+            <p>{userName}님 환영합니다</p>
+            <div>
+                <button onClick={onClickLogout}>로그아웃</button>
+            </div>
             <div className="MainBox">
                 <span className="GuideTextTitle">
                     Re:coder 모바일 촬영 화면입니다.

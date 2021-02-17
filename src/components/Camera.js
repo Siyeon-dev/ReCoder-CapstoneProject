@@ -41,14 +41,12 @@ const Camera = () => {
         setUserId(cookies.s_email);
         setUserName(cookies.s_name);
         setUserNumber(cookies.s_number);    
-    });
+    }, []);
 
     return (
         <div>
             <Header />
             <p>{userName}님 환영합니다!</p>
-            <p>email : {userId}</p>
-            <p>s_number : {userNumber}</p>
             <div className="MainBox">
                 <div className="CameraBox">
                 <span className="CameraTitle">
