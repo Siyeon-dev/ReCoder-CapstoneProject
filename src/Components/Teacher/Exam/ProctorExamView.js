@@ -1,6 +1,9 @@
 import React from 'react'
+import * as janus from '../../../modules/examPromoter'
+
 
 const ProctorExamView = () => {
+  janus.runJanusTeacher();
     return (
       <div className="proctor_exam_container">
         {/* <div className="side_list_area">
@@ -18,9 +21,10 @@ const ProctorExamView = () => {
             <div className="std_video_set">
               <div className="monitor_view">
                 <video
-                  src="../video/Sunrise_28975.mp4"
+                  id="remote1"
                   width="440"
-                  autoplay="autoplay"
+                  height="200"
+                  autoPlay="autoplay"
                   muted="muted"
                   loop="loop"
                 >
@@ -29,18 +33,20 @@ const ProctorExamView = () => {
               </div>
               <div className="web_mobile_cam">
                 <video
-                  src="../video/Sunrise_28975.mp4"
+                  id="remote2"
                   width="219"
-                  autoplay="autoplay"
+                  height="170"
+                  autoPlay="autoplay"
                   muted="muted"
                   loop="loop"
                 >
                   해당 브라우저는 video 태그를 지원하지 않습니다.
                 </video>
                 <video
-                  src="../video/Sunrise_28975.mp4"
+                  id="remote3"
                   width="219"
-                  autoplay="autoplay"
+                  height="170"
+                  autoPlay="autoplay"
                   muted="muted"
                   loop="loop"
                 >
@@ -48,7 +54,7 @@ const ProctorExamView = () => {
                 </video>
               </div>
             </div>
-            <div className="std_video_set">
+            {/* <div className="std_video_set">
               <div className="monitor_view">
                 <video
                   src="../video/Sunrise_28975.mp4"
@@ -245,7 +251,7 @@ const ProctorExamView = () => {
                   해당 브라우저는 video 태그를 지원하지 않습니다.
                 </video>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import React from 'react'
+import * as janus from '../../../modules/examCandidatePC'
 
 const TestPrecautions = () => {
+  janus.runJanusPC();
     return (
       <div id="test_warning_container">
         <div className="wrap">
@@ -64,33 +66,36 @@ const TestPrecautions = () => {
             */}
             <div className="view_area">
               <video
-                src="../video/Sunrise_28975.mp4"
-                width="315"
-                autoplay="autoplay"
+                id="myvideo"
+                width="300px"
+                height="200px"
+                autoPlay
+                playsInline
                 muted="muted"
-                loop="loop"
               >
                 해당 브라우저는 video 태그를 지원하지 않습니다.
               </video>
             </div>
             <div className="view_area">
               <video
-                src="../video/Field_39990.mp4"
-                width="315"
-                autoplay="autoplay"
+                id="myVideoScreen"
+                width="300px"
+                height="200px"
+                autoPlay
+                playsInline
                 muted="muted"
-                loop="loop"
               >
                 해당 브라우저는 video 태그를 지원하지 않습니다.
               </video>
             </div>
             <div className="view_area">
               <video
-                src="../video/Snowy_Trees_7328.mp4"
-                width="315"
-                autoplay="autoplay"
+                id="myVideoMobile"
+                width="300px"
+                height="200px"
+                autoPlay
+                playsInline
                 muted="muted"
-                loop="loop"
               >
                 해당 브라우저는 video 태그를 지원하지 않습니다.
               </video>
