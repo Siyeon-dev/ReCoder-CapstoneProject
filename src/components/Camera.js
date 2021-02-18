@@ -25,14 +25,13 @@ const Camera = () => {
     const [userId, setUserId]                   = useState();
     const [userName, setUserName]               = useState();
     const [userNumber, setUserNumber]           = useState();
-    const [isLogin, setLogin]                   = useState();
+    const [isLogin, setLogin]                   = useState("true");
     const [data, setData]                       = useState();
     const [cookies, setCookie, removeCookie]    = useCookies(["token"]);
     const history                               = useHistory();
 
     useEffect(() => {
-        setLogin(cookies.isLogin);
-        if(isLogin != true) {
+        if(isLogin != "true") {
             return (
                 alert("비정상적인 접근입니다!"),
                 history.push("/")
