@@ -25,14 +25,13 @@ const Camera = () => {
     const [userId, setUserId]                   = useState();
     const [userName, setUserName]               = useState();
     const [userNumber, setUserNumber]           = useState();
-    const [isLogin, setLogin]                   = useState();
+    const [isLogin, setLogin]                   = useState("true");
     const [data, setData]                       = useState();
     const [cookies, setCookie, removeCookie]    = useCookies(["token"]);
     const history                               = useHistory();
 
     useEffect(() => {
-        setLogin(cookies.isLogin);
-        if(isLogin != true) {
+        if(isLogin != "true") {
             return (
                 alert("비정상적인 접근입니다!"),
                 history.push("/")
@@ -41,14 +40,12 @@ const Camera = () => {
         setUserId(cookies.s_email);
         setUserName(cookies.s_name);
         setUserNumber(cookies.s_number);    
-    });
+    }, []);
 
     return (
         <div>
             <Header />
             <p>{userName}님 환영합니다!</p>
-            <p>email : {userId}</p>
-            <p>s_number : {userNumber}</p>
             <div className="MainBox">
                 <div className="CameraBox">
                 <span className="CameraTitle">
