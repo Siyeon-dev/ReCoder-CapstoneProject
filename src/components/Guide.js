@@ -1,5 +1,6 @@
-import React from "react";
-import { HashRouter, Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { HashRouter, Link, useHistory } from 'react-router-dom';
+import { Cookies, useCookies } from "react-cookie";
 
 import Header from './Header';
 import Sample1 from '../media/sample1.png';
@@ -7,10 +8,40 @@ import Sample2 from '../media/sample2.png';
 import Sample3 from '../media/sample3.png';
 import "../css.css";
 
-function Guide() {
+
+const Guide = () => {
+    const [userId, setUserId]                   = useState();
+    const [userName, setUserName]               = useState();
+    const [userNumber, setUserNumber]           = useState();
+    const [cookies, setCookie, removeCookie]    = useCookies(["token"]);
+    const [isLogin, setLogin]                   = useState(cookies.isLogin);
+    const history                               = useHistory();
+
+    useEffect(() => {
+        if(isLogin != 'true') {
+            return (
+                alert("비정상적인 접근입니다!"),
+                history.push("/")
+            )
+        }
+        setUserId(cookies.s_email);
+        setUserName(cookies.s_name);
+        setUserNumber(cookies.s_number);    
+    }, []);
+
+    const onClickLogout = () => {
+        localStorage.removeItem("token");
+        alert("로그아웃 되었습니다");
+        history.push("/");
+    }
+
     return (
         <div>
             <Header />
+            <p>{userName}님 환영합니다</p>
+            <div>
+                <button onClick={onClickLogout}>로그아웃</button>
+            </div>
             <div className="MainBox">
                 <span className="GuideTextTitle">
                     Re:coder 모바일 촬영 화면입니다.
@@ -54,7 +85,7 @@ function Guide() {
                 <div>
                     <HashRouter>
                     <Link to="/Camera">
-                    <button className="GuideButton">촬영 시작</button>
+                    <button className="GuideButton" >촬영 시작</button>
                     </Link>
                     </HashRouter>
                 </div>

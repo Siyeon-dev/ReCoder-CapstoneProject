@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { Cookies, useCookies } from "react-cookie";
+import { useHistory } from "react-router-dom";
 
 import Header from './Header';
 import '../css.css';
-import Video from '../media/sample_v_1.mp4';
 
 import * as janus from '../module/examCandidateMobile';
 
@@ -19,12 +20,32 @@ function Test() {
     );
 }
 
-function Camera() {
-    let [isVisible, changeVisible] = useState([false]);
+const Camera = () => {
+    const [isVisible, changeVisible] = useState([false]);
+    const [userId, setUserId]                   = useState();
+    const [userName, setUserName]               = useState();
+    const [userNumber, setUserNumber]           = useState();
+    const [isLogin, setLogin]                   = useState("true");
+    const [data, setData]                       = useState();
+    const [cookies, setCookie, removeCookie]    = useCookies(["token"]);
+    const history                               = useHistory();
+
+    useEffect(() => {
+        if(isLogin != "true") {
+            return (
+                alert("비정상적인 접근입니다!"),
+                history.push("/")
+            )
+        }
+        setUserId(cookies.s_email);
+        setUserName(cookies.s_name);
+        setUserNumber(cookies.s_number);    
+    }, []);
 
     return (
         <div>
             <Header />
+            <p>{userName}님 환영합니다!</p>
             <div className="MainBox">
                 <div className="CameraBox">
                 <span className="CameraTitle">
@@ -32,22 +53,14 @@ function Camera() {
                 </span>
                 </div>
                 <span>
-                    카메라 접근 허용을 해야 정상적으로 시험에 응시가 가능합니다.
+                    연결 시작 버튼을 누른 후, 카메라 접근 허용을 해야 정상적으로 시험에 응시가 가능합니다.
                 </span>
                 {isVisible ?  null : <Test />}
                 <button className="TestButton" onClick={() => janus.runJanusMobile()}>
-                    임시 허용 버튼
+                    연결 시작
                 </button>
-                <div className="VideoBox">
-                <video
-				    className="rounded centered"
-				    id="myvideo"
-				    width="300px"
-				    height="300px"
-				    autoPlay
-				    playsInline
-				    muted="muted"
-			    />
+                <div>
+                <video className="RTC "id="myvideo" autoPlay playsInline muted="muted"/>
                 </div>
             </div>
         </div>

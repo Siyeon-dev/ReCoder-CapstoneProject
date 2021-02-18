@@ -1,19 +1,70 @@
-import React from 'react';
-
-import { Link, HashRouter, Route } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
-import Router from "./Router";
+import React, { useState, useEffect } from 'react';
+import { Link, HashRouter, useHistory } from "react-router-dom";
+import { useCookies } from 'react-cookie';
+import axios from "axios";
 
 import { TextField } from "@material-ui/core";
-import TextInput from './TextInput';
 import Header from './Header';
-import Guide from './Guide';
 
 import "../css.css";
 
 
-function Main() {
+const Main = () => {
+    const [userId, setUserId]                   = useState();
+    const [userPw, setUserPw]                   = useState();
+    const [userNumber, setUserNumber]           = useState();
+    const [data, setData]                       = useState();
+    const [cookies, setCookie, removeCookie]    = useCookies();
+    const history                               = useHistory();
 
+    useEffect(() => {
+        removeCookie("s_email");
+        removeCookie("s_name");
+        removeCookie("s_number");
+        removeCookie("isLogin");
+    }, [])
+
+    const getUserData = (e) => {
+        
+        let data = {
+            s_email: userId,
+            s_password: userPw
+        };
+
+        setData(data);
+
+        console.log(data);
+
+        axios
+        .post("http://3.89.30.234:3000/login", data)
+        .then((res)=> {
+            localStorage.setItem("token", res.data.token);
+
+            const { accessToken } = res.data;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+            console.log(res.data)
+            
+            if(res.data.login == "success") {
+                alert("로그인 되었습니다");
+                setCookie("s_email", data.s_email);
+                setCookie("s_name", res.data.s_name);
+                setCookie("s_number", res.data.s_number);
+                setCookie("isLogin", true);
+
+                history.push("/Guide");
+            }
+            else {
+                alert("로그인에 실패했습니다\n아이디 또는 비밀번호를 확인하여 주세요");
+
+                history.push("/");
+            }
+        })
+        .catch((err) => {
+            console.log(err.res);
+            localStorage.removeItem("token");
+        })
+    }
+    
     return (
         <div>
             <Header />
@@ -34,16 +85,16 @@ function Main() {
                     <span className="BoxTextCode">
                     <span style={{color: "red"}}>✻</span> 로그인</span>
                     <div className="InputBox">
-                        <TextField variant="outlined" size="small" label="ID" style={{width: "100%", margin: "10px 0px"}}/>
-                        <TextField variant="outlined" size="small" label="PW" style={{width: "100%"}}/>
+                        <TextField id="userId" variant="outlined" size="small" 
+                            label="ID" style={{width: "100%", margin: "10px 0px"}}
+                            onChange={(e) => setUserId(e.target.value)}/>
+                        <TextField id="userPw" variant="outlined" size="small" 
+                            label="PW" style={{width: "100%"}} type="password"
+                            onChange={(e) => setUserPw(e.target.value)}/>
                     </div>
                 </div>
                 <div>
-                    <HashRouter>
-                    <Link to="/Guide">
-                    <button className="MainButton" >로그인</button>
-                    </Link>
-                    </HashRouter>
+                    <button className="MainButton" onClick={() => getUserData()}>로그인</button>
                 </div>
             </div>
         </div>

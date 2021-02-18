@@ -10,6 +10,7 @@
     "@types/react-responsive": "^8.0.2",
     "jquery": "^3.5.1",
     "react": "^17.0.1",
+    "react-cookie": "^4.0.3",
     "react-dom": "^17.0.1",
     "react-responsive": "^8.2.0",
     "react-router-dom": "^5.2.0",
@@ -41,5 +42,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://3.89.30.234:3000/login"
 }
