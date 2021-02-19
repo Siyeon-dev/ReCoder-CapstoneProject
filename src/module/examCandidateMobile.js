@@ -100,7 +100,7 @@ function joinTheRoom(roomID, userId) {
 	let register = {
 		request: 'join',
 		room: roomID,
-		id: userId,
+		feed: userId,
 		ptype: 'publisher',
 		// display: myUsername,
 	};
