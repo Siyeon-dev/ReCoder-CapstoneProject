@@ -25,7 +25,7 @@ const Camera = () => {
     const [userId, setUserId]                   = useState();
     const [userName, setUserName]               = useState();
     const [userNumber, setUserNumber]           = useState();
-    const [isLogin, setLogin]                   = useState("true");
+    const [isLogin, setLogin]                   = useState(cookies.isLogin);
     const [data, setData]                       = useState();
     const [cookies, setCookie, removeCookie]    = useCookies(["token"]);
     const history                               = useHistory();
