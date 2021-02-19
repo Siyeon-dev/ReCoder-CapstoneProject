@@ -12,7 +12,7 @@ let mypvtid = null;
 let room = 1234;
 
 let myUsername = 'siyeon park';
-let opaqueId = '박시연'; // 무슨 역할?
+var opaqueId = "videoroomtest-" + Janus.randomString(12); // opaqueId 값을 통해서 유저 구분을 한다.
 
 const TEST_CANDIDATE_NUM = 5;
 
@@ -38,21 +38,43 @@ export function runJanusPC () {
 							videoHandlerOnPC = pluginHandle;
 
 							Janus.log(
-								`Plugin attached! (${videoHandlerOnPC.getPlugin()}, ID = ${videoHandlerOnPC.getId()})`
+								` --Janus-- Plugin attached! (${videoHandlerOnPC.getPlugin()}, ID = ${videoHandlerOnPC.getId()})`
 							);
 
 							// room = createTheRoom(TEST_CANDIDATE_NUM);
 							joinTheRoom(1234, myId);
+						},
+						error: function (error) {
+							Janus.error(" --Janus-- Error attaching plugin...", error);
+						},
+						iceState: function (state) {
+							Janus.log(" --Janus-- ICE state changed to " + state);
+						},
+						mediaState: function (medium, on) {
+							Janus.log(
+								" --Janus-- Janus " +
+									(on ? "started" : "stopped") +
+									" receiving our " +
+									medium
+							);
+						},
+						webrtcState: function(on) {
+							Janus.log(
+								" --Janus-- Janus says our WebRTC PeerConnection is " +
+									(on ? "up" : "down") +
+									" now"
+							);
 						},
 						// WebRTC 권한 허용 표시 관련 UI 출력
 						// User 등록 후 실행 콜백
 						// msg 값에 따라 event 처리 가능
 						onmessage: function (msg, jsep) {
 							Janus.debug(
-								' ::: Got a message (publisher) :::',
+								' --Janus-- ::: Got a message (publisher) :::',
 								msg
 							);
 							let event = msg['videoroom'];
+							Janus.debug("Event: " + event);
 
 							if (event) {
 								if (event === 'joined') {
@@ -60,7 +82,7 @@ export function runJanusPC () {
 									mypvtid = msg['private_id'];
 
 									Janus.log(
-										`${msg['room']}에 성공적으로 접속하였습니다. ID = $ myId}`
+										` --Janus-- ${msg['room']}에 성공적으로 접속하였습니다. ID = ${myId}`
 									);
 
 									publishOwnFeed(msg);
@@ -68,15 +90,24 @@ export function runJanusPC () {
 									let list = msg['publishers'];
 
 									Janus.log(
-										'Got a list of available publishers/feeds:',
+										' --Janus-- Got a list of available publishers/feeds:',
 										list
 									);
 									for (var f in list) {
-										var id = list[f]['id'];
+										var id = list[f]['feed'];
 										if (id === myId + 2)
 											// createAnswer 제작
 											mobileFeed(id);
 									}
+								} else if (event === 'destroyed') {
+									Janus.warn("The room has been destroyed!");
+									alert('The Janus room has been destroyed', function() {
+										window.location.reload();
+									});
+								} else if (msg["leaving"]) {
+									// One of the publishers has gone away?
+									var leaving = msg["leaving"];
+									Janus.log(" --Janus-- Publisher left: " + leaving);
 								}
 							}
 							if (jsep) {
@@ -88,17 +119,22 @@ export function runJanusPC () {
 						},
 						// localStreamData를 받아온다
 						onlocalstream: function (stream) {
-							Janus.debug(' ::: Got a local stream :::', stream);
+							Janus.debug(' --Janus-- ::: Got a local stream :::', stream);
 							// html tag 값 가져오기
 							let myVideo = document.getElementById('myvideo');
 							// tag에 stream data 붙이기
 							Janus.attachMediaStream(myVideo, stream);
 						},
-						oncleanup: function () {},
+						oncleanup: function () {
+							Janus.log(
+								" --Janus-- ::: Got a cleanup notification: we are unpublished now :::"
+							);
+						},
 					});
 				},
 				error: function (error) {
 					Janus.error(error);
+					// Janus.destroy(videoHandlerOnPC);
 				},
 				destroyed: function () {
 					window.location.reload();
@@ -106,7 +142,7 @@ export function runJanusPC () {
 			});
 		},
 	});
-};
+}
 
 /**
  * @description screenFeed handle 생성
@@ -130,10 +166,9 @@ function localScreenFeed(msg) {
 			var register = {
 				request: 'join',
 				room: msg['room'],
-				id: myId + 1,
 				ptype: 'publisher',
 				private_id: mypvtid,
-				feed: msg['publishers']['id'],
+				feed: myId + 1,
 			};
 			screenHandle.send({ message: register });
 		},
@@ -270,7 +305,7 @@ function joinTheRoom(roomID, userId) {
 	let register = {
 		request: 'join',
 		room: roomID,
-		id: userId,
+		feed: userId,
 		ptype: 'publisher',
 		display: myUsername,
 	};
@@ -361,7 +396,6 @@ function publishOwnFeed(msg) {
 			videoHandlerOnPC.send({ message: publish, jsep: jsep });
 
 			// localScreenFeed 생성
-			Janus.log(msg['publishers']['id']);
 			localScreenFeed(msg);
 		},
 		error: function (error) {
