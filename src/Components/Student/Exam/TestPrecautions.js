@@ -1,10 +1,41 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom';
 import * as janus from '../../../modules/examCandidatePC'
 
 const TestPrecautions = () => {
+  const TestCodeParams = useParams();
+  const [cautionData, setCautionData] = useState([]);
+
+  const data = {
+    test_id: TestCodeParams.testId,
+  };
+        console.log(data);
+  const CautionDataApi = () => { 
+    axios
+      .post("/cautionpage", data)
+      .then((res) => {
+        setCautionData(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    CautionDataApi();
+  }, [])
+
   janus.runJanusPC();
-    return (
+  return (
+    cautionData.length !== 0 && (
       <div id="test_warning_container">
+        <form action="">
+          <input type="text" id="name" placeholder="Enter name" />
+          <input type="button" id="namevalue" value="이름전송" />
+        </form>
+
         <div className="wrap">
           <div className="std_test_info">
             <ul>
@@ -15,43 +46,29 @@ const TestPrecautions = () => {
                 </div>
               </li>
               <li className="time">03:50</li>
+              <li className="start_test_btn">
+                <Link to={`/testscreen/${TestCodeParams.testId}`}>
+                  시험시작
+                </Link>
+              </li>
             </ul>
-            <p className="test_tit">2020학년도 1학기 중간고사</p>
-            <p className="test_date">2020-07-26 11:00 ~ 2020-07-26 11:50</p>
+            <p className="test_tit">{cautionData[0].test_name}</p>
+            <p className="test_date">
+              {cautionData[0].test_start} ~ {cautionData[0].test_end}
+            </p>
           </div>
           <ul className="std_test_info_tab">
             <li>문항수</li>
-            <li>3문항</li>
+            <li>{cautionData[0].questioncount}문항</li>
             <li>점수</li>
-            <li>100점 만점</li>
+            <li>{cautionData[0].total_score}점 만점</li>
             <li>제한시간</li>
-            <li>40분</li>
+            <li>{cautionData[0].time_diff}분</li>
           </ul>
           <div className="std_test_txt">
             <div className="txt_area">
               <p className="tit">시험 시 주의사항</p>
-              0. 만약 이미 시험을 응시완료한 상태일 경우, 관리자 시험관리
-              응시자관리로 이동하여 재응시버튼을 클릭하시면 됩니다. <br />
-              1. 제출완료 버튼을 누르지 않으면 완료되지 않습니다.단, 제한시간을
-              초과하면 입장할 수 없습니다. <br />
-              2. 중간에 시험을 나갈 경우, 시간은 자동으로 차감됩니다. <br />
-              3. 본 시험은 문제별 제한시간이 적용되어 있으며, 응시시간이 지나면
-              자동으로 시험이 종료됩니다. <br />
-              4. 합격기준은 60점 만점입니다.
-              <br />
-              <br /> ※ 시험 응시 전 웹 브라우저의 팝업 차단 설정을 해제해주시기
-              바랍니다.
-              <br /> ※ 시험 조건을 반드시 숙지하고 시험에 응시해주시기 바랍니다.
-              <br /> ※ 시험응시기록이 전부 저장되기 때문에 부정행위 적발시 0점
-              조치될 수 있습니다. <br />※ 시험 응시하기 버튼을 클릭하시면 자동
-              재응시가 불가능하며, 관리자에게 문의해주셔야 합니다.
-              <br />
-              <br /> ※ 시험 응시 전 웹 브라우저의 팝업 차단 설정을 해제해주시기
-              바랍니다.
-              <br /> ※ 시험 조건을 반드시 숙지하고 시험에 응시해주시기 바랍니다.
-              <br /> ※ 시험응시기록이 전부 저장되기 때문에 부정행위 적발시 0점
-              조치될 수 있습니다. <br />※ 시험 응시하기 버튼을 클릭하시면 자동
-              재응시가 불가능하며, 관리자에게 문의해주셔야 합니다.
+              <div>{cautionData[0].test_caution}</div>
             </div>
           </div>
           <div className="std_video_view">
@@ -103,7 +120,8 @@ const TestPrecautions = () => {
           </div>
         </div>
       </div>
-    );
+    )
+  );
 }
 
 export default TestPrecautions

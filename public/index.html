@@ -20,6 +20,47 @@
     <link rel="stylesheet" href="%PUBLIC_URL%/css/contents.css" />
 
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="http://3.89.30.234:3001/socket.io/socket.io.js"></script>
+    <script>
+          var url = "http://3.89.30.234:3001";
+          var options = {
+            'forceNew': true
+          };
+          const socket = io.connect(url, options);
+          socket.on('connect', function () {
+            console.log("웹 소켓 연결" + url);
+             $("#namevalue").bind('click', function (event) {
+              var name = $('#name').val();
+
+              var output = {
+                name: name
+              }
+              console.log('서버로 보낼 데이터 : ' + JSON.stringify(output));
+              if (socket == undefined) {
+                alert('서버에 연결되어 있지 않습니다. 먼저 서버에 연결하세요.');
+                return;
+              }
+              socket.emit("user_connected", name); // emit 보내줄 때 / 받을 때는 on
+            })
+            socket.on("user_connected", function (username) {
+              //$('#result').html('<p> 학생 리스트 ' + username + '</p>')
+              console.log("*******************************************" + username);
+            });
+          })
+
+          /*
+            주의사항에서 학생아이디, 이름
+            감독에서는 선생님 아이디, 시험번호
+          */
+
+          
+
+          // function printIn(data) {
+          //   console.log(data);
+          //   $('#result_test_area').append('<p>' + data + '</p>');
+          // }
+    </script>
     <script>
       $(document).ready(function () {
         starting_mouse_pos = 0;
