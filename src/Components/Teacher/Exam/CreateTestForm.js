@@ -82,6 +82,34 @@ const CreateTestForm = () => {
       });
   }
 
+      const deleteQuiz = (v) => {
+        setQuizList(quizList.filter((el) => el.question_name !== v));
+      };
+
+    const readQuizList = () => {
+      return quizList.length !== 0 ? (
+        quizList.map((v) => (
+          <div className="questions_box">
+            <p className="tit">{v.question_name}</p>
+            <p className="score">
+              <span>{v.question_score}</span>점
+            </p>
+            <div className="btn_wrap">
+              <div className="btn questions_modify">수정하기</div>
+              <div
+                className="btn questions_delete"
+                onClick={() => deleteQuiz(v.question_name)}
+              >
+                삭제하기
+              </div>
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className="questions_box">생성된 문제가 없습니다.</div>
+      );
+    };
+
   return (
     <>
       <Header />
@@ -295,7 +323,7 @@ const CreateTestForm = () => {
                   />
                 </div>
                 <div className="add_questions_list">
-                  {quizList.length !== 0 ? (
+                  {/* {quizList.length !== 0 ? (
                     quizList.map((v) => (
                       <div className="questions_box">
                         <p className="tit">{v.question_name}</p>
@@ -310,7 +338,8 @@ const CreateTestForm = () => {
                     ))
                   ) : (
                     <div className="questions_box">생성된 문제가 없습니다.</div>
-                  )}
+                  )} */}
+                  {readQuizList()}
                 </div>
               </div>
               <div className="test_save_btn">

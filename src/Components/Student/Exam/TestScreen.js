@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams, Link } from 'react-router-dom';
 import AceEditor from 'react-ace';
 
 import 'ace-builds/src-noconflict/mode-javascript';
@@ -13,6 +14,8 @@ function onChange(newValue) {
 }
 
 const TestScreen = () => {
+  const TestCodeParams = useParams();
+  
   return (
     <div className="test_screen_wrapper">
       <div className="test_screen_top">
@@ -36,7 +39,9 @@ const TestScreen = () => {
         </div>
         <ul>
           <li className="test_time_limit">30:00</li>
-          <li>제출하기</li>
+          <li>
+            <Link to="/student/805760">제출하기</Link>
+          </li>
           {/* <li>문의하기</li> 2021.02.16 보류 */}
         </ul>
       </div>

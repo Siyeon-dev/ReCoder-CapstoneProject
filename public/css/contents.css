@@ -204,7 +204,22 @@ button.sign_check_btn {background:#ef6d9b  url(../img/sgin_check_arrow.gif) no-r
 -moz-box-shadow: 1px 1px 5px 0px rgba(159,162,176,0.18);
 box-shadow: 1px 1px 5px 0px rgba(159,162,176,0.18);}
 #contents .my_test_box p {float:left;line-height:100%;font-weight:600;line-height: 80px;}
-#contents .my_test_box .test_name {font-size:15px; color:#152842; }
+#contents .my_test_box .test_name {
+
+font-size:15px;
+
+color:#152842;
+
+width: 160px;
+
+overflow: hidden;
+
+text-overflow:ellipsis;
+
+white-space:nowrap;
+
+text-align: center;
+}
 #contents .my_test_box .question {margin:0 25px; color:#53646e; font-size:13px;}
 #contents .my_test_box .infobox {border-radius:100px;font-size:13px; margin-top:23px; font-family:'Lato', sans-serif;font-weight:800;padding: 0 20px 0 45px;height: 32px;line-height: 35px;}
 #contents .my_test_box .infobox.date {background:#eff3f8 url(../img/testList_date_ico.gif) no-repeat 15px 50%;}
@@ -268,7 +283,7 @@ box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);}
 .create_class_container {width:100%;text-align: center;background:url(../img/create_test_form_bg.jpg) no-repeat 50% 0px;padding-bottom: 90px;}
 .create_class_container .form_contents {width:1200px; display:inline-block; text-align: left;}
 .exam_name_form {margin:72px 0;}
-.exam_name_form input {width:100%; height:95px; line-height:95px; font-size:13px; background:none; border:none; outline:0; border-bottom:1px solid rgba(255, 255, 255, 0.5); font-size:48px; color:#fff; letter-spacing: -0.05em; box-sizing: border-box; background:url(../img/create_test_form_search.png) no-repeat left 50%; padding-left:70px;}
+.exam_name_form input {width:100%; height:95px; line-height:95px; font-size:13px; background:none; border:none; outline:0; border-bottom:1px solid rgba(255, 255, 255, 0.5); font-size:48px; color:#fff; letter-spacing: -0.05em; box-sizing: border-box; background:url(../img/create_test_form_search.png) no-repeat left 50%; padding-left:70px; font-family: 'Noto Sans KR', sans-serif;}
 .exam_name_form input::placeholder  {font-size:48px; color:#fff; font-weight:100; letter-spacing: -0.05em;}
 select {-webkit-appearance: none; -moz-appearance: none; -ms-appearance: none; appearance: none; outline: 0; box-shadow: none; border: 0 !important;  background-image: none;}
 select::-ms-expand {display: none;}
@@ -434,17 +449,19 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 /* Teacher :: 생성된 시험이 없을 때 */
 .no_test_guide {width:100%; margin:30px 0 60px 0; padding-top:240px; background:url(../img/no_test_img.jpg) no-repeat 50% 0px; color:#232e3c; font-weight:200; text-align: center; font-size:25px;}
 .no_test_guide span {display:block; font-weight:600;}
-.no_test_guide button {margin-top:30px; background:#6277f5 url(../img/no_test_arrow.gif) no-repeat 125px 50%; border-radius:8px; padding:10px 70px 10px 20px; color:#fff; font-weight:600; font-size:12px; -webkit-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6); -moz-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6); box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);}
+.no_test_guide a {display:inline-block; margin-top:30px; background:#6277f5 url(../img/no_test_arrow.gif) no-repeat 125px 50%; border-radius:8px; padding:10px 70px 10px 20px; color:#fff; font-weight:600; font-size:12px; -webkit-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6); -moz-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6); box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);}
 
 /* Student :: 시험 시 주의사항 */
 #test_warning_container {width: 100%; background:#f4f7fa;}
-#test_warning_container .wrap {width:1000px;margin:0 auto;padding: 95px 0 100px 0;background:url(../img/test_warning_img.gif) no-repeat 565px 50px;}
+#test_warning_container .wrap {width:1000px;margin:0 auto;padding: 95px 0 100px 0;background: url(../img/test_warning_img.gif) no-repeat 580px 50px;}
 #test_warning_container .wrap .std_test_info {width:100%; font-weight:600;}
 #test_warning_container .wrap .std_test_info ul {display:inline-block;}
 #test_warning_container .wrap .std_test_info ul li {float:left; color:#fff; height:42px; line-height: 42px; background:#152842; padding:0 20px; border-radius:30px; margin-right:5px; font-size:13px;}
 #test_warning_container .wrap .std_test_info ul li .eng {display:inline-block; font-family:'Lato', sans-serif; font-size:17px;}
 #test_warning_container .wrap .std_test_info ul li .eng span {color:#ffa525; font-size:20px;}
 #test_warning_container .wrap .std_test_info ul li.time {font-family:'Lato', sans-serif; font-size:18px; padding-left:50px; background:#152842 url(../img/test_warning_time_ico.gif) no-repeat 18px 50%;}
+#test_warning_container .wrap .std_test_info ul li.start_test_btn {background:#dd3619; }
+#test_warning_container .wrap .std_test_info ul li.start_test_btn a {display:inline-block; font-size:15px; color:#fff;}
 #test_warning_container .wrap .std_test_info .test_tit {font-size:36px; color:#152842; letter-spacing:-0.02em; margin:40px 0 10px 0;}
 #test_warning_container .wrap .std_test_info .test_date {color:#6277f5; font-size:16px; font-family:'Lato', sans-serif; font-weight: 800; }
 #test_warning_container .wrap ul.std_test_info_tab {margin-top:50px; width:100%; overflow: hidden; height:50px; line-height:50px; background:#fff; border:1px solid #d6daed; border-radius: 5px; font-weight:600; font-size: 14px;
@@ -480,13 +497,23 @@ box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);}
 
 /* Teacher :: 시험 진행시 감독 페이지 */
 .proctor_exam_container {width:100%; background:#152842; display: inline-block;}
-.proctor_exam_container .side_list_area {position:fixed; float:left; width: 350px; height:100%;  background: #fff;}
-.proctor_exam_container .video_area {width:80%; float:right; height: 100vh;box-sizing: border-box;}
+.proctor_exam_container .side_list_area {position:fixed; top:0px; float:left; width: 350px; height:100%;  background: #fff; padding:0 40px; box-sizing:border-box;}
+.proctor_exam_container .side_list_area p.tit {position:absolute; height:60px; line-height:60px; z-index: 1; top:0px; left:0px; width:100%; border-bottom:1px solid #ddd; box-sizing:border-box;padding:0 30px; font-size:16px; color:#152842; font-weight:600;}
+.proctor_exam_container .side_list_area p.tit div {float: right; font-size:14px; color:#999;}
+.proctor_exam_container .side_list_area p.tit div span {color:#ed3e3e; font-weight:800; font-size:18px;}
+.proctor_exam_container .side_list_area ul {margin-top:70px;}
+.proctor_exam_container .side_list_area ul li {width:100%; height:55px; line-height:55px; display:inline-block; font-size:16px; color:#152842; font-weight:600;}
+.proctor_exam_container .side_list_area ul li span {float:right; color:#4895ff; font-size:13px;}
+.proctor_exam_container .side_list_area .btn_wrap {position:absolute;bottom:0; left:0; width:100%; border-top:1px solid #ddd; height:60px; line-height:60px; text-align:right; padding:0 20px; box-sizing:border-box;}
+.proctor_exam_container .side_list_area .btn_wrap div {cursor:pointer; text-align:center; color:#fff; font-weight:600; font-size:15px; line-height:40px; height:40px; background:#ed3e3e; display:inline-block; border-radius:20px; padding:0 20px;}
+.proctor_exam_container .video_area {width: 75%;float:right;height: 100vh;box-sizing: border-box;padding-right: 40px;}
 .proctor_exam_container .video_area .tit_area {width: 90%;display: inline-block;color:#fff;font-weight:600;margin:80px 0 70px 0;}
 .proctor_exam_container .video_area .tit_area p {display:inline-block; font-size:25px; padding-left:40px; line-height:30px; background:url(../img/proctor_exam_tit_ico.gif) no-repeat 0 50%;}
 ul.status_desc {float:right; font-size:19px; overflow: hidden;}
-ul.status_desc li {float:left; padding-left:20px;}
-.video_area_align {display: inline-block; margin-left:-20px; height:630px; overflow-x: hidden; overflow-y: auto; padding-right: 10px;}
+ul.status_desc li {float:left; padding-left:20px; margin-left:20px;}
+ul.status_desc li.voice {background:url(../img/voice_focus.gif) no-repeat 0 50%;}
+ul.status_desc li.cheating {background:url(../img/cheating_focus.gif) no-repeat 0 50%;}
+.video_area_align {display: inline-block;margin-left:-20px;/* height:630px; */overflow-x: hidden;overflow-y: auto;padding-right: 10px;}
 .video_area_align::-webkit-scrollbar {
 	width: 5px;
 }
@@ -518,6 +545,7 @@ ul.status_desc li {float:left; padding-left:20px;}
 .test_scren_nav .quiz_num {float:left;height:35px;line-height:35px;padding:0 25px;border-radius: 35px;border: 1px solid #45556d;color:#ffd615;font-size:15px;font-weight:600;margin-top: 15px;}
 .test_scren_nav ul {overflow: hidden; float:right; margin-top:15px; color:#fff; line-height:35px;}
 .test_scren_nav ul li {cursor: pointer; float:left; font-weight:600; margin-left:20px; }
+.test_scren_nav ul li a {color:#fff;}
 .test_scren_nav ul li:hover {color:#ffd615;}
 .test_scren_nav ul li.test_time_limit {cursor:auto; height:35px;padding:0 25px;border-radius: 35px;border: 1px solid #45556d;}
 .test_scren_nav ul li.test_time_limit:hover {color:#fff;}

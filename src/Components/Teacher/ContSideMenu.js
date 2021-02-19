@@ -10,7 +10,7 @@ const ContSideMenu = ({ userClassInfo, setclassCode, readClass }) => {
 
   const MenuState = useParams();
   console.log(MenuState);
-  const test =
+  const MenuSelectState =
     userClassInfo.length !== 0 && MenuState.classCode === undefined
       ? userClassInfo[0].class_code
       : MenuState.classCode;
@@ -22,7 +22,7 @@ const ContSideMenu = ({ userClassInfo, setclassCode, readClass }) => {
       const ListUpdate = userClassInfo.map((currElement) => (
         <li>
           <Link
-            className={currElement.class_code === test ? "on" : ""}
+            className={currElement.class_code === MenuSelectState ? "on" : ""}
             to={`/teacher/${currElement.class_code}`}
             onClick={() => {
               setclassCode(currElement.class_code);

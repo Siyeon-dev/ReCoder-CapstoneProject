@@ -86,7 +86,7 @@ const ClassTestList = (classCode) => {
     selectClassTestInfo.length === 0 ? (
       <div className="no_test_guide">
         생성된 시험이 없습니다. <span>먼저 시험을 생성해주세요.</span>
-        <Link to="/createtestform">시험 생성하기</Link>
+          <Link to={ `/createtestform/${classCode.classCode}`}>시험 생성하기</Link>
       </div>
     ) : (
       <div>
@@ -109,7 +109,7 @@ const ClassTestList = (classCode) => {
           </thead>
           <tbody>{ListUpdate}</tbody>
         </table>
-          <Link
+        <Link
           to={`/createtestform/${classCodeParams.classCode}`}
           className="create_test_btn"
         >
