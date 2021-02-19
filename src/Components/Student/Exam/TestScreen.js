@@ -1,5 +1,17 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
+import AceEditor from 'react-ace';
+
+import 'ace-builds/src-noconflict/mode-javascript';
+import 'ace-builds/src-noconflict/theme-mono_industrial';
+import "ace-builds/src-noconflict/ext-language_tools"
+
+let value;
+
+function onChange(newValue) {
+  console.log('change', newValue);
+  value = newValue;
+}
 
 const TestScreen = () => {
   const TestCodeParams = useParams();
@@ -47,15 +59,36 @@ const TestScreen = () => {
                   <p className="file_name">Soulution.Java</p>
                   <ul>
                     <li>JAVA</li>
-                    <li className="compile_btn">컴파일 하기</li>
+                    <li className="compile_btn" onClick={()=> {console.log(value)}}>
+                        컴파일 하기
+                    </li>
                   </ul>
                 </div>
                 <div className="code_compiler_area">
-                  <div className="scroll_area">{/* 코드 컴파일러 */}</div>
+                    <AceEditor
+                      className="scroll_area code_editor"
+                      mode='javascript'
+                      theme='mono_industrial'
+                      onChange={onChange}
+                      name='UNIQUE_ID_OF_DEV'
+                      height='100%'
+                      width='100%'
+                      editorProps={{ $blockScrolling: true }}
+                      setOptions={{
+                        enableBasicAutocompletion: true,
+                        enableLiveAutocompletion: true,
+                        enableSnippets: true,
+                        showLineNumbers: true,
+                        tabSize: 4,
+                      }}
+                    />
                 </div>
                 <div className="code_compiler_result">
                   <p className="tit">실행결과</p>
-                  <div className="scroll_area">{/* 코드 실행 결과 */}</div>
+                  <div className="scroll_area">{
+                    /* 코드 실행 결과 */
+                    <ul class="editor__console-logs"></ul>
+                  }</div>
                 </div>
               </div>
             </div>
