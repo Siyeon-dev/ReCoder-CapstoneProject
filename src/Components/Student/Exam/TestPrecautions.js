@@ -15,6 +15,7 @@ const TestPrecautions = () => {
     axios
       .post("/cautionpage", data)
       .then((res) => {
+        janus.runJanusPC(0);
         setCautionData(res.data);
         console.log(res.data);
       })
@@ -27,12 +28,15 @@ const TestPrecautions = () => {
     CautionDataApi();
   }, [])
 
+<<<<<<< HEAD
   const PrecautionTextAreaHtml = () => {
     let codes = cautionData && cautionData[0].test_caution;
     return <div dangerouslySetInnerHTML={{ __html: codes }}></div>;
   };
 
   janus.runJanusPC();
+=======
+>>>>>>> dab13235989485392a48b1189743996a04c320f3
   return (
     cautionData.length !== 0 && (
       <div id="test_warning_container">
