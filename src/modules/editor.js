@@ -1,16 +1,20 @@
-import * as ace from '../../node_modules/ace-builds/src/ace'
+import * as ace from 'ace-builds/src-noconflict/ace'
+
+import 'ace-builds/src-noconflict/theme-dracula'
+import 'ace-builds/src-noconflict/ext-language_tools'
+import 'ace-builds/src-noconflict/mode-javascript'
 
 // Retrieve Elements
 const consoleLogList = document.querySelector('.editor__console-logs');
-const executeCodeBtn = document.querySelector('.compile_btn');
-
+const executeCodeBtn = document.querySelector('.editor__run');
+const resetCodeBtn = document.querySelector('.editor__reset');
 
 // Setup Ace
-let codeEditor = ace.edit('code_compiler_area');
+export let codeEditor = null;
 let defaultCode = `console.log('hello world');`;
 let consoleMessages = [];
 
-let editorLib = {
+export let editorLib = {
 	clearConsoleScreen() {
 		consoleMessages.length = 0;
 
@@ -34,7 +38,7 @@ let editorLib = {
 	},
 	init() {
 		// Configure Ace
-
+		codeEditor = ace.edit("editorCode");
 		// Theme
 		codeEditor.setTheme('ace/theme/dracula');
 
@@ -43,7 +47,7 @@ let editorLib = {
 
 		// Set Options
 		codeEditor.setOptions({
-			fontSize: '12pt',
+			fontSize: '16pt',
 			enableBasicAutocompletion: true,
 			enableLiveAutocompletion: true,
 		});
@@ -54,23 +58,23 @@ let editorLib = {
 };
 
 // Events
-executeCodeBtn.addEventListener('click', () => {
-	// Clear console message
-	editorLib.clearConsoleScreen();
+// executeCodeBtn.addEventListener('click', () => {
+// 	// Clear console message
+	// editorLib.clearConsoleScreen();
 
-	// Get input from the code editor
-	const userCode = codeEditor.getValue();
+	// // Get input from the code editor
+	// const userCode = codeEditor.getValue();
 
-	// Run the user code
-	try {
-		new Function(userCode)();
-	} catch (err) {
-		console.error(err);
-	}
+	// // Run the user code
+	// try {
+	// 	new Function(userCode)();
+	// } catch (err) {
+	// 	console.error(err);
+	// }
 
-	// Print to the console
-	editorLib.printConsole();
-});
+	// // Print to the console
+	// editorLib.printConsole();
+// });
 
 // resetCodeBtn.addEventListener('click', () => {
 // 	// Clear Ace Editor
@@ -80,4 +84,4 @@ executeCodeBtn.addEventListener('click', () => {
 // 	editorLib.clearConsoleScreen();
 // });
 
-editorLib.init();
+

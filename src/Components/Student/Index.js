@@ -73,6 +73,6 @@ const Index = () => {
       <Footer />
     </>
   );
-};;
+};
 
 export default Index;
