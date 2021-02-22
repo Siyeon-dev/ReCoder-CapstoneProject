@@ -15,6 +15,7 @@ const TestPrecautions = () => {
     axios
       .post("/cautionpage", data)
       .then((res) => {
+        janus.runJanusPC();
         setCautionData(res.data);
         console.log(res.data);
       })
@@ -27,7 +28,6 @@ const TestPrecautions = () => {
     CautionDataApi();
   }, [])
 
-  janus.runJanusPC();
   return (
     cautionData.length !== 0 && (
       <div id="test_warning_container">
