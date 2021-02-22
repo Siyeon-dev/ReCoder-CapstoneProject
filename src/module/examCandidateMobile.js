@@ -6,7 +6,7 @@ let janus = null;
 let screenHandle = null;
 let videoHandlerOnPC = null;
 
-let myId = 35;
+let myId = null;
 let room = 1234;
 
 let opaqueId = '박시연'; // 무슨 역할?
@@ -16,7 +16,7 @@ if (window.location.protocol === 'http:')
 	server = 'http://' + 're-coder.net' + '/janus';
 else server = 'https://' + 're-coder.net' + '/janus';
 
-export function runJanusMobile() {
+export function runJanusMobile(studentId) {
 	Janus.init({
 		debug: 'all',
 		callback: function () {
@@ -31,6 +31,7 @@ export function runJanusMobile() {
 
 						success: function (pluginHandle) {
 							videoHandlerOnPC = pluginHandle;
+							myId = studentId;
 
 							Janus.log(
 								`Plugin attached! (${videoHandlerOnPC.getPlugin()}
@@ -48,6 +49,7 @@ export function runJanusMobile() {
 								' ::: Got a message (publisher) :::',
 								msg
 							);
+
 							let event = msg['videoroom'];
 							Janus.debug('Event: ' + event);
 
@@ -101,9 +103,8 @@ function joinTheRoom(roomID, userId) {
 	let register = {
 		request: 'join',
 		room: roomID,
-		id: userId,
 		ptype: 'publisher',
-		// display: myUsername,
+		display: userId,
 	};
 
 	videoHandlerOnPC.send({
