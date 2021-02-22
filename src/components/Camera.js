@@ -56,7 +56,7 @@ const Camera = () => {
                     연결 시작 버튼을 누른 후, 카메라 접근 허용을 해야 정상적으로 시험에 응시가 가능합니다.
                 </span>
                 {isVisible ?  null : <Test />}
-                <button className="TestButton" onClick={() => janus.runJanusMobile()}>
+                <button className="TestButton" onClick={() => janus.runJanusMobile(userNumber)}>
                     연결 시작
                 </button>
                 <div>
