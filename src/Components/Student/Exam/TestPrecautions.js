@@ -27,6 +27,11 @@ const TestPrecautions = () => {
   useEffect(() => {
     CautionDataApi();
   }, [])
+  
+  const PrecautionTextAreaHtml = () => {
+    let codes = cautionData && cautionData[0].test_caution;
+    return <div dangerouslySetInnerHTML={{ __html: codes }}></div>;
+  };
 
   return (
     cautionData.length !== 0 && (
@@ -68,7 +73,7 @@ const TestPrecautions = () => {
           <div className="std_test_txt">
             <div className="txt_area">
               <p className="tit">시험 시 주의사항</p>
-              <div>{cautionData[0].test_caution}</div>
+              {PrecautionTextAreaHtml()}
             </div>
           </div>
           <div className="std_video_view">

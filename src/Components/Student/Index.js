@@ -34,6 +34,7 @@ const Index = () => {
           : setclassCode(classCodeParams.classCode);
 
         console.log(res.data);
+        console.log(classCode);
       })
       .catch((err) => {
         console.log(err);

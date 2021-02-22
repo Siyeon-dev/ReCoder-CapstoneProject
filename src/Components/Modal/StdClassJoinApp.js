@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import useModal from "./useModal";
 import axios from "axios";
-import { useCookies } from "react-cookie";
-
 
   const ClassJoinStdList = ({ appllyStdList, classCode, setIsOpen }) => {
     const [stdList, setStdList] = useState([]);
@@ -14,7 +12,7 @@ import { useCookies } from "react-cookie";
         s_email: "",
       };
 
-      stdList.map((v) => {
+      classCode && stdList.map((v) => {
         data = { class_code: classCode.classCode, s_email: v.s_email };
         stdData.push(data);
       });
@@ -22,13 +20,17 @@ import { useCookies } from "react-cookie";
       axios
         .post("/classrecognize", stdData)
         .then((res) => {
-          console.log(res);
+          console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
         })
         .then(() => setIsOpen(false));
     };
+
+    useEffect(() => {
+      console.log(appllyStdList);
+    }, [])
 
     return (
       <form
