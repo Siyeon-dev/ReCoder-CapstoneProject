@@ -11,7 +11,6 @@ let mypvtid = null;
 
 let room = 1234;
 
-let myUsername = 'siyeon park';
 var opaqueId = "videoroomtest-" + Janus.randomString(12); // opaqueId 값을 통해서 유저 구분을 한다.
 
 const TEST_CANDIDATE_NUM = 5;
@@ -20,7 +19,7 @@ if (window.location.protocol === 'http:')
 	server = 'http://' + 're-coder.net' + '/janus';
 else server = 'https://' + 're-coder.net' + '/janus';
 
-export function runJanusPC () {
+export function runJanusPC (studentId) {
 	Janus.init({
 		debug: 'all',
 		callback: function () {
@@ -36,23 +35,24 @@ export function runJanusPC () {
 
 						success: function (pluginHandle) {
 							videoHandlerOnPC = pluginHandle;
+							myId = studentId;
 
 							Janus.log(
-								` --Janus-- Plugin attached! (${videoHandlerOnPC.getPlugin()}, ID = ${videoHandlerOnPC.getId()})`
+								` --Janus-- WebCam Plugin attached! (${videoHandlerOnPC.getPlugin()}, ID = ${videoHandlerOnPC.getId()})`
 							);
 
 							// room = createTheRoom(TEST_CANDIDATE_NUM);
 							joinTheRoom(1234, myId);
 						},
 						error: function (error) {
-							Janus.error(" --Janus-- Error attaching plugin...", error);
+							Janus.error(" --Janus-- WebCam Error attaching plugin...", error);
 						},
 						iceState: function (state) {
-							Janus.log(" --Janus-- ICE state changed to " + state);
+							Janus.log(" --Janus-- WebCam ICE state changed to " + state);
 						},
 						mediaState: function (medium, on) {
 							Janus.log(
-								" --Janus-- Janus " +
+								" --Janus-- WebCam Janus " +
 									(on ? "started" : "stopped") +
 									" receiving our " +
 									medium
@@ -60,7 +60,7 @@ export function runJanusPC () {
 						},
 						webrtcState: function(on) {
 							Janus.log(
-								" --Janus-- Janus says our WebRTC PeerConnection is " +
+								" --Janus-- WebCam Janus says our WebRTC PeerConnection is " +
 									(on ? "up" : "down") +
 									" now"
 							);
@@ -78,9 +78,22 @@ export function runJanusPC () {
 
 							if (event) {
 								if (event === 'joined') {
+									let list = msg['publishers'];
+									
 									Janus.log(
 										` --Janus-- ${msg['room']}에 성공적으로 접속하였습니다. ID = ${myId}`
 									);
+
+									for (var f in list) {
+										var display = list[f]['display'];
+										var id = list[f]['id'];
+										let mobileId =  myId + 2;
+
+										if (display === String(mobileId)) {
+											// createAnswer 제작
+											mobileFeed(id);
+										}
+									}
 
 									publishOwnFeed(msg);
 								} else if (event === 'event') {
@@ -97,7 +110,6 @@ export function runJanusPC () {
 										let mobileId =  myId + 2;
 
 										if (display === String(mobileId)) {
-											alert("실행! ")
 											// createAnswer 제작
 											mobileFeed(id);
 										}
@@ -122,7 +134,7 @@ export function runJanusPC () {
 						},
 						// localStreamData를 받아온다
 						onlocalstream: function (stream) {
-							Janus.debug(' --Janus-- ::: Got a local stream :::', stream);
+							Janus.debug(' --Janus-- ::: WebCam Got a local stream :::', stream);
 							// html tag 값 가져오기
 							let myVideo = document.getElementById('myvideo');
 							// tag에 stream data 붙이기
@@ -130,7 +142,7 @@ export function runJanusPC () {
 						},
 						oncleanup: function () {
 							Janus.log(
-								" --Janus-- ::: Got a cleanup notification: we are unpublished now :::"
+								" --Janus-- ::: WebCam Got a cleanup notification: we are unpublished now :::"
 							);
 						},
 					});
@@ -159,36 +171,38 @@ function localScreenFeed(msg) {
 		success: function (pluginHandle) {
 			screenHandle = pluginHandle; // pluginHandle 은 변수명 그대로의 의미를 지닌다.
 			Janus.log(
-				'Plugin attached! (' +
+				' --Janus-- Screen Plugin attached! (' +
 					screenHandle.getPlugin() +
 					', id=' +
 					screenHandle.getId() +
 					')'
 			);
+			
+			let screenId = myId + 1;
 
 			var register = {
 				request: 'join',
 				room: msg['room'],
 				ptype: 'publisher',
 				private_id: mypvtid,
-				display: "" + myId + 1,
+				display: String(screenId),
 				feed: myId,
 			};
 			screenHandle.send({ message: register });
 		},
 		iceState: function (state) {
-			Janus.log('ICE state changed to ' + state);
+			Janus.log(' --Janus-- Screen ICE state changed to ' + state);
 		},
 		mediaState: function (medium, on) {
 			Janus.log(
-				'Janus ' +
+				' --Janus-- Screen Janus ' +
 					(on ? 'started' : 'stopped') +
 					' receiving our ' +
 					medium
 			);
 		},
 		error: function (error) {
-			Janus.error('  -- Error attaching plugin...', error);
+			Janus.error(' --Janus-- Screen Error attaching plugin...', error);
 		},
 
 		onmessage: function (msg, jsep) {
@@ -211,8 +225,7 @@ function localScreenFeed(msg) {
 		},
 		// 여기부터 작업
 		onlocalstream: function (stream) {
-			console.log('onlocalstream(on Screen handle) 실행 !');
-			Janus.debug(' ::: Got a local Screen stream :::', stream);
+			Janus.debug(' --Janus-- ::: Got a local Screen stream :::', stream);
 			// html tag 값 가져오기
 			let myVideoScreen = document.getElementById('myVideoScreen');
 			// tag에 stream data 붙이기
@@ -234,13 +247,13 @@ function mobileFeed(id) {
 			mobileFeed = pluginHandle;
 
 			Janus.log(
-				'Plugin attached! (' +
+				' --Janus-- Mobile Plugin attached! (' +
 					mobileFeed.getPlugin() +
 					', id=' +
 					mobileFeed.getId() +
 					')'
 			);
-			Janus.log('  -- This is a subscriber -- ');
+			Janus.log('  -- This is a mobile subscriber -- ');
 
 			let subscribe = {
 				request: 'join',
@@ -259,7 +272,7 @@ function mobileFeed(id) {
 					jsep: jsep,
 					// Add data:true here if you want to subscribe to datachannels as well
 					// (obviously only works if the publisher offered them in the first place)
-					media: { audioSend: false, videoSend: false }, // We want recvonly audio/video
+					media: { audioSend: false, videoSend: true }, // We want recvonly audio/video
 					success: function (jsep) {
 						Janus.debug('Got SDP!', jsep);
 						var body = { request: 'start', room: room };
@@ -272,8 +285,7 @@ function mobileFeed(id) {
 			}
 		},
 		onremotestream: function (stream) {
-			console.log('onremotestream(on mobile Feed) 실행 !');
-			Janus.debug(' ::: Got a local Screen stream :::', stream);
+			Janus.debug(' --Janus-- ::: Got a local Mobile stream :::', stream);
 			// html tag 값 가져오기
 			let myVideoMobile = document.getElementById('myVideoMobile');
 			// tag에 stream data 붙이기
@@ -288,7 +300,7 @@ function mobileFeed(id) {
 function publishOwnScreenFeed() {
 	// Publish our stream
 	screenHandle.createOffer({
-		media: { video: 'screen', audioSend: false, videoRecv: false }, // Publishers are sendonly
+		media: { video: 'screen', audioSend: false, videoRecv: true }, // Publishers are sendonly
 		success: function (jsep) {
 			Janus.debug('Got publisher screen SDP!', jsep);
 			var publish = { request: 'configure', audio: false, video: true };
@@ -310,7 +322,7 @@ function joinTheRoom(roomID, userId) {
 		room: roomID,
 		ptype: 'publisher',
 		feed: userId,
-		display: "" + userId,
+		display: String(userId),
 	};
 
 	videoHandlerOnPC.send({
@@ -389,7 +401,7 @@ function publishOwnFeed(msg) {
 	videoHandlerOnPC.createOffer({
 		media: {
 			audioRecv: false,
-			videoRecv: false,
+			videoRecv: true,
 			audioSend: false,
 			videoSend: true,
 		},
