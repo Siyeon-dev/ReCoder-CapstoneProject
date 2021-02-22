@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import CreateClass from "Components/Modal/CreateClass";
 import DeleteClass from "Components/Modal/DeleteClass";
+import $ from "jquery";
 
 
 const ContSideMenu = ({ userClassInfo, setclassCode, readClass }) => {

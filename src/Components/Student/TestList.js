@@ -30,12 +30,14 @@ const TestList = (classCode) => {
   };
 
   useEffect(() => {
-    classCode && MenuSelect(classCode.classCode);
+    classCode.classCode !== "" && MenuSelect(classCode.classCode);
   }, [classCode]);
 
 
   const StdTestInfoList = (stdClassTestInfo) => {
+      
     return (
+      !stdClassTestInfo.hasOwnProperty("mes") &&
       stdClassTestInfo &&
       stdClassTestInfo.map((v) => (
         <div className="my_test_box">

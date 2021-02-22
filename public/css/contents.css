@@ -35,11 +35,15 @@
 /********************************* SubContents *********************************/
 #contents {float:right;width:880px;text-align: left;}
 /* Visual */
-#contents .cont_visual {width:100%; height:278px; padding:60px 0 0 70px; box-sizing:border-box; background: url(../img/content_visual_bg.gif) no-repeat left 0px;}
+#contents .cont_visual {position:relative; width:100%; height:278px; padding:60px 0 0 70px; box-sizing:border-box; background: url(../img/content_visual_bg.gif) no-repeat left 0px;}
 #contents .cont_visual p.eng {font-family: 'Montserrat', sans-serif; line-height:100%; color:#152842; font-style: italic;}
 #contents .cont_visual p.eng.small {font-weight:300; font-size:40px; letter-spacing: -0.05em;}
 #contents .cont_visual p.eng.big {font-weight:800; font-size:70px; letter-spacing: -0.01em;}
-#contents .cont_visual p.kor {margin-top:25px; font-weight:600; font-size:18px; color:#138c6a;}
+#contents .cont_visual p.kor {margin-top:20px; font-weight:600; font-size:18px; color:#138c6a;}
+#contents .cont_visual .clipboard_copy {position:absolute;top: 16px;right: 19px;padding: 8px 10px;background: #25c598;border-radius: 7px;line-height: 0;}
+#contents .cont_visual .clipboard_copy button {font-family:'Noto Sans KR', sans-serif;color:#fff;font-size: 13px;font-weight:600;text-align: left;}
+#contents .cont_visual .clipboard_copy button span {display: inline-block;width: 53px;padding-right: 18px;font-size:14px;font-family:'Lato', sans-serif;background: url(../img/code_copy_ico.gif) no-repeat right 50%;margin-left: 5px;}
+
 /* SubTitle */
 #contents .cont_tit {position:relative;margin: 40px 0;/* border-bottom:1px solid #dadada; */}
 #contents .cont_tit .eng_txt {font-size:15px; color:#152842; font-weight:800; font-style: italic;}
@@ -256,6 +260,7 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 .class_member_list .mem_check_box input[type="checkbox"] + label {display: inline-block;width: 155px;height:195px;background:#fff url(../img/class_mem_off.png) no-repeat center 30px;cursor: pointer;border-radius: 7px;border:2px solid #d9e0e7;box-sizing: border-box;transition-duration:0.3s;text-align: center;font-size: 15px;padding-top:130px;font-weight:600;color:#152842;}
 .class_member_list .mem_check_box input[type="checkbox"] + label span {font-family: 'Montserrat', sans-serif; font-size:13px; font-weight:700; display: block;}
 .class_member_list .mem_check_box input[type="checkbox"]:checked + label {background:#eff3f8 url(../img/class_mem_on.png) no-repeat center 30px; border:2px solid #3d4b65;}
+.class_member_list .all_member .no_mem {margin:10px 0 0 26px; text-align: center; background:#ededed; padding:20px 0; border-radius:7px; font-size:13px;}
 
 /* Teacher :: 나의 클래스 - 시험관리 */
 .tch_class_list_table {width:100%;}
@@ -267,11 +272,11 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 .tch_class_list_table tbody th,
 .tch_class_list_table tbody td {padding: 25px 0;font-size:13px;text-align:center;border-bottom:1px solid #f1f3f6;}
 .tch_class_list_table tbody td {color:#53646e;}
-.tch_class_list_table tbody td p.tch_test_state {width:120px; box-sizing:border-box; cursor:pointer; display:inline-block; padding-left:15px; height:35px; line-height:35px; color:#fff; font-weight:500; border-radius:8px; text-align: left;}
-.tch_class_list_table tbody td p.tch_test_state.complete {background:#fcbe2d url(../img/tch_test_complete_ico.gif) no-repeat 90px 50%;-webkit-box-shadow: 3px 3px 10px 0px rgba(233,172,29,0.6);
+.tch_class_list_table tbody td a.tch_test_state {width:120px; box-sizing:border-box; cursor:pointer; display:inline-block; padding-left:15px; height:35px; line-height:35px; color:#fff; font-weight:500; border-radius:8px; text-align: left;}
+.tch_class_list_table tbody td a.tch_test_state.complete {background:#fcbe2d url(../img/tch_test_complete_ico.gif) no-repeat 90px 50%;-webkit-box-shadow: 3px 3px 10px 0px rgba(233,172,29,0.6);
 -moz-box-shadow: 3px 3px 10px 0px rgba(233,172,29,0.6);
 box-shadow: 3px 3px 10px 0px rgba(233,172,29,0.6);}
-.tch_class_list_table tbody td p.tch_test_state.start {background:#37d4a8 url(../img/tch_test_start_ico.gif) no-repeat 90px 50%;-webkit-box-shadow: 3px 3px 10px 0px rgba(22,189,142,0.6);
+.tch_class_list_table tbody td a.tch_test_state.start {background:#37d4a8 url(../img/tch_test_start_ico.gif) no-repeat 90px 50%;-webkit-box-shadow: 3px 3px 10px 0px rgba(22,189,142,0.6);
 -moz-box-shadow: 3px 3px 10px 0px rgba(22,189,142,0.6);
 box-shadow: 3px 3px 10px 0px rgba(22,189,142,0.6);}
 .create_test_btn {display:inline-block; width:100%; text-align: center; height:40px; line-height:40px;   border-radius:8px; cursor:pointer; font-size:13px; background:#6277f5; -webkit-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);

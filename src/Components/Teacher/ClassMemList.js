@@ -1,35 +1,58 @@
 import React, { useEffect, useState } from "react";
 import StdClassJoinApp from "Components/Modal/StdClassJoinApp";
 import axios from "axios";
+import Loading from "Components/User/Loading";
 
-const ClassMemList = ( classCode ) => {
+const ClassMemList = ({ classCode }) => {
   const [appllyStdList, setAppllyStdList] = useState([]);
   const [appStdNum, setAppStdNum] = useState(0);
-
-  const data = {
-    class_code: classCode.classCode,
-  };
-
-  console.log(data);
+  const [apiFlag, setApiFlag] = useState(false);
 
   const appllyStdListApi = () => {
-    axios
-      .post("/usermanagement", data)
-      .then((res) => {
-        setAppllyStdList(res.data);
-        setAppStdNum(setAppllyStdList.length);
-      })
-      
-      .catch((err) => {
-        console.log(err);
-      });
+    apiFlag === true && setApiFlag(false);
+    const data = {
+      class_code: classCode,
+    };
+
+    classCode &&
+      axios
+        .post("/usermanagement", data)
+        .then((res) => {
+          setAppllyStdList(res.data);
+          setApiFlag(true);
+          setAppStdNum(setAppllyStdList.length);
+        })
+
+        .catch((err) => {
+          console.log(err);
+        });
   };
 
   useEffect(() => {
     appllyStdListApi();
   }, []);
 
-  console.log(appStdNum);
+  const AppllyStdList = (appllyStdList) => {
+    console.log(appllyStdList.length);
+    return apiFlag === true ? (
+      appllyStdList.length !== 0 ? (
+        appllyStdList.map((v, index) => (
+          <div className="mem_check_box">
+            <input type="checkbox" id={index} name="전체동의" />
+            <label for={index}>
+              <span>{v.s_email}</span>
+              {v.s_name}
+            </label>
+          </div>
+        ))
+      ) : (
+        <p className="no_mem">가입된 회원이 없습니다.</p>
+      )
+    ) : (
+      <Loading />
+    );
+  };
+
   return (
     <>
       <div className="cont_top_btn">
@@ -44,38 +67,7 @@ const ClassMemList = ( classCode ) => {
         <button>학생삭제</button>
       </div>
       <div className="class_member_list">
-        <div className="all_member">
-          <div className="mem_check_box">
-            <input type="checkbox" id="a1" name="전체동의" />
-            <label for="a1">
-              <span>rntmf1247</span>이구슬
-            </label>
-          </div>
-          <div className="mem_check_box">
-            <input type="checkbox" id="a2" name="전체동의" />
-            <label for="a2">
-              <span>rntmf1247</span>이구슬
-            </label>
-          </div>
-          <div className="mem_check_box">
-            <input type="checkbox" id="a3" name="전체동의" />
-            <label for="a3">
-              <span>rntmf1247</span>이구슬
-            </label>
-          </div>
-          <div className="mem_check_box">
-            <input type="checkbox" id="a4" name="전체동의" />
-            <label for="a4">
-              <span>rntmf1247</span>이구슬
-            </label>
-          </div>
-          <div className="mem_check_box">
-            <input type="checkbox" id="a5" name="전체동의" />
-            <label for="a5">
-              <span>rntmf1247</span>이구슬
-            </label>
-          </div>
-        </div>
+        <div className="all_member">{AppllyStdList(appllyStdList)}</div>
       </div>
     </>
   );
