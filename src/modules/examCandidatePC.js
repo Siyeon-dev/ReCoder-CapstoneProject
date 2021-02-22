@@ -6,7 +6,7 @@ let janus = null;
 let screenHandle = null;
 let videoHandlerOnPC = null;
 
-let myId = 33;
+let myId = 0;
 let mypvtid = null;
 
 let room = 1234;
@@ -78,9 +78,6 @@ export function runJanusPC () {
 
 							if (event) {
 								if (event === 'joined') {
-									myId = msg['id'];
-									mypvtid = msg['private_id'];
-
 									Janus.log(
 										` --Janus-- ${msg['room']}에 성공적으로 접속하였습니다. ID = ${myId}`
 									);
@@ -93,11 +90,17 @@ export function runJanusPC () {
 										' --Janus-- Got a list of available publishers/feeds:',
 										list
 									);
+
 									for (var f in list) {
-										var id = list[f]['feed'];
-										if (id === myId + 2)
+										var display = list[f]['display'];
+										var id = list[f]['id'];
+										let mobileId =  myId + 2;
+
+										if (display === String(mobileId)) {
+											alert("실행! ")
 											// createAnswer 제작
 											mobileFeed(id);
+										}
 									}
 								} else if (event === 'destroyed') {
 									Janus.warn("The room has been destroyed!");
@@ -168,7 +171,8 @@ function localScreenFeed(msg) {
 				room: msg['room'],
 				ptype: 'publisher',
 				private_id: mypvtid,
-				feed: myId + 1,
+				display: "" + myId + 1,
+				feed: myId,
 			};
 			screenHandle.send({ message: register });
 		},
@@ -236,14 +240,13 @@ function mobileFeed(id) {
 					mobileFeed.getId() +
 					')'
 			);
-			Janus.log('  -- This is a subscriber');
+			Janus.log('  -- This is a subscriber -- ');
 
 			let subscribe = {
 				request: 'join',
 				room: room,
 				ptype: 'subscriber',
 				feed: id,
-				private_id: mypvtid,
 			};
 
 			mobileFeed.send({ message: subscribe });
@@ -305,9 +308,9 @@ function joinTheRoom(roomID, userId) {
 	let register = {
 		request: 'join',
 		room: roomID,
-		feed: userId,
 		ptype: 'publisher',
-		display: myUsername,
+		feed: userId,
+		display: "" + userId,
 	};
 
 	videoHandlerOnPC.send({
