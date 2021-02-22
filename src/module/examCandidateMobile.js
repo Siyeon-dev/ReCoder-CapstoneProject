@@ -31,7 +31,7 @@ export function runJanusMobile(studentId) {
 
 						success: function (pluginHandle) {
 							videoHandlerOnPC = pluginHandle;
-							myId = studentId;
+							myId = Number(studentId) + 2;
 
 							Janus.log(
 								`Plugin attached! (${videoHandlerOnPC.getPlugin()}
@@ -104,7 +104,7 @@ function joinTheRoom(roomID, userId) {
 		request: 'join',
 		room: roomID,
 		ptype: 'publisher',
-		display: userId,
+		display: "" + userId,
 	};
 
 	videoHandlerOnPC.send({
