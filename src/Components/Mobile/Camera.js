@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Cookies, useCookies } from "react-cookie";
 import { useHistory } from "react-router-dom";
 
-import Header from './Header';
-import '../css.css';
+import Header from './MobileHeader';
 
-import * as janus from '../module/examCandidateMobile';
+
+import * as janus from '../../module/examCandidateMobile';
 
 function Test() {
     return (
