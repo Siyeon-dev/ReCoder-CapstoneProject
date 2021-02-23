@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link, HashRouter, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import axios from "axios";
 
 import { TextField } from "@material-ui/core";
-import Header from './Header';
+import Header from './MobileHeader';
 
-import "../css.css";
+
 
 
 const Main = () => {
