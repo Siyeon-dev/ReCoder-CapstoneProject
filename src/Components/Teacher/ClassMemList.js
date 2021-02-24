@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import StdClassJoinApp from "Components/Modal/StdClassJoinApp";
 import axios from "axios";
 import Loading from "Components/User/Loading";
+import CodeClipboardCopy from "./CodeClipboardCopy";
 
 const ClassMemList = ({ classCode }) => {
   const [appllyStdList, setAppllyStdList] = useState([]);
@@ -30,23 +31,26 @@ const ClassMemList = ({ classCode }) => {
 
   useEffect(() => {
     appllyStdListApi();
-  }, []);
+  }, [classCode]);
 
   const AppllyStdList = (appllyStdList) => {
-    console.log(appllyStdList.length);
     return apiFlag === true ? (
       appllyStdList.length !== 0 ? (
         appllyStdList.map((v, index) => (
           <div className="mem_check_box">
             <input type="checkbox" id={index} name="전체동의" />
             <label for={index}>
-              <span>{v.s_email}</span>
+              <span>{v.s_email.split('@')[0]}</span>
               {v.s_name}
             </label>
           </div>
         ))
       ) : (
-        <p className="no_mem">가입된 회원이 없습니다.</p>
+        <div className="no_create_guide member">
+          가입된 회원이 없습니다.
+          <span>초대코드로 클래스에 초대할 수 있습니다.</span>
+          <CodeClipboardCopy classCode={classCode} />
+        </div>
       )
     ) : (
       <Loading />

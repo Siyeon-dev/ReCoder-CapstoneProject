@@ -1,56 +1,97 @@
 import React, { useEffect, useState } from "react";
-import ContTitle from "./ContTitle";
+import axios from "axios";
+import Header from "Components/Layout/Header";
+import Footer from "Components/Layout/Footer";
 import ClassMemList from "./ClassMemList";
 import ClassTestList from "./ClassTestList";
 import ContSideMenu from "./ContSideMenu";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useParams } from "react-router";
-import axios from 'axios'
 import { Cookies, useCookies } from "react-cookie";
-import Header from "Components/Layout/Header";
-import Footer from "Components/Layout/Footer";
-import Clipboard from "react-clipboard.js";
+import CodeClipboardCopy from "./CodeClipboardCopy";
+import ClassStatistics from "./ClassStatistics";
 
 const Index = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [classCode, setclassCode] = useState(""); //  해당 클래스 시험 정보
   const [userClassInfo, setUserClassInfo] = useState([]);
+  const [selectClassTestInfo, setSelectClassTestInfo] = useState([]);
   const [classStdNum, setClassStdNum] = useState(0);
   const [classTestNum, setClassTestNum] = useState(0);
+  const [emptyArrayCheckFlag, setEmptyArrayCheckFlag] = useState(false);
+  const [apiLoadingFlag, setApiLoadingFlag] = useState(false);
   const classCodeParams = useParams();
 
-  const readClass = () => {
-    let userEmail;
+  const SelectEmail = () => {
+    let UserEmail = {};
 
-    if (cookies.t_email) {
-      userEmail = { t_email: cookies.t_email };
-    } else if (cookies.s_email) {
-      userEmail = { s_email: cookies.s_email };
-    } else {
-      return null;
-    }
+    cookies.t_email
+      ? (UserEmail = { t_email: cookies.t_email })
+      : (UserEmail = { s_email: cookies.s_email });
 
-    console.log(userEmail);
-    axios
-      .post("/classlist", userEmail)
-      .then((res) => {
-        setUserClassInfo(res.data);
-        !classCodeParams.hasOwnProperty("classCode")
-          ? setclassCode(res.data[0].class_code)
-          : setclassCode(classCodeParams.classCode);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    return UserEmail;
+  };
+
+  const readClass = (apiEmailData) => {
+    apiEmailData.hasOwnProperty("t_email") === true
+      ? axios
+          .post("/classlist", apiEmailData)
+          .then((res) => {
+            setUserClassInfo(res.data);
+            !classCodeParams.hasOwnProperty("classCode")
+              ? setclassCode(res.data[0].class_code)
+              : setclassCode(classCodeParams.classCode);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      : console.log("Lost User Email");
+  };
+
+  const MenuSelect = (apiEmailData, classCode) => {
+    apiLoadingFlag === true && setApiLoadingFlag(false);
+    emptyArrayCheckFlag === true && setEmptyArrayCheckFlag(false);
+
+    console.log(classCode);
+
+    const data = {
+      class_code: classCode !== undefined ? classCode : null,
+      ...apiEmailData,
+    };
+
+    console.log(data);
+
+    data.class_code !== null &&
+      axios
+        .post("/classinfo", data)
+        .then((res) => {
+          setApiLoadingFlag(true);
+          res.data.hasOwnProperty("mes")
+            ? setEmptyArrayCheckFlag(true)
+            : setSelectClassTestInfo(res.data);
+
+          res.data.length === undefined
+            ? setClassTestNum(0)
+            : setClassTestNum(res.data.length);
+
+          res.data.length === undefined
+            ? setClassStdNum(0)
+            : setClassStdNum(res.data[0].student_count);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   };
 
   useEffect(() => {
-    readClass();
+    readClass(SelectEmail());
   }, []);
 
-  const CopySuccess = () => {
-    alert("초대 코드 클립보드 복사가 완료되었습니다.");
-  };
+  useEffect(() => {
+    setSelectClassTestInfo([]);
+    console.log(emptyArrayCheckFlag);
+    classCode && MenuSelect(SelectEmail(), classCode);
+  }, [classCode]);
 
   return (
     <>
@@ -65,12 +106,7 @@ const Index = () => {
           <div id="contents">
             <div className="cont_visual">
               <div className="clipboard_copy">
-                <Clipboard
-                  data-clipboard-text={`클래스에 초대되셨습니다. \n클래스 초대 코드를 입력하면 가입하실 수 있습니다. \n초대 코드 : ${classCode}`}
-                  onSuccess={CopySuccess}
-                >
-                  초대코드 <span>{classCode}</span>
-                </Clipboard>
+                <CodeClipboardCopy classCode={classCode} />
               </div>
               <p className="eng small">Welcome.</p>
               <p className="eng big">Re:Coder</p>
@@ -81,7 +117,6 @@ const Index = () => {
             <div className="cont_tit">
               <p className="eng_txt">className :</p>
               <p className="class_name">
-                {console.log(classCode)}
                 {userClassInfo.map((v) =>
                   v.class_code === classCode ? v.class_name : ""
                 )}
@@ -107,16 +142,22 @@ const Index = () => {
 
                   <TabPanel>
                     <ClassTestList
-                      setClassStdNum={setClassStdNum}
-                      setClassTestNum={setClassTestNum}
+                      selectClassTestInfo={selectClassTestInfo}
                       classCode={classCode}
+                      apiLoadingFlag={apiLoadingFlag}
+                      emptyArrayCheckFlag={emptyArrayCheckFlag}
                     />
                   </TabPanel>
                   <TabPanel>
                     <ClassMemList classCode={classCode} />
                   </TabPanel>
                   <TabPanel>
-                    <img src="../img/tab_page3.png" alt="클래스통계_예시" />
+                    <ClassStatistics
+                      selectClassTestInfo={selectClassTestInfo}
+                      apiLoadingFlag={apiLoadingFlag}
+                      emptyArrayCheckFlag={emptyArrayCheckFlag}
+                      classCode={classCode}
+                    />
                   </TabPanel>
                 </Tabs>
               </div>
@@ -127,6 +168,6 @@ const Index = () => {
       <Footer />
     </>
   );
-};;
+};
 
 export default Index;
