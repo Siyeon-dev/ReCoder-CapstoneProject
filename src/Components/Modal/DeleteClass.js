@@ -3,15 +3,13 @@ import useModal from "./useModal";
 
 const DeleteModal = ({ readClass, classListUpdate, userClassInfo }) => {
   const [isOpen, setIsOpen, Modal] = useModal();
-  const aaa = [];
+  const handleCheckArray = [];
   const uniqueArr = [];
 
-  console.log(userClassInfo);
-
   const handleCheck = (e) => {
-    aaa.push(e.target.name);
+    handleCheckArray.push(e.target.name);
 
-    aaa.forEach((element) => {
+    handleCheckArray.forEach((element) => {
       if (!uniqueArr.includes(element)) {
         uniqueArr.push(element);
       } else {
@@ -19,7 +17,7 @@ const DeleteModal = ({ readClass, classListUpdate, userClassInfo }) => {
         uniqueArr.splice(uniqueArr.indexOf(element), 1);
       }
     });
-    aaa.length = 0;
+    handleCheckArray.length = 0;
     console.log(uniqueArr);
   };
 
@@ -34,6 +32,7 @@ const DeleteModal = ({ readClass, classListUpdate, userClassInfo }) => {
       .post("/classdelete", ArrClassCode)
       .then((res) => {
         console.log(res);
+        window.location.replace("/teacher");
       })
       .catch((err) => {
         console.log(err);

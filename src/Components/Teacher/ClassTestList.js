@@ -1,57 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
 import { Link, useParams } from 'react-router-dom';
 import Loading from 'Components/User/Loading';
 
-const ClassTestList = ({ classCode, setClassStdNum, setClassTestNum }) => {
-  const [selectClassTestInfo, setSelectClassTestInfo] = useState([]);
-  const [arrayValues, setArrayValues] = useState("");
+const ClassTestList = ({
+  selectClassTestInfo,
+  classCode,
+  apiLoadingFlag,
+  emptyArrayCheckFlag
+}) => {
   const classCodeParams = useParams();
-  const [flag, setFlag] = useState(false);
-  const [emptyArrayCheckFlag, setEmptyArrayCheckFlag] = useState(false);
+
+  console.log(selectClassTestInfo);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    classCode.length === 0
-      ? MenuSelect(classCodeParams.classCode)
-      : MenuSelect(classCode);
-  }, [classCode]);
-
-  const MenuSelect = (e) => {
-    flag === true && setFlag(false);
-
-    let classCodeDataCheck = e;
-    const data = {
-      class_code: classCodeDataCheck !== undefined ? classCodeDataCheck : null,
-    };
-
-    data.class_code !== null &&
-      axios
-        .post("/classinfo", data)
-        .then((res) => {
-          emptyArrayCheckFlag === true && setEmptyArrayCheckFlag(false);
-          res.data && setFlag(true);
-
-          res.data.hasOwnProperty("mes")
-            ? setEmptyArrayCheckFlag(true)
-            : setSelectClassTestInfo(res.data);
-
-          res.data.length === undefined
-            ? setClassTestNum(0)
-            : setClassTestNum(res.data.length);
-          
-          res.data.length === undefined
-            ? setClassStdNum(0)
-            : setClassStdNum(res.data[0].student_count);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-  };
-
-  useEffect(() => {
-    console.log(selectClassTestInfo);
-    console.log(emptyArrayCheckFlag);
   }, []);
 
   const ListUpdate = () => {
@@ -104,9 +67,9 @@ const ClassTestList = ({ classCode, setClassStdNum, setClassTestNum }) => {
       });
   };
 
-  return flag === true ? (
-    emptyArrayCheckFlag === true ? (
-      <div className="no_test_guide">
+  return apiLoadingFlag === true ? ( // api 값을 받아 왔는지
+    emptyArrayCheckFlag === true ? ( // 값이 있는지 없는지
+      <div className="no_create_guide test">
         생성된 시험이 없습니다. <span>먼저 시험을 생성해주세요.</span>
         <Link to={`/createtestform/${classCode}`}>시험 생성하기</Link>
       </div>

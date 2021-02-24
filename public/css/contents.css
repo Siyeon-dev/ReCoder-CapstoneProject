@@ -452,9 +452,19 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 .test_save_btn button {display: inline-block; width:280px; font-size:17px; background:#6277f5; border-radius:8px; color:#fff; font-weight: 600; padding:20px 0; letter-spacing:-0.05em;}
 
 /* Teacher :: 생성된 시험이 없을 때 */
-.no_test_guide {width:100%; margin:30px 0 60px 0; padding-top:240px; background:url(../img/no_test_img.jpg) no-repeat 50% 0px; color:#232e3c; font-weight:200; text-align: center; font-size:25px;}
-.no_test_guide span {display:block; font-weight:600;}
-.no_test_guide a {display:inline-block; margin-top:30px; background:#6277f5 url(../img/no_test_arrow.gif) no-repeat 125px 50%; border-radius:8px; padding:10px 70px 10px 20px; color:#fff; font-weight:600; font-size:12px; -webkit-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6); -moz-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6); box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);}
+.no_create_guide {width:100%; margin:30px 0 60px 0;  color:#232e3c; font-weight:200; text-align: center; font-size:25px;}
+.no_create_guide.test {padding-top:240px; background:url(../img/no_test_img.jpg) no-repeat 50% 0px;}
+.no_create_guide.member {padding-top: 210px;background:url(../img/no_member_img.jpg) no-repeat 50% 0px;}
+.no_create_guide > span {display:block; font-weight:600;}
+.no_create_guide a,
+.no_create_guide button {display:inline-block;margin-top:30px;background: #6277f5 url(../img/no_test_arrow.gif) no-repeat 85% 50%;border-radius:8px;padding:12px 70px 12px 20px;color:#fff;font-weight:600;font-size: 13px;-webkit-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);-moz-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);}
+.no_create_guide.test a,
+.no_create_guide.test button {background: #6277f5 url(../img/no_test_arrow.gif) no-repeat 85% 50%;}
+.no_create_guide.member a,
+.no_create_guide.member button {background: #6277f5 url(../img/no_mem_ico.gif) no-repeat 85% 50%;}
+.no_create_guide a span,
+.no_create_guide button span { font-family:'Lato', sans-serif; }
+
 
 /* Student :: 시험 시 주의사항 */
 #test_warning_container {width: 100%; background:#f4f7fa;}
@@ -538,6 +548,37 @@ ul.status_desc li.cheating {background:url(../img/cheating_focus.gif) no-repeat 
 .proctor_exam_container .video_area .std_video_set .web_mobile_cam video {float:left; margin:0; padding:0; line-height: 0; letter-spacing: 0; font-size: 0; border:0;}
 .proctor_exam_container .video_area .std_video_set .web_mobile_cam video:first-child {border-right: 1px solid #b0bdce; }
 
+/* Teacher :: 시험 통계 */
+.class_statistic_wrap {width:100%;}
+.class_statistic_wrap .top_test_list_area {width:100%;}
+.class_statistic_wrap p.tit {position:relative; z-index:1; width:100%; height:80px; line-height:80px; border:1px solid #ddd; border-radius:10px; font-size:17px; color:#152842; font-weight:600; padding:0 40px; box-sizing: border-box; background:#fff url(../img/class_statistic_tit_arrow.gif) no-repeat 95% 50%;
+-webkit-box-shadow: 0px 1px 6px 0px rgba(159,162,176,0.18);
+-moz-box-shadow: 0px 1px 6px 0px rgba(159,162,176,0.18);
+box-shadow: 0px 1px 6px 0px rgba(159,162,176,0.18);} 
+.class_statistic_wrap .bottom_std_list_area {margin-top:15px;}
+.class_statistic_wrap .bottom_std_list_area p.tit {background:#6277f5; color:#fff; border:1px solid #6277f5;}
+.class_statistic_wrap table {width:100%; /*border-collapse: collapse*/ text-align: center; margin-top:-40px; border:1px solid #e5eaf1; border-radius: 10px;}
+.class_statistic_wrap table th, 
+.class_statistic_wrap table td {font-size:13px;}
+.class_statistic_wrap table thead th {background:#f4f8fb;  padding:50px 0 15px 0; font-weight:600;}
+.class_statistic_wrap table tbody td {border-bottom:1px solid #f1f3f6;/* height:70px; *//* line-height:70px; */font-weight:500;padding: 30px 0;}
+.class_statistic_wrap table tbody td .test_name {display: inline-block; cursor: pointer; line-height:100%;}
+.class_statistic_wrap table tbody td .test_name:hover {color:#445df2; border-bottom:1px solid #445df2; transition-duration:0.3s;}
+.class_statistic_wrap table tbody td.date {font-weight:600;}
+.class_statistic_wrap table tbody td.date,
+.class_statistic_wrap table tbody td span {font-family:'Lato', sans-serif;}
+.class_statistic_wrap table tbody td.person span {color:#00ca91; font-weight:800;}
+.class_statistic_wrap table tbody td.score span {color:#6277f5; font-weight:800;}
+.class_statistic_wrap table tbody .std_id {display:inline-block; font-weight:600; line-height:140%; text-align: left; padding-left:50px; background:#f4f8fb url(../img/bottom_std_list_id.gif) no-repeat 0 50%;}
+.class_statistic_wrap table tbody .std_id span {display: block; color:#9ca2ab; font-family:'Lato', sans-serif;}
+.class_statistic_wrap .bottom_std_list_area table thead {-webkit-box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);
+-moz-box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);
+box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);}
+.class_statistic_wrap .bottom_std_list_area table thead th {background:#fff;}
+.class_statistic_wrap .bottom_std_list_area table tbody td {background:#f1f6fe; border-bottom:1px solid #e7edf5; padding:20px 0;}
+.class_statistic_wrap .bottom_std_list_area table tbody td .test_status {display: inline-block; padding-right:20px; }
+.class_statistic_wrap .bottom_std_list_area table tbody td .test_status.no_test {background:url(../img/statistic_no_test_ico.gif) no-repeat right 50%;}
+.class_statistic_wrap .bottom_std_list_area table tbody td .test_status.complete {background:url(../img/statistic_complete_ico.gif) no-repeat right 50%;}
 
 /**/
 .test_screen_wrapper {width:100%;/* height:100vh; */background:#152842;display: inline-block;/* box-sizing: border-box; *//* padding-bottom: 34px; */}
