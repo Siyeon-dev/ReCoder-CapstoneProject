@@ -1,21 +1,66 @@
-import React from "react";
+import { Hook } from 'console-feed';
+import { Editor } from 'draft-js';
+import React, { useEffect } from "react";
 import { useParams, Link } from 'react-router-dom';
-import AceEditor from 'react-ace';
 
-import 'ace-builds/src-noconflict/mode-javascript';
-import 'ace-builds/src-noconflict/theme-mono_industrial';
-import "ace-builds/src-noconflict/ext-language_tools"
+import * as Ace from '../../../modules/editor'
 
-let value;
-
-function onChange(newValue) {
-  console.log('change', newValue);
-  value = newValue;
-}
+let consoleMessages = [];
+let consoleLogList = null;
 
 const TestScreen = () => {
   const TestCodeParams = useParams();
-  
+
+  const runCompile = () => {
+    Ace.editorLib.clearConsoleScreen(consoleMessages, consoleLogList);
+
+    // Get input from the code editor
+    const userCode = Ace.codeEditor.getValue();
+
+
+    // Run the user code
+    try {
+      new Function(userCode)();
+    } catch (err) {
+      console.error(err);
+    }
+
+    // Print to the console
+    Ace.editorLib.printConsole(consoleMessages, consoleLogList);
+  }
+
+  useEffect(() => {
+    Ace.editorLib.init();
+    consoleLogList = document.getElementById('editor__console-logs');
+    // define a new console
+    var console=(function(oldCons){
+      return {
+          log: function(text){
+              oldCons.log(text);
+              // // Your code
+              consoleMessages.push({
+                message: text,
+              })
+          },
+          info: function (text) {
+              oldCons.info(text);
+              // Your code
+          },
+          warn: function (text) {
+              oldCons.warn(text);
+              // Your code
+          },
+          error: function (text) {
+              oldCons.error(text);
+              // Your code
+          }
+      };
+    }(window.console));
+    
+    //Then redefine the old console
+    window.console = console;
+  }, [])
+
   return (
     <div className="test_screen_wrapper">
       <div className="test_screen_top">
@@ -59,35 +104,19 @@ const TestScreen = () => {
                   <p className="file_name">Soulution.Java</p>
                   <ul>
                     <li>JAVA</li>
-                    <li className="compile_btn" onClick={()=> {console.log(value)}}>
+                    <li className="compile_btn" onClick={runCompile}>
                         컴파일 하기
                     </li>
                   </ul>
                 </div>
-                <div className="code_compiler_area">
-                    <AceEditor
-                      className="scroll_area code_editor"
-                      mode='javascript'
-                      theme='mono_industrial'
-                      onChange={onChange}
-                      name='UNIQUE_ID_OF_DEV'
-                      height='100%'
-                      width='100%'
-                      editorProps={{ $blockScrolling: true }}
-                      setOptions={{
-                        enableBasicAutocompletion: true,
-                        enableLiveAutocompletion: true,
-                        enableSnippets: true,
-                        showLineNumbers: true,
-                        tabSize: 4,
-                      }}
-                    />
+                <div className="code_compiler_area" id="editorCode">
                 </div>
                 <div className="code_compiler_result">
                   <p className="tit">실행결과</p>
                   <div className="scroll_area">{
                     /* 코드 실행 결과 */
-                    <ul class="editor__console-logs"></ul>
+                    <ul className="editor__console-logs" id="editor__console-logs">
+                    </ul>
                   }</div>
                 </div>
               </div>
@@ -98,5 +127,6 @@ const TestScreen = () => {
     </div>
   );
 };
+
 
 export default TestScreen;
