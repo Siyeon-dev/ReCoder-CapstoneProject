@@ -1,15 +1,22 @@
+import { Hook } from 'console-feed';
+import { Editor } from 'draft-js';
 import React, { useEffect } from "react";
 import { useParams, Link } from 'react-router-dom';
 
 import * as Ace from '../../../modules/editor'
 
+let consoleMessages = [];
+let consoleLogList = null;
+
 const TestScreen = () => {
   const TestCodeParams = useParams();
-  
+
   const runCompile = () => {
-    // Ace.editorLib.clearConsoleScreen();
+    Ace.editorLib.clearConsoleScreen(consoleMessages, consoleLogList);
+
     // Get input from the code editor
     const userCode = Ace.codeEditor.getValue();
+
 
     // Run the user code
     try {
@@ -19,11 +26,39 @@ const TestScreen = () => {
     }
 
     // Print to the console
-    Ace.editorLib.printConsole();
+    Ace.editorLib.printConsole(consoleMessages, consoleLogList);
   }
 
   useEffect(() => {
     Ace.editorLib.init();
+    consoleLogList = document.getElementById('editor__console-logs');
+    // define a new console
+    var console=(function(oldCons){
+      return {
+          log: function(text){
+              oldCons.log(text);
+              // // Your code
+              consoleMessages.push({
+                message: text,
+              })
+          },
+          info: function (text) {
+              oldCons.info(text);
+              // Your code
+          },
+          warn: function (text) {
+              oldCons.warn(text);
+              // Your code
+          },
+          error: function (text) {
+              oldCons.error(text);
+              // Your code
+          }
+      };
+    }(window.console));
+    
+    //Then redefine the old console
+    window.console = console;
   }, [])
 
   return (
@@ -80,7 +115,8 @@ const TestScreen = () => {
                   <p className="tit">실행결과</p>
                   <div className="scroll_area">{
                     /* 코드 실행 결과 */
-                    <ul class="editor__console-logs"></ul>
+                    <ul className="editor__console-logs" id="editor__console-logs">
+                    </ul>
                   }</div>
                 </div>
               </div>
