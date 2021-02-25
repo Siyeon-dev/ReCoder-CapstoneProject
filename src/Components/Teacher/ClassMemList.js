@@ -36,15 +36,18 @@ const ClassMemList = ({ classCode }) => {
   const AppllyStdList = (appllyStdList) => {
     return apiFlag === true ? (
       appllyStdList.length !== 0 ? (
-        appllyStdList.map((v, index) => (
-          <div className="mem_check_box">
-            <input type="checkbox" id={index} name="전체동의" />
-            <label for={index}>
-              <span>{v.s_email.split('@')[0]}</span>
-              {v.s_name}
-            </label>
-          </div>
-        ))
+        appllyStdList.map(
+          (v, index) =>
+            v.recognize === 1 && (
+              <div className="mem_check_box">
+                <input type="checkbox" id={index} name="전체동의" />
+                <label for={index}>
+                  <span>{v.s_email.split("@")[0]}</span>
+                  {v.s_name}
+                </label>
+              </div>
+            )
+        )
       ) : (
         <div className="no_create_guide member">
           가입된 회원이 없습니다.

@@ -160,11 +160,17 @@ const CreateTestForm = () => {
                         시작시간(분)
                       </option>
                       <option value="00">00분</option>
+                      <option value="00">05분</option>
                       <option value="10">10분</option>
+                      <option value="10">15분</option>
                       <option value="20">20분</option>
+                      <option value="20">25분</option>
                       <option value="30">30분</option>
+                      <option value="30">35분</option>
                       <option value="40">40분</option>
+                      <option value="40">45분</option>
                       <option value="50">50분</option>
+                      <option value="50">55분</option>
                     </select>
                   </div>
                 </div>

@@ -19,12 +19,19 @@ const CreateClass = ({readClass, classListUpdate}) => {
             t_email : cookies.t_email
         };
 
-        axios.post('/classcreate', newClassData).then(res => {
+        axios
+          .post("/classcreate", newClassData)
+          .then((res) => {
             setcreateClassList(res);
-        })
-        .catch(err => {
+          })
+          .catch((err) => {
             console.log(err);
-        }).then(() => readClass(), classListUpdate, setIsOpen(!isOpen))
+          })
+          .then(
+            () => readClass({ t_email: cookies.t_email }),
+            classListUpdate,
+            setIsOpen(!isOpen)
+          );
     }
 
     return <>

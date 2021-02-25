@@ -1,21 +1,66 @@
-import React, { useEffect } from 'react'
-import axios from 'axios'
-import { Link, useParams } from 'react-router-dom';
-import Loading from 'Components/User/Loading';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link, useParams } from "react-router-dom";
+import Loading from "Components/User/Loading";
+import socketio from "socket.io-client";
+import { useCookies } from "react-cookie";
+import moment from "moment";
+import "moment/locale/ko"; // 한국 시간
+import { useInterval } from "react-use";
 
 const ClassTestList = ({
   selectClassTestInfo,
   classCode,
   apiLoadingFlag,
-  emptyArrayCheckFlag
+  emptyArrayCheckFlag,
 }) => {
   const classCodeParams = useParams();
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const [realTime, setRealTime] = useState(Date.now());
+  const [testStartTimeArray, setTestStartTimeArray] = useState([])
+  const [testStartTimeFlag, setTestStartTimeFlag] = useState(false);
+  const [socketStdNumData, setsocketStdNumData] = useState([]);
 
-  console.log(selectClassTestInfo);
+  const ClassListSocket = (testData) => {
+    const socket = socketio.connect("http://3.89.30.234:3001");
+
+    console.log(cookies.t_email);
+    console.log(testData);
+    testData !== undefined && socket.emit("create", { t_email: cookies.t_email, test_id: testData });
+
+    socket.on("student_join", (msg) => {
+      console.log("asdasdasdasdasd");
+      console.log(msg);
+      setsocketStdNumData(msg);
+    });
+
+    console.log(socketStdNumData);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    console.log(selectClassTestInfo);
   }, []);
+
+    useEffect(() => {
+      socketStdNumData.length !== 0 && console.log(socketStdNumData);
+    }, [socketStdNumData]);
+
+  // const TestBtnTimeCheck = () => { 
+  //   testStartTimeArray.length !== 0 && testStartTimeArray.push(
+  //     selectClassTestInfo.map((v) => v.test_start)
+  //   );
+  // }
+
+  // useInterval(() => {
+  //     testStartTimeFlag === true && setTestStartTimeFlag(false);
+  //     setRealTime(moment().format("YYYY-MM-DD HH:mm:ss"));
+  //     const ddd =
+  //       testStartTimeArray.length !== 0 &&
+  //     testStartTimeArray.filter((f) => realTime === f);
+    
+  //     ddd.length !== undefined && setTestStartTimeFlag(true);
+  //   }, 1000);
 
   const ListUpdate = () => {
     return emptyArrayCheckFlag === false && selectClassTestInfo ? (
@@ -28,14 +73,19 @@ const ClassTestList = ({
           </td>
           <td>
             {currElement.t_test_status === 1 ? (
+              <Link
+                to="/proctorexamview"
+                onClick={() => ClassListSocket(currElement.test_id)}
+                className="tch_test_state start"
+              >
+                시험시작
+              </Link>
+            ) : (
               <Link to="/proctorexamview" className="tch_test_state complete">
                 시험완료
               </Link>
-            ) : (
-              <Link to="/proctorexamview" className="tch_test_state start">
-                시험시작
-              </Link>
             )}
+            {/* {TestBtnTimeCheck(currElement.test_start)} */}
           </td>
           <td>
             <button onClick={() => TestListDelete(currElement.test_id)}>
@@ -75,6 +125,7 @@ const ClassTestList = ({
       </div>
     ) : (
       <div className="tch_test_area">
+        {realTime}
         <table className="tch_class_list_table">
           <colgroup>
             <col width="25%" />
@@ -109,4 +160,4 @@ const ClassTestList = ({
   );
 };
 
-export default ClassTestList
+export default ClassTestList;

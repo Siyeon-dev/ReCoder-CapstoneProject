@@ -2,10 +2,37 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import * as janus from '../../../modules/examCandidatePC'
+import socketio from 'socket.io-client';
+import { useCookies } from 'react-cookie';
+
+// const socket = socketio.connect('http://localhost:4000');
+
+// (() => {
+//     socket.emit('init', { name: 'bella' });
+  
+//     socket.on('welcome', (msg) => {
+//       console.log(msg);
+//     });
+    
+// })();
 
 const TestPrecautions = () => {
   const TestCodeParams = useParams();
+  const [cookies, setCookie, removeCookie] = useCookies();
   const [cautionData, setCautionData] = useState([]);
+
+    const ClassListSocket = () => {
+      const socket = socketio.connect("http://3.89.30.234:3001");
+
+      console.log(cookies.s_email);
+      console.log(TestCodeParams.testId);
+
+      TestCodeParams.testId !== undefined &&
+        socket.emit("join", {
+          s_email: cookies.s_email,
+          test_id: Number(TestCodeParams.testId),
+        });
+    };
 
   const data = {
     test_id: TestCodeParams.testId,
@@ -15,7 +42,7 @@ const TestPrecautions = () => {
     axios
       .post("/cautionpage", data)
       .then((res) => {
-        janus.runJanusPC(0);
+        janus.runJanusPC(0); // 0 => s_num
         setCautionData(res.data);
         console.log(res.data);
       })
@@ -52,7 +79,10 @@ const TestPrecautions = () => {
               </li>
               <li className="time">03:50</li>
               <li className="start_test_btn">
-                <Link to={`/testscreen/${TestCodeParams.testId}`}>
+                <Link
+                  to={`/testscreen/${TestCodeParams.testId}`}
+                  onClick={() => ClassListSocket()}
+                >
                   시험시작
                 </Link>
               </li>

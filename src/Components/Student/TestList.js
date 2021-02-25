@@ -3,6 +3,7 @@ import Loading from "Components/User/Loading";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
+import socketio from "socket.io-client";
 
 const TestList = (classCode) => {
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -10,7 +11,19 @@ const TestList = (classCode) => {
 
   console.log(classCode);
 
+  // const ClassListSocket = (testData) => {
+  //   const socket = socketio.connect("http://3.89.30.234:3001");
+
+  //   console.log(cookies.s_email);
+  //   testData !== undefined &&
+  //     socket.emit("join", {
+  //       s_email: cookies.s_email,
+  //       test_id: testData,
+  //     });
+  // };
+
   const MenuSelect = (e) => {
+  
     const data = {
       s_email: cookies.s_email,
       class_code: e,

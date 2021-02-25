@@ -23,7 +23,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="dist/clipboard.min.js"></script>
     <script src="http://3.89.30.234:3001/socket.io/socket.io.js"></script>
-    <script>
+    <!-- <script>
           var url = "http://3.89.30.234:3001";
           var options = {
             'forceNew': true
@@ -49,23 +49,20 @@
               console.log("*******************************************" + username);
             });
           })
-
-          /*
-            주의사항에서 학생아이디, 이름 / 받기 : s_number
-            감독에서는 선생님 아이디, 시험번호
-
-            socket.connect( url ) -> 커넥트
-            받는 거 socket.on( {key}, ( {return value(서버에서 보내주는 데이터 저장 됨)}) => { code .. }) => get onmessage
-            보내는 거socket.emi({key}, {data}) => send
-          */
-
-          
-
-          // function printIn(data) {
-          //   console.log(data);
-          //   $('#result_test_area').append('<p>' + data + '</p>');
-          // }
-    </script>
+    </script> -->
+              <!-- 주의사항에서 학생아이디, 이름 / 받기 : s_number
+              감독에서는 선생님 아이디, 시험번호
+              
+              socket.connect( url ) -> 커넥트
+              받는 거 socket.on( {key}, ( {return value(서버에서 보내주는 데이터 저장 됨)}) => { code .. }) => get onmessage
+              보내는 거socket.emi({key}, {data}) => send
+              
+              
+              
+              function printIn(data) {
+              console.log(data);
+              $('#result_test_area').append('<p>' + data + '</p>');
+              } -->
     <script>
       $(document).ready(function () {
         starting_mouse_pos = 0;
