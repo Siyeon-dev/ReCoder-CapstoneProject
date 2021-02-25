@@ -6,8 +6,10 @@ let janus = null;
 let screenHandle = null;
 let videoHandlerOnPC = null;
 
-let myId = 0;
+let myId = null;
+let screenId = null;
 let mypvtid = null;
+
 
 let room = 1234;
 
@@ -81,15 +83,19 @@ export function runJanusPC (studentId) {
 									let list = msg['publishers'];
 									
 									Janus.log(
-										` --Janus-- ${msg['room']}에 성공적으로 접속하였습니다. ID = ${myId}`
+										` --Janus-- Room : ${msg['room']}에 성공적으로 접속하였습니다.`
 									);
+									Janus.log(` --Janus-- WebCam Display Name : ${myId} 님이 Feed를 생성하였습니다.`);
 
 									for (var f in list) {
 										var display = list[f]['display'];
 										var id = list[f]['id'];
+										
+										
 										let mobileId =  myId + 2;
-
+										
 										if (display === String(mobileId)) {
+											Janus.log(` --Janus-- Mobile Display name : ${display} 님이 Feed를 생성하였습니다.`);
 											// createAnswer 제작
 											mobileFeed(id);
 										}
@@ -108,6 +114,8 @@ export function runJanusPC (studentId) {
 										var display = list[f]['display'];
 										var id = list[f]['id'];
 										let mobileId =  myId + 2;
+										
+										Janus.log(`Display Value : ${display}, Mobile Display Value : ${mobileId}`)
 
 										if (display === String(mobileId)) {
 											// createAnswer 제작
@@ -144,6 +152,7 @@ export function runJanusPC (studentId) {
 							Janus.log(
 								" --Janus-- ::: WebCam Got a cleanup notification: we are unpublished now :::"
 							);
+							runJanusPC(studentId);
 						},
 					});
 				},
@@ -178,7 +187,7 @@ function localScreenFeed(msg) {
 					')'
 			);
 			
-			let screenId = myId + 1;
+			screenId = myId + 1;
 
 			var register = {
 				request: 'join',
@@ -215,6 +224,7 @@ function localScreenFeed(msg) {
 
 			if (event) {
 				if (event === 'joined') {
+					Janus.log(` --Janus-- Screen Display Name : ${screenId} 님이 Feed를 생성하였습니다.`);
 					publishOwnScreenFeed();
 				}
 			}
@@ -300,10 +310,10 @@ function mobileFeed(id) {
 function publishOwnScreenFeed() {
 	// Publish our stream
 	screenHandle.createOffer({
-		media: { video: 'screen', audioSend: false, videoRecv: true }, // Publishers are sendonly
+		media: { video: 'screen', audioSend: true, videoRecv: true }, // Publishers are sendonly
 		success: function (jsep) {
 			Janus.debug('Got publisher screen SDP!', jsep);
-			var publish = { request: 'configure', audio: false, video: true };
+			var publish = { request: 'configure', audio: true, video: true };
 			screenHandle.send({ message: publish, jsep: jsep });
 		},
 		error: function (error) {
