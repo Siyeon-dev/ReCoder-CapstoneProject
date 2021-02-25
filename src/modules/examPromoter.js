@@ -39,7 +39,7 @@ export function runJanusTeacher() {
 							videoHandlerOnPC = pluginHandle;
 
 							Janus.log(
-								`Plugin attached! (${videoHandlerOnPC.getPlugin()}, ID = ${videoHandlerOnPC.getId()})`
+								` --Janus-- Teacher Plugin attached! (${videoHandlerOnPC.getPlugin()}, ID = ${videoHandlerOnPC.getId()})`
 							);
 
 							var register = {
@@ -70,7 +70,13 @@ export function runJanusTeacher() {
 
 									for (var f in list) {
 										var id = list[f]['id'];
-										newRemoteFeed(id);
+										let display = list[f]['display'];
+
+										// Student list에서 display Name이 있는 publisher에 한해서 Feed 생성
+										if (display !== null) {
+											Janus.log(` --Janus-- Display Name : ${display} 님이 Feed를 생성하였습니다.`);
+											newRemoteFeed(id, display);
+										}
 									}
 
 									myId = msg['id'];
@@ -88,7 +94,12 @@ export function runJanusTeacher() {
 									);
 									for (var f in list) {
 										var id = list[f]['id'];
-										newRemoteFeed(id);
+										let display = list[f]['display'];
+
+										if (display !== null) {
+											Janus.log(` --Janus-- Display Name : ${display} 님이 Feed를 생성하였습니다.`);
+											newRemoteFeed(id, display);
+										}
 									}
 								}
 							}
@@ -133,7 +144,7 @@ export function runJanusTeacher() {
 	});
 };
 
-function newRemoteFeed(id) {
+function newRemoteFeed(id, displayValue) {
 	let remoteFeed = null;
 	janus.attach({
 		plugin: 'janus.plugin.videoroom',
@@ -149,7 +160,6 @@ function newRemoteFeed(id) {
 					')'
 			);
 
-			Janus.log('  -- This is a subscriber');
 			let subscribe = {
 				request: 'join',
 				room: room,
@@ -169,19 +179,18 @@ function newRemoteFeed(id) {
 
 			} else if (event) {
 				if (event === 'attached') {
-					for (var i = 1; i < 6; i++) {
-						if (!feeds[i]) {
-							feeds[i] = remoteFeed;
-							remoteFeed.rfindex = i; // remoteFeed에 번호 속성 추가
-							break;
-						}
-					}
+					// for (var i = 1; i < 6; i++) {
+					// 	if (!feeds[i]) {
+					// 		feeds[i] = remoteFeed;
+					// 		remoteFeed.rfindex = i; // remoteFeed에 번호 속성 추가
+					// 		break;
+					// 	}
+					// }
 
-					remoteFeed.rfid = msg['id'];
+					remoteFeed.rfdisplay = displayValue;
 
 					Janus.log(
-						'Successfully attached to feed ' +
-							remoteFeed.rfid +
+						'Successfully attached that Display Value is' +
 							' (' +
 							remoteFeed.rfdisplay +
 							') in room ' +
@@ -209,7 +218,8 @@ function newRemoteFeed(id) {
 			}
 		},
 		onremotestream: function (stream) {
-			let video = document.getElementById('remote' + remoteFeed.rfindex);
+			// div에 붙일 이름 규칙 정하기
+			let video = document.getElementById('remote' + remoteFeed.rfdisplay);
 			// tag에 stream data 붙이기
 			Janus.attachMediaStream(video, stream);
 		},

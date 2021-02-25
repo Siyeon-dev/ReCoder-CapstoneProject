@@ -54,7 +54,7 @@ const ProctorExamView = () => {
             </div>
             <div className="web_mobile_cam">
               <video
-                id="remote2"
+                id="remote0"
                 width="219"
                 height="170"
                 autoPlay="autoplay"
@@ -64,7 +64,7 @@ const ProctorExamView = () => {
                 해당 브라우저는 video 태그를 지원하지 않습니다.
               </video>
               <video
-                id="remote3"
+                id="remote2"
                 width="219"
                 height="170"
                 autoPlay="autoplay"
