@@ -1,7 +1,9 @@
 import axios from "axios";
+import { useCookies } from "react-cookie";
 import useModal from "./useModal";
 
 const DeleteModal = ({ readClass, classListUpdate, userClassInfo }) => {
+  const [cookies, setCookie, removeCookie] = useCookies();
   const [isOpen, setIsOpen, Modal] = useModal();
   const handleCheckArray = [];
   const uniqueArr = [];
@@ -37,7 +39,11 @@ const DeleteModal = ({ readClass, classListUpdate, userClassInfo }) => {
       .catch((err) => {
         console.log(err);
       })
-      .then(() => readClass(), classListUpdate, setIsOpen(!isOpen));
+      .then(
+        () => readClass({ t_email: cookies.t_email }),
+        classListUpdate,
+        setIsOpen(!isOpen)
+      );
   };
 
   const delClassListSetUp = userClassInfo.map((currElement, index) => (

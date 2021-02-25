@@ -33,7 +33,9 @@ const Index = () => {
   };
 
   const readClass = (apiEmailData) => {
-    apiEmailData.hasOwnProperty("t_email") === true
+    console.log(apiEmailData);
+    console.log(apiEmailData.hasOwnProperty("t_email"));
+    apiEmailData && apiEmailData.hasOwnProperty("t_email") === true
       ? axios
           .post("/classlist", apiEmailData)
           .then((res) => {

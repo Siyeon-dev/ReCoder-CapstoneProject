@@ -1,14 +1,34 @@
-import { Hook } from 'console-feed';
-import { Editor } from 'draft-js';
-import React, { useEffect } from "react";
-import { useParams, Link } from 'react-router-dom';
+import { Hook } from "console-feed";
+import { Editor } from "draft-js";
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 
-import * as Ace from '../../../modules/editor'
+import * as Ace from "../../../modules/editor";
 
 let consoleMessages = [];
 let consoleLogList = null;
 
 const TestScreen = () => {
+  const [minutes, setMinutes] = useState(30);
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    const countdown = setInterval(() => {
+      if (parseInt(seconds) > 0) {
+        setSeconds(parseInt(seconds) - 1);
+      }
+      if (parseInt(seconds) === 0) {
+        if (parseInt(minutes) === 0) {
+          clearInterval(countdown);
+        } else {
+          setMinutes(parseInt(minutes) - 1);
+          setSeconds(59);
+        }
+      }
+    }, 1000);
+    return () => clearInterval(countdown);
+  }, [minutes, seconds]);
+
   const TestCodeParams = useParams();
 
   const runCompile = () => {
@@ -16,7 +36,6 @@ const TestScreen = () => {
 
     // Get input from the code editor
     const userCode = Ace.codeEditor.getValue();
-
 
     // Run the user code
     try {
@@ -27,39 +46,39 @@ const TestScreen = () => {
 
     // Print to the console
     Ace.editorLib.printConsole(consoleMessages, consoleLogList);
-  }
+  };
 
   useEffect(() => {
     Ace.editorLib.init();
-    consoleLogList = document.getElementById('editor__console-logs');
+    consoleLogList = document.getElementById("editor__console-logs");
     // define a new console
-    var console=(function(oldCons){
+    var console = (function (oldCons) {
       return {
-          log: function(text){
-              oldCons.log(text);
-              // // Your code
-              consoleMessages.push({
-                message: text,
-              })
-          },
-          info: function (text) {
-              oldCons.info(text);
-              // Your code
-          },
-          warn: function (text) {
-              oldCons.warn(text);
-              // Your code
-          },
-          error: function (text) {
-              oldCons.error(text);
-              // Your code
-          }
+        log: function (text) {
+          oldCons.log(text);
+          // // Your code
+          consoleMessages.push({
+            message: text,
+          });
+        },
+        info: function (text) {
+          oldCons.info(text);
+          // Your code
+        },
+        warn: function (text) {
+          oldCons.warn(text);
+          // Your code
+        },
+        error: function (text) {
+          oldCons.error(text);
+          // Your code
+        },
       };
-    }(window.console));
-    
+    })(window.console);
+
     //Then redefine the old console
     window.console = console;
-  }, [])
+  }, []);
 
   return (
     <div className="test_screen_wrapper">
@@ -83,7 +102,9 @@ const TestScreen = () => {
           </select>
         </div>
         <ul>
-          <li className="test_time_limit">30:00</li>
+          <li className="test_time_limit">
+            {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+          </li>
           <li>
             <Link to="/student/805760">제출하기</Link>
           </li>
@@ -105,19 +126,22 @@ const TestScreen = () => {
                   <ul>
                     <li>JAVA</li>
                     <li className="compile_btn" onClick={runCompile}>
-                        컴파일 하기
+                      컴파일 하기
                     </li>
                   </ul>
                 </div>
-                <div className="code_compiler_area" id="editorCode">
-                </div>
+                <div className="code_compiler_area" id="editorCode"></div>
                 <div className="code_compiler_result">
                   <p className="tit">실행결과</p>
-                  <div className="scroll_area">{
-                    /* 코드 실행 결과 */
-                    <ul className="editor__console-logs" id="editor__console-logs">
-                    </ul>
-                  }</div>
+                  <div className="scroll_area">
+                    {
+                      /* 코드 실행 결과 */
+                      <ul
+                        className="editor__console-logs"
+                        id="editor__console-logs"
+                      ></ul>
+                    }
+                  </div>
                 </div>
               </div>
             </div>
@@ -127,6 +151,5 @@ const TestScreen = () => {
     </div>
   );
 };
-
 
 export default TestScreen;

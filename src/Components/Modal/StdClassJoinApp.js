@@ -12,10 +12,12 @@ import axios from "axios";
         s_email: "",
       };
 
-      classCode && stdList.map((v) => {
-        data = { class_code: classCode.classCode, s_email: v.s_email };
-        stdData.push(data);
-      });
+      classCode && stdList.map((v) =>
+        data = {class_code: classCode.classCode, s_email: v.s_email},
+        stdData.push(data)
+      );
+
+      console.log(stdData);
 
       axios
         .post("/classrecognize", stdData)

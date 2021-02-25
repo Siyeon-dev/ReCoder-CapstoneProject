@@ -562,14 +562,18 @@ box-shadow: 0px 1px 6px 0px rgba(159,162,176,0.18);}
 .class_statistic_wrap table td {font-size:13px;}
 .class_statistic_wrap table thead th {background:#f4f8fb;  padding:50px 0 15px 0; font-weight:600;}
 .class_statistic_wrap table tbody td {border-bottom:1px solid #f1f3f6;/* height:70px; *//* line-height:70px; */font-weight:500;padding: 30px 0;}
-.class_statistic_wrap table tbody td .test_name {display: inline-block; cursor: pointer; line-height:100%;}
-.class_statistic_wrap table tbody td .test_name:hover {color:#445df2; border-bottom:1px solid #445df2; transition-duration:0.3s;}
+.class_statistic_wrap table tbody td .test_name {display: inline-block; cursor: pointer; line-height:40px; border:1px solid #ddd; border-radius: 40px; padding:0 50px 0 20px; height:40px; font-weight:600; background:url(../img/statistic_test_icon.png) no-repeat 95% 50%; -webkit-box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);
+-moz-box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);
+box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);}
+.class_statistic_wrap table tbody td .test_name:hover {color:#445df2; border:1px solid #445df2; transition-duration:0.3s;}
 .class_statistic_wrap table tbody td.date {font-weight:600;}
 .class_statistic_wrap table tbody td.date,
-.class_statistic_wrap table tbody td span {font-family:'Lato', sans-serif;}
-.class_statistic_wrap table tbody td.person span {color:#00ca91; font-weight:800;}
-.class_statistic_wrap table tbody td.score span {color:#6277f5; font-weight:800;}
-.class_statistic_wrap table tbody .std_id {display:inline-block; font-weight:600; line-height:140%; text-align: left; padding-left:50px; background:#f4f8fb url(../img/bottom_std_list_id.gif) no-repeat 0 50%;}
+.class_statistic_wrap table tbody td span {font-family:'Lato', sans-serif; }
+.class_statistic_wrap table tbody td.person, 
+.class_statistic_wrap table tbody td.score {color:#888;}
+.class_statistic_wrap table tbody td.person span {color:#00ca91; font-weight:800; font-size:18px;}
+.class_statistic_wrap table tbody td.score span {color:#6277f5; font-weight:800; font-size:18px;}
+.class_statistic_wrap table tbody .std_id {display:inline-block; font-weight:600; line-height:140%; height:37px; text-align: left; padding-left:50px; background:#f4f8fb url(../img/bottom_std_list_id.gif) no-repeat 0 50%;}
 .class_statistic_wrap table tbody .std_id span {display: block; color:#9ca2ab; font-family:'Lato', sans-serif;}
 .class_statistic_wrap .bottom_std_list_area table thead {-webkit-box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);
 -moz-box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);
@@ -664,6 +668,7 @@ box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);}
 	background-color: #253e60;
 	border-radius: 10px;
 }
+.editor__console-logs {color:#fff;}
 /* Custom Select */
 .test_scren_nav .test_select {position: relative;display: inline-block;height:45px;line-height: 45px;overflow: hidden;border-radius: 5px;margin: 10px 0 0 10px;/* margin-top: 10px; */}
 .test_scren_nav .test_select:first-child{margin-left:0;}
