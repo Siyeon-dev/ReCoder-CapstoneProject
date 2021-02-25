@@ -1,6 +1,6 @@
 import * as ace from 'ace-builds/src-noconflict/ace'
 
-import 'ace-builds/src-noconflict/theme-dracula'
+import 'ace-builds/src-noconflict/theme-github'
 import 'ace-builds/src-noconflict/ext-language_tools'
 import 'ace-builds/src-noconflict/mode-javascript'
 
@@ -34,7 +34,7 @@ export let editorLib = {
 		// Configure Ace
 		codeEditor = ace.edit("editorCode");
 		// Theme
-		codeEditor.setTheme('ace/theme/dracula');
+		codeEditor.setTheme('ace/theme/github');
 
 		// Set language
 		codeEditor.session.setMode('ace/mode/javascript');
