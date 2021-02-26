@@ -3,10 +3,11 @@ import Janus from './janus/janus'
 let server = null;
 let janus = null;
 
-let screenHandle = null;
-let videoHandlerOnPC = null;
+let videoHandlerOnPC = null;	// WebCam Handler
+let screenHandle = null;		// Screen Handler
+let mobileFeedHandler = null;	// Mobile Handler
 
-let myId = null;
+let myId = null;		// 학생 primaryKey 값
 let screenId = null;
 let mypvtid = null;
 
@@ -14,8 +15,6 @@ let mypvtid = null;
 let room = 1234;
 
 var opaqueId = "videoroomtest-" + Janus.randomString(12); // opaqueId 값을 통해서 유저 구분을 한다.
-
-const TEST_CANDIDATE_NUM = 5;
 
 if (window.location.protocol === 'http:')
 	server = 'http://' + 're-coder.net' + '/janus';
@@ -42,7 +41,8 @@ export function runJanusPC (studentId) {
 							Janus.log(
 								` --Janus-- WebCam Plugin attached! (${videoHandlerOnPC.getPlugin()}, ID = ${videoHandlerOnPC.getId()})`
 							);
-
+							
+							// 방 생성
 							// room = createTheRoom(TEST_CANDIDATE_NUM);
 							joinTheRoom(1234, myId);
 						},
@@ -90,11 +90,9 @@ export function runJanusPC (studentId) {
 									for (var f in list) {
 										var display = list[f]['display'];
 										var id = list[f]['id'];
-										
-										
 										let mobileId =  myId + 2;
 										
-										if (display === String(mobileId)) {
+										if (display === String(mobileId) && display != NaN) {
 											Janus.log(` --Janus-- Mobile Display name : ${display} 님이 Feed를 생성하였습니다.`);
 											// createAnswer 제작
 											mobileFeed(id);
@@ -158,7 +156,7 @@ export function runJanusPC (studentId) {
 				},
 				error: function (error) {
 					Janus.error(error);
-					// Janus.destroy(videoHandlerOnPC);
+					Janus.destroy(videoHandlerOnPC);
 				},
 				destroyed: function () {
 					window.location.reload();
@@ -170,7 +168,7 @@ export function runJanusPC (studentId) {
 
 /**
  * @description screenFeed handle 생성
- * @param {register의 feed 값} id
+ * @param {Publisher의 정보 } msg
  */
 function localScreenFeed(msg) {
 	janus.attach({
@@ -248,19 +246,17 @@ function localScreenFeed(msg) {
 }
 
 function mobileFeed(id) {
-	let mobileFeed = null;
-
 	janus.attach({
 		plugin: 'janus.plugin.videoroom',
 		opaqueId: opaqueId,
 		success: function (pluginHandle) {
-			mobileFeed = pluginHandle;
+			mobileFeedHandler = pluginHandle;
 
 			Janus.log(
 				' --Janus-- Mobile Plugin attached! (' +
-					mobileFeed.getPlugin() +
+					mobileFeedHandler.getPlugin() +
 					', id=' +
-					mobileFeed.getId() +
+					mobileFeedHandler.getId() +
 					')'
 			);
 			Janus.log('  -- This is a mobile subscriber -- ');
@@ -272,13 +268,13 @@ function mobileFeed(id) {
 				feed: id,
 			};
 
-			mobileFeed.send({ message: subscribe });
+			mobileFeedHandler.send({ message: subscribe });
 		},
 		onmessage: function (msg, jsep) {
 			if (jsep) {
 				Janus.debug('Handling SDP as well...', jsep);
 				// Answer and attach
-				mobileFeed.createAnswer({
+				mobileFeedHandler.createAnswer({
 					jsep: jsep,
 					// Add data:true here if you want to subscribe to datachannels as well
 					// (obviously only works if the publisher offered them in the first place)
@@ -286,7 +282,7 @@ function mobileFeed(id) {
 					success: function (jsep) {
 						Janus.debug('Got SDP!', jsep);
 						var body = { request: 'start', room: room };
-						mobileFeed.send({ message: body, jsep: jsep });
+						mobileFeedHandler.send({ message: body, jsep: jsep });
 					},
 					error: function (error) {
 						Janus.error('WebRTC error:', error);
