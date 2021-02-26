@@ -92,7 +92,7 @@ export function runJanusPC (studentId) {
 										var id = list[f]['id'];
 										let mobileId =  myId + 2;
 										
-										if (display === String(mobileId) && display != NaN) {
+										if (display === String(mobileId) && !isNaN(display)) {
 											Janus.log(` --Janus-- Mobile Display name : ${display} 님이 Feed를 생성하였습니다.`);
 											// createAnswer 제작
 											mobileFeed(id);
@@ -115,7 +115,7 @@ export function runJanusPC (studentId) {
 										
 										Janus.log(`Display Value : ${display}, Mobile Display Value : ${mobileId}`)
 
-										if (display === String(mobileId)) {
+										if (display === String(mobileId) && !isNaN(display)) {
 											// createAnswer 제작
 											mobileFeed(id);
 										}
