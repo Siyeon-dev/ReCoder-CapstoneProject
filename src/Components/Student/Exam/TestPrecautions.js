@@ -43,6 +43,7 @@ const TestPrecautions = () => {
     axios
       .post("/cautionpage", data)
       .then((res) => {
+        console.log("s_number : ", res.data.s_number);
         janus.runJanusPC(res.data.s_number); // 0 => s_num
         setCautionData(res.data);
         console.log(res.data);
