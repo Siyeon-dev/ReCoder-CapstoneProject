@@ -36,13 +36,14 @@ const TestPrecautions = () => {
 
   const data = {
     test_id: TestCodeParams.testId,
+    s_email: cookies.s_email,
   };
         console.log(data);
   const CautionDataApi = () => { 
     axios
       .post("/cautionpage", data)
       .then((res) => {
-        janus.runJanusPC(0); // 0 => s_num
+        janus.runJanusPC(res.data.s_number); // 0 => s_num
         setCautionData(res.data);
         console.log(res.data);
       })

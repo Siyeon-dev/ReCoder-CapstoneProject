@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import Loading from "Components/User/Loading";
 import socketio from "socket.io-client";
 import { useCookies } from "react-cookie";
@@ -15,11 +15,13 @@ const ClassTestList = ({
   emptyArrayCheckFlag,
 }) => {
   const classCodeParams = useParams();
+  const history = useHistory();
   const [cookies, setCookie, removeCookie] = useCookies();
   const [realTime, setRealTime] = useState(Date.now());
   const [testStartTimeArray, setTestStartTimeArray] = useState([])
   const [testStartTimeFlag, setTestStartTimeFlag] = useState(false);
   const [socketStdNumData, setsocketStdNumData] = useState([]);
+  const [socketStdNumDataArray, setsocketStdNumDataArray] = useState(0);
 
   const ClassListSocket = (testData) => {
     const socket = socketio.connect("http://3.89.30.234:3001");
@@ -30,11 +32,12 @@ const ClassTestList = ({
 
     socket.on("student_join", (msg) => {
       console.log("asdasdasdasdasd");
-      console.log(msg);
-      setsocketStdNumData(msg);
-    });
+      console.log(msg.s_number);
+      socketStdNumData.push(msg.s_number);
+      setCookie("std_data", [socketStdNumData]);
+      console.log(socketStdNumData);
 
-    console.log(socketStdNumData);
+    });
   };
 
   useEffect(() => {
@@ -42,9 +45,12 @@ const ClassTestList = ({
     console.log(selectClassTestInfo);
   }, []);
 
-    useEffect(() => {
-      socketStdNumData.length !== 0 && console.log(socketStdNumData);
-    }, [socketStdNumData]);
+
+  useEffect(() => {
+    console.log(cookies.std_data);
+  }, [socketStdNumData]);
+
+
 
   // const TestBtnTimeCheck = () => { 
   //   testStartTimeArray.length !== 0 && testStartTimeArray.push(
@@ -75,7 +81,9 @@ const ClassTestList = ({
             {currElement.t_test_status === 1 ? (
               <Link
                 to="/proctorexamview"
-                onClick={() => ClassListSocket(currElement.test_id)}
+                onClick={
+                  (() => ClassListSocket(currElement.test_id))
+                }
                 className="tch_test_state start"
               >
                 시험시작
@@ -125,7 +133,6 @@ const ClassTestList = ({
       </div>
     ) : (
       <div className="tch_test_area">
-        {realTime}
         <table className="tch_class_list_table">
           <colgroup>
             <col width="25%" />

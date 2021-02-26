@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { Link } from "react-router-dom";
 import * as janus from "../../../modules/examPromoter";
+import ProctorExamVideo from "./ProctorExamVideo";
 
 const ProctorExamView = () => {
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const [stdDataCookies, setStdDataCookies] = useState([]);
+
+  useEffect(() => {
+    console.log(cookies.std_data);
+    cookies.std_data !== undefined && setStdDataCookies(...cookies.std_data);
+    console.log(stdDataCookies);
+  }, [cookies.std_data]);
+
   janus.runJanusTeacher();
+
   return (
     <div className="proctor_exam_container">
       <div className="side_list_area">
@@ -28,6 +41,15 @@ const ProctorExamView = () => {
         </ul>
         <div className="btn_wrap">
           <div>경고주기</div>
+          <Link
+            to={`/teacher`}
+            onClick={() => {
+              removeCookie("std_data");
+              setStdDataCookies([]);
+            }}
+          >
+            나가기
+          </Link>
         </div>
       </div>
       <div className="video_area">
@@ -39,42 +61,9 @@ const ProctorExamView = () => {
           </ul>
         </div>
         <div className="video_area_align">
-          <div className="std_video_set">
-            <div className="monitor_view">
-              <video
-                id="remote1"
-                width="440"
-                height="200"
-                autoPlay="autoplay"
-                muted="muted"
-                loop="loop"
-              >
-                해당 브라우저는 video 태그를 지원하지 않습니다.
-              </video>
-            </div>
-            <div className="web_mobile_cam">
-              <video
-                id="remote0"
-                width="219"
-                height="170"
-                autoPlay="autoplay"
-                muted="muted"
-                loop="loop"
-              >
-                해당 브라우저는 video 태그를 지원하지 않습니다.
-              </video>
-              <video
-                id="remote2"
-                width="219"
-                height="170"
-                autoPlay="autoplay"
-                muted="muted"
-                loop="loop"
-              >
-                해당 브라우저는 video 태그를 지원하지 않습니다.
-              </video>
-            </div>
-          </div>
+          <ProctorExamVideo
+            stdDataCookies={stdDataCookies}
+          />
         </div>
       </div>
     </div>

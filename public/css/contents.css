@@ -520,7 +520,9 @@ box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);}
 .proctor_exam_container .side_list_area ul li {width:100%; height:55px; line-height:55px; display:inline-block; font-size:16px; color:#152842; font-weight:600;}
 .proctor_exam_container .side_list_area ul li span {float:right; color:#4895ff; font-size:13px;}
 .proctor_exam_container .side_list_area .btn_wrap {position:absolute;bottom:0; left:0; width:100%; border-top:1px solid #ddd; height:60px; line-height:60px; text-align:right; padding:0 20px; box-sizing:border-box;}
-.proctor_exam_container .side_list_area .btn_wrap div {cursor:pointer; text-align:center; color:#fff; font-weight:600; font-size:15px; line-height:40px; height:40px; background:#ed3e3e; display:inline-block; border-radius:20px; padding:0 20px;}
+.proctor_exam_container .side_list_area .btn_wrap div,
+.proctor_exam_container .side_list_area .btn_wrap a {cursor:pointer; text-align:center; color:#fff; font-weight:600; font-size:15px; line-height:40px; height:40px; background:#ed3e3e; display:inline-block; border-radius:20px; padding:0 20px;}
+.proctor_exam_container .side_list_area .btn_wrap a {background:#333; margin-right:10px;}
 .proctor_exam_container .video_area {width: 75%;float:right;height: 100vh;box-sizing: border-box;padding-right: 40px;}
 .proctor_exam_container .video_area .tit_area {width: 90%;display: inline-block;color:#fff;font-weight:600;margin:80px 0 70px 0;}
 .proctor_exam_container .video_area .tit_area p {display:inline-block; font-size:25px; padding-left:40px; line-height:30px; background:url(../img/proctor_exam_tit_ico.gif) no-repeat 0 50%;}
@@ -584,21 +586,38 @@ box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);}
 .class_statistic_wrap .bottom_std_list_area table tbody td .test_status.no_test {background:url(../img/statistic_no_test_ico.gif) no-repeat right 50%;}
 .class_statistic_wrap .bottom_std_list_area table tbody td .test_status.complete {background:url(../img/statistic_complete_ico.gif) no-repeat right 50%;}
 
-/**/
-.test_screen_wrapper {width:100%;/* height:100vh; */background:#152842;display: inline-block;/* box-sizing: border-box; *//* padding-bottom: 34px; */}
+/* Student :: 시험응시 Black */
+/* .test_screen_wrapper {width:100%;background:#152842;display: inline-block;}
 .test_screen_top {width:100%; height:60px; line-height:60px; background:#00001f;}
 .test_screen_top .logo {float:left; padding:0 30px;}
 .test_screen_top ul {display: inline-block;}
 .test_screen_top ul li {float:left; color:#fff; font-size:15px; font-weight:600;}
 .test_screen_top ul li:first-child {color:#808089; padding-right:15px; margin-right:10px; background:url(../img/test_screen_top_arrow.gif) no-repeat right 50%;}
-.test_scren_nav {width:100%;height:70px;/* line-height: 70px; */overflow: hidden;padding: 0 40px;box-sizing: border-box;border-bottom: 1px solid #000c27;}
+.test_scren_nav {width:100%;height:70px;overflow: hidden;padding: 0 40px;box-sizing: border-box;border-bottom: 1px solid #000c27;}
 .test_scren_nav .quiz_num {float:left;height:35px;line-height:35px;padding:0 25px;border-radius: 35px;border: 1px solid #45556d;color:#ffd615;font-size:15px;font-weight:600;margin-top: 15px;}
 .test_scren_nav ul {overflow: hidden; float:right; margin-top:15px; color:#fff; line-height:35px;}
 .test_scren_nav ul li {cursor: pointer; float:left; font-weight:600; margin-left:20px; }
 .test_scren_nav ul li a {color:#fff;}
 .test_scren_nav ul li:hover {color:#ffd615;}
 .test_scren_nav ul li.test_time_limit {cursor:auto; height:35px;padding:0 25px;border-radius: 35px;border: 1px solid #45556d;}
+.test_scren_nav ul li.test_time_limit:hover {color:#fff;} */
+
+/* Student :: 시험응시 White */
+.test_screen_wrapper {width:100%; background: #fff;display: inline-block;}
+.test_screen_top {width:100%;height:60px;line-height:60px;background: #152842;}
+.test_screen_top .logo {float:left; padding:0 30px;}
+.test_screen_top ul {display: inline-block;}
+.test_screen_top ul li {float:left; color:#fff; font-size:15px; font-weight:600;}
+.test_screen_top ul li:first-child {color:#808089; padding-right:15px; margin-right:10px; background:url(../img/test_screen_top_arrow.gif) no-repeat right 50%;}
+.test_scren_nav {width:100%;height:70px; overflow: hidden;padding: 0 30px;box-sizing: border-box;border-bottom: 1px solid #dfdfdf;background: #f2f2f2;}
+.test_scren_nav .quiz_num {float:left;height:35px;line-height:35px;padding:0 25px;border-radius: 35px;border: 2px solid #c4c4c4;color: #152842;font-size:15px;font-weight:600;margin-top: 15px;}
+.test_scren_nav ul {overflow: hidden; float:right; margin-top:15px; color:#fff; line-height:35px;}
+.test_scren_nav ul li {cursor: pointer; float:left; font-weight:600; margin-left:20px; }
+.test_scren_nav ul li a {color: #7358df;}
+.test_scren_nav ul li:hover {color:#ffd615;}
+.test_scren_nav ul li.test_time_limit {cursor:auto;height:35px;padding:0 25px;border-radius: 35px;background: #7358df;}
 .test_scren_nav ul li.test_time_limit:hover {color:#fff;}
+
 /* Panels: */
 .std_test_wrapper{
     position:relative;
@@ -626,8 +645,8 @@ box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);}
 }
 .middle_bar{
     background:url(../img/test_drag_bar_icon.gif) no-repeat center 50%;
-    border-left:1px solid #000c27;
-    border-right:1px solid #000c27;
+    border-left: 1px solid #d8d8d8;
+    border-right: 1px solid #d8d8d8;
     position:relative;
     float:left;
     width:20px;
@@ -648,12 +667,12 @@ box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);}
 }
 #overlay_div .std_coding_area  {width:100%; height:100vh; font-size:15px; font-weight:600; display: inline-block; }
 #overlay_div .std_coding_area .coding_nav,
-.code_compiler_result p.tit  {color:#fff;height:50px;line-height:50px;width:100%;border-bottom:1px solid #000c27;padding-left:25px;box-sizing: border-box;/* border-top: 1px solid #000c27; */}
-.code_compiler_result p.tit {border-top: 1px solid #000c27;}
+.code_compiler_result p.tit  {color: #152842;height:50px;line-height:50px;width:100%;border-bottom: 1px solid #d8d8d8;padding-left:25px;box-sizing: border-box;/* border-top: 1px solid #000c27; */background: #edf5ff;}
+.code_compiler_result p.tit {border-top: 1px solid #d8d8d8;}
 #overlay_div .std_coding_area .coding_nav p.file_name {display: inline-block;     }
 #overlay_div .std_coding_area .coding_nav ul {float: right; overflow: hidden;}
-#overlay_div .std_coding_area .coding_nav ul li {float:left; border-left: 1px solid #000c27; height:50px; line-height:50px; color:#fff; padding:0 35px;}
-#overlay_div .std_coding_area ul li.compile_btn {cursor:pointer;background:#1d365c;height: 48px;}
+#overlay_div .std_coding_area .coding_nav ul li {float:left;border-left: 1px solid #d8d8d8;height:50px;line-height:50px;color: #1d365c;padding:0 35px;}
+#overlay_div .std_coding_area ul li.compile_btn {cursor:pointer;/* background:#1d365c; */height: 48px;}
 #overlay_div .std_coding_area .code_compiler_area,
 #overlay_div .std_coding_area .code_compiler_result {height: 40%;/* border-bottom:1px solid #000c27; *//* padding-bottom: 15px; */display: inline-block;width: 100%;}
 .std_test_wrapper .scroll_area {width: 98%;height: 100%;padding: 5px 25px;box-sizing: border-box;overflow-x: hidden;overflow-y: auto;padding-right: 10px;margin: 15px 0px;color: #384565;line-height: 190%;font-weight: 600;}
@@ -668,11 +687,11 @@ box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);}
 	background-color: #253e60;
 	border-radius: 10px;
 }
-.editor__console-logs {color:#fff;}
+.editor__console-logs {color: #152842;}
 /* Custom Select */
 .test_scren_nav .test_select {position: relative;display: inline-block;height:45px;line-height: 45px;overflow: hidden;border-radius: 5px;margin: 10px 0 0 10px;/* margin-top: 10px; */}
 .test_scren_nav .test_select:first-child{margin-left:0;}
-.test_scren_nav select {background:#152842; padding: 0 60px 0 20px;color:#fff;cursor: pointer;margin-top: -5px;font-size: 14px;height: 45px;font-weight: 600;}
+.test_scren_nav select {background: #f2f2f2;padding: 0 60px 0 20px;color: #152842;cursor: pointer;margin-top: -5px;font-size: 14px;height: 45px;font-weight: 600;}
 .test_scren_nav option {border:none;}
 .test_scren_nav .test_select::after {content:url( "../img/test_select_arrow.gif" ); position: absolute; top: -2px; right: 20px;cursor: pointer; pointer-events: none; -webkit-transition: .6s all ease; -o-transition: .6s all ease; transition: .6s all ease;}
 /* Transition */
