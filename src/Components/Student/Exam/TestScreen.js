@@ -72,22 +72,19 @@ const TestScreen = () => {
       return {
         log: function (text) {
           oldCons.log(text);
-          // // Your code
+
           consoleMessages.push({
             message: text,
           });
         },
         info: function (text) {
           oldCons.info(text);
-          // Your code
         },
         warn: function (text) {
           oldCons.warn(text);
-          // Your code
         },
         error: function (text) {
           oldCons.error(text);
-          // Your code
         },
       };
     })(window.console);

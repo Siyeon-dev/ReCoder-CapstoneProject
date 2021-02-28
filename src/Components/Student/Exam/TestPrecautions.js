@@ -1,10 +1,22 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import * as janus from "../../../modules/examCandidatePC";
-import socketio from "socket.io-client";
-import { useCookies } from "react-cookie";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom';
+import socketio from 'socket.io-client';
+import { useCookies } from 'react-cookie';
 
+import * as janus from '../../../modules/examCandidatePC'
+import * as VolumeMeter from "../../../modules/anti-cheat/volumeMeter"
+
+// const socket = socketio.connect('http://localhost:4000');
+
+// (() => {
+//     socket.emit('init', { name: 'bella' });
+  
+//     socket.on('welcome', (msg) => {
+//       console.log(msg);
+//     });
+    
+// })();
 const TestPrecautions = () => {
   const TestCodeParams = useParams();
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -32,10 +44,10 @@ const TestPrecautions = () => {
     axios
       .post("/cautionpage", data)
       .then((res) => {
-        console.log("s_number : ", res.data.s_number);
-        janus.runJanusPC(res.data.s_number); // 0 => s_num
+        console.log("s_number : ", res.data[0].s_number);
         setCautionData(res.data);
-        console.log(res.data);
+        res.data && janus.runJanusPC(res.data[0].s_number); // 0 => s_num
+        res.data && console.log(res.data.s_number);
       })
       .catch((err) => {
         console.log(err);
@@ -67,7 +79,37 @@ const TestPrecautions = () => {
               <li className="start_test_btn">
                 <Link
                   to={`/testscreen/${TestCodeParams.testId}`}
-                  onClick={() => ClassListSocket()}
+                  onClick={() => {
+                    ClassListSocket()
+                  
+                    // volumeMeter 매소드 호출
+                    VolumeMeter.getVolumeMeter()
+
+                    // 화면 전환 시 강제 리다이랙션
+                    window.onblur = function() {
+                      console.log('화면 전환 발생');
+                      alert('시험 도중 화면 전환을 시도하셨습니다.\n 시험 대기실로 강제 이동됩니다.');
+                      
+                      /* 리다이랙션 로직 */
+                    }
+
+                    // Keyboard Event 'alt" 막기
+                    window.addEventListener("keydown", function(event) {
+                      let handled = false;
+
+                      if (event.defaultPrevented) {
+                          return;
+                      }
+
+                      if (event.altKey)
+                          handled = true;
+
+                      if(handled) {
+                          console.log(event.keyCode);
+                          event.preventDefault();
+                      }
+                    }, true);
+                  }}
                 >
                   시험시작
                 </Link>
