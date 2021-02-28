@@ -6,10 +6,12 @@ import ClassMemList from "./ClassMemList";
 import ClassTestList from "./ClassTestList";
 import ContSideMenu from "./ContSideMenu";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { Cookies, useCookies } from "react-cookie";
 import CodeClipboardCopy from "./CodeClipboardCopy";
 import ClassStatistics from "./ClassStatistics";
+import TestScoreGrade from "./TestScoreGrade";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -19,26 +21,39 @@ const Index = () => {
   const [classStdNum, setClassStdNum] = useState(0);
   const [classTestNum, setClassTestNum] = useState(0);
   const [emptyArrayCheckFlag, setEmptyArrayCheckFlag] = useState(false);
+  const [
+    classListEmptyArrayCheckFlag,
+    setclassListEmptyArrayCheckFlag,
+  ] = useState(false);
   const [apiLoadingFlag, setApiLoadingFlag] = useState(false);
   const classCodeParams = useParams();
+  const history = useHistory();
 
   const SelectEmail = () => {
     let UserEmail = {};
 
-    cookies.t_email
-      ? (UserEmail = { t_email: cookies.t_email })
-      : (UserEmail = { s_email: cookies.s_email });
+    const MultiLogin = () => { 
+      alert("이미 로그인 된 상태입니다.")
+      history.push("/");
+    }
 
-    return UserEmail;
+    cookies.t_email ? (UserEmail = { t_email: cookies.t_email }) : MultiLogin();
+    
+
+    return UserEmail && UserEmail;
   };
 
   const readClass = (apiEmailData) => {
+    classListEmptyArrayCheckFlag === true &&
+      setclassListEmptyArrayCheckFlag(false);
+
     console.log(apiEmailData);
     console.log(apiEmailData.hasOwnProperty("t_email"));
     apiEmailData && apiEmailData.hasOwnProperty("t_email") === true
       ? axios
           .post("/classlist", apiEmailData)
-          .then((res) => {
+        .then((res) => {
+          res.data.length === 0 && setclassListEmptyArrayCheckFlag(true);
             setUserClassInfo(res.data);
             !classCodeParams.hasOwnProperty("classCode")
               ? setclassCode(res.data[0].class_code)
@@ -71,6 +86,8 @@ const Index = () => {
           res.data.hasOwnProperty("mes")
             ? setEmptyArrayCheckFlag(true)
             : setSelectClassTestInfo(res.data);
+
+          console.log(res.data);
 
           res.data.length === undefined
             ? setClassTestNum(0)
@@ -107,9 +124,11 @@ const Index = () => {
           />
           <div id="contents">
             <div className="cont_visual">
-              <div className="clipboard_copy">
-                <CodeClipboardCopy classCode={classCode} />
-              </div>
+              {classListEmptyArrayCheckFlag === false && (
+                <div className="clipboard_copy">
+                  <CodeClipboardCopy classCode={classCode} />
+                </div>
+              )}
               <p className="eng small">Welcome.</p>
               <p className="eng big">Re:Coder</p>
               <p className="kor">
@@ -119,51 +138,78 @@ const Index = () => {
             <div className="cont_tit">
               <p className="eng_txt">className :</p>
               <p className="class_name">
-                {userClassInfo.map((v) =>
-                  v.class_code === classCode ? v.class_name : ""
-                )}
+                {classListEmptyArrayCheckFlag === false
+                  ? userClassInfo.map((v) =>
+                      v.class_code === classCode ? v.class_name : ""
+                    )
+                  : "클래스를 먼저 생성해주세요."}
               </p>
-
-              <div className="test_info">
-                <p className="test_num">
-                  전체 시험 수 <span className="mint">{classTestNum}</span>개
-                </p>
-                <p className="test_std">
-                  전체 학생 수 <span className="blue">{classStdNum}</span>명
-                </p>
-              </div>
+              {classListEmptyArrayCheckFlag === false && (
+                <div className="test_info">
+                  <p className="test_num">
+                    전체 시험 수 <span className="mint">{classTestNum}</span>개
+                  </p>
+                  <p className="test_std">
+                    전체 학생 수 <span className="blue">{classStdNum}</span>명
+                  </p>
+                </div>
+              )}
             </div>
-            <div className="cont_wrap">
-              <div className="reload_area">
-                <Tabs>
-                  <TabList>
-                    <Tab>시험관리</Tab>
-                    <Tab>회원관리</Tab>
-                    <Tab>클래스 통계</Tab>
-                  </TabList>
-
-                  <TabPanel>
-                    <ClassTestList
-                      selectClassTestInfo={selectClassTestInfo}
-                      classCode={classCode}
-                      apiLoadingFlag={apiLoadingFlag}
-                      emptyArrayCheckFlag={emptyArrayCheckFlag}
-                    />
-                  </TabPanel>
-                  <TabPanel>
-                    <ClassMemList classCode={classCode} />
-                  </TabPanel>
-                  <TabPanel>
-                    <ClassStatistics
-                      selectClassTestInfo={selectClassTestInfo}
-                      apiLoadingFlag={apiLoadingFlag}
-                      emptyArrayCheckFlag={emptyArrayCheckFlag}
-                      classCode={classCode}
-                    />
-                  </TabPanel>
-                </Tabs>
+            {classListEmptyArrayCheckFlag === false ? (
+              <div className="cont_wrap">
+                <div className="reload_area">
+                  <Tabs>
+                    <TabList>
+                      <Tab>시험관리</Tab>
+                      <Tab>시험채점</Tab>
+                      <Tab>회원관리</Tab>
+                      <Tab>클래스 통계</Tab>
+                    </TabList>
+                    <TabPanel>
+                      <ClassTestList
+                        selectClassTestInfo={selectClassTestInfo}
+                        classCode={classCode}
+                        apiLoadingFlag={apiLoadingFlag}
+                        emptyArrayCheckFlag={emptyArrayCheckFlag}
+                        classListEmptyArrayCheckFlag={
+                          classListEmptyArrayCheckFlag
+                        }
+                      />
+                    </TabPanel>
+                    <TabPanel>
+                      <TestScoreGrade
+                        apiLoadingFlag={apiLoadingFlag}
+                        selectClassTestInfo={selectClassTestInfo}
+                        emptyArrayCheckFlag={emptyArrayCheckFlag}
+                      />
+                    </TabPanel>
+                    <TabPanel>
+                      <ClassMemList classCode={classCode} />
+                    </TabPanel>
+                    <TabPanel>
+                      <ClassStatistics
+                        selectClassTestInfo={selectClassTestInfo}
+                        apiLoadingFlag={apiLoadingFlag}
+                        emptyArrayCheckFlag={emptyArrayCheckFlag}
+                        classCode={classCode}
+                      />
+                    </TabPanel>
+                  </Tabs>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="no_create_guide class">
+                먼저 클래스를 생성해보세요!
+                <span>
+                  메뉴
+                  <img
+                    src="/img/first_class_plus.gif"
+                    alt="메뉴 클래스 추가 버튼 아이콘"
+                  />
+                  버튼을 눌러 클래스를 생성할 수 있습니다.
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -6,16 +6,13 @@ import axios from "axios";
     const [stdList, setStdList] = useState([]);
     const [stdData, setstdData] = useState([]);
 
-    const appllyStdListSubmit = () => {
-      let data = {
-        class_code: "",
-        s_email: "",
-      };
 
-      classCode && stdList.map((v) =>
-        data = {class_code: classCode.classCode, s_email: v.s_email},
-        stdData.push(data)
-      );
+    const appllyStdListSubmit = () => {
+      classCode &&
+        stdList.map(
+          (v) =>
+            stdData.push({"class_code": classCode, "s_email": v.s_email})
+        );
 
       console.log(stdData);
 
@@ -31,8 +28,9 @@ import axios from "axios";
     };
 
     useEffect(() => {
-      console.log(appllyStdList);
-    }, [])
+      setStdList([]);
+      setstdData([])
+    }, [classCode]);
 
     return (
       <form

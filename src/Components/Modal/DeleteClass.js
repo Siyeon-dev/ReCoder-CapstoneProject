@@ -34,7 +34,8 @@ const DeleteModal = ({ readClass, classListUpdate, userClassInfo }) => {
       .post("/classdelete", ArrClassCode)
       .then((res) => {
         console.log(res);
-        window.location.replace("/teacher");
+        //window.location.replace("/teacher");
+        readClass(cookies.t_email);
       })
       .catch((err) => {
         console.log(err);

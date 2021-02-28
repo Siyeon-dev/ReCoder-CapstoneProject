@@ -5,54 +5,13 @@ import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
 import socketio from "socket.io-client";
 
-const TestList = (classCode) => {
-  const [cookies, setCookie, removeCookie] = useCookies();
-  const [stdClassTestInfo, setStdClassTestInfo] = useState([]);
+const TestList = ({ selectClassTestInfo }) => {
 
-  console.log(classCode);
+  console.log(selectClassTestInfo);
 
-  // const ClassListSocket = (testData) => {
-  //   const socket = socketio.connect("http://3.89.30.234:3001");
-
-  //   console.log(cookies.s_email);
-  //   testData !== undefined &&
-  //     socket.emit("join", {
-  //       s_email: cookies.s_email,
-  //       test_id: testData,
-  //     });
-  // };
-
-  const MenuSelect = (e) => {
-  
-    const data = {
-      s_email: cookies.s_email,
-      class_code: e,
-    };
-
-    console.log(data);
-
-    axios
-      .post("/classinfo", data)
-      .then((res) => {
-        setStdClassTestInfo(res.data);
-        console.log(stdClassTestInfo);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    classCode.classCode !== "" && MenuSelect(classCode.classCode);
-  }, [classCode]);
-
-
-  const StdTestInfoList = (stdClassTestInfo) => {
-      
-    return (
-      !stdClassTestInfo.hasOwnProperty("mes") &&
-      stdClassTestInfo &&
-      stdClassTestInfo.map((v) => (
+  const StdTestInfoList = () => {
+    return Object.keys(selectClassTestInfo).length !== 0 ? (
+      selectClassTestInfo.map((v) => (
         <div className="my_test_box">
           <p className="test_name">{v.test_name}</p>
           <p className="question">{v.questioncount}문항</p>
@@ -91,21 +50,12 @@ const TestList = (classCode) => {
           ) : null}
         </div>
       ))
+    ) : (
+      <p>가입 승인중입니다.</p>
     );
   };
 
-  return (
-    <>
-      {stdClassTestInfo ? (
-        <>
-          {StdTestInfoList(stdClassTestInfo)}
-          <p id="result_test_area"></p>
-        </>
-      ) : (
-        <Loading />
-      )}
-    </>
-  );
+  return <>{StdTestInfoList()}</>;
 };
 
 export default TestList;

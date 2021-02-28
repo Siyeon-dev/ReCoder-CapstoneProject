@@ -1,45 +1,34 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
-import * as janus from '../../../modules/examCandidatePC'
-import socketio from 'socket.io-client';
-import { useCookies } from 'react-cookie';
-
-// const socket = socketio.connect('http://localhost:4000');
-
-// (() => {
-//     socket.emit('init', { name: 'bella' });
-  
-//     socket.on('welcome', (msg) => {
-//       console.log(msg);
-//     });
-    
-// })();
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import * as janus from "../../../modules/examCandidatePC";
+import socketio from "socket.io-client";
+import { useCookies } from "react-cookie";
 
 const TestPrecautions = () => {
   const TestCodeParams = useParams();
   const [cookies, setCookie, removeCookie] = useCookies();
   const [cautionData, setCautionData] = useState([]);
 
-    const ClassListSocket = () => {
-      const socket = socketio.connect("http://3.89.30.234:3001");
+  const ClassListSocket = () => {
+    const socket = socketio.connect("http://3.89.30.234:3001");
 
-      console.log(cookies.s_email);
-      console.log(TestCodeParams.testId);
+    console.log(cookies.s_email);
+    console.log(TestCodeParams.testId);
 
-      TestCodeParams.testId !== undefined &&
-        socket.emit("join", {
-          s_email: cookies.s_email,
-          test_id: Number(TestCodeParams.testId),
-        });
-    };
+    TestCodeParams.testId !== undefined &&
+      socket.emit("join", {
+        s_email: cookies.s_email,
+        test_id: Number(TestCodeParams.testId),
+      });
+  };
 
   const data = {
     test_id: TestCodeParams.testId,
     s_email: cookies.s_email,
   };
-        console.log(data);
-  const CautionDataApi = () => { 
+  console.log(data);
+  const CautionDataApi = () => {
     axios
       .post("/cautionpage", data)
       .then((res) => {
@@ -51,12 +40,12 @@ const TestPrecautions = () => {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   useEffect(() => {
     CautionDataApi();
-  }, [])
-  
+  }, []);
+
   const PrecautionTextAreaHtml = () => {
     let codes = cautionData && cautionData[0].test_caution;
     return <div dangerouslySetInnerHTML={{ __html: codes }}></div>;
@@ -65,11 +54,6 @@ const TestPrecautions = () => {
   return (
     cautionData.length !== 0 && (
       <div id="test_warning_container">
-        <form action="">
-          <input type="text" id="name" placeholder="Enter name" />
-          <input type="button" id="namevalue" value="이름전송" />
-        </form>
-
         <div className="wrap">
           <div className="std_test_info">
             <ul>
@@ -159,6 +143,6 @@ const TestPrecautions = () => {
       </div>
     )
   );
-}
+};
 
-export default TestPrecautions
+export default TestPrecautions;

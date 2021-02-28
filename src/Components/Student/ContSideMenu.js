@@ -6,7 +6,6 @@ import JoinClass from "Components/Modal/JoinClass";
 import DeleteClass from "Components/Modal/DeleteClass";
 
 const ContSideMenu = ({ userClassInfo, setclassCode, readClass }) => {
-
   const MenuState = useParams();
 
   const MenuSelectState =
@@ -14,20 +13,29 @@ const ContSideMenu = ({ userClassInfo, setclassCode, readClass }) => {
       ? userClassInfo[0].class_code
       : MenuState.classCode;
 
-  const classListUpdate = userClassInfo.map((currElement) => (
-    <li>
-      <Link
-        className={currElement.class_code === MenuSelectState ? "on" : ""}
-        to={`/student/${currElement.class_code}`}
-        onClick={() => {
-          setclassCode(currElement.class_code);
-        }}
-      >
-        {currElement.class_name}
-        <span>{currElement.recognize === 0 ? "(가입승인중)" : ""} </span>
-      </Link>
-    </li>
-  ));
+  const classListUpdate = () => {
+    if (userClassInfo.length === 0) {
+      return <li className="no_class_list">가입된 클래스가 없습니다.</li>;
+    } else {
+      const ListUpdate = userClassInfo.map((currElement) => (
+        <li>
+          <Link
+            className={currElement.class_code === MenuSelectState ? "on" : ""}
+            to={`/student/${currElement.class_code}`}
+            onClick={() => {
+              currElement.recognize !== 0
+                ? setclassCode(currElement.class_code)
+                : alert("아직 가입 승인중입니다.");
+            }}
+          >
+            {currElement.class_name}
+            <span>{currElement.recognize === 0 ? "(가입승인중)" : ""} </span>
+          </Link>
+        </li>
+      ));
+      return ListUpdate;
+    }
+  };
 
   return (
     <div id="nav_menu">
@@ -48,7 +56,7 @@ const ContSideMenu = ({ userClassInfo, setclassCode, readClass }) => {
               />
             </div>
           </div>
-          <ul className="dep2">{classListUpdate}</ul>
+          <ul className="dep2">{classListUpdate()}</ul>
         </li>
         <li>
           <Link to="">시험 통계</Link>

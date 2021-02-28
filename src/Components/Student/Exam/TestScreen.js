@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Hook } from "console-feed";
 import { Editor } from "draft-js";
 import React, { useEffect, useState } from "react";
@@ -9,6 +10,7 @@ let consoleMessages = [];
 let consoleLogList = null;
 
 const TestScreen = () => {
+  const TestCodeParams = useParams();
   const [minutes, setMinutes] = useState(30);
   const [seconds, setSeconds] = useState(0);
 
@@ -29,8 +31,6 @@ const TestScreen = () => {
     return () => clearInterval(countdown);
   }, [minutes, seconds]);
 
-  const TestCodeParams = useParams();
-
   const runCompile = () => {
     Ace.editorLib.clearConsoleScreen(consoleMessages, consoleLogList);
 
@@ -46,6 +46,22 @@ const TestScreen = () => {
 
     // Print to the console
     Ace.editorLib.printConsole(consoleMessages, consoleLogList);
+  };
+
+  const StdTestInfoApi = () => {
+    const data = {
+      test_id: TestCodeParams.testId,
+    };
+
+    console.log(data);
+    axios
+      .post("/testpaper", data)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -78,7 +94,12 @@ const TestScreen = () => {
 
     //Then redefine the old console
     window.console = console;
+
   }, []);
+
+  useEffect(() => {
+    StdTestInfoApi();
+  }, [])
 
   return (
     <div className="test_screen_wrapper">
