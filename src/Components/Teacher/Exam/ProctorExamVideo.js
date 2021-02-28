@@ -9,7 +9,7 @@ const ProctorExamVideo = ({ stdDataCookies }) => {
       <div className="std_video_set">
         <div className="monitor_view">
           <video
-            id={v}
+            id={"remote" + Number(v + 1)}
             width="440"
             height="200"
             autoPlay="autoplay"
@@ -21,7 +21,7 @@ const ProctorExamVideo = ({ stdDataCookies }) => {
         </div>
         <div className="web_mobile_cam">
           <video
-            id={v + 1}
+            id={"remote" + v}
             width="219"
             height="170"
             autoPlay="autoplay"
@@ -31,7 +31,7 @@ const ProctorExamVideo = ({ stdDataCookies }) => {
             해당 브라우저는 video 태그를 지원하지 않습니다.
           </video>
           <video
-            id={v + 2}
+            id={"remote" + Number(v + 2)}
             width="219"
             height="170"
             autoPlay="autoplay"
