@@ -3,11 +3,15 @@ import StdClassJoinApp from "Components/Modal/StdClassJoinApp";
 import axios from "axios";
 import Loading from "Components/User/Loading";
 import CodeClipboardCopy from "./CodeClipboardCopy";
+import $ from "jquery";
 
 const ClassMemList = ({ classCode }) => {
   const [appllyStdList, setAppllyStdList] = useState([]);
+  const [deleteStdList, setDeleteStdList] = useState([]);
+  const [deleteStdData, setDeleteStdData] = useState([]);
   const [appStdNum, setAppStdNum] = useState(0);
   const [apiFlag, setApiFlag] = useState(false);
+  const [findMemFlag, setFindMemFlag] = useState(false);
 
   const appllyStdListApi = () => {
     apiFlag === true && setApiFlag(false);
@@ -21,7 +25,11 @@ const ClassMemList = ({ classCode }) => {
         .then((res) => {
           setAppllyStdList(res.data);
           setApiFlag(true);
+          NotJoinMemberFind(res.data);
           setAppStdNum(setAppllyStdList.length);
+
+          
+        console.log(apiFlag);
         })
 
         .catch((err) => {
@@ -29,18 +37,76 @@ const ClassMemList = ({ classCode }) => {
         });
   };
 
+  const NotJoinMemberFind = (data) => {
+    findMemFlag === true && setFindMemFlag(false);
+
+    console.log(data);
+
+    const FindMem = data.find((element) => element.recognize === 0);
+    console.log(typeof FindMem);
+    typeof FindMem !== "undefined"
+      ? setFindMemFlag(true)
+      : setFindMemFlag(false);
+    console.log(findMemFlag);
+  };
+
   useEffect(() => {
     appllyStdListApi();
+    setDeleteStdList([])
+    setDeleteStdData([]);
   }, [classCode]);
+
+  useEffect(() => {
+    appllyStdListApi();
+  }, [appStdNum]);
+
+
+  const DeleteStdApi = () => {
+
+    let apiClassCpde = {
+      class_code : classCode
+    };
+
+    Object.keys(deleteStdList).length !== 0 &&
+      deleteStdData.push(apiClassCpde);
+      deleteStdList.map((v) =>
+        deleteStdData.push({
+          s_email: v.s_email,
+        })
+      );
+    
+    console.log(deleteStdData);
+    
+    axios
+      .post("/classuserdelete", deleteStdData)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+  };
 
   const AppllyStdList = (appllyStdList) => {
     return apiFlag === true ? (
-      appllyStdList.length !== 0 ? (
+      findMemFlag === false ? (
         appllyStdList.map(
           (v, index) =>
             v.recognize === 1 && (
               <div className="mem_check_box">
-                <input type="checkbox" id={index} name="전체동의" />
+                <input
+                  type="checkbox"
+                  id={index}
+                  name="student_box"
+                  onChange={(e) => {
+                    e.target.checked
+                      ? setDeleteStdList([...deleteStdList, v])
+                      : setDeleteStdList(
+                          deleteStdList.filter((value) => value !== v)
+                        );
+                  }}
+                />
                 <label for={index}>
                   <span>{v.s_email.split("@")[0]}</span>
                   {v.s_name}
@@ -71,9 +137,9 @@ const ClassMemList = ({ classCode }) => {
           </div>
         )}  추후 수정 */}
         <StdClassJoinApp appllyStdList={appllyStdList} classCode={classCode} />
-        <button>학생삭제</button>
+        <button onClick={() => DeleteStdApi()}>학생삭제</button>
       </div>
-      <div className="class_member_list">
+      <div className="class_member_list" id="reload_div">
         <div className="all_member">{AppllyStdList(appllyStdList)}</div>
       </div>
     </>

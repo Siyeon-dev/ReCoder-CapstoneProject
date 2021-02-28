@@ -12,38 +12,94 @@ const Index = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [classCode, setclassCode] = useState(""); //  해당 클래스 시험 정보
   const [userClassInfo, setUserClassInfo] = useState([]);
+  const [selectClassTestInfo, setSelectClassTestInfo] = useState([]);
+  const [classStdNum, setClassStdNum] = useState(0);
+  const [classTestNum, setClassTestNum] = useState(0);
+  const [emptyArrayCheckFlag, setEmptyArrayCheckFlag] = useState(false);
+  const [
+    classListEmptyArrayCheckFlag,
+    setclassListEmptyArrayCheckFlag,
+  ] = useState(false);
+  const [apiLoadingFlag, setApiLoadingFlag] = useState(false);
   const classCodeParams = useParams();
 
-  const readClass = () => {
-    let userEmail;
+  const SelectEmail = () => {
+    let UserEmail = {};
 
-    if (cookies.t_email) {
-      userEmail = { t_email: cookies.t_email };
-    } else if (cookies.s_email) {
-      userEmail = { s_email: cookies.s_email };
-    } else {
-      return null;
-    }
+    cookies.t_email
+      ? (UserEmail = { t_email: cookies.t_email })
+      : (UserEmail = { s_email: cookies.s_email });
+    
+    console.log(UserEmail);
 
+    return UserEmail && UserEmail;
+  };
+
+  const readClass = (apiEmailData) => {
+    classListEmptyArrayCheckFlag === true &&
+      setclassListEmptyArrayCheckFlag(false);
+
+    console.log(apiEmailData);
+    console.log(apiEmailData.hasOwnProperty("s_email"));
+    apiEmailData && apiEmailData.hasOwnProperty("s_email") === true
+      ? axios
+          .post("/classlist", apiEmailData)
+          .then((res) => {
+            res.data.length === 0 && setclassListEmptyArrayCheckFlag(true);
+            setUserClassInfo(res.data);
+            !classCodeParams.hasOwnProperty("classCode")
+              ? setclassCode(res.data[0].class_code)
+              : setclassCode(classCodeParams.classCode);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      : console.log("Lost User Email");
+  };
+const MenuSelect = (apiEmailData, classCode) => {
+  apiLoadingFlag === true && setApiLoadingFlag(false);
+  emptyArrayCheckFlag === true && setEmptyArrayCheckFlag(false);
+
+  console.log(classCode);
+
+  const data = {
+    class_code: classCode !== undefined ? classCode : null,
+    ...apiEmailData,
+  };
+
+  console.log(data);
+
+  data.class_code !== null &&
     axios
-      .post("/classlist", userEmail)
+      .post("/classinfo", data)
       .then((res) => {
-        setUserClassInfo(res.data);
-        !classCodeParams.hasOwnProperty("classCode")
-          ? setclassCode(res.data[0].class_code)
-          : setclassCode(classCodeParams.classCode);
+        setApiLoadingFlag(true);
+        res.data.hasOwnProperty("mes")
+          ? setEmptyArrayCheckFlag(true)
+          : setSelectClassTestInfo(res.data);
 
-        console.log(res.data);
-        console.log(classCode);
+        res.data.length === undefined
+          ? setClassTestNum(0)
+          : setClassTestNum(res.data.length);
+
+        res.data.length === undefined
+          ? setClassStdNum(0)
+          : setClassStdNum(res.data[0].student_count);
       })
       .catch((err) => {
         console.log(err);
       });
-  };
+};
 
-  useEffect(() => {
-    readClass();
-  }, []);
+useEffect(() => {
+  readClass(SelectEmail());
+}, []);
+
+useEffect(() => {
+  setSelectClassTestInfo([]);
+  console.log(emptyArrayCheckFlag);
+  classCode && MenuSelect(SelectEmail(), classCode);
+}, [classCode]);
 
   return (
     <>
@@ -63,9 +119,22 @@ const Index = () => {
                 공정한 시험 문화를 위한 코딩 테스트 프로그램
               </p>
             </div>
-            <ContTitle />
+            <div className="cont_tit">
+              <p className="eng_txt">className :</p>
+              <p className="class_name">
+                {classListEmptyArrayCheckFlag === false
+                  ? userClassInfo.map((v) =>
+                      v.class_code === classCode ? v.class_name : ""
+                    )
+                  : "클래스를 먼저 생성해주세요."}
+              </p>
+              <div className="teacher_info">
+                <p className="eng_txt">Teacher : </p>
+                <p>정영철</p>
+              </div>
+            </div>
             <div className="cont_wrap">
-              <TestList classCode={classCode} />
+              <TestList selectClassTestInfo={selectClassTestInfo} />
             </div>
           </div>
         </div>
