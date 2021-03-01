@@ -26,7 +26,7 @@ const TestPrecautions = () => {
         console.log("s_number : ", res.data[0].s_number);
         setStudentNumber(res.data[0].s_number)
         setCautionData(res.data);
-        res.data && janus.runJanusPC(res.data[0].s_number); // 0 => s_num
+        res.data && janus.runJanusPC(res.data[0].s_number, data.test_id); // 0 => s_num
         res.data && console.log(res.data.s_number);
       })
       .catch((err) => {
@@ -60,11 +60,6 @@ const TestPrecautions = () => {
                 <Link
                   to={`/testscreen/${TestCodeParams.testId}`}
                   onClick={() => {
-<<<<<<< HEAD
-=======
-                    ClassListSocket()
-                    console.log("in Link onClick : ",studentNumber);
->>>>>>> ce1d4655fabc1db8464ad816be24d331209de25d
                     // volumeMeter 매소드 호출
                     VolumeMeter.getVolumeMeter(TestCodeParams.testId, studentNumber);
 

@@ -1,20 +1,21 @@
-import axios from "axios";
-import { useParams } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 import socketio from "socket.io-client";
+
+const volumeLevel = 0.1;  // 0.1 는 평소 말하는 목소리 크기를 판단할 수 있는 정도. (속삭임은 판명 안됨)
 
 let meter = null;
 let audioContext = null;
 let mediaStreamSource = null;
-let volumeLevel = 0.1;  // 0.1 는 평소 말하는 목소리 크기를 판단할 수 있는 정도. (속삭임은 판명 안됨)
 
 let socket = null;
 let testIdValue = null;
 let studentNumber = null;
 
 export function getVolumeMeter(test_id, s_number) {
-    socket = socketio.connect("http://3.89.30.234:3001");
-
+    try {
+        socket = socketio.connect("http://3.89.30.234:3001");
+    } catch(error) {
+        console.log('커넥션 실패');
+    }
     // monkeypatch Web Audio
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     
@@ -71,6 +72,7 @@ function drawLoop( time ) {
     // 한 번 호출이 되고나면 시간 stop 해야된다.
     if (meter.volume > volumeLevel) {
         // 음성인식 부정행위 API 호출
+        console.log('음성 인식');
         (function volumeAPI()  {
             const data = {
                 test_id: testIdValue,
@@ -89,7 +91,7 @@ function drawLoop( time ) {
     // callback으로 재귀 호출 (중요!)
     setTimeout(function() {
         window.requestAnimationFrame( drawLoop );
-    }, 3000);
+    }, 1000);
 }
 
 
