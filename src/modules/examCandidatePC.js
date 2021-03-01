@@ -353,7 +353,6 @@ function createTheRoom(numOfCandidate) {
 	let create = {
 		request: 'create',
 		room: numOfCandidate,
-		require_pvtid: true,
 		bitrate: 500000,
 		notify_joining: true,
 		// 참여 가능한 publisher 수 = (참가자 인원 * 3) + (eyetracker, promoter)
