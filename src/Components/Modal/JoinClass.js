@@ -30,7 +30,11 @@ const JoinClass = ({ readClass, classListUpdate, userClassInfo }) => {
       .catch((err) => {
         console.log(err);
       })
-      .then(() => readClass(cookies.s_email), classListUpdate, setIsOpen(!isOpen));
+      .then(
+        () => readClass({ s_email: cookies.s_email }),
+        classListUpdate,
+        setIsOpen(!isOpen)
+      );
   };
 
   return (

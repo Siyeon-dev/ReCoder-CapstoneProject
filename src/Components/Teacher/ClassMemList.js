@@ -29,7 +29,7 @@ const ClassMemList = ({ classCode }) => {
           setAppStdNum(setAppllyStdList.length);
 
           
-        console.log(apiFlag);
+        console.log(res.data);
         })
 
         .catch((err) => {
@@ -81,6 +81,8 @@ const ClassMemList = ({ classCode }) => {
       .post("/classuserdelete", deleteStdData)
       .then((res) => {
         console.log(res.data);
+
+        !alert("회원 삭제가 완료되었습니다.") && appllyStdListApi();
       })
       .catch((err) => {
         console.log(err);
@@ -90,7 +92,7 @@ const ClassMemList = ({ classCode }) => {
 
   const AppllyStdList = (appllyStdList) => {
     return apiFlag === true ? (
-      findMemFlag === false ? (
+      Object.keys(appllyStdList).length !== 0 ? (
         appllyStdList.map(
           (v, index) =>
             v.recognize === 1 && (
@@ -136,7 +138,11 @@ const ClassMemList = ({ classCode }) => {
             {appStdNum}개의 가입 신청이 있습니다.
           </div>
         )}  추후 수정 */}
-        <StdClassJoinApp appllyStdList={appllyStdList} classCode={classCode} />
+        <StdClassJoinApp
+          appllyStdListApi={appllyStdListApi}
+          appllyStdList={appllyStdList}
+          classCode={classCode}
+        />
         <button onClick={() => DeleteStdApi()}>학생삭제</button>
       </div>
       <div className="class_member_list" id="reload_div">

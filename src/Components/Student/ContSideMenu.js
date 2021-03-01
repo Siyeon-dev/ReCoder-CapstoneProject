@@ -49,11 +49,11 @@ const ContSideMenu = ({ userClassInfo, setclassCode, readClass }) => {
                 classListUpdate={classListUpdate}
                 userClassInfo={userClassInfo}
               />
-              <DeleteClass
+              {/* <DeleteClass
                 readClass={readClass}
                 classListUpdate={classListUpdate}
                 userClassInfo={userClassInfo}
-              />
+              /> */}
             </div>
           </div>
           <ul className="dep2">{classListUpdate()}</ul>
