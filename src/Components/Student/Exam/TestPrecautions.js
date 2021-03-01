@@ -7,35 +7,12 @@ import { useCookies } from 'react-cookie';
 import * as janus from '../../../modules/examCandidatePC'
 import * as VolumeMeter from "../../../modules/anti-cheat/volumeMeter"
 
-// const socket = socketio.connect('http://localhost:4000');
-
-// (() => {
-//     socket.emit('init', { name: 'bella' });
-  
-//     socket.on('welcome', (msg) => {
-//       console.log(msg);
-//     });
-    
-// })();
 
 const TestPrecautions = () => {
   const TestCodeParams = useParams();
   const [cookies, setCookie, removeCookie] = useCookies();
   const [cautionData, setCautionData] = useState([]);
   const [studentNumber, setStudentNumber] = useState([]);
-
-  const ClassListSocket = () => {
-    const socket = socketio.connect("http://3.89.30.234:3001");
-
-    console.log(cookies.s_email);
-    console.log(TestCodeParams.testId);
-
-    TestCodeParams.testId !== undefined &&
-      socket.emit("join", {
-        s_email: cookies.s_email,
-        test_id: Number(TestCodeParams.testId),
-      });
-  };
 
   const data = {
     test_id: TestCodeParams.testId,
@@ -72,19 +49,22 @@ const TestPrecautions = () => {
         <div className="wrap">
           <div className="std_test_info">
             <ul>
-              <li>
+              {/* <li>
                 대기인원 :
                 <div className="eng">
                   <span>10</span>/30
                 </div>
-              </li>
+              </li> */}
               <li className="time">03:50</li>
               <li className="start_test_btn">
                 <Link
                   to={`/testscreen/${TestCodeParams.testId}`}
                   onClick={() => {
+<<<<<<< HEAD
+=======
                     ClassListSocket()
                     console.log("in Link onClick : ",studentNumber);
+>>>>>>> ce1d4655fabc1db8464ad816be24d331209de25d
                     // volumeMeter 매소드 호출
                     VolumeMeter.getVolumeMeter(TestCodeParams.testId, studentNumber);
 

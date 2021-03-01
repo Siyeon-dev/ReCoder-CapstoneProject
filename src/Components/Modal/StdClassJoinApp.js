@@ -23,11 +23,12 @@ const ClassJoinStdList = ({
       .post("/classrecognize", stdData)
       .then((res) => {
         console.log(res.data);
+        appllyStdListApi();
       })
       .catch((err) => {
         console.log(err);
       })
-      .then(() => setIsOpen(false), appllyStdListApi());
+      .then(() => setIsOpen(false));
   };
 
   useEffect(() => {
