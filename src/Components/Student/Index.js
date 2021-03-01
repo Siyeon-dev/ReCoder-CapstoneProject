@@ -1,7 +1,8 @@
 import axios from "axios";
 import Footer from "Components/Layout/Footer";
 import Header from "Components/Layout/Header";
-import React, { useEffect, useState } from "react";
+import ClassStatistics from "Components/Teacher/ClassStatistics";
+import React, { createContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 import ContSideMenu from "./ContSideMenu";
@@ -96,12 +97,10 @@ const MenuSelect = (apiEmailData, classCode) => {
       .catch((err) => {
         console.log(err);
       });
-};
-
+  };
 useEffect(() => {
   readClass(SelectEmail());
   Object.keys(classCode).length === 0 && setNoClassCodeFlag(true);
-            
 }, []);
 
 useEffect(() => {

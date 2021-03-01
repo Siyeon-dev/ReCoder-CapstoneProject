@@ -31,13 +31,13 @@ const ClassTestList = ({
     testData !== undefined && socket.emit("create", { t_email: cookies.t_email, test_id: testData });
 
     socket.on("student_join", (msg) => {
+      console.log(msg);
       console.log("asdasdasdasdasd");
       console.log(msg.s_number);
       socketStdNumData.push(msg.s_number);
       setCookie("std_data", [socketStdNumData]);
-      console.log(socketStdNumData);
-
     });
+    
   };
 
   useEffect(() => {
@@ -80,10 +80,8 @@ const ClassTestList = ({
           <td>
             {currElement.t_test_status === 1 ? (
               <Link
-                to="/proctorexamview"
-                onClick={
-                  (() => ClassListSocket(currElement.test_id))
-                }
+                to={`/proctorexamview/${currElement.test_id}`}
+                onClick={() => ClassListSocket(currElement.test_id)}
                 className="tch_test_state start"
               >
                 시험시작

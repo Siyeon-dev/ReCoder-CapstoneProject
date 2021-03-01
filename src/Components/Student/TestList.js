@@ -2,13 +2,13 @@ import axios from "axios";
 import Loading from "Components/User/Loading";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import socketio from "socket.io-client";
 
 const TestList = ({ selectClassTestInfo, noClassCodeFlag }) => {
-  console.log(noClassCodeFlag);
+
   const StdTestInfoList = () => {
-    return Object.keys(selectClassTestInfo).length !== 0 ? (
+    return noClassCodeFlag && Object.keys(selectClassTestInfo).length !== 0 ? (
       selectClassTestInfo.map((v) => (
         <div className="my_test_box">
           <p className="test_name">{v.test_name}</p>

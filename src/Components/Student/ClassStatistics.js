@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router";
 import SelectTestStatistics from "./SelectTestStatistics";
@@ -9,14 +9,18 @@ const ClassStatistics = ({
   apiLoadingFlag,
   emptyArrayCheckFlag,
   classCode,
+  TeatDataApiContext,
 }) => {
   const [stateViewData, setStateViewData] = useState([]);
   const [stateViewDataFlag, setStateViewDataFlag] = useState(false);
   const [selectTestName, setSelectTestName] = useState("");
   const classCodeParams = useParams();
 
+  const user = useContext(TeatDataApiContext);
+  console.log(user);
+
   const TestListDataLoop = (TestIdData) => {
-    stateViewDataFlag === true && setStateViewDataFlag(false)
+    stateViewDataFlag === true && setStateViewDataFlag(false);
     const data = {
       test_id: String(TestIdData),
     };
@@ -71,7 +75,7 @@ const ClassStatistics = ({
 
   useEffect(() => {
     setSelectTestName("");
-    setStateViewData([])
+    setStateViewData([]);
   }, [classCodeParams]);
 
   return (

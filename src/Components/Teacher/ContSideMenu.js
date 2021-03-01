@@ -56,12 +56,12 @@ const ContSideMenu = ({ userClassInfo, setclassCode, readClass }) => {
           </div>
           <ul className="dep2">{classListUpdate()}</ul>
         </li>
-        <li>
+        {/* <li>
           <Link to="">시험 통계</Link>
         </li>
         <li>
           <Link to="">시험 체험하기</Link>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

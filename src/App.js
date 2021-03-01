@@ -10,6 +10,7 @@ import CreateTestForm from "./Components/Teacher/Exam/CreateTestForm";
 import TestPrecautions from "./Components/Student/Exam/TestPrecautions";
 import ProctorExamView from "./Components/Teacher/Exam/ProctorExamView";
 import TestScreen from "Components/Student/Exam/TestScreen";
+import ClassStatistics from "Components/Student/ClassStatistics";
 
 function App() {
   return (
@@ -25,7 +26,8 @@ function App() {
           <Route path="/student/:classCode" component={Student} />
           <Route path="/testprecautions/:testId" component={TestPrecautions} />
           <Route path="/testscreen/:testId" component={TestScreen} />
-          <Route path="/proctorexamview" component={ProctorExamView} />
+          <Route path="/proctorexamview/:testId" component={ProctorExamView} />
+          <Route path="/studentcasssatistics" component={ClassStatistics} />
 
           <Route path="/createtestform/:classCode" component={CreateTestForm} />
           <Redirect from="*" to="/" />

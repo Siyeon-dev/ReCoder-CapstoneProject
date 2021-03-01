@@ -22,11 +22,37 @@ const TestScreen = () => {
   const [selectTestListData, setSelectTestListData] = useState([]);
   const [userCodeData, setUserCodeData] = useState([]);
   const [userCodeResultData, setUserCodeResultData] = useState([]);
+
+  
+  const [socketData, setSocketData] = useState([]);
+
   const [quizId, setQuizId] = useState();
   const [apiCount, setApiCount] = useState(0);
   const [currentTestNum, setCurrentTestNum] = useState(1);
   const [testCompleteBtn, setTestCompleteBtn] = useState("제출하기")
   const [resultArray, setResultArray] = useState([])
+  
+  const ClassListSocket = () => {
+    const socket = socketio.connect("http://3.89.30.234:3001");
+
+    console.log(cookies.s_email);
+    console.log(TestCodeParams.testId);
+
+    TestCodeParams.testId !== undefined &&
+      socket.emit("join", {
+        s_email: cookies.s_email,
+        test_id: Number(TestCodeParams.testId),
+      });
+    
+       socket.on("m_room_out", (msg) => {
+         console.log("room_out자알받았습니다요~~`");
+         console.log(msg);
+       });
+  };
+
+  useEffect(() => {
+    ClassListSocket();
+  }, []);
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -65,9 +91,9 @@ const TestScreen = () => {
     // Object.keys(userCodeData).length !== 0 && CompileApi();
   };
 
-  useEffect(() => {
-    console.log(userCodeData)
-  },[userCodeData])
+  // useEffect(() => {
+  //   console.log(Ace.codeEditor.getValue());
+  // },[userCodeData])
 
   const StdTestInfoApi = () => {
     const data = {
@@ -84,6 +110,7 @@ const TestScreen = () => {
         setResultArray(
           new Array(res.data.length)
         )
+        setQuizId(String(res.data[0].question_id));
         setIsLoading(true);
       })
       .catch((err) => {
@@ -102,6 +129,8 @@ const TestScreen = () => {
     setQuizId(testListData[selectTestNum].question_id);
     Ace.codeEditor.setValue(resultArray[selectTestNum] ? resultArray[selectTestNum] : "console.log('hello world');")
     Ace.editorLib.clearConsoleScreen(consoleMessages, consoleLogList);
+
+    console.log(resultArray[0]);
   };
 
   useEffect(() => {
@@ -139,16 +168,24 @@ const TestScreen = () => {
 
   const CompileApi = () => {
 
-    const ApiCommand = apiCount === 0 ? "insert" : "update";
+
+    const asdasd = userCodeData.filter((v) => v === quizId);
+    const ApiCommand = asdasd.length === 0 ? "insert" : "update";
+    
 
     const data = {
       s_email: cookies.s_email,
       question_id: quizId,
       test_id: TestCodeParams.testId,
-      compile_code: userCodeData,
+      compile_code: Ace.codeEditor.getValue(),
       //compile_result: userCodeResultData,
       command: ApiCommand,
     };
+
+    userCodeData.push(quizId);
+    console.log(userCodeData);
+
+    console.log(data);
 
     data !== undefined && axios
       .post("/compile", data)
@@ -231,7 +268,13 @@ const TestScreen = () => {
                   <p className="file_name">Soulution.Java</p>
                   <ul>
                     <li>JAVA</li>
-                    <li className="compile_btn" onClick={runCompile}>
+                    <li
+                      className="compile_btn"
+                      onClick={(e) => {
+                        runCompile()
+                        CompileApi()
+                      }}
+                    >
                       컴파일 하기
                     </li>
                   </ul>
