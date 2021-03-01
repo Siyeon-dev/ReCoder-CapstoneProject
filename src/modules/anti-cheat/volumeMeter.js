@@ -9,8 +9,10 @@ let mediaStreamSource = null;
 let socket = null;
 let testIdValue = null;
 let studentNumber = null;
+let count = null;
 
 export function getVolumeMeter(test_id, s_number) {
+    count = 0;
     try {
         socket = socketio.connect("http://3.89.30.234:3001");
     } catch(error) {
@@ -69,11 +71,13 @@ function gotStream(stream) {
 }
 
 function drawLoop( time ) {
-    // 한 번 호출이 되고나면 시간 stop 해야된다.
-    if (meter.volume > volumeLevel) {
+    // 0.1 데시벨 이상, 3번 이하 호출
+    if (meter.volume > volumeLevel && count < 3) {
         // 음성인식 부정행위 API 호출
         console.log('음성 인식');
         (function volumeAPI()  {
+            count++;
+
             const data = {
                 test_id: testIdValue,
                 s_number: studentNumber,
