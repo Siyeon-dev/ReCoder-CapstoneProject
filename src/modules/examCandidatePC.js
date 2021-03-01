@@ -42,7 +42,8 @@ export function runJanusPC (studentId, testRoomNum) {
 								` --Janus-- WebCam Plugin attached! (${videoHandlerOnPC.getPlugin()}, ID = ${videoHandlerOnPC.getId()})`
 							);
 							
-							isRoomExist(roomNumber);
+							// isRoomExist(roomNumber);
+							joinTheRoom(1234);
 						},
 						error: function (error) {
 							Janus.error(" --Janus-- WebCam Error attaching plugin...", error);

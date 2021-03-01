@@ -27,7 +27,7 @@ const ProctorExamView = () => {
       s_email: cookies.s_email,
       test_id: Number(TestCodeParams.testId),
     });
-  
+    
     
   }, [cookies.std_data]);
 
