@@ -9,7 +9,11 @@ const ProctorExamView = () => {
   const TestCodeParams = useParams();
   const [cookies, setCookie, removeCookie] = useCookies();
   const [stdDataCookies, setStdDataCookies] = useState([]);
-
+  const [socketData, setSocketData] = useState(null);
+  useEffect(() => {
+    const socket = socketio.connect("http://3.89.30.234:3001");
+    setSocketData({ socket : socket });
+  }, []);
   useEffect(() => {
     janus.runJanusTeacher();
     
@@ -33,11 +37,18 @@ const ProctorExamView = () => {
     // 구슬 상 ON 출력이 안되는 이유가 현 ClassListSocket 메소드가 버튼 클릭시 실행 되는 걸로 감싸져 있어서 그런거 같아요 ㅠ_ㅠ
   };
 
+useEffect(() => {
   // 형탁상 eye-tracking 부정행위시 넘어 오는 데이터
-  socket.on("eyetrackingcount", (msg) => {
-    console.log("자알받았습니다요~~`");
-    console.log(msg);
-  });
+//  s_number test_id => object => JSON 
+  console.log(socketData);
+  if (socketData != null) {
+    socketData.socket.on("eyetrackingcount", (msg) => {
+      console.log("자알받았습니다요~~`");
+      console.log(msg);
+    });
+    console.log("Socket On Set success")
+  }
+}, [socketData]);
 
   return (
     <div className="proctor_exam_container">

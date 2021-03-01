@@ -60,11 +60,6 @@ const TestPrecautions = () => {
                 <Link
                   to={`/testscreen/${TestCodeParams.testId}`}
                   onClick={() => {
-<<<<<<< HEAD
-=======
-                    ClassListSocket()
-                    console.log("in Link onClick : ",studentNumber);
->>>>>>> ce1d4655fabc1db8464ad816be24d331209de25d
                     // volumeMeter 매소드 호출
                     VolumeMeter.getVolumeMeter(TestCodeParams.testId, studentNumber);
 

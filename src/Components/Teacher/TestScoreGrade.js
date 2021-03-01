@@ -19,7 +19,6 @@ const TestScoreGrade = ({
   emptyArrayCheckFlag,
 }) => {
   const classCodeParams = useParams();
-  const [cookies, setCookie, removeCookie] = useCookies();
   const [stateApiData, setStateApiData] = useState([]);
   const [stateApiDataFlag, setStateApiDataFlag] = useState(false);
   const [apiDataFlag, setapiDataFlag] = useState(false);
