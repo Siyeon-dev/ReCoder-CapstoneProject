@@ -10,10 +10,10 @@ const ProctorExamView = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [stdDataCookies, setStdDataCookies] = useState([]);
   const [socketData, setSocketData] = useState(null);
-  useEffect(() => {
-    const socket = socketio.connect("http://3.89.30.234:3001");
-    setSocketData({ socket : socket });
-  }, []);
+  // useEffect(() => {
+  //   const socket = socketio.connect("http://3.89.30.234:3001");
+  //   setSocketData({ socket : socket });
+  // }, []);
   useEffect(() => {
     janus.runJanusTeacher(TestCodeParams.testId);
     
@@ -22,32 +22,24 @@ const ProctorExamView = () => {
     console.log(stdDataCookies);
   }, [cookies.std_data]);
 
+  // const ClassListSocket = () => {
+  //   console.log("실행됨");
+  //   console.log("선생님 보냄");
+  //   console.log(TestCodeParams.testId);
+
+  //   TestCodeParams.testId !== undefined &&
+  //     socket.emit("m_room_out", {
+  //       test_id: Number(TestCodeParams.testId),
+  //     });
+  //   // 구슬 상 ON 출력이 안되는 이유가 현 ClassListSocket 메소드가 버튼 클릭시 실행 되는 걸로 감싸져 있어서 그런거 같아요 ㅠ_ㅠ
+  // };
+
   const socket = socketio.connect("http://3.89.30.234:3001");
-  const ClassListSocket = () => {
-    console.log("실행됨");
-    console.log("선생님 보냄");
-    console.log(TestCodeParams.testId);
-
-    TestCodeParams.testId !== undefined &&
-      socket.emit("m_room_out", {
-        test_id: Number(TestCodeParams.testId),
-      });
-    // 구슬 상 ON 출력이 안되는 이유가 현 ClassListSocket 메소드가 버튼 클릭시 실행 되는 걸로 감싸져 있어서 그런거 같아요 ㅠ_ㅠ
-  };
-
-useEffect(() => {
-  // 형탁상 eye-tracking 부정행위시 넘어 오는 데이터
-//  s_number test_id => object => JSON 
-  console.log(socketData);
-  if (socketData != null) {
-    socketData.socket.on("eyetrackingcount", (msg) => {
-      console.log("자알받았습니다요~~`");
-      console.log(msg);
-    });
-    console.log("Socket On Set success")
-  }
-}, [socketData]);
-
+  
+  socket.on("eyetrackingcount", (msg) => {
+    console.log(msg);
+  });
+  
   return (
     <div className="proctor_exam_container">
       <div className="side_list_area">
@@ -76,7 +68,7 @@ useEffect(() => {
           <Link
             to={`/teacher`}
             onClick={() => {
-              ClassListSocket();
+              //ClassListSocket();
               removeCookie("std_data");
               setStdDataCookies([]);
             }}

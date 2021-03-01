@@ -1,7 +1,7 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import * as Ace from "../../modules/editor";
 import parse from "html-react-parser";
 
@@ -17,8 +17,10 @@ const TestScoringPage = () => {
   const [selectApiDataFlag, setSelectApiDataFlag] = useState(true);
   const [testLang, setTestLang] = useState([]);
   const [minutes, setMinutes] = useState(30);
-    const [seconds, setSeconds] = useState(0);
-    const [scoringTestNum, setScoringTestNum] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const [scoringTestNum, setScoringTestNum] = useState(0);
+  const inputScore = useRef();
+  const history = useHistory();
 
   const ScoringApiData = () => {
     apiDataFlag === true && setApiDataFlag(false);
@@ -34,8 +36,9 @@ const TestScoringPage = () => {
         .then((res) => {
           setApiDataFlag(true);
           console.log(res.data);
-            setGradingDataArray(res.data);
-            setSelectGradingDataArray([res.data[0]]);
+          setGradingDataArray(res.data);
+          setSelectGradingDataArray([res.data[0]]);
+          console.log(selectGradingDataArray[0].compile_code);
         })
         .catch((err) => {
           console.log(err);
@@ -44,8 +47,19 @@ const TestScoringPage = () => {
 
   useEffect(() => {
     ScoringApiData();
-        console.log(selectGradingDataArray);
+    console.log(apiDataFlag);
+    console.log(selectGradingDataArray);
   }, []);
+
+  useEffect(() => {
+    Object.keys(selectGradingDataArray).length !== 0 &&
+      Ace.codeEditor.setValue(selectGradingDataArray[0].compile_code);
+  }, [selectGradingDataArray]);
+
+  // useEffect(() => {
+  //   Object.keys(selectGradingDataArray).length !== 0 &&
+  //     Ace.codeEditor.setValue(selectGradingDataArray[0].compile_code);
+  // }, [gradingDataArray]);
 
   useEffect(() => {
     /* API에서 학생 시험 종류 받아오기 */
@@ -67,62 +81,95 @@ const TestScoringPage = () => {
     return () => clearInterval(countdown);
   }, [minutes, seconds]);
 
-//   // Ace Code Editor Run
-//   const runCompile = () => {
-//     Ace.editorLib.clearConsoleScreen(consoleMessages, consoleLogList);
+  // Ace Code Editor Run
+  const runCompile = () => {
+    Ace.editorLib.clearConsoleScreen(consoleMessages, consoleLogList);
 
-//     // Get input from the code editor
-//     const userCode = Ace.codeEditor.getValue();
-//     // Run the user code
-//     try {
-//       new Function(userCode)();
-//     } catch (err) {
-//       console.error(err);
-//     }
-
-//     // Print to the console
-//     Ace.editorLib.printConsole(consoleMessages, consoleLogList);
-//   };
-
-//   // Ace Code Editor
-//   useEffect(() => {
-//     Ace.editorLib.init();
-//     consoleLogList = document.getElementById("editor__console-logs");
-//     // define a new console
-//     var console = (function (oldCons) {
-//       return {
-//         log: function (text) {
-//           oldCons.log(text);
-
-//           consoleMessages.push({
-//             message: text,
-//           });
-//         },
-//         info: function (text) {
-//           oldCons.info(text);
-//         },
-//         warn: function (text) {
-//           oldCons.warn(text);
-//         },
-//         error: function (text) {
-//           oldCons.error(text);
-//         },
-//       };
-//     })(window.console);
-
-//     //Then redefine the old console
-//     window.console = console;
-//   }, []);
-    
-    const selectTestNumFunction = e => { 
-        const selectTestNum = e.target.value;
-        Object.keys(gradingDataArray[selectTestNum]).length !== 0
-          ? setSelectGradingDataArray([gradingDataArray[selectTestNum]])
-          : setSelectApiDataFlag(false);
-        
-        console.log(selectGradingDataArray);
-
+    // Get input from the code editor
+    const userCode = Ace.codeEditor.getValue();
+    // Run the user code
+    try {
+      new Function(userCode)();
+    } catch (err) {
+      console.error(err);
     }
+
+    // Print to the console
+    Ace.editorLib.printConsole(consoleMessages, consoleLogList);
+  };
+
+  // Ace Code Editor
+  useEffect(() => {
+    Ace.editorLib.init();
+    consoleLogList = document.getElementById("editor__console-logs");
+    // define a new console
+    var console = (function (oldCons) {
+      return {
+        log: function (text) {
+          oldCons.log(text);
+
+          consoleMessages.push({
+            message: text,
+          });
+        },
+        info: function (text) {
+          oldCons.info(text);
+        },
+        warn: function (text) {
+          oldCons.warn(text);
+        },
+        error: function (text) {
+          oldCons.error(text);
+        },
+      };
+    })(window.console);
+
+    //Then redefine the old console
+    window.console = console;
+  }, []);
+
+  const selectTestNumFunction = (e) => {
+    const ScoreTestNum = e.target.value;
+    Object.keys(gradingDataArray[ScoreTestNum]).length !== 0
+      ? setSelectGradingDataArray([gradingDataArray[ScoreTestNum]])
+      : setSelectApiDataFlag(false);
+
+    Ace.codeEditor.setValue(
+      selectGradingDataArray
+        ? selectGradingDataArray[0].compile_code
+        : "console.log('hello world');"
+    );
+    console.log(selectGradingDataArray);
+  };
+
+  const TestGradingApi = (e) => {
+    e.preventDefault();
+
+    const data = {
+      question_grade: inputScore.current.value,
+      s_email: cookies.s_email,
+      test_id: testIdParams.testId,
+      question_id: "58",
+    };
+
+    console.log(data);
+
+    // data &&
+    //   axios
+    //     .post("/testgrading", data)
+    //     .then((res) => {
+    //       console.log(res.data);
+    //       alert("점수 저장이 완료되었습니다.")
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+  };
+
+  const ScoreExit = () => {
+    history.push("/teacher");
+    removeCookie("s_email");
+  };
 
   return (
     <div className="test_screen_wrapper">
@@ -152,9 +199,9 @@ const TestScoringPage = () => {
           </select>
         </div>
         <ul>
-          <li>학생 : 이구슬</li>
+          <li className="std_name">학생 : 이구슬</li>
           <li>
-            <input type="button" value="채점 종료" />
+            <input type="button" value="채점 종료" onClick={() => ScoreExit()} />
           </li>
         </ul>
       </div>
@@ -164,7 +211,7 @@ const TestScoringPage = () => {
           <div className="test_guide_section">
             <div className="scroll_area">
               {parse(
-                apiDataFlag
+                apiDataFlag && Object.keys(selectGradingDataArray).length !== 0
                   ? String(selectGradingDataArray[0].question_text)
                   : `<p>문제를 불러오는 중입니다.</p>`
               )}
@@ -177,8 +224,14 @@ const TestScoringPage = () => {
                 <div className="coding_nav">
                   <p className="file_name">Soulution.Java</p>
                   <ul>
+                    <li className="test_score_form">
+                      <form onSubmit={TestGradingApi}>
+                        <input ref={inputScore} type="text" />
+                        <button>점수입력</button>
+                      </form>
+                    </li>
                     <li>JAVA</li>
-                    <li className="compile_btn" /*onClick={runCompile}*/>
+                    <li className="compile_btn" onClick={runCompile}>
                       컴파일 하기
                     </li>
                   </ul>
