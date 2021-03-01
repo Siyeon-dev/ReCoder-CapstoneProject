@@ -18,8 +18,6 @@ const ProctorExamView = () => {
     console.log(stdDataCookies);
   }, [cookies.std_data]);
 
-  janus.runJanusTeacher();
-
   const socket = socketio.connect("http://3.89.30.234:3001");
   const ClassListSocket = () => {
     console.log("실행됨");
