@@ -602,7 +602,7 @@ box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);}
 .test_scren_nav .quiz_num {float:left;height:35px;line-height:35px;padding:0 25px;border-radius: 35px;border: 2px solid #c4c4c4;color: #152842;font-size:15px;font-weight:600;margin-top: 15px;}
 .test_scren_nav ul {overflow: hidden; float:right; margin-top:15px; color:#fff; line-height:35px;}
 .test_scren_nav ul li {cursor: pointer; float:left; font-weight:600; margin-left:20px; }
-.test_scren_nav ul li a {color: #7358df;}
+.test_scren_nav ul li input[type="button"] {color: #7358df; font-size:17px; font-weight:600; font-family: 'Noto Sans KR', sans-serif; cursor:pointer;}
 .test_scren_nav ul li:hover {color:#ffd615;}
 .test_scren_nav ul li.test_time_limit {cursor:auto;height:35px;padding:0 25px;border-radius: 35px;background: #7358df;}
 .test_scren_nav ul li.test_time_limit:hover {color:#fff;}

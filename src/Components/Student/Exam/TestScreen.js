@@ -3,16 +3,30 @@ import { Hook } from "console-feed";
 import { Editor } from "draft-js";
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import parse from "html-react-parser";
+import socketio from "socket.io-client";
 
 import * as Ace from "../../../modules/editor";
+import { useCookies } from "react-cookie";
 
 let consoleMessages = [];
 let consoleLogList = null;
 
 const TestScreen = () => {
+  const [isLoding, setIsLoading] = useState(false)
+  const [cookies, setCookie, removeCookie] = useCookies();
   const TestCodeParams = useParams();
   const [minutes, setMinutes] = useState(30);
   const [seconds, setSeconds] = useState(0);
+  const [testListData, setTestListData] = useState([]);
+  const [selectTestListData, setSelectTestListData] = useState([]);
+  const [userCodeData, setUserCodeData] = useState([]);
+  const [userCodeResultData, setUserCodeResultData] = useState([]);
+  const [quizId, setQuizId] = useState();
+  const [apiCount, setApiCount] = useState(0);
+  const [currentTestNum, setCurrentTestNum] = useState(1);
+  const [testCompleteBtn, setTestCompleteBtn] = useState("제출하기")
+  const [resultArray, setResultArray] = useState([])
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -36,7 +50,8 @@ const TestScreen = () => {
 
     // Get input from the code editor
     const userCode = Ace.codeEditor.getValue();
-
+    setUserCodeData(userCode);
+    setUserCodeResultData(Ace.codeEditor.getValue());
     // Run the user code
     try {
       new Function(userCode)();
@@ -46,7 +61,13 @@ const TestScreen = () => {
 
     // Print to the console
     Ace.editorLib.printConsole(consoleMessages, consoleLogList);
+
+    // Object.keys(userCodeData).length !== 0 && CompileApi();
   };
+
+  useEffect(() => {
+    console.log(userCodeData)
+  },[userCodeData])
 
   const StdTestInfoApi = () => {
     const data = {
@@ -58,10 +79,29 @@ const TestScreen = () => {
       .post("/testpaper", data)
       .then((res) => {
         console.log(res.data);
+        setTestListData(res.data);
+        setSelectTestListData([res.data[0]])
+        setResultArray(
+          new Array(res.data.length)
+        )
+        setIsLoading(true);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const SelectTestChange = (e) => {
+    const selectTestNum = e.target.value;
+    const data = Ace.codeEditor.getValue();
+    resultArray[parseInt(currentTestNum) - 1] = data;
+    setResultArray([...resultArray])
+
+    setCurrentTestNum(parseInt(selectTestNum)+1);
+    setSelectTestListData([testListData[selectTestNum]]);
+    setQuizId(testListData[selectTestNum].question_id);
+    Ace.codeEditor.setValue(resultArray[selectTestNum] ? resultArray[selectTestNum] : "console.log('hello world');")
+    Ace.editorLib.clearConsoleScreen(consoleMessages, consoleLogList);
   };
 
   useEffect(() => {
@@ -91,12 +131,49 @@ const TestScreen = () => {
 
     //Then redefine the old console
     window.console = console;
-
   }, []);
 
   useEffect(() => {
     StdTestInfoApi();
-  }, [])
+  }, []);
+
+  const CompileApi = () => {
+
+    const ApiCommand = apiCount === 0 ? "insert" : "update";
+
+    const data = {
+      s_email: cookies.s_email,
+      question_id: quizId,
+      test_id: TestCodeParams.testId,
+      compile_code: userCodeData,
+      //compile_result: userCodeResultData,
+      command: ApiCommand,
+    };
+
+    data !== undefined && axios
+      .post("/compile", data)
+      .then((res) => {
+        console.log(res.data);
+        setApiCount(1);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  const testCompleteBtnState = () => {
+    
+    const socket = socketio.connect("http://3.89.30.234:3001");
+
+    testCompleteBtn === "제출하기" && setTestCompleteBtn("제출완료");
+    testCompleteBtn === "제출완료" &&
+      socket.emit("room_out", {
+        test_id: Number(TestCodeParams.testId),
+      });
+    testCompleteBtn === "제출완료" && alert("제출이 완료되어 시험이 종료되었습니다.");
+    
+    return testCompleteBtn;
+  }
 
   return (
     <div className="test_screen_wrapper">
@@ -110,13 +187,14 @@ const TestScreen = () => {
         </ul>
       </div>
       <div className="test_scren_nav">
-        <p className="quiz_num">문제 1</p>
+        <p className="quiz_num">문제 {currentTestNum}</p>
         <div className="test_select">
-          <select name="test_start_time" id="slct">
-            <option value="1">문제 1</option>
-            <option value="2">문제 2</option>
-            <option value="3">문제 3</option>
-            <option value="4">문제 4</option>
+          <select name="test_start_time" id="slct" onChange={SelectTestChange}>
+            {testListData.map((v, index) => (
+              <option value={index} selected={index === 0}>
+                문제 {index + 1}
+              </option>
+            ))}
           </select>
         </div>
         <ul>
@@ -124,7 +202,11 @@ const TestScreen = () => {
             {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
           </li>
           <li>
-            <Link to="/student/805760">제출하기</Link>
+            <input
+              type="button"
+              value={testCompleteBtn}
+              onClick={() => testCompleteBtnState()}
+            ></input>
           </li>
           {/* <li>문의하기</li> 2021.02.16 보류 */}
         </ul>
@@ -133,7 +215,13 @@ const TestScreen = () => {
       <div className="std_test_area">
         <div className="std_test_wrapper">
           <div className="test_guide_section">
-            <div className="scroll_area">{/* 문제 설명 */}</div>
+            <div className="scroll_area">
+              {parse(
+                isLoding
+                  ? selectTestListData[0].question_text
+                  : `<p>문제를 불러오는 중입니다.</p>`
+              )}
+            </div>
           </div>
           <div className="middle_bar"></div>
           <div className="code_editor_section">

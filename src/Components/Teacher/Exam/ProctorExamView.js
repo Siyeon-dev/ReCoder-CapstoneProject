@@ -20,7 +20,7 @@ const ProctorExamView = () => {
     <div className="proctor_exam_container">
       <div className="side_list_area">
         <p className="tit">
-          학생 목록{" "}
+          학생 목록
           <div>
             <span>6</span>/30
           </div>

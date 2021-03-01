@@ -87,7 +87,7 @@ const TestPrecautions = () => {
                     console.log("in Link onClick : ",studentNumber);
                     // volumeMeter 매소드 호출
                     VolumeMeter.getVolumeMeter(TestCodeParams.testId, studentNumber);
-                    
+
                     // 화면 전환 시 강제 리다이랙션
                     // window.onblur = function() {
                     //   console.log('화면 전환 발생');

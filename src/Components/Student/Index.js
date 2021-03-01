@@ -21,6 +21,8 @@ const Index = () => {
     setclassListEmptyArrayCheckFlag,
   ] = useState(false);
   const [apiLoadingFlag, setApiLoadingFlag] = useState(false);
+  const [noClassCodeFlag, setNoClassCodeFlag] = useState(false);
+
   const classCodeParams = useParams();
 
   const SelectEmail = () => {
@@ -38,6 +40,7 @@ const Index = () => {
   const readClass = (apiEmailData) => {
     classListEmptyArrayCheckFlag === true &&
       setclassListEmptyArrayCheckFlag(false);
+    noClassCodeFlag === true && setNoClassCodeFlag(false);
 
     console.log(apiEmailData);
     console.log(apiEmailData.hasOwnProperty("s_email"));
@@ -45,11 +48,15 @@ const Index = () => {
       ? axios
           .post("/classlist", apiEmailData)
           .then((res) => {
+
             res.data.length === 0 && setclassListEmptyArrayCheckFlag(true);
             setUserClassInfo(res.data);
             !classCodeParams.hasOwnProperty("classCode")
               ? setclassCode(res.data[0].class_code)
               : setclassCode(classCodeParams.classCode);
+            
+            console.log(userClassInfo);
+            
           })
           .catch((err) => {
             console.log(err);
@@ -93,6 +100,8 @@ const MenuSelect = (apiEmailData, classCode) => {
 
 useEffect(() => {
   readClass(SelectEmail());
+  Object.keys(classCode).length === 0 && setNoClassCodeFlag(true);
+            
 }, []);
 
 useEffect(() => {
@@ -126,15 +135,18 @@ useEffect(() => {
                   ? userClassInfo.map((v) =>
                       v.class_code === classCode ? v.class_name : ""
                     )
-                  : "클래스를 먼저 생성해주세요."}
+                  : "현재 가입된 클래스가 없습니다."}
               </p>
-              <div className="teacher_info">
+              {/* ㅜㅜ <div className="teacher_info">
                 <p className="eng_txt">Teacher : </p>
                 <p>정영철</p>
-              </div>
+              </div> */}
             </div>
             <div className="cont_wrap">
-              <TestList selectClassTestInfo={selectClassTestInfo} />
+              <TestList
+                selectClassTestInfo={selectClassTestInfo}
+                noClassCodeFlag={noClassCodeFlag}
+              />
             </div>
           </div>
         </div>

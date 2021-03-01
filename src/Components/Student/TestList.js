@@ -5,10 +5,8 @@ import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
 import socketio from "socket.io-client";
 
-const TestList = ({ selectClassTestInfo }) => {
-
-  console.log(selectClassTestInfo);
-
+const TestList = ({ selectClassTestInfo, noClassCodeFlag }) => {
+  console.log(noClassCodeFlag);
   const StdTestInfoList = () => {
     return Object.keys(selectClassTestInfo).length !== 0 ? (
       selectClassTestInfo.map((v) => (
@@ -50,8 +48,25 @@ const TestList = ({ selectClassTestInfo }) => {
           ) : null}
         </div>
       ))
+    ) : noClassCodeFlag ? (
+      <div className="no_create_guide class">
+        <p className="mb10">먼저 클래스에 가입해보세요!</p>
+        <span>
+          클래스 초대코드를 받아
+          <img
+            src="/img/first_class_plus.gif"
+            alt="메뉴 클래스 추가 버튼 아이콘"
+          />
+          버튼을 누르면
+          <br />
+          클래스 가입을 신청 할 수 있습니다.
+        </span>
+      </div>
     ) : (
-      <p>가입 승인중입니다.</p>
+      <div className="no_create_guide member">
+        클래스 가입 요청중입니다.
+        <span>선생님이 확인 후 가입 승인을 진행됩니다.</span>
+      </div>
     );
   };
 
