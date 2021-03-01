@@ -89,7 +89,9 @@ function drawLoop( time ) {
     }
 
     // callback으로 재귀 호출 (중요!)
-    window.requestAnimationFrame( drawLoop );
+    setTimeout(function() {
+        window.requestAnimationFrame( drawLoop );
+    }, 3000);
 }
 
 
