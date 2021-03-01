@@ -1,7 +1,12 @@
 import Loading from 'Components/User/Loading';
 import React from 'react'
+import { useCookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
 
 const ScoreGradeLow = ({ apiDataFlag, stateApiDataFlag, stateApiData }) => {
+  const [cookies, setCookie, removeCookie] = useCookies();
+
+  console.log(stateApiData);
   return apiDataFlag === true ? (
     stateApiDataFlag === false ? (
       (console.log(stateApiData),
@@ -29,7 +34,13 @@ const ScoreGradeLow = ({ apiDataFlag, stateApiDataFlag, stateApiData }) => {
             <span className="blue">50</span>/ 100
           </td>
           <td>
-            <button className="score_grade_btn after">채점완료</button>
+            <Link
+              to={`/testscoringpage/${v.test_id}`}
+              className="score_grade_btn after"
+              onClick={() => setCookie("s_email", v.s_email)}
+            >
+              채점완료
+            </Link>
           </td>
         </tr>
       )))

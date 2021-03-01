@@ -606,6 +606,10 @@ box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);}
 .test_scren_nav ul li:hover {color:#ffd615;}
 .test_scren_nav ul li.test_time_limit {cursor:auto;height:35px;padding:0 25px;border-radius: 35px;background: #7358df;}
 .test_scren_nav ul li.test_time_limit:hover {color:#fff;}
+.test_scren_nav ul li.std_name {color:#152842;}
+.coding_nav  li.test_score_form {padding:0 15px !important;}
+.coding_nav li.test_score_form input[type="text"]{height:36px; border:1px solid #d8d8d8; border-radius:5px; width:80px; padding:0 10px;}
+.coding_nav li.test_score_form button {margin-left:3px; background:#e23f3f; border:1px solid #e23f3f; color:#fff; font-weight:600; height:36px; font-size:13px; padding:0 15px;}
 
 /* Teacher ::  시험 체점 */
 .accordion {
@@ -711,12 +715,12 @@ box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);}
 .accordion__panel table tbody td .test_status {display: inline-block; padding-right:20px; }
 .accordion__panel table tbody td .test_status.no_test {background:url(../img/statistic_no_test_ico.gif) no-repeat right 50%;}
 .accordion__panel table tbody td .test_status.complete {background:url(../img/statistic_complete_ico.gif) no-repeat right 50%;}
-.accordion__panel table tbody td button.score_grade_btn {padding:0 55px 0 15px; height:35px; line-height:35px; color:#fff; font-weight:600; border-radius:7px;}
-.accordion__panel table tbody td button.score_grade_btn.before {background:#fc5454 url(../img/score_grade_before.gif) no-repeat 90% 50%;
+.accordion__panel table tbody td a.score_grade_btn {display:inline-block; padding:0 55px 0 15px; height:35px; line-height:35px; color:#fff; font-weight:600; border-radius:7px;}
+.accordion__panel table tbody td a.score_grade_btn.before {background:#fc5454 url(../img/score_grade_before.gif) no-repeat 90% 50%;
 -webkit-box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);
 -moz-box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);
 box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
-.accordion__panel table tbody td button.score_grade_btn.after {background:#6277f5 url(../img/score_grade_after.gif) no-repeat 90% 50%;
+.accordion__panel table tbody td a.score_grade_btn.after {background:#6277f5 url(../img/score_grade_after.gif) no-repeat 90% 50%;
 -webkit-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);
 -moz-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);
 box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);}
