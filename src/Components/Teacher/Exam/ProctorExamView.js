@@ -27,7 +27,7 @@ const ProctorExamView = () => {
       s_email: cookies.s_email,
       test_id: Number(TestCodeParams.testId),
     });
-  
+    
     
   }, [cookies.std_data]);
 
@@ -47,7 +47,7 @@ const ProctorExamView = () => {
   //       test_id: Number(TestCodeParams.testId),
   //     });
   //   // 구슬 상 ON 출력이 안되는 이유가 현 ClassListSocket 메소드가 버튼 클릭시 실행 되는 걸로 감싸져 있어서 그런거 같아요 ㅠ_ㅠ
-  // };
+  };
 
   const socket = socketio.connect("http://3.89.30.234:3001");
   

@@ -42,7 +42,8 @@ export function runJanusPC (studentId, testRoomNum) {
 								` --Janus-- WebCam Plugin attached! (${videoHandlerOnPC.getPlugin()}, ID = ${videoHandlerOnPC.getId()})`
 							);
 							
-							isRoomExist(roomNumber);
+							// isRoomExist(roomNumber);
+							joinTheRoom(1234);
 						},
 						error: function (error) {
 							Janus.error(" --Janus-- WebCam Error attaching plugin...", error);
@@ -353,7 +354,7 @@ function createTheRoom(numOfCandidate) {
 	let create = {
 		request: 'create',
 		room: numOfCandidate,
-		require_pvtid: true,
+		require_pvtid: false,
 		bitrate: 500000,
 		notify_joining: true,
 		// 참여 가능한 publisher 수 = (참가자 인원 * 3) + (eyetracker, promoter)
