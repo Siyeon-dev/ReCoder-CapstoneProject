@@ -83,7 +83,7 @@ function drawLoop( time ) {
 
             socket.emit("volumeMeter", {
                 test_id: Number(data.test_id),
-                s_number: Number(data.studentNumber)
+                s_number: Number(data.s_number)
             });
         })();
     }
