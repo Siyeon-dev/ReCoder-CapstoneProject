@@ -135,6 +135,11 @@ export function runJanusTeacher(testRoomNum) {
 				},
 				destroyed: function () {
 					window.location.reload();
+					const destroy = {
+						"request" : "destroy",
+						"room": roomNumber
+					}
+					videoHandlerOnPC.send({ message: destroy });
 				},
 			});
 		},
@@ -226,8 +231,6 @@ function joinTheRoom(roomID) {
 		room: roomID,
 		ptype: 'publisher',
 	};
-	videoHandlerOnPC.send({ message: register });
-
 	videoHandlerOnPC.send({
 		message: register,
 		success: function () {
@@ -250,10 +253,12 @@ function createTheRoom(numOfCandidate) {
 	let create = {
 		request: 'create',
 		room: numOfCandidate,
+		require_pvtid: false,
 		bitrate: 500000,
 		notify_joining: true,
 		// 참여 가능한 publisher 수 = (참가자 인원 * 3) + (eyetracker, promoter)
 		publishers: numOfCandidate * 4 + 2,
+
 	};
 
 	videoHandlerOnPC.send({
