@@ -26,9 +26,13 @@ const TestScreen = () => {
   const [apiCount, setApiCount] = useState(0);
   const [currentTestNum, setCurrentTestNum] = useState(1);
   const [testCompleteBtn, setTestCompleteBtn] = useState("제출하기")
-  const [resultArray, setResultArray] = useState([])
+  const [resultArray, setResultArray] = useState([]);
+  const [testLang, setTestLang] = useState([]);
 
   useEffect(() => {
+    /* API에서 학생 시험 종류 받아오기 */
+    Ace.editorLib.setModeEditor(testLang);
+
     const countdown = setInterval(() => {
       if (parseInt(seconds) > 0) {
         setSeconds(parseInt(seconds) - 1);
@@ -45,10 +49,9 @@ const TestScreen = () => {
     return () => clearInterval(countdown);
   }, [minutes, seconds]);
 
+  // Ace Code Editor Run
   const runCompile = () => {
     Ace.editorLib.clearConsoleScreen(consoleMessages, consoleLogList);
-    /* API에서 학생 시험 종류 받아오기 */
-    Ace.editorLib.setModeEditor('javascript');
 
     // Get input from the code editor
     const userCode = Ace.codeEditor.getValue();
@@ -80,7 +83,7 @@ const TestScreen = () => {
     axios
       .post("/testpaper", data)
       .then((res) => {
-        console.log(res.data);
+        setTestLang(res['data'][0]['test_lang'])
         setTestListData(res.data);
         setSelectTestListData([res.data[0]])
         setResultArray(
@@ -106,6 +109,7 @@ const TestScreen = () => {
     Ace.editorLib.clearConsoleScreen(consoleMessages, consoleLogList);
   };
 
+  // Ace Code Editor
   useEffect(() => {
     Ace.editorLib.init();
     consoleLogList = document.getElementById("editor__console-logs");

@@ -57,16 +57,16 @@ export let editorLib = {
 	
 	setModeEditor(modeEditor) {
 		switch (modeEditor) {
-			case 'javascript':
+			case 'JavaScript':
 				statusModeEditor = 'ace/mode/javascript';
 				break;
-			case 'python':
+			case 'Python':
 				statusModeEditor = 'ace/mode/python';
 				break;
-			case 'java':
+			case 'Java':
 				statusModeEditor = 'ace/mode/java';
 				break;
-			case 'php':
+			case 'PHP':
 				statusModeEditor = 'ace/mode/php';
 				break;
 		}

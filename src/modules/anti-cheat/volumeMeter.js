@@ -1,16 +1,20 @@
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import socketio from "socket.io-client";
 
 let meter = null;
 let audioContext = null;
 let mediaStreamSource = null;
 let volumeLevel = 0.1;  // 0.1 는 평소 말하는 목소리 크기를 판단할 수 있는 정도. (속삭임은 판명 안됨)
 
+let socket = null;
 let testIdValue = null;
 let studentNumber = null;
 
 export function getVolumeMeter(test_id, s_number) {
+    socket = socketio.connect("http://3.89.30.234:3001");
+
     // monkeypatch Web Audio
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     
@@ -72,19 +76,13 @@ function drawLoop( time ) {
                 test_id: testIdValue,
                 s_number: studentNumber,
             };
-        
+            
             console.log(data);
 
-            // API 백앤드랑 함께 테스트 필요!
-            // axios
-            //     // API 주소
-            //     .post("/", data)
-            //     .then((res) => {
-            //     console.log(res.data);
-            // })
-            // .catch((err) => {
-            //     console.log(err);
-            // });
+            socket.emit("volumeMeter", {
+                test_id: Number(data.test_id),
+                s_number: Number(data.studentNumber)
+            });
         })();
     }
 
