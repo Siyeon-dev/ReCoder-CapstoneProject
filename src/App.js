@@ -11,6 +11,9 @@ import TestPrecautions from "./Components/Student/Exam/TestPrecautions";
 import ProctorExamView from "./Components/Teacher/Exam/ProctorExamView";
 import TestScreen from "Components/Student/Exam/TestScreen";
 import ClassStatistics from "Components/Student/ClassStatistics";
+import TestScoringPage from "Components/Teacher/TestScoringPage";
+
+import Test from "test";
 
 function App() {
   return (
@@ -18,6 +21,7 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path="/" component={FormLogin} />
+          <Route exact path="/test" component={Test} />
           <Route exact path="/signup" component={FormSignUpFir} />
           <Route exact path="/formSignUp" component={FormSignUp} />
           <Route exact path="/student" component={Student} />
@@ -28,6 +32,7 @@ function App() {
           <Route path="/testscreen/:testId" component={TestScreen} />
           <Route path="/proctorexamview/:testId" component={ProctorExamView} />
           <Route path="/studentcasssatistics" component={ClassStatistics} />
+          <Route path="/testscoringpage/:testId" component={TestScoringPage} />
 
           <Route path="/createtestform/:classCode" component={CreateTestForm} />
           <Redirect from="*" to="/" />
