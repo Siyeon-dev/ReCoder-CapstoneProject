@@ -5,6 +5,8 @@ import * as janus from "../../../modules/examPromoter";
 import ProctorExamVideo from "./ProctorExamVideo";
 import socketio from "socket.io-client";
 
+const socket = socketio.connect("http://3.89.30.234:3001");
+
 const ProctorExamView = () => {
   const TestCodeParams = useParams();
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -20,12 +22,25 @@ const ProctorExamView = () => {
     console.log(cookies.std_data);
     cookies.std_data !== undefined && setStdDataCookies(...cookies.std_data);
     console.log(stdDataCookies);
+
+    socket.emit("join", {
+      s_email: cookies.s_email,
+      test_id: Number(TestCodeParams.testId),
+    });
+  
+    
   }, [cookies.std_data]);
 
-  // const ClassListSocket = () => {
-  //   console.log("실행됨");
-  //   console.log("선생님 보냄");
-  //   console.log(TestCodeParams.testId);
+  useEffect(() => {
+    socket.on("volumeMeter", function(res) {
+      console.log("volumeMeter : ", res);
+    })
+  })
+
+  const ClassListSocket = () => {
+    console.log("실행됨");
+    console.log("선생님 보냄");
+    console.log(TestCodeParams.testId);
 
   //   TestCodeParams.testId !== undefined &&
   //     socket.emit("m_room_out", {
