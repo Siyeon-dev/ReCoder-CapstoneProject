@@ -57,9 +57,6 @@ const TestScreen = () => {
 
 
   useEffect(() => {
-    /* API에서 학생 시험 종류 받아오기 */
-    Ace.editorLib.setModeEditor(testLang);
-
     const countdown = setInterval(() => {
       if (parseInt(seconds) > 0) {
         setSeconds(parseInt(seconds) - 1);
@@ -141,6 +138,11 @@ const TestScreen = () => {
 
   // Ace Code Editor
   useEffect(() => {
+    StdTestInfoApi();
+
+    /* API에서 학생 시험 종류 받아오기 */
+    Ace.editorLib.setModeEditor(testLang);
+
     Ace.editorLib.init();
     consoleLogList = document.getElementById("editor__console-logs");
     // define a new console
@@ -169,13 +171,7 @@ const TestScreen = () => {
     window.console = console;
   }, []);
 
-  useEffect(() => {
-    StdTestInfoApi();
-  }, []);
-
   const CompileApi = () => {
-
-
     const asdasd = userCodeData.filter((v) => v === quizId);
     const ApiCommand = asdasd.length === 0 ? "insert" : "update";
     

@@ -15,14 +15,12 @@ const ProctorExamView = () => {
     setSocketData({ socket : socket });
   }, []);
   useEffect(() => {
-    janus.runJanusTeacher();
+    janus.runJanusTeacher(TestCodeParams.testId);
     
     console.log(cookies.std_data);
     cookies.std_data !== undefined && setStdDataCookies(...cookies.std_data);
     console.log(stdDataCookies);
   }, [cookies.std_data]);
-
-  janus.runJanusTeacher();
 
   const socket = socketio.connect("http://3.89.30.234:3001");
   const ClassListSocket = () => {

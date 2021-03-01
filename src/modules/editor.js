@@ -40,9 +40,8 @@ export let editorLib = {
 		codeEditor = ace.edit("editorCode");
 		// Theme
 		codeEditor.setTheme('ace/theme/github');
-
 		// Set language
-		codeEditor.session.setMode(statusModeEditor);
+		codeEditor.session.setMode('ace/mode/javascript');
 
 		// Set Options
 		codeEditor.setOptions({
@@ -56,6 +55,7 @@ export let editorLib = {
 	},
 	
 	setModeEditor(modeEditor) {
+		// eslint-disable-next-line default-case	
 		switch (modeEditor) {
 			case 'JavaScript':
 				statusModeEditor = 'ace/mode/javascript';
