@@ -30,7 +30,8 @@ const TestScreen = () => {
   const [apiCount, setApiCount] = useState(0);
   const [currentTestNum, setCurrentTestNum] = useState(1);
   const [testCompleteBtn, setTestCompleteBtn] = useState("제출하기")
-  const [resultArray, setResultArray] = useState([])
+  const [resultArray, setResultArray] = useState([]);
+  const [testLang, setTestLang] = useState([]);
   
   const ClassListSocket = () => {
     const socket = socketio.connect("http://3.89.30.234:3001");
@@ -44,17 +45,21 @@ const TestScreen = () => {
         test_id: Number(TestCodeParams.testId),
       });
     
-       socket.on("m_room_out", (msg) => {
-         console.log("room_out자알받았습니다요~~`");
-         console.log(msg);
-       });
+      socket.on("m_room_out", (msg) => {
+        console.log("room_out자알받았습니다요~~`");
+        console.log(msg);
+      });
   };
 
   useEffect(() => {
     ClassListSocket();
   }, []);
 
+
   useEffect(() => {
+    /* API에서 학생 시험 종류 받아오기 */
+    Ace.editorLib.setModeEditor(testLang);
+
     const countdown = setInterval(() => {
       if (parseInt(seconds) > 0) {
         setSeconds(parseInt(seconds) - 1);
@@ -71,6 +76,7 @@ const TestScreen = () => {
     return () => clearInterval(countdown);
   }, [minutes, seconds]);
 
+  // Ace Code Editor Run
   const runCompile = () => {
     Ace.editorLib.clearConsoleScreen(consoleMessages, consoleLogList);
 
@@ -104,7 +110,7 @@ const TestScreen = () => {
     axios
       .post("/testpaper", data)
       .then((res) => {
-        console.log(res.data);
+        setTestLang(res['data'][0]['test_lang'])
         setTestListData(res.data);
         setSelectTestListData([res.data[0]])
         setResultArray(
@@ -133,6 +139,7 @@ const TestScreen = () => {
     console.log(resultArray[0]);
   };
 
+  // Ace Code Editor
   useEffect(() => {
     Ace.editorLib.init();
     consoleLogList = document.getElementById("editor__console-logs");

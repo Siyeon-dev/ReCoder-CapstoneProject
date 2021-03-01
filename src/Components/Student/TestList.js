@@ -4,8 +4,16 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link, useParams } from "react-router-dom";
 import socketio from "socket.io-client";
+import moment from "moment"
+import "moment/locale/en-au"
 
 const TestList = ({ selectClassTestInfo, noClassCodeFlag }) => {
+  const nowTime = moment().format('YYYY-MM-DD A HH:mm');
+  let buttonStatus = null;
+  let testStart = null;
+  let testEnd = null;
+
+  console.log(noClassCodeFlag);
 
   const StdTestInfoList = () => {
     return noClassCodeFlag && Object.keys(selectClassTestInfo).length !== 0 ? (
@@ -17,25 +25,35 @@ const TestList = ({ selectClassTestInfo, noClassCodeFlag }) => {
           <p className="infobox time">
             {v.test_start} ~ {v.test_end}
           </p>
-          {v.s_test_status === 1 ? (
-            <Link
-              to={`/testprecautions/${v.test_id}`}
-              className="test_btn mint"
-            >
-              <span>시험시작</span>
-            </Link>
-          ) : v.s_test_status === 2 ? (
-            <Link to={`/testprecautions/${v.test_id}`} className="test_btn red">
-              <span>미응시</span>
-            </Link>
-          ) : v.s_test_status === 3 ? (
+          {
+          testStart = v.date + " " + v.test_start,
+          testEnd = v.date + " " + v.test_end,
+          buttonStatus = compareTime(nowTime,testStart, testEnd),
+
+          console.log("testStart : ",testStart),
+          console.log("testEnd : ",testEnd),
+          console.log("nowTime : ", nowTime),
+          console.log(buttonStatus),
+
+          buttonStatus === 0 ? (
             <Link
               to={`/testprecautions/${v.test_id}`}
               className="test_btn yellow"
             >
-              <span>채점중</span>
+              <span>시험대기</span>
             </Link>
-          ) : v.s_test_status === 4 ? (
+          ) : buttonStatus === 1 ? (
+            <Link to={`/testprecautions/${v.test_id}`} className="test_btn mint">
+              <span>시험응시</span>
+            </Link>
+          ) : buttonStatus === 2 ? (
+            <Link
+              to={`/testprecautions/${v.test_id}`}
+              className="test_btn red"
+            >
+              <span>시험종료</span>
+            </Link>
+          ) : buttonStatus === 3 ? (
             <Link
               to={`/testprecautions/${v.test_id}`}
               className="test_btn puple"
@@ -72,5 +90,23 @@ const TestList = ({ selectClassTestInfo, noClassCodeFlag }) => {
 
   return <>{StdTestInfoList()}</>;
 };
+
+
+const compareTime = (nowTime, comTimeStart, comTimeEnd) => {
+  if (nowTime < comTimeStart) {
+    // 시험 대기
+    return 0;
+  } else {
+    if (nowTime < comTimeEnd) {
+      // 시험 응시
+      return 1;
+    } else {
+      // 시험 종료
+      return 2;
+    }
+  }
+
+  return null;
+}
 
 export default TestList;

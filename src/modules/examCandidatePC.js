@@ -11,14 +11,13 @@ let myId = null;		// 학생 primaryKey 값
 let screenId = null;
 let mypvtid = null;
 
-
 let room = 1234;
 
-var opaqueId = "videoroomtest-" + Janus.randomString(12); // opaqueId 값을 통해서 유저 구분을 한다.
+var opaqueId = "student" + Janus.randomString(12); // opaqueId 값을 통해서 유저 구분을 한다.
 
 if (window.location.protocol === 'http:')
-	server = 'http://' + 're-coder.net' + '/janus';
-else server = 'https://' + 're-coder.net' + '/janus';
+	server = 'http://re-coder.net/janus';
+else server = 'https://re-coder.net/janus';
 
 export function runJanusPC (studentId) {
 	Janus.init({

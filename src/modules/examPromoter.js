@@ -11,7 +11,7 @@ let mypvtid = null;
 
 let room = 1234;
 
-let opaqueId = 'teacher';
+var opaqueId = "teacher" + Janus.randomString(12); // opaqueId 값을 통해서 유저 구분을 한다.
 
 const TEST_CANDIDATE_NUM = 5;
 

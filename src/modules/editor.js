@@ -2,11 +2,16 @@ import * as ace from 'ace-builds/src-noconflict/ace'
 
 import 'ace-builds/src-noconflict/theme-github'
 import 'ace-builds/src-noconflict/ext-language_tools'
+
 import 'ace-builds/src-noconflict/mode-javascript'
+import 'ace-builds/src-noconflict/mode-python'
+import 'ace-builds/src-noconflict/mode-java'
+import 'ace-builds/src-noconflict/mode-php'
 
 // Setup Ace
 export let codeEditor = null;
 
+let statusModeEditor = null;
 let defaultCode = `console.log('hello world');`;
 
 export let editorLib = {
@@ -37,7 +42,7 @@ export let editorLib = {
 		codeEditor.setTheme('ace/theme/github');
 
 		// Set language
-		codeEditor.session.setMode('ace/mode/javascript');
+		codeEditor.session.setMode(statusModeEditor);
 
 		// Set Options
 		codeEditor.setOptions({
@@ -49,4 +54,21 @@ export let editorLib = {
 		// Set Default
 		codeEditor.setValue(defaultCode);
 	},
+	
+	setModeEditor(modeEditor) {
+		switch (modeEditor) {
+			case 'JavaScript':
+				statusModeEditor = 'ace/mode/javascript';
+				break;
+			case 'Python':
+				statusModeEditor = 'ace/mode/python';
+				break;
+			case 'Java':
+				statusModeEditor = 'ace/mode/java';
+				break;
+			case 'PHP':
+				statusModeEditor = 'ace/mode/php';
+				break;
+		}
+	}
 };
