@@ -6,20 +6,18 @@ let janus = null;
 
 let videoHandlerOnPC = null;
 
-let feeds = [];
 let myId = 33;
 let mypvtid = null;
 
 let room = 1234;
 
-let myUsername = 'siyeon park';
-let opaqueId = '박시연'; // 무슨 역할?
+let opaqueId = 'teacher';
 
 const TEST_CANDIDATE_NUM = 5;
 
 if (window.location.protocol === 'http:')
-	server = 'http://' + 're-coder.net' + '/janus';
-else server = 'https://' + 're-coder.net' + '/janus';
+	server = 'http://re-coder.net/janus';
+else server = 'https://re-coder.net/janus';
 
 export function runJanusTeacher() {
 	Janus.init({
@@ -130,6 +128,9 @@ export function runJanusTeacher() {
 							Janus.attachMediaStream(myVideo, stream);
 						},
 						oncleanup: function () {},
+						error: function(error) {
+							runJanusTeacher();
+						},
 					});
 				},
 
@@ -179,14 +180,6 @@ function newRemoteFeed(id, displayValue) {
 
 			} else if (event) {
 				if (event === 'attached') {
-					// for (var i = 1; i < 6; i++) {
-					// 	if (!feeds[i]) {
-					// 		feeds[i] = remoteFeed;
-					// 		remoteFeed.rfindex = i; // remoteFeed에 번호 속성 추가
-					// 		break;
-					// 	}
-					// }
-
 					remoteFeed.rfdisplay = displayValue;
 
 					Janus.log(
@@ -221,6 +214,7 @@ function newRemoteFeed(id, displayValue) {
 			// div에 붙일 이름 규칙 정하기
 			let video = document.getElementById('remote' + remoteFeed.rfdisplay);
 			// tag에 stream data 붙이기
+			
 			Janus.attachMediaStream(video, stream);
 		},
 	});

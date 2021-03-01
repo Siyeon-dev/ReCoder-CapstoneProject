@@ -12,6 +12,7 @@ const TestPrecautions = () => {
   const TestCodeParams = useParams();
   const [cookies, setCookie, removeCookie] = useCookies();
   const [cautionData, setCautionData] = useState([]);
+  const [studentNumber, setStudentNumber] = useState([]);
 
   const data = {
     test_id: TestCodeParams.testId,
@@ -23,6 +24,7 @@ const TestPrecautions = () => {
       .post("/cautionpage", data)
       .then((res) => {
         console.log("s_number : ", res.data[0].s_number);
+        setStudentNumber(res.data[0].s_number)
         setCautionData(res.data);
         res.data && janus.runJanusPC(res.data[0].s_number); // 0 => s_num
         res.data && console.log(res.data.s_number);
@@ -58,8 +60,13 @@ const TestPrecautions = () => {
                 <Link
                   to={`/testscreen/${TestCodeParams.testId}`}
                   onClick={() => {
+<<<<<<< HEAD
+=======
+                    ClassListSocket()
+                    console.log("in Link onClick : ",studentNumber);
+>>>>>>> ce1d4655fabc1db8464ad816be24d331209de25d
                     // volumeMeter 매소드 호출
-                    VolumeMeter.getVolumeMeter()
+                    VolumeMeter.getVolumeMeter(TestCodeParams.testId, studentNumber);
 
                     // 화면 전환 시 강제 리다이랙션
                     // window.onblur = function() {
@@ -67,24 +74,27 @@ const TestPrecautions = () => {
                     //   alert('시험 도중 화면 전환을 시도하셨습니다.\n 시험 대기실로 강제 이동됩니다.');
                       
                     //   /* 리다이랙션 로직 */
+                    //   redirect("/student");
                     // }
 
                     // Keyboard Event 'alt" 막기
-                    window.addEventListener("keydown", function(event) {
-                      let handled = false;
+                    // window.addEventListener("keydown", function(event) {
+                    //   let handled = false;
 
-                      if (event.defaultPrevented) {
-                          return;
-                      }
+                    //   if (event.defaultPrevented) {
+                    //       return;
+                    //   }
 
-                      if (event.altKey)
-                          handled = true;
+                    //   if (event.altKey)
+                    //       handled = true;
 
-                      if(handled) {
-                          console.log(event.keyCode);
-                          event.preventDefault();
-                      }
-                    }, true);
+                    //   if(handled) {
+                    //       console.log(event.keyCode);
+                    //       event.preventDefault();
+                    //   }
+                    // }, true);
+
+                    document.documentElement.webkitRequestFullscreen();
                   }}
                 >
                   시험시작

@@ -11,6 +11,8 @@ const ProctorExamView = () => {
   const [stdDataCookies, setStdDataCookies] = useState([]);
 
   useEffect(() => {
+    janus.runJanusTeacher();
+    
     console.log(cookies.std_data);
     cookies.std_data !== undefined && setStdDataCookies(...cookies.std_data);
     console.log(stdDataCookies);

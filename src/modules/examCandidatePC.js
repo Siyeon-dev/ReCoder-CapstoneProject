@@ -156,7 +156,6 @@ export function runJanusPC (studentId) {
 				},
 				error: function (error) {
 					Janus.error(error);
-					Janus.destroy(videoHandlerOnPC);
 				},
 				destroyed: function () {
 					window.location.reload();
