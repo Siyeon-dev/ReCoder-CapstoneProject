@@ -15,6 +15,9 @@ const ClassMemList = ({ classCode }) => {
 
   const appllyStdListApi = () => {
     apiFlag === true && setApiFlag(false);
+    console.log("asdasdasdasdasdasdasd");
+
+    console.log(classCode);
     const data = {
       class_code: classCode,
     };
@@ -52,9 +55,13 @@ const ClassMemList = ({ classCode }) => {
 
   useEffect(() => {
     appllyStdListApi();
-    setDeleteStdList([])
+    setDeleteStdList([]);
     setDeleteStdData([]);
   }, [classCode]);
+
+    useEffect(() => {
+      appllyStdListApi();
+    }, [appStdNum]);
 
   useEffect(() => {
     appllyStdListApi();
