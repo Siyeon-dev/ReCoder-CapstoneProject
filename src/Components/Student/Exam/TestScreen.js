@@ -47,6 +47,8 @@ const TestScreen = () => {
 
   const runCompile = () => {
     Ace.editorLib.clearConsoleScreen(consoleMessages, consoleLogList);
+    /* API에서 학생 시험 종류 받아오기 */
+    Ace.editorLib.setModeEditor('javascript');
 
     // Get input from the code editor
     const userCode = Ace.codeEditor.getValue();
