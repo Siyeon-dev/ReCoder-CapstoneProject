@@ -13,6 +13,10 @@ const ProctorExamView = () => {
   const [stdDataCookies, setStdDataCookies] = useState([]);
   const [socketData, setSocketData] = useState(null);
   const [socketStdNumData, setsocketStdNumData] = useState([]);
+  const [particStdList, setParticStdList] = useState([]);
+  const [particStdFlag, setParticStdFlag] = useState(false);
+  const [volumeMeterValue, setVolumeMeterValue] = useState(0);
+  const [eyetrackingValue, setEyetrackingValue] = useState(0);
   // useEffect(() => {
   //   const socket = socketio.connect("http://3.89.30.234:3001");
   //   setSocketData({ socket : socket });
@@ -29,9 +33,9 @@ const ProctorExamView = () => {
     const socket = socketio.connect("http://3.89.30.234:3001");
 
     socket.emit("create", {
-        t_email: cookies.t_email,
-        test_id: TestCodeParams.testId,
-      });
+      t_email: cookies.t_email,
+      test_id: TestCodeParams.testId,
+    });
 
     socket.emit("join", {
       t_email: cookies.t_email,
@@ -40,18 +44,20 @@ const ProctorExamView = () => {
 
     console.log(cookies.t_email);
     console.log(TestCodeParams.testId);
-    
     socket.on("student_join", (msg) => {
+      const ddd = () => {
+        particStdFlag === true && setParticStdFlag(false);
+        setParticStdFlag(true);
+        console.log("asdasdasdasdasd");
+        console.log(msg);
+        socketStdNumData.push(msg.s_number);
+        setCookie("std_data", [socketStdNumData]);
+        particStdList.push(msg);
+      };
 
-        const ddd = () => {
-          console.log("asdasdasdasdasd");
-          console.log(msg.s_number);
-          socketStdNumData.push(msg.s_number);
-          setCookie("std_data", [socketStdNumData]);
-        };
-        
-          console.log(msg);
-    
+      // console.log(particStdList);
+      // console.log(msg);
+
       msg !== null && ddd();
     });
 
@@ -60,8 +66,22 @@ const ProctorExamView = () => {
     });
     socket.on("eyetrackingcount", (msg) => {
       console.log(msg);
+      setEyetrackingValue(msg);
+      const aaa = particStdList.filter(
+        (v) => v.s_number === msg.s_number
+      );
+      console.log("****************************");
+      console.log(aaa);
+
+      aaa[0].eye_caution = msg.eye_caution;
+      console.log("****************************");
+      console.log(aaa);
     });
   });
+
+  useEffect(() => {
+    console.log(particStdList);
+  }, []);
 
   const ClassListSocket = () => {
     console.log("실행됨");
@@ -81,22 +101,11 @@ const ProctorExamView = () => {
         <p className="tit">
           학생 목록
           <div>
-            <span>6</span>/30
+            <span>{particStdFlag && stdDataCookies.length}</span>/30
           </div>
         </p>
         <ul>
-          <li>
-            이구슬 <span>마이크 on</span>
-          </li>
-          <li>
-            박시연 <span>마이크 on</span>
-          </li>
-          <li>
-            손형탁 <span>마이크 on</span>
-          </li>
-          <li>
-            김원형 <span>마이크 on</span>
-          </li>
+          {particStdFlag && particStdList.map((v) => <li>{v.s_name}</li>)}
         </ul>
         <div className="btn_wrap">
           <div>경고주기</div>
@@ -121,7 +130,10 @@ const ProctorExamView = () => {
           </ul>
         </div>
         <div className="video_area_align">
-          <ProctorExamVideo stdDataCookies={stdDataCookies} />
+          <ProctorExamVideo
+            particStdFlag={particStdFlag}
+            particStdList={particStdList}
+          />
         </div>
       </div>
     </div>
