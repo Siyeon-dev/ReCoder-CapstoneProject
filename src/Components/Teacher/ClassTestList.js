@@ -23,22 +23,22 @@ const ClassTestList = ({
   const [socketStdNumData, setsocketStdNumData] = useState([]);
   const [socketStdNumDataArray, setsocketStdNumDataArray] = useState(0);
 
-  const ClassListSocket = (testData) => {
-    const socket = socketio.connect("http://3.89.30.234:3001");
+  // const ClassListSocket = (testData) => {
+  //   const socket = socketio.connect("http://3.89.30.234:3001");
 
-    console.log(cookies.t_email);
-    console.log(testData);
-    testData !== undefined && socket.emit("create", { t_email: cookies.t_email, test_id: testData });
+  //   console.log(cookies.t_email);
+  //   console.log(testData);
+  //   testData !== undefined && socket.emit("create", { t_email: cookies.t_email, test_id: testData });
 
-    socket.on("student_join", (msg) => {
-      console.log(msg);
-      console.log("asdasdasdasdasd");
-      console.log(msg.s_number);
-      socketStdNumData.push(msg.s_number);
-      setCookie("std_data", [socketStdNumData]);
-    });
+  //   socket.on("student_join", (msg) => {
+  //     console.log(msg);
+  //     console.log("asdasdasdasdasd");
+  //     console.log(msg.s_number);
+  //     socketStdNumData.push(msg.s_number);
+  //     setCookie("std_data", [socketStdNumData]);
+  //   });
     
-  };
+  // };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -81,7 +81,7 @@ const ClassTestList = ({
             {currElement.t_test_status === 1 ? (
               <Link
                 to={`/proctorexamview/${currElement.test_id}`}
-                onClick={() => ClassListSocket(currElement.test_id)}
+                //onClick={() => ClassListSocket(currElement.test_id)}
                 className="tch_test_state start"
               >
                 시험시작

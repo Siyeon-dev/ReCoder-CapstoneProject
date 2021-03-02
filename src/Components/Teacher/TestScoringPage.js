@@ -144,26 +144,27 @@ const TestScoringPage = () => {
 
   const TestGradingApi = (e) => {
     e.preventDefault();
+    console.log(selectGradingDataArray);
 
     const data = {
       question_grade: inputScore.current.value,
       s_email: cookies.s_email,
       test_id: testIdParams.testId,
-      question_id: "58",
+      question_id: String(selectGradingDataArray[0].question_id),
     };
 
     console.log(data);
 
-    // data &&
-    //   axios
-    //     .post("/testgrading", data)
-    //     .then((res) => {
-    //       console.log(res.data);
-    //       alert("점수 저장이 완료되었습니다.")
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
+    data &&
+      axios
+        .post("/testgrading", data)
+        .then((res) => {
+          console.log(res.data);
+          alert("점수 저장이 완료되었습니다.")
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   };
 
   const ScoreExit = () => {
@@ -201,7 +202,11 @@ const TestScoringPage = () => {
         <ul>
           <li className="std_name">학생 : 이구슬</li>
           <li>
-            <input type="button" value="채점 종료" onClick={() => ScoreExit()} />
+            <input
+              type="button"
+              value="채점 종료"
+              onClick={() => ScoreExit()}
+            />
           </li>
         </ul>
       </div>
@@ -229,6 +234,11 @@ const TestScoringPage = () => {
                         <input ref={inputScore} type="text" />
                         <button>점수입력</button>
                       </form>
+                    </li>
+                    <li>
+                      {apiDataFlag &&
+                        Object.keys(selectGradingDataArray).length !== 0 &&
+                        selectGradingDataArray[0].question_grade}점 만점
                     </li>
                     <li>JAVA</li>
                     <li className="compile_btn" onClick={runCompile}>
