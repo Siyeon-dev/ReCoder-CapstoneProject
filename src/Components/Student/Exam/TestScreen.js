@@ -184,7 +184,7 @@ const TestScreen = () => {
   }, []);
 
   const CompileApi = () => {
-    const asdasd = userCodeData.filter((v) => v === quizId);
+    const asdasd =  userCodeData && userCodeData.filter((v) => v === quizId);
     const ApiCommand = asdasd.length === 0 ? "insert" : "update";
     
 
