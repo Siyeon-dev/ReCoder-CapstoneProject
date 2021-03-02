@@ -68,6 +68,7 @@ const TestPrecautions = () => {
                       console.log('화면 전환 발생');
                       /* 리다이랙션 로직 */
                       alert('시험 도중 화면 전환을 시도하셨습니다.\n 시험 대기실로 강제 이동됩니다.');
+                      window.location.replace("http://localhost:3000/student");
                     }
 
                     // Keyboard Event 'alt" 막기
