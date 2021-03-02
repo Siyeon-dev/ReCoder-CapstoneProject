@@ -33,6 +33,7 @@ const TestScreen = () => {
   const [testCompleteBtn, setTestCompleteBtn] = useState("제출하기")
   const [resultArray, setResultArray] = useState([]);
   const [testLang, setTestLang] = useState([]);
+  const [testFileName, setTestFileName] = useState([]);
   
   const ClassListSocket = () => {
     const socket = socketio.connect("http://3.89.30.234:3001");
@@ -51,9 +52,30 @@ const TestScreen = () => {
         console.log(msg);
       });
   };
+  
+  const convertFileName = (fileName) => {
+    console.log("convertFileName : ", fileName);
+    // eslint-disable-next-line default-case
+    switch (fileName) {
+      case "JavaScript" :
+        setTestFileName('js');
+        break;
+      case "PHP" :
+        setTestFileName('php');
+        break;
+      case "Java" :
+        setTestFileName('java');
+        break;
+      case "Python" :
+        setTestFileName('py');
+        // break;
+    }
+  };  
 
   useEffect(() => {
     ClassListSocket();
+    testLang.length 
+    !== 0 && convertFileName(testLang);
   }, []);
 
   useEffect(() => {
@@ -118,7 +140,7 @@ const TestScreen = () => {
     axios
       .post("/testpaper", data)
       .then((res) => {
-        setTestLang(res['data'][0]['test_lang'])
+        setTestLang(res.data[0].test_lang)
         setTestListData(res.data);
         setSelectTestListData([res.data[0]])
         setResultArray(
@@ -127,6 +149,8 @@ const TestScreen = () => {
         setQuizId(String(res.data[0].question_id));
         setMinutes(res.data[0].time_diff);
         setIsLoading(true);
+
+        //testLang.length !== 0 && convertFileName(testLang);
       })
       .catch((err) => {
         console.log(err);
@@ -280,9 +304,9 @@ const TestScreen = () => {
             <div id="overlay_div">
               <div className="std_coding_area">
                 <div className="coding_nav">
-                  <p className="file_name">Soulution.Java</p>
+                  <p className="file_name">Soulution.{testFileName}</p>
                   <ul>
-                    <li>JAVA</li>
+                    <li>{testLang}</li>
                     <li
                       className="compile_btn"
                       onClick={(e) => {
