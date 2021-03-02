@@ -37,9 +37,13 @@ const ProctorExamView = () => {
       t_email: cookies.t_email,
       test_id: Number(TestCodeParams.testId),
     });
+<<<<<<< HEAD
 
     console.log(cookies.t_email);
     console.log(TestCodeParams.testId);
+=======
+    
+>>>>>>> 1aa851f313a09842db045619fbb97fd15da68641
     
     socket.on("student_join", (msg) => {
 
