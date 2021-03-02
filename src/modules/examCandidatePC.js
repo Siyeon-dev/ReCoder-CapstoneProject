@@ -11,15 +11,15 @@ let myId = null;		// 학생 primaryKey 값
 let screenId = null;
 let mypvtid = null;
 
-let roomNumber = null;
-let opaqueId = "student" + Janus.randomString(12); // opaqueId 값을 통해서 유저 구분을 한다.
+let room = 1234;
 
+var opaqueId = "student" + Janus.randomString(12); // opaqueId 값을 통해서 유저 구분을 한다.
 
 if (window.location.protocol === 'http:')
 	server = 'http://re-coder.net/janus';
 else server = 'https://re-coder.net/janus';
 
-export function runJanusPC (studentId, testRoomNum) {
+export function runJanusPC (studentId) {
 	Janus.init({
 		debug: 'all',
 		callback: function () {
@@ -36,14 +36,14 @@ export function runJanusPC (studentId, testRoomNum) {
 						success: function (pluginHandle) {
 							videoHandlerOnPC = pluginHandle;
 							myId = studentId;
-							roomNumber = Number(testRoomNum);
 
 							Janus.log(
 								` --Janus-- WebCam Plugin attached! (${videoHandlerOnPC.getPlugin()}, ID = ${videoHandlerOnPC.getId()})`
 							);
 							
-							// isRoomExist(roomNumber);
-							joinTheRoom(1234);
+							// 방 생성
+							// room = createTheRoom(TEST_CANDIDATE_NUM);
+							joinTheRoom(1234, myId);
 						},
 						error: function (error) {
 							Janus.error(" --Janus-- WebCam Error attaching plugin...", error);
@@ -261,7 +261,7 @@ function mobileFeed(id) {
 
 			let subscribe = {
 				request: 'join',
-				room: roomNumber,
+				room: room,
 				ptype: 'subscriber',
 				feed: id,
 			};
@@ -279,7 +279,7 @@ function mobileFeed(id) {
 					media: { audioSend: false, videoSend: true }, // We want recvonly audio/video
 					success: function (jsep) {
 						Janus.debug('Got SDP!', jsep);
-						var body = { request: 'start', room: roomNumber };
+						var body = { request: 'start', room: room };
 						mobileFeedHandler.send({ message: body, jsep: jsep });
 					},
 					error: function (error) {
@@ -294,9 +294,6 @@ function mobileFeed(id) {
 			let myVideoMobile = document.getElementById('myVideoMobile');
 			// tag에 stream data 붙이기
 			Janus.attachMediaStream(myVideoMobile, stream);
-		},
-		oncleanup: function () {
-			mobileFeed(id);
 		},
 	});
 }
@@ -323,13 +320,13 @@ function publishOwnScreenFeed() {
  * @description 방 접속
  * @param {접속할 방 번호} roomID
  */
-function joinTheRoom(roomID) {
+function joinTheRoom(roomID, userId) {
 	let register = {
 		request: 'join',
 		room: roomID,
 		ptype: 'publisher',
-		feed: myId,
-		display: String(myId),
+		feed: userId,
+		display: String(userId),
 	};
 
 	videoHandlerOnPC.send({
@@ -353,12 +350,11 @@ function joinTheRoom(roomID) {
 function createTheRoom(numOfCandidate) {
 	let create = {
 		request: 'create',
-		room: numOfCandidate,
-		require_pvtid: false,
+		require_pvtid: true,
 		bitrate: 500000,
 		notify_joining: true,
 		// 참여 가능한 publisher 수 = (참가자 인원 * 3) + (eyetracker, promoter)
-		publishers: numOfCandidate * 4 + 2,
+		publishers: numOfCandidate * 3 + 2,
 	};
 
 	videoHandlerOnPC.send({
@@ -390,19 +386,14 @@ function isRoomExist(roomNum) {
 
 	videoHandlerOnPC.send({
 		message: exists,
-		success: function (res) {
-			if (res.exists) {
-				console.log("방있음 -- in isRoomExist");
-				joinTheRoom(roomNum);
-			} else {
-				console.log("방없음 -- in isRoomExist");
-				createTheRoom(roomNumber);
-			}
+		success: function () {
+			Janus.log(`roomID = ${roomNum} 방이 존재합니다.`);
+			return true;
 		},
 		error: function (error) {
 			Janus.error('WebRTC error:', error);
 			Janus.log(`roomID = ${roomNum} 방이 존재하지 않습니다.`);
-			return null;
+			return false;
 		},
 	});
 }
