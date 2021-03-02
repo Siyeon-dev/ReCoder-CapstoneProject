@@ -47,9 +47,9 @@ const SelectTestStatistics = ({
                       <span>{v.s_email.split("@")[0]}</span>
                     </div>
                   </td>
-                  <td>{v.s_retake}</td>
-                  <td>{v.eye_caution}</td>
-                  <td>{v.mic_caution}</td>
+                  <td>{v.s_retake}회</td>
+                  <td>{v.eye_caution}회</td>
+                  <td>{v.mic_caution}회</td>
                   <td>
                     {v.test_validation === 0 ? (
                       <div className="test_status no_test">미응시</div>
@@ -58,7 +58,7 @@ const SelectTestStatistics = ({
                     )}
                   </td>
                   <td className="score">
-                    <span>80</span> / {v.total_score}
+                    <span>{v.question_grade}</span> / {v.total_score}
                   </td>
                 </tr>
               );

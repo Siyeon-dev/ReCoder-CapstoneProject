@@ -41,7 +41,8 @@ export function runJanusTeacher(testRoomNum) {
 							);
 
 
-							isRoomExist(roomNumber)
+							// isRoomExist(roomNumber)
+							joinTheRoom(1234);
 						},
 						// WebRTC 권한 허용 표시 관련 UI 출력
 						// User 등록 후 실행 콜백

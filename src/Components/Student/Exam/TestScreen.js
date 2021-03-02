@@ -2,7 +2,7 @@ import axios from "axios";
 import { Hook } from "console-feed";
 import { Editor } from "draft-js";
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import parse from "html-react-parser";
 import socketio from "socket.io-client";
 
@@ -16,7 +16,8 @@ const TestScreen = () => {
   const [isLoding, setIsLoading] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies();
   const TestCodeParams = useParams();
-  const [minutes, setMinutes] = useState(30);
+  const history = useHistory();
+  const [minutes, setMinutes] = useState(1);
   const [seconds, setSeconds] = useState(0);
   const [testListData, setTestListData] = useState([]);
   const [selectTestListData, setSelectTestListData] = useState([]);
@@ -54,6 +55,16 @@ const TestScreen = () => {
   useEffect(() => {
     ClassListSocket();
   }, []);
+
+  useEffect(() => {
+    const TestTimeOur = () => { 
+       alert("제출 시간이 다되어 시험이 종료됩니다.");
+       history.push("/student");
+    }
+    String(seconds) === "0" && String(minutes) === "0" && TestTimeOur();
+  }, [seconds]);
+
+
 
 
   useEffect(() => {
@@ -114,6 +125,7 @@ const TestScreen = () => {
           new Array(res.data.length)
         )
         setQuizId(String(res.data[0].question_id));
+        //setMinutes(res.data[0].time_diff);
         setIsLoading(true);
       })
       .catch((err) => {

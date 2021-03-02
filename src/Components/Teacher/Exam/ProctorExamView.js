@@ -12,49 +12,69 @@ const ProctorExamView = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [stdDataCookies, setStdDataCookies] = useState([]);
   const [socketData, setSocketData] = useState(null);
+  const [socketStdNumData, setsocketStdNumData] = useState([]);
   // useEffect(() => {
   //   const socket = socketio.connect("http://3.89.30.234:3001");
   //   setSocketData({ socket : socket });
   // }, []);
   useEffect(() => {
     janus.runJanusTeacher(TestCodeParams.testId);
-    
+
     console.log(cookies.std_data);
     cookies.std_data !== undefined && setStdDataCookies(...cookies.std_data);
     console.log(stdDataCookies);
-
-    socket.emit("join", {
-      s_email: cookies.s_email,
-      test_id: Number(TestCodeParams.testId),
-    });
-  
-    
   }, [cookies.std_data]);
 
   useEffect(() => {
-    socket.on("volumeMeter", function(res) {
+    const socket = socketio.connect("http://3.89.30.234:3001");
+
+    socket.emit("create", {
+        t_email: cookies.t_email,
+        test_id: TestCodeParams.testId,
+      });
+
+    socket.emit("join", {
+      t_email: cookies.t_email,
+      test_id: Number(TestCodeParams.testId),
+    });
+
+    console.log(cookies.t_email);
+    console.log(TestCodeParams.testId);
+    
+    socket.on("student_join", (msg) => {
+
+        const ddd = () => {
+          console.log("asdasdasdasdasd");
+          console.log(msg.s_number);
+          socketStdNumData.push(msg.s_number);
+          setCookie("std_data", [socketStdNumData]);
+        };
+        
+          console.log(msg);
+    
+      msg !== null && ddd();
+    });
+
+    socket.on("volumeMeter", function (res) {
       console.log("volumeMeter : ", res);
-    })
-  })
+    });
+    socket.on("eyetrackingcount", (msg) => {
+      console.log(msg);
+    });
+  });
 
   const ClassListSocket = () => {
     console.log("실행됨");
     console.log("선생님 보냄");
     console.log(TestCodeParams.testId);
 
-  //   TestCodeParams.testId !== undefined &&
-  //     socket.emit("m_room_out", {
-  //       test_id: Number(TestCodeParams.testId),
-  //     });
-  //   // 구슬 상 ON 출력이 안되는 이유가 현 ClassListSocket 메소드가 버튼 클릭시 실행 되는 걸로 감싸져 있어서 그런거 같아요 ㅠ_ㅠ
-  // };
+    //   TestCodeParams.testId !== undefined &&
+    //     socket.emit("m_room_out", {
+    //       test_id: Number(TestCodeParams.testId),
+    //     });
+    //   // 구슬 상 ON 출력이 안되는 이유가 현 ClassListSocket 메소드가 버튼 클릭시 실행 되는 걸로 감싸져 있어서 그런거 같아요 ㅠ_ㅠ
+  };
 
-  const socket = socketio.connect("http://3.89.30.234:3001");
-  
-  socket.on("eyetrackingcount", (msg) => {
-    console.log(msg);
-  });
-  
   return (
     <div className="proctor_exam_container">
       <div className="side_list_area">

@@ -24,14 +24,14 @@ const ScoreGradeLow = ({ apiDataFlag, stateApiDataFlag, stateApiData }) => {
               <div className="test_status complete">응시 완료</div>
             )}
           </td>
-          <td>{v.s_retake}</td>
-          <td>{v.eye_caution}</td>
-          <td>{v.mic_caution}</td>
+          <td>{v.s_retake}회</td>
+          <td>{v.eye_caution}회</td>
+          <td>{v.mic_caution}회</td>
           <td>
-            <span className="mint">5</span>/10
+            <span className="mint">{v.compile_count}</span>/{v.question_count}
           </td>
           <td>
-            <span className="blue">50</span>/ 100
+            <span className="blue">50</span>/ {v.total_score}
           </td>
           <td>
             <Link
