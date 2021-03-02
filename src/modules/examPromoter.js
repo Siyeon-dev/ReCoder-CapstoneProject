@@ -6,19 +6,20 @@ let janus = null;
 
 let videoHandlerOnPC = null;
 
-let myId = null;
+let myId = 33;
 let mypvtid = null;
 
-let roomNumber = 1234;
+let room = 1234;
 
 var opaqueId = "teacher" + Janus.randomString(12); // opaqueId 값을 통해서 유저 구분을 한다.
 
+const TEST_CANDIDATE_NUM = 5;
 
 if (window.location.protocol === 'http:')
 	server = 'http://re-coder.net/janus';
 else server = 'https://re-coder.net/janus';
 
-export function runJanusTeacher(testRoomNum) {
+export function runJanusTeacher() {
 	Janus.init({
 		debug: 'all',
 		callback: function () {
@@ -34,15 +35,17 @@ export function runJanusTeacher(testRoomNum) {
 
 						success: function (pluginHandle) {
 							videoHandlerOnPC = pluginHandle;
-							roomNumber = Number(testRoomNum);
 
 							Janus.log(
 								` --Janus-- Teacher Plugin attached! (${videoHandlerOnPC.getPlugin()}, ID = ${videoHandlerOnPC.getId()})`
 							);
 
-
-							// isRoomExist(roomNumber);
-							joinTheRoom(1234);
+							var register = {
+								request: 'join',
+								room: room,
+								ptype: 'publisher',
+							};
+							videoHandlerOnPC.send({ message: register });
 						},
 						// WebRTC 권한 허용 표시 관련 UI 출력
 						// User 등록 후 실행 콜백
@@ -136,11 +139,6 @@ export function runJanusTeacher(testRoomNum) {
 				},
 				destroyed: function () {
 					window.location.reload();
-					const destroy = {
-						"request" : "destroy",
-						"room": roomNumber
-					}
-					videoHandlerOnPC.send({ message: destroy });
 				},
 			});
 		},
@@ -165,7 +163,7 @@ function newRemoteFeed(id, displayValue) {
 
 			let subscribe = {
 				request: 'join',
-				room: roomNumber,
+				room: room,
 				ptype: 'subscriber',
 				feed: id,
 				private_id: mypvtid,
@@ -203,7 +201,7 @@ function newRemoteFeed(id, displayValue) {
 					media: { audioSend: false, videoSend: false }, // We want recvonly audio/video
 					success: function (jsep) {
 						Janus.debug('Got SDP!', jsep);
-						var body = { request: 'start', room: roomNumber };
+						var body = { request: 'start', room: room };
 						remoteFeed.send({ message: body, jsep: jsep });
 					},
 					error: function (error) {
@@ -226,12 +224,15 @@ function newRemoteFeed(id, displayValue) {
  * @description 방 접속
  * @param {접속할 방 번호} roomID
  */
-function joinTheRoom(roomID) {
-	var register = {
+function joinTheRoom(roomID, userId) {
+	let register = {
 		request: 'join',
 		room: roomID,
-		ptype: 'publisher',
+		id: userId,
+		ptype: 'subscriber',
+		// display: myUsername,
 	};
+
 	videoHandlerOnPC.send({
 		message: register,
 		success: function () {
@@ -253,13 +254,9 @@ function joinTheRoom(roomID) {
 function createTheRoom(numOfCandidate) {
 	let create = {
 		request: 'create',
-		room: numOfCandidate,
-		require_pvtid: false,
 		bitrate: 500000,
-		notify_joining: true,
 		// 참여 가능한 publisher 수 = (참가자 인원 * 3) + (eyetracker, promoter)
-		publishers: numOfCandidate * 4 + 2,
-
+		publishers: numOfCandidate * 3 + 2,
 	};
 
 	videoHandlerOnPC.send({
@@ -267,7 +264,7 @@ function createTheRoom(numOfCandidate) {
 		success: function (result) {
 			Janus.log(`room = ${result['room']} 방이 생성되었습니다.`);
 			// 방 번호 return
-			return joinTheRoom(result['room']);
+			joinTheRoom(result['room']);
 		},
 		error: function (error) {
 			Janus.error('WebRTC error:', error);
@@ -291,19 +288,14 @@ function isRoomExist(roomNum) {
 
 	videoHandlerOnPC.send({
 		message: exists,
-		success: function (res) {
-			if (res.exists) {
-				console.log("방있음 -- in isRoomExist");
-				joinTheRoom(roomNum);
-			} else {
-				console.log("방없음 -- in isRoomExist");
-				createTheRoom(roomNumber);
-			}
+		success: function () {
+			Janus.log(`roomID = ${roomNum} 방이 존재합니다.`);
+			return true;
 		},
 		error: function (error) {
 			Janus.error('WebRTC error:', error);
 			Janus.log(`roomID = ${roomNum} 방이 존재하지 않습니다.`);
-			return null;
+			return false;
 		},
 	});
 }

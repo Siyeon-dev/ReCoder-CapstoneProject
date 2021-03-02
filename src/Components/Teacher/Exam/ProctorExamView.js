@@ -22,7 +22,7 @@ const ProctorExamView = () => {
   //   setSocketData({ socket : socket });
   // }, []);
   useEffect(() => {
-    janus.runJanusTeacher(TestCodeParams.testId);
+    janus.runJanusTeacher();
 
     console.log(cookies.std_data);
     cookies.std_data !== undefined && setStdDataCookies(...cookies.std_data);
@@ -44,7 +44,6 @@ const ProctorExamView = () => {
 
     console.log(cookies.t_email);
     console.log(TestCodeParams.testId);
-
     socket.on("student_join", (msg) => {
       const ddd = () => {
         particStdFlag === true && setParticStdFlag(false);
