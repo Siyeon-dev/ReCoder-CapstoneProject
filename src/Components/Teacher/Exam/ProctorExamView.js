@@ -15,6 +15,7 @@ const ProctorExamView = () => {
   const [socketStdNumData, setsocketStdNumData] = useState([]);
   const [particStdList, setParticStdList] = useState([]);
   const [particStdFlag, setParticStdFlag] = useState(false);
+  const [eyeCautionValueFlag, setEyeCautionValueFlag] = useState(false);
   const [volumeMeterValue, setVolumeMeterValue] = useState(0);
   const [eyetrackingValue, setEyetrackingValue] = useState(0);
   // useEffect(() => {
@@ -24,9 +25,9 @@ const ProctorExamView = () => {
   useEffect(() => {
     janus.runJanusTeacher();
 
-    console.log(cookies.std_data);
-    cookies.std_data !== undefined && setStdDataCookies(...cookies.std_data);
-    console.log(stdDataCookies);
+    // console.log(cookies.std_data);
+    // cookies.std_data !== undefined && setStdDataCookies(...cookies.std_data);
+    // console.log(stdDataCookies);
   }, [cookies.std_data]);
 
   useEffect(() => {
@@ -47,12 +48,13 @@ const ProctorExamView = () => {
     socket.on("student_join", (msg) => {
       const ddd = () => {
         particStdFlag === true && setParticStdFlag(false);
-        setParticStdFlag(true);
         console.log("asdasdasdasdasd");
         console.log(msg);
         socketStdNumData.push(msg.s_number);
-        setCookie("std_data", [socketStdNumData]);
+        //setCookie("std_data", [socketStdNumData]);
         particStdList.push(msg);
+        console.log(particStdList);
+        setParticStdFlag(true);
       };
 
       // console.log(particStdList);
@@ -67,15 +69,17 @@ const ProctorExamView = () => {
     socket.on("eyetrackingcount", (msg) => {
       console.log(msg);
       setEyetrackingValue(msg);
-      const aaa = particStdList.filter(
+      const aaa = particStdList.find(
         (v) => v.s_number === msg.s_number
       );
-      console.log("****************************");
-      console.log(aaa);
+      
+      aaa.eye_caution = msg.eye_caution;
+      setParticStdList([...particStdList, aaa])
 
-      aaa[0].eye_caution = msg.eye_caution;
-      console.log("****************************");
-      console.log(aaa);
+      document.getElementById("test_warning_state").className += "eye";
+      setTimeout(function () {
+        document.getElementById("test_warning_state").classList.remove("eye");
+      }, 3000);
     });
   });
 
@@ -83,25 +87,13 @@ const ProctorExamView = () => {
     console.log(particStdList);
   }, []);
 
-  const ClassListSocket = () => {
-    console.log("실행됨");
-    console.log("선생님 보냄");
-    console.log(TestCodeParams.testId);
-
-    //   TestCodeParams.testId !== undefined &&
-    //     socket.emit("m_room_out", {
-    //       test_id: Number(TestCodeParams.testId),
-    //     });
-    //   // 구슬 상 ON 출력이 안되는 이유가 현 ClassListSocket 메소드가 버튼 클릭시 실행 되는 걸로 감싸져 있어서 그런거 같아요 ㅠ_ㅠ
-  };
-
   return (
     <div className="proctor_exam_container">
       <div className="side_list_area">
         <p className="tit">
           학생 목록
           <div>
-            <span>{particStdFlag && stdDataCookies.length}</span>/30
+            <span>{particStdFlag && particStdList.length}</span>/30
           </div>
         </p>
         <ul>
