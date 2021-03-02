@@ -26,7 +26,7 @@ const TestPrecautions = () => {
         console.log("s_number : ", res.data[0].s_number);
         setStudentNumber(res.data[0].s_number)
         setCautionData(res.data);
-        res.data && janus.runJanusPC(res.data[0].s_number, data.test_id); // 0 => s_num
+        res.data && janus.runJanusPC(res.data[0].s_number); // 0 => s_num
         res.data && console.log(res.data.s_number);
       })
       .catch((err) => {
