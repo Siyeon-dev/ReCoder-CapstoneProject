@@ -66,10 +66,8 @@ const TestPrecautions = () => {
                     // 화면 전환 시 강제 리다이랙션
                     window.onblur = function() {
                       console.log('화면 전환 발생');
-                      alert('시험 도중 화면 전환을 시도하셨습니다.\n 시험 대기실로 강제 이동됩니다.');
-                      
                       /* 리다이랙션 로직 */
-                      // redirect("/student");
+                      alert('시험 도중 화면 전환을 시도하셨습니다.\n 시험 대기실로 강제 이동됩니다.');
                     }
 
                     // Keyboard Event 'alt" 막기
