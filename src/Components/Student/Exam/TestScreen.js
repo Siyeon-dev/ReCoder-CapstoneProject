@@ -125,7 +125,7 @@ const TestScreen = () => {
           new Array(res.data.length)
         )
         setQuizId(String(res.data[0].question_id));
-        //setMinutes(res.data[0].time_diff);
+        setMinutes(res.data[0].time_diff);
         setIsLoading(true);
       })
       .catch((err) => {

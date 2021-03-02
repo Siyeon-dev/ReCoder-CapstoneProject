@@ -530,12 +530,18 @@ ul.status_desc li.cheating {background:url(../img/cheating_focus.gif) no-repeat 
 	border-radius: 10px;
 }
 
-.proctor_exam_container .video_area .std_video_set {float:left; width:440px;height: 370px;border-radius:10px;border:1px solid #b0bdce;overflow:hidden; background:#fff;}
-.proctor_exam_container .video_area .std_video_set {padding:0;line-height:0;font-size:0;margin: 0 0 20px 20px;}
+.std_video_area {position: relative;display: inline-block; color:#fff;}
+.proctor_exam_container .video_area .std_video_set {position: relative; float:left; width:440px;height: 370px;border-radius:10px;border:1px solid #b0bdce;overflow:hidden; color:#fff; background:#fff;}
+.proctor_exam_container .video_area .std_video_area .std_test_info{width:440px; margin-left:20px; position:absolute;}
+.proctor_exam_container .video_area .std_video_area .std_test_info p {float:left;font-weight:600;font-size: 28px;margin-bottom:20px;}
+.proctor_exam_container .video_area .std_video_area .std_test_info ul {float:right; overflow: hidden;}
+.proctor_exam_container .video_area .std_video_area .std_test_info ul li {float:left;margin-left:10px;font-size: 17px;margin-top: 10px;font-weight: 600;}
+.proctor_exam_container .video_area .std_video_set {padding:0;line-height:0;font-size:0;margin:60px 0 20px 20px;}
 .proctor_exam_container .video_area .std_video_set .monitor_view {border-bottom:1px solid #b0bdce;}
 .proctor_exam_container .video_area .std_video_set .web_mobile_cam {width:100%; display:inline-block;}
 .proctor_exam_container .video_area .std_video_set .web_mobile_cam video {float:left; margin:0; padding:0; line-height: 0; letter-spacing: 0; font-size: 0; border:0;}
 .proctor_exam_container .video_area .std_video_set .web_mobile_cam video:first-child {border-right: 1px solid #b0bdce; }
+.std_warning_area.voice {width: 439px; height: 368px; position: absolute; z-index: 9999; background: #86ff5266; bottom: 20px; right: 0; border-radius: 10px; border: 2px solid #3cce40;}
 
 /* Teacher :: 시험 통계 */
 .class_statistic_wrap {width:100%;}

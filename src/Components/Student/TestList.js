@@ -9,11 +9,35 @@ import "moment/locale/en-au"
 
 const TestList = ({ selectClassTestInfo, noClassCodeFlag }) => {
   const nowTime = moment().format('YYYY-MM-DD A HH:mm');
+  const [cookies, setCookie, removeCookie] = useCookies();
   let buttonStatus = null;
   let testStart = null;
   let testEnd = null;
 
   console.log(noClassCodeFlag);
+
+  const StateInsertData = (startData, endData, testId) => { 
+    console.log(startData, endData);
+
+    const data = {
+      test_id: String(testId),
+      s_email: cookies.s_email,
+      test_start_time: "2021-03-01",
+      test_end_time: "2021-03-01",
+    };
+
+    console.log(data);
+
+    data &&
+      axios
+        .post("/stateinsert", data)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }
 
   const StdTestInfoList = () => {
     return noClassCodeFlag && Object.keys(selectClassTestInfo).length !== 0 ? (
@@ -26,44 +50,55 @@ const TestList = ({ selectClassTestInfo, noClassCodeFlag }) => {
             {v.test_start} ~ {v.test_end}
           </p>
           {
-          testStart = v.date + " " + v.test_start,
-          testEnd = v.date + " " + v.test_end,
-          buttonStatus = compareTime(nowTime,testStart, testEnd),
-
-          console.log("testStart : ",testStart),
-          console.log("testEnd : ",testEnd),
-          console.log("nowTime : ", nowTime),
-          console.log(buttonStatus),
-
-          buttonStatus === 0 ? (
-            <Link
-              to={`/testprecautions/${v.test_id}`}
-              className="test_btn yellow"
-            >
-              <span>시험대기</span>
-            </Link>
-          ) : buttonStatus === 1 ? (
-            <Link to={`/testprecautions/${v.test_id}`} className="test_btn mint">
-              <span>시험응시</span>
-            </Link>
-          ) : buttonStatus === 2 ? (
-            <Link
-              to={`/testprecautions/${v.test_id}`}
-              className="test_btn red"
-            >
-              <span>시험종료</span>
-            </Link>
-          ) : buttonStatus === 3 ? (
-            <Link
-              to={`/testprecautions/${v.test_id}`}
-              className="test_btn puple"
-            >
-              결과보기
-              <div className="score">
-                80 / <span>100</span>
-              </div>
-            </Link>
-          ) : null}
+            ((testStart = v.date + " " + v.test_start),
+            (testEnd = v.date + " " + v.test_end),
+            (buttonStatus = compareTime(nowTime, testStart, testEnd)),
+            console.log("testStart : ", testStart),
+            console.log("testEnd : ", testEnd),
+            console.log("nowTime : ", nowTime),
+            console.log(buttonStatus),
+            buttonStatus === 0 ? (
+              <Link
+                to={`/testprecautions/${v.test_id}`}
+                className="test_btn yellow"
+                onClick={() =>
+                  StateInsertData(v.test_start, v.test_end, v.test_id)
+                }
+              >
+                <span>시험대기</span>
+              </Link>
+            ) : buttonStatus === 1 ? (
+              <Link
+                to={`/testprecautions/${v.test_id}`}
+                className="test_btn mint"
+                onClick={() =>
+                  StateInsertData(v.test_start, v.test_end, v.test_id)
+                }
+              >
+                <span>시험응시</span>
+              </Link>
+            ) : buttonStatus === 2 ? (
+              <Link
+                to={`/testprecautions/${v.test_id}`}
+                className="test_btn red"
+                onClick={() =>
+                  StateInsertData(v.test_start, v.test_end, v.test_id)
+                }
+              >
+                <span>시험종료</span>
+              </Link>
+            ) : buttonStatus === 3 ? (
+              <Link
+                to={`/testprecautions/${v.test_id}`}
+                className="test_btn puple"
+              >
+                결과보기
+                <div className="score">
+                  80 / <span>100</span>
+                </div>
+              </Link>
+            ) : null)
+          }
         </div>
       ))
     ) : noClassCodeFlag ? (
