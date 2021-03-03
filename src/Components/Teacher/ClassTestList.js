@@ -80,7 +80,7 @@ const ClassTestList = ({
           <td>
             {currElement.t_test_status === 1 ? (
               <Link
-                to={`/proctorexamview/${currElement.test_id}`}
+                to={`/proctorexamview/${currElement.test_id}/${currElement.test_name}`}
                 //onClick={() => ClassListSocket(currElement.test_id)}
                 className="tch_test_state start"
               >
