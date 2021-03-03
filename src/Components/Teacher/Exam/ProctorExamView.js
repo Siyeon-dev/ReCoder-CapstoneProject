@@ -11,13 +11,16 @@ const ProctorExamView = () => {
   const TestCodeParams = useParams();
   const [cookies, setCookie, removeCookie] = useCookies();
   const [stdDataCookies, setStdDataCookies] = useState([]);
-  const [socketData, setSocketData] = useState(null);
-  const [socketStdNumData, setsocketStdNumData] = useState([]);
   const [particStdList, setParticStdList] = useState([]);
   const [particStdFlag, setParticStdFlag] = useState(false);
-  const [eyeCautionValueFlag, setEyeCautionValueFlag] = useState(false);
+  const [tempParticStdList, setTempParticStdList] = useState([]);
   const [volumeMeterValue, setVolumeMeterValue] = useState(0);
   const [eyetrackingValue, setEyetrackingValue] = useState(0);
+  const [highlightState, setHighlightState] = useState(false);
+  const [duplicateDataCheckArray, setDuplicateDataCheckArray] = useState([])
+  const [duplicateDataCheckFlag, setDuplicateDataCheckFlag] = useState(false)
+
+  const socket = socketio.connect("http://3.89.30.234:3001");
   // useEffect(() => {
   //   const socket = socketio.connect("http://3.89.30.234:3001");
   //   setSocketData({ socket : socket });
@@ -28,15 +31,16 @@ const ProctorExamView = () => {
     // console.log(cookies.std_data);
     // cookies.std_data !== undefined && setStdDataCookies(...cookies.std_data);
     // console.log(stdDataCookies);
-  }, [cookies.std_data]);
+  }, [particStdList]);
+
 
   useEffect(() => {
-    const socket = socketio.connect("http://3.89.30.234:3001");
-
     socket.emit("create", {
       t_email: cookies.t_email,
       test_id: TestCodeParams.testId,
     });
+
+    console.log("방 개설 시작중");
 
     socket.emit("join", {
       t_email: cookies.t_email,
@@ -50,38 +54,56 @@ const ProctorExamView = () => {
         particStdFlag === true && setParticStdFlag(false);
         console.log("asdasdasdasdasd");
         console.log(msg);
-        socketStdNumData.push(msg.s_number);
-        //setCookie("std_data", [socketStdNumData]);
-        particStdList.push(msg);
+
+        const vvv = particStdList.filter((v) => v.s_number === msg.s_number);
+        Object.keys(vvv).length === 0
+          ? particStdList.push(msg)
+          : console.log("중복된 학생입니다.");
+
         console.log(particStdList);
-        setParticStdFlag(true);
+        Object.keys(msg).length !== 0 && setParticStdFlag(true);
+
+        //socket.off("student_join", msg);
       };
-
-      // console.log(particStdList);
-      // console.log(msg);
-
       msg !== null && ddd();
     });
 
     socket.on("volumeMeter", function (res) {
       console.log("volumeMeter : ", res);
+
+      console.log(res);
+      setVolumeMeterValue(res);
+      const bbb = particStdList.find((v) => v.s_number === res.s_number);
+
+      bbb.mic_caution = res.mic_caution;
+      setParticStdList([
+        ...particStdList.filter((v) => v.s_number !== res.s_number),
+        bbb,
+      ]);
+      
+      setHighlightState(true);
+      setTimeout(() => {
+        setHighlightState(false);
+      }, 2000);
+
+      //socket.off("volumeMeter", res);
     });
     socket.on("eyetrackingcount", (msg) => {
       console.log(msg);
       setEyetrackingValue(msg);
-      const aaa = particStdList.find(
-        (v) => v.s_number === msg.s_number
-      );
-      
-      aaa.eye_caution = msg.eye_caution;
-      setParticStdList([...particStdList, aaa])
+      const aaa = particStdList.find((v) => v.s_number === msg.s_number);
+      console.log(msg.s_number);
 
-      document.getElementById("test_warning_state").className += "eye";
-      setTimeout(function () {
-        document.getElementById("test_warning_state").classList.remove("eye");
-      }, 3000);
+      aaa.eye_caution = msg.eye_caution;
+
+      setParticStdList([
+        ...particStdList.filter((v) => v.s_number !== msg.s_number),
+        aaa,
+      ]);
+
+      //socket.off("eyetrackingcount", msg);
     });
-  });
+  }, []);
 
   useEffect(() => {
     console.log(particStdList);
@@ -125,6 +147,7 @@ const ProctorExamView = () => {
           <ProctorExamVideo
             particStdFlag={particStdFlag}
             particStdList={particStdList}
+            highlightState={highlightState}
           />
         </div>
       </div>
