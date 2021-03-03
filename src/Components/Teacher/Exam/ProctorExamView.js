@@ -16,9 +16,9 @@ const ProctorExamView = () => {
   const [tempParticStdList, setTempParticStdList] = useState([]);
   const [volumeMeterValue, setVolumeMeterValue] = useState(0);
   const [eyetrackingValue, setEyetrackingValue] = useState(0);
-  const [highlightState, setHighlightState] = useState(false);
-  const [duplicateDataCheckArray, setDuplicateDataCheckArray] = useState([])
-  const [duplicateDataCheckFlag, setDuplicateDataCheckFlag] = useState(false)
+  const [highlightStateVoice, setHighlightStateVoice] = useState(false);
+  const [highlightStateEye, setHighlightStateEye] = useState(false);
+  const [currentStdNumber, setCurrentStdNumber] = useState(0);
 
   const socket = socketio.connect("http://3.89.30.234:3001");
   // useEffect(() => {
@@ -59,6 +59,8 @@ const ProctorExamView = () => {
         Object.keys(vvv).length === 0
           ? particStdList.push(msg)
           : console.log("중복된 학생입니다.");
+        
+        console.log("들어온 학생 목록 : " + particStdList);
 
         console.log(particStdList);
         Object.keys(msg).length !== 0 && setParticStdFlag(true);
@@ -80,11 +82,11 @@ const ProctorExamView = () => {
         ...particStdList.filter((v) => v.s_number !== res.s_number),
         bbb,
       ]);
-      
-      setHighlightState(true);
+      setCurrentStdNumber(res.s_number);
+      setHighlightStateVoice(true);
       setTimeout(() => {
-        setHighlightState(false);
-      }, 2000);
+        setHighlightStateVoice(false);
+      }, 3000);
 
       //socket.off("volumeMeter", res);
     });
@@ -101,6 +103,12 @@ const ProctorExamView = () => {
         aaa,
       ]);
 
+      setCurrentStdNumber(msg.s_number);
+      setHighlightStateEye(true);
+      setTimeout(() => {
+        setHighlightStateEye(false);
+      }, 3000);
+
       //socket.off("eyetrackingcount", msg);
     });
   }, []);
@@ -108,6 +116,13 @@ const ProctorExamView = () => {
   useEffect(() => {
     console.log(particStdList);
   }, []);
+
+  const SocketRoomOut = () => { 
+    socket.emit("m_room_out", {
+        test_id: Number(TestCodeParams.testId),
+    });
+    console.log("Room Out");
+  }
 
   return (
     <div className="proctor_exam_container">
@@ -126,9 +141,7 @@ const ProctorExamView = () => {
           <Link
             to={`/teacher`}
             onClick={() => {
-              //ClassListSocket();
-              removeCookie("std_data");
-              setStdDataCookies([]);
+              SocketRoomOut();
             }}
           >
             나가기
@@ -147,7 +160,9 @@ const ProctorExamView = () => {
           <ProctorExamVideo
             particStdFlag={particStdFlag}
             particStdList={particStdList}
-            highlightState={highlightState}
+            highlightStateVoice={highlightStateVoice}
+            highlightStateEye={highlightStateEye}
+            currentStdNumber={currentStdNumber}
           />
         </div>
       </div>
