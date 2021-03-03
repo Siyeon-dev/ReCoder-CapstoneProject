@@ -23,6 +23,7 @@ const TestScreen = () => {
   const [selectTestListData, setSelectTestListData] = useState([]);
   const [userCodeData, setUserCodeData] = useState([]);
   const [userCodeResultData, setUserCodeResultData] = useState([]);
+  const [commandDataList, setCommandDataList] = useState(0);
 
   
   const [socketData, setSocketData] = useState([]);
@@ -112,7 +113,7 @@ const TestScreen = () => {
 
     // Get input from the code editor
     const userCode = Ace.codeEditor.getValue();
-    setUserCodeData(userCode);
+    // setUserCodeData(userCode);
     setUserCodeResultData(Ace.codeEditor.getValue());
     // Run the user code
     try {
@@ -208,8 +209,7 @@ const TestScreen = () => {
   }, []);
 
   const CompileApi = () => {
-    const asdasd =  userCodeData && userCodeData.filter((v) => v === quizId);
-    const ApiCommand = asdasd.length === 0 ? "insert" : "update";
+    const ApiCommand = commandDataList === 0 ? "insert" : "update"
     
 
     const data = {
@@ -221,7 +221,7 @@ const TestScreen = () => {
       command: ApiCommand,
     };
 
-    userCodeData.push(quizId);
+    commandDataList.push(quizId);
     console.log(userCodeData);
 
     console.log(data);
@@ -231,6 +231,7 @@ const TestScreen = () => {
       .then((res) => {
         console.log(res.data);
         setApiCount(1);
+        setCommandDataList(1);
       })
       .catch((err) => {
         console.log(err);

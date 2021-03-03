@@ -11,12 +11,16 @@ const ProctorExamView = () => {
   const TestCodeParams = useParams();
   const [cookies, setCookie, removeCookie] = useCookies();
   const [stdDataCookies, setStdDataCookies] = useState([]);
-  const [socketData, setSocketData] = useState(null);
-  const [socketStdNumData, setsocketStdNumData] = useState([]);
   const [particStdList, setParticStdList] = useState([]);
   const [particStdFlag, setParticStdFlag] = useState(false);
+  const [tempParticStdList, setTempParticStdList] = useState([]);
   const [volumeMeterValue, setVolumeMeterValue] = useState(0);
   const [eyetrackingValue, setEyetrackingValue] = useState(0);
+  const [highlightState, setHighlightState] = useState(false);
+  const [duplicateDataCheckArray, setDuplicateDataCheckArray] = useState([])
+  const [duplicateDataCheckFlag, setDuplicateDataCheckFlag] = useState(false)
+
+  const socket = socketio.connect("http://3.89.30.234:3001");
   // useEffect(() => {
   //   const socket = socketio.connect("http://3.89.30.234:3001");
   //   setSocketData({ socket : socket });
@@ -29,13 +33,14 @@ const ProctorExamView = () => {
     // console.log(stdDataCookies);
   }, [particStdList]);
 
-  useEffect(() => {
-    const socket = socketio.connect("http://3.89.30.234:3001");
 
+  useEffect(() => {
     socket.emit("create", {
       t_email: cookies.t_email,
       test_id: TestCodeParams.testId,
     });
+
+    console.log("방 개설 시작중");
 
     socket.emit("join", {
       t_email: cookies.t_email,
@@ -47,53 +52,62 @@ const ProctorExamView = () => {
     socket.on("student_join", (msg) => {
       const ddd = () => {
         particStdFlag === true && setParticStdFlag(false);
-        setParticStdFlag(true);
         console.log("asdasdasdasdasd");
         console.log(msg);
-        socketStdNumData.push(msg.s_number);
-        setCookie("std_data", [socketStdNumData]);
-        particStdList.push(msg);
+
+        const vvv = particStdList.filter((v) => v.s_number === msg.s_number);
+        Object.keys(vvv).length === 0
+          ? particStdList.push(msg)
+          : console.log("중복된 학생입니다.");
+
+        console.log(particStdList);
+        Object.keys(msg).length !== 0 && setParticStdFlag(true);
+
+        //socket.off("student_join", msg);
       };
-
-      // console.log(particStdList);
-      // console.log(msg);
-
       msg !== null && ddd();
     });
 
     socket.on("volumeMeter", function (res) {
       console.log("volumeMeter : ", res);
+
+      console.log(res);
+      setVolumeMeterValue(res);
+      const bbb = particStdList.find((v) => v.s_number === res.s_number);
+
+      bbb.mic_caution = res.mic_caution;
+      setParticStdList([
+        ...particStdList.filter((v) => v.s_number !== res.s_number),
+        bbb,
+      ]);
+      
+      setHighlightState(true);
+      setTimeout(() => {
+        setHighlightState(false);
+      }, 2000);
+
+      //socket.off("volumeMeter", res);
     });
     socket.on("eyetrackingcount", (msg) => {
       console.log(msg);
       setEyetrackingValue(msg);
-      const aaa = particStdList.filter(
-        (v) => v.s_number === msg.s_number
-      );
-      console.log("****************************");
-      console.log(aaa);
+      const aaa = particStdList.find((v) => v.s_number === msg.s_number);
+      console.log(msg.s_number);
 
-      aaa[0].eye_caution = msg.eye_caution;
-      console.log("****************************");
-      console.log(aaa);
+      aaa.eye_caution = msg.eye_caution;
+
+      setParticStdList([
+        ...particStdList.filter((v) => v.s_number !== msg.s_number),
+        aaa,
+      ]);
+
+      //socket.off("eyetrackingcount", msg);
     });
-  });
+  }, []);
 
   useEffect(() => {
     console.log(particStdList);
   }, []);
-
-  const ClassListSocket = () => {
-    console.log("실행됨");
-    console.log("선생님 보냄");
-    console.log(TestCodeParams.testId);
-
-    //   TestCodeParams.testId !== undefined &&
-    //     socket.emit("m_room_out", {
-    //       test_id: Number(TestCodeParams.testId),
-    //     });
-    //   // 구슬 상 ON 출력이 안되는 이유가 현 ClassListSocket 메소드가 버튼 클릭시 실행 되는 걸로 감싸져 있어서 그런거 같아요 ㅠ_ㅠ
-  };
 
   return (
     <div className="proctor_exam_container">
@@ -101,7 +115,7 @@ const ProctorExamView = () => {
         <p className="tit">
           학생 목록
           <div>
-            <span>{particStdFlag && stdDataCookies.length}</span>/30
+            <span>{particStdFlag && particStdList.length}</span>/30
           </div>
         </p>
         <ul>
@@ -133,6 +147,7 @@ const ProctorExamView = () => {
           <ProctorExamVideo
             particStdFlag={particStdFlag}
             particStdList={particStdList}
+            highlightState={highlightState}
           />
         </div>
       </div>

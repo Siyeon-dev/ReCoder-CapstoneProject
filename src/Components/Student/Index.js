@@ -1,13 +1,13 @@
 import axios from "axios";
 import Footer from "Components/Layout/Footer";
 import Header from "Components/Layout/Header";
-import ClassStatistics from "Components/Teacher/ClassStatistics";
 import React, { createContext, useEffect, useState } from "react";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 import ContSideMenu from "./ContSideMenu";
-import ContTitle from "./ContTitle";
 import TestList from "./TestList";
+import TestScoreGrade from "./TestScoreGrade";
 
 const Index = () => {
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -142,10 +142,25 @@ useEffect(() => {
               </div> */}
             </div>
             <div className="cont_wrap">
-              <TestList
-                selectClassTestInfo={selectClassTestInfo}
-                noClassCodeFlag={noClassCodeFlag}
-              />
+              <Tabs>
+                <TabList>
+                  <Tab>시험리스트</Tab>
+                  <Tab>시험통계</Tab>
+                </TabList>
+                <TabPanel>
+                  <TestList
+                    selectClassTestInfo={selectClassTestInfo}
+                    noClassCodeFlag={noClassCodeFlag}
+                  />
+                </TabPanel>
+                <TabPanel>
+                  <TestScoreGrade
+                    apiLoadingFlag={apiLoadingFlag}
+                    selectClassTestInfo={selectClassTestInfo}
+                    emptyArrayCheckFlag={emptyArrayCheckFlag}
+                  />
+                </TabPanel>
+              </Tabs>
             </div>
           </div>
         </div>
