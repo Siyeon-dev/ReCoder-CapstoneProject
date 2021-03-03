@@ -1,30 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Cookies, useCookies } from "react-cookie";
 import { useHistory } from "react-router-dom";
+import { TextField } from "@material-ui/core";
 
 import Header from './MobileHeader';
 
 
 import * as janus from '../../module/examCandidateMobile';
 
-function Test() {
-    return (
-        <div className="TestBox">
-            <span className="TestTitle">
-                휴대폰 카메라 설정 완료
-            </span>
-            <span className="TestText">
-                이 창을 닫지 마시고, 컴퓨터에서 모바일 기기의 촬영이 정상적으로 이루어지는지 확인하세요.
-            </span>
-        </div>
-    );
-}
 
 const Camera = () => {
     const [isVisible, changeVisible] = useState([false]);
     const [userId, setUserId]                   = useState();
     const [userName, setUserName]               = useState();
     const [userNumber, setUserNumber]           = useState();
+    const [testId, setTestId]                   = useState();
     const [cookies, setCookie, removeCookie]    = useCookies(["token"]);
     const [isLogin, setLogin]                   = useState(cookies.isLogin);
     const [data, setData]                       = useState();
@@ -45,6 +35,7 @@ const Camera = () => {
     return (
         <div>
             <Header />
+            <p>{userNumber}</p>
             <p>{userName}님 환영합니다!</p>
             <div className="MainBox">
                 <div className="CameraBox">
@@ -53,10 +44,17 @@ const Camera = () => {
                 </span>
                 </div>
                 <span>
-                    연결 시작 버튼을 누른 후, 카메라 접근 허용을 해야 정상적으로 시험에 응시가 가능합니다.
+                    카메라 접근 허용을 해야 정상적으로 시험에 응시가 가능합니다.
                 </span>
-                {isVisible ?  null : <Test />}
-                <button className="TestButton" onClick={() => janus.runJanusMobile(userNumber)}>
+                <div className="CameraSubTitle">
+                <span>
+                    PC 화면의 시험 대기 페이지에 나와있는 시험 번호를 입력 후, 연결 시작 버튼을 눌러주세요.
+                </span>
+                </div>
+                <TextField id="userId" variant="outlined" size="small" 
+                            label="TEST ID" style={{width: "100%", margin: "20px -5px 0px 0px"}}
+                            onChange={(e) => setTestId(e.target.value)}/>
+                <button className="TestButton" onClick={() => janus.runJanusMobile(userNumber, testId)}>
                     연결 시작
                 </button>
                 <div>
