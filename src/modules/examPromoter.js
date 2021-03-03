@@ -119,14 +119,6 @@ export function runJanusTeacher() {
 									medium
 							);
 						},
-						// localStreamData를 받아온다
-						onlocalstream: function (stream) {
-							Janus.debug(' ::: Got a local stream :::', stream);
-							// html tag 값 가져오기
-							let myVideo = document.getElementById('myvideo');
-							// tag에 stream data 붙이기
-							Janus.attachMediaStream(myVideo, stream);
-						},
 						oncleanup: function () {},
 						error: function(error) {
 							runJanusTeacher();
