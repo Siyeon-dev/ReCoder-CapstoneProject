@@ -1,6 +1,6 @@
 import socketio from "socket.io-client";
 
-const volumeLevel = 0.1;  // 0.1 는 평소 말하는 목소리 크기를 판단할 수 있는 정도. (속삭임은 판명 안됨)
+const volumeLevel = 0.05;  // 0.1 는 평소 말하는 목소리 크기를 판단할 수 있는 정도. (속삭임은 판명 안됨)
 
 let meter = null;
 let audioContext = null;
@@ -73,7 +73,7 @@ function gotStream(stream) {
 function drawLoop( time ) {
     // 0.1 데시벨 이상, 3번 이하 호출
     console.log("데시벨 : ", meter.volume);
-    
+
     // if (meter.volume > volumeLevel && count < 3) {
     if (meter.volume > volumeLevel) {
         // 음성인식 부정행위 API 호출
