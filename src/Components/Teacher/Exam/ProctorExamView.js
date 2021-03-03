@@ -95,6 +95,7 @@ const ProctorExamView = () => {
 
   useEffect(() => {
     student && setParticStdList([...particStdList, student])
+    janus.runJanusTeacher();
   }, [student])
   
   useEffect(() => {
