@@ -7,7 +7,7 @@ let screenHandle = null;
 let videoHandlerOnPC = null;
 
 let myId = null;
-let room = 1234;
+let room = null;
 
 let opaqueId = '박시연'; // 무슨 역할?
 const TEST_CANDIDATE_NUM = 5;
@@ -16,7 +16,7 @@ if (window.location.protocol === 'http:')
 	server = 'http://' + 're-coder.net' + '/janus';
 else server = 'https://' + 're-coder.net' + '/janus';
 
-export function runJanusMobile(studentId) {
+export function runJanusMobile(studentId, testId) {
 	Janus.init({
 		debug: 'all',
 		callback: function () {
@@ -31,15 +31,17 @@ export function runJanusMobile(studentId) {
 
 						success: function (pluginHandle) {
 							videoHandlerOnPC = pluginHandle;
+							
 							myId = Number(studentId) + 2;
-
+							room = Number(testId);
+							
 							Janus.log(
 								`Plugin attached! (${videoHandlerOnPC.getPlugin()}
-                                    , ID = ${videoHandlerOnPC.getId()})`
+                                    , Display Value = ${myId})`
 							);
 
 							// room = createTheRoom(TEST_CANDIDATE_NUM);
-							joinTheRoom(1234, myId);
+							joinTheRoom(room, myId);
 						},
 						// WebRTC 권한 허용 표시 관련 UI 출력
 						// User 등록 후 실행 콜백
