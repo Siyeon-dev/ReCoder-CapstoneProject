@@ -76,21 +76,21 @@ const TestPrecautions = () => {
                     // }
 
                     // Keyboard Event 'alt" 막기
-                    // window.addEventListener("keydown", function(event) {
-                    //   let handled = false;
+                    window.addEventListener("keydown", function(event) {
+                      let handled = false;
 
-                    //   if (event.defaultPrevented) {
-                    //       return;
-                    //   }
+                      if (event.defaultPrevented) {
+                          return;
+                      }
 
-                    //   if (event.altKey)
-                    //       handled = true;
+                      if (event.altKey)
+                          handled = true;
 
-                    //   if(handled) {
-                    //       console.log(event.keyCode);
-                    //       event.preventDefault();
-                    //   }
-                    // }, true);
+                      if(handled) {
+                          console.log(event.keyCode);
+                          event.preventDefault();
+                      }
+                    }, true);
 
                     document.documentElement.webkitRequestFullscreen();
                   }}

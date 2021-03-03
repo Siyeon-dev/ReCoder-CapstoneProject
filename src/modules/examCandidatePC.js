@@ -304,10 +304,10 @@ function mobileFeed(id) {
 function publishOwnScreenFeed() {
 	// Publish our stream
 	screenHandle.createOffer({
-		media: { video: 'screen', audioSend: true, videoRecv: true }, // Publishers are sendonly
+		media: { video: 'screen', audioSend: false, videoRecv: true }, // Publishers are sendonly
 		success: function (jsep) {
 			Janus.debug('Got publisher screen SDP!', jsep);
-			var publish = { request: 'configure', audio: true, video: true };
+			var publish = { request: 'configure', audio: false, video: true };
 			screenHandle.send({ message: publish, jsep: jsep });
 		},
 		error: function (error) {

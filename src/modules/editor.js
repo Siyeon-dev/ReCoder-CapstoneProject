@@ -9,10 +9,10 @@ import 'ace-builds/src-noconflict/mode-java'
 import 'ace-builds/src-noconflict/mode-php'
 
 // Setup Ace
-export let codeEditor = null;
+export let codeEditor = null; 
 
-let statusModeEditor = null;
 let defaultCode = `console.log('hello world');`;
+let statusModeEditor = null;
 
 export let editorLib = {
 	clearConsoleScreen(consoleMessages, consoleLogList) {
@@ -35,7 +35,9 @@ export let editorLib = {
 			consoleLogList.appendChild(newLogItem);
 		});
 	},
-	init() {
+	init(argQuestionCode) {
+		defaultCode = argQuestionCode === "" ? defaultCode : argQuestionCode;
+
 		// Configure Ace
 		codeEditor = ace.edit("editorCode");
 		// Theme

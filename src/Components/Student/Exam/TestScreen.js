@@ -33,8 +33,10 @@ const TestScreen = () => {
   const [currentTestNum, setCurrentTestNum] = useState(1);
   const [testCompleteBtn, setTestCompleteBtn] = useState("제출하기")
   const [resultArray, setResultArray] = useState([]);
-  const [testLang, setTestLang] = useState([]);
-    const socket = socketio.connect("http://3.89.30.234:3001");
+  const [testLang, setTestLang] = useState("");
+  const [questionCode, setQuestionCode] = useState("");
+
+  const socket = socketio.connect("http://3.89.30.234:3001");
   
   const ClassListSocket = () => {
 
@@ -59,8 +61,8 @@ const TestScreen = () => {
 
   useEffect(() => {
     const TestTimeOur = () => { 
-       alert("제출 시간이 다되어 시험이 종료됩니다.");
-       history.push("/student");
+      alert("제출 시간이 다되어 시험이 종료됩니다.");
+      history.push("/student");
     }
     String(seconds) === "0" && String(minutes) === "0" && TestTimeOur();
   }, [seconds]);
@@ -120,6 +122,7 @@ const TestScreen = () => {
       .post("/testpaper", data)
       .then((res) => {
         setTestLang(res['data'][0]['test_lang'])
+        setQuestionCode(res['data'][0]['question_code']);
         setTestListData(res.data);
         setSelectTestListData([res.data[0]])
         setResultArray(
@@ -155,8 +158,7 @@ const TestScreen = () => {
 
     /* API에서 학생 시험 종류 받아오기 */
     Ace.editorLib.setModeEditor(testLang);
-
-    Ace.editorLib.init();
+    Ace.editorLib.init(questionCode);
     consoleLogList = document.getElementById("editor__console-logs");
     // define a new console
     var console = (function (oldCons) {
@@ -182,7 +184,7 @@ const TestScreen = () => {
 
     //Then redefine the old console
     window.console = console;
-  }, []);
+  }, [questionCode]);
 
   const CompileApi = () => {
     const ApiCommand = commandDataList === 0 ? "insert" : "update"
@@ -226,6 +228,14 @@ const TestScreen = () => {
     testCompleteBtn === "제출완료" && alert("제출이 완료되어 시험이 종료되었습니다.");
     
     return testCompleteBtn;
+  }
+
+  const SelectLang = (testLang) => {
+    return testLang === "JavaScript" ? <span>js</span> 
+      : testLang === "PHP" ? <span>php</span>
+      : testLang === "Java" ? <span>java</span>
+      : testLang === "Python" ? <span>py</span>
+      : null 
   }
 
   return (
@@ -281,9 +291,11 @@ const TestScreen = () => {
             <div id="overlay_div">
               <div className="std_coding_area">
                 <div className="coding_nav">
-                  <p className="file_name">Soulution.Java</p>
+                  <p className="file_name">Soulution.
+                    {testLang && SelectLang(testLang)}
+                  </p>
                   <ul>
-                    <li>JAVA</li>
+                    <li>{testLang}</li>
                     <li
                       className="compile_btn"
                       onClick={(e) => {

@@ -5,7 +5,7 @@ import Loading from "Components/User/Loading";
 import socketio from "socket.io-client";
 import { useCookies } from "react-cookie";
 import moment from "moment";
-import "moment/locale/ko"; // 한국 시간
+import "moment/locale/en-au"
 import { useInterval } from "react-use";
 
 const ClassTestList = ({
@@ -14,6 +14,7 @@ const ClassTestList = ({
   apiLoadingFlag,
   emptyArrayCheckFlag,
 }) => {
+  const nowTime = moment().format('YYYY-MM-DD HH:mm');
   const classCodeParams = useParams();
   const history = useHistory();
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -22,6 +23,7 @@ const ClassTestList = ({
   const [testStartTimeFlag, setTestStartTimeFlag] = useState(false);
   const [socketStdNumData, setsocketStdNumData] = useState([]);
   const [socketStdNumDataArray, setsocketStdNumDataArray] = useState(0);
+  let buttonStatus = null;
 
   // const ClassListSocket = (testData) => {
   //   const socket = socketio.connect("http://3.89.30.234:3001");
@@ -37,8 +39,9 @@ const ClassTestList = ({
   //     socketStdNumData.push(msg.s_number);
   //     setCookie("std_data", [socketStdNumData]);
   //   });
-    
+
   // };
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -68,6 +71,24 @@ const ClassTestList = ({
   //     ddd.length !== undefined && setTestStartTimeFlag(true);
   //   }, 1000);
 
+
+  const compareTime = (nowTime, comTimeStart, comTimeEnd) => {
+    if (nowTime < comTimeStart) {
+      // 시험 대기
+      return 0;
+    } else {
+      if (nowTime < comTimeEnd) {
+        // 시험 응시
+        return 1;
+      } else {
+        // 시험 종료
+        return 2;
+      }
+    }
+
+    return null;
+  }
+
   const ListUpdate = () => {
     return emptyArrayCheckFlag === false && selectClassTestInfo ? (
       selectClassTestInfo.map((currElement) => (
@@ -77,20 +98,28 @@ const ClassTestList = ({
           <td>
             {currElement.test_start} ~{currElement.test_end}
           </td>
+
           <td>
-            {currElement.t_test_status === 1 ? (
+            { 
+            (buttonStatus = compareTime(nowTime, currElement.test_start, currElement.test_end)),
+            buttonStatus === 0 ? (  
               <Link
                 to={`/proctorexamview/${currElement.test_id}/${currElement.test_name}`}
                 //onClick={() => ClassListSocket(currElement.test_id)}
                 className="tch_test_state start"
               >
-                시험시작
+                시험대기
               </Link>
-            ) : (
+            ) : buttonStatus === 1 ? (
               <Link to="/proctorexamview" className="tch_test_state complete">
-                시험완료
+                시험응시
               </Link>
-            )}
+            ) : buttonStatus === 2 ? (
+              <Link to="/proctorexamview" className="tch_test_state complete">
+              시험완료
+              </Link>
+            ) : null
+            }
             {/* {TestBtnTimeCheck(currElement.test_start)} */}
           </td>
           <td>
@@ -164,5 +193,7 @@ const ClassTestList = ({
     </>
   );
 };
+
+
 
 export default ClassTestList;
