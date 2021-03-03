@@ -34,10 +34,14 @@ const TestScreen = () => {
   const [testCompleteBtn, setTestCompleteBtn] = useState("제출하기")
   const [resultArray, setResultArray] = useState([]);
   const [testLang, setTestLang] = useState([]);
+    const socket = socketio.connect("http://3.89.30.234:3001");
   
   const ClassListSocket = () => {
-    const socket = socketio.connect("http://3.89.30.234:3001");
 
+  };
+
+  useEffect(() => {
+    
     console.log(cookies.s_email);
     console.log(TestCodeParams.testId);
 
@@ -46,15 +50,11 @@ const TestScreen = () => {
         s_email: cookies.s_email,
         test_id: Number(TestCodeParams.testId),
       });
-    
-      socket.on("m_room_out", (msg) => {
-        console.log("room_out자알받았습니다요~~`");
-        console.log(msg);
-      });
-  };
 
-  useEffect(() => {
-    ClassListSocket();
+    socket.on("m_room_out", (msg) => {
+      console.log("room_out !!");
+      console.log(msg);
+    });
   }, []);
 
   useEffect(() => {

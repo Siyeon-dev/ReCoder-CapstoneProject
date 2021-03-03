@@ -440,7 +440,7 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 .no_create_guide {width:100%; margin:30px 0 60px 0;  color:#232e3c; font-weight:200; text-align: center; font-size:25px;}
 .no_create_guide.test {padding-top:240px; background:url(../img/no_test_img.jpg) no-repeat 50% 0px;}
 .no_create_guide.member {padding-top: 210px;background:url(../img/no_member_img.jpg) no-repeat 50% 0px;}
-.no_create_guide.class {padding:300px 0 70px;background: url(../img/first_class_img.jpg) no-repeat 50% 105px;border-top:1px solid #dadada;}
+.no_create_guide.class {padding:300px 0 70px;background: url(../img/first_class_img.jpg) no-repeat 50% 105px;}
 .no_create_guide > span {display:block; font-weight:600; line-height:150%;}
 .no_create_guide > span img {margin:0 6px -8px 10px;}
 .no_create_guide a,
@@ -541,8 +541,25 @@ ul.status_desc li.cheating {background:url(../img/cheating_focus.gif) no-repeat 
 .proctor_exam_container .video_area .std_video_set .web_mobile_cam {width:100%; display:inline-block;}
 .proctor_exam_container .video_area .std_video_set .web_mobile_cam video {float:left; margin:0; padding:0; line-height: 0; letter-spacing: 0; font-size: 0; border:0;}
 .proctor_exam_container .video_area .std_video_set .web_mobile_cam video:first-child {border-right: 1px solid #b0bdce; }
+.std_warning_area {
+  -webkit-animation:blink 0.1s ease-in-out infinite alternate;
+  -moz-animation:blink 0.1s ease-in-out infinite alternate;
+  animation:blink 0.1s ease-in-out infinite alternate;
+}
 .std_warning_area.voice {width: 439px; height: 368px; position: absolute; z-index: 9999; background: #86ff5266; bottom: 20px; right: 0; border-radius: 10px; border: 2px solid #3cce40;}
 .std_warning_area.eye {width: 439px; height: 368px; position: absolute; z-index: 9999; background: #ff464666; bottom: 20px; right: 0; border-radius: 10px; border: 2px solid #ca1e1e;}
+@-webkit-keyframes blink{
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+@-moz-keyframes blink{
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+@keyframes blink{
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
 
 /* Teacher :: 시험 통계 */
 .class_statistic_wrap {width:100%;}
