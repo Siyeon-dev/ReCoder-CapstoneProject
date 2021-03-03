@@ -212,6 +212,7 @@ function newRemoteFeed(id, displayValue) {
 		},
 		onremotestream: function (stream) {
 			// div에 붙일 이름 규칙 정하기
+			console.log('test',remoteFeed.rfdisplay);
 			let video = document.getElementById('remote' + remoteFeed.rfdisplay);
 			// tag에 stream data 붙이기
 			
