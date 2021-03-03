@@ -8,8 +8,11 @@ const ProctorExamVideo = ({
   highlightStateEye,
   currentStdNumber,
 }) => {
-      console.log("반응 학생 : "  + currentStdNumber);
-  return particStdFlag ? (
+  useEffect(() => {
+    console.log(particStdList)
+  })
+  
+  return Object.keys(particStdList).length !== 0 ? (
     particStdList.map((v) => (
       <div className="std_video_area">
         <div className="std_test_info">

@@ -199,7 +199,7 @@ const TestScreen = () => {
       command: ApiCommand,
     };
 
-    commandDataList.push(quizId);
+    setCommandDataList(quizId);
     console.log(userCodeData);
 
     console.log(data);
