@@ -72,7 +72,10 @@ function gotStream(stream) {
 
 function drawLoop( time ) {
     // 0.1 데시벨 이상, 3번 이하 호출
-    if (meter.volume > volumeLevel && count < 3) {
+    console.log("데시벨 : ", meter.volume);
+    
+    // if (meter.volume > volumeLevel && count < 3) {
+    if (meter.volume > volumeLevel) {
         // 음성인식 부정행위 API 호출
         console.log('음성 인식');
         (function volumeAPI()  {
@@ -89,6 +92,7 @@ function drawLoop( time ) {
                 test_id: Number(data.test_id),
                 s_number: Number(data.s_number)
             });
+
         })();
     }
 

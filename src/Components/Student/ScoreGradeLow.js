@@ -12,11 +12,9 @@ const ScoreGradeLow = ({ apiDataFlag, stateApiDataFlag, stateApiData }) => {
       (console.log(stateApiData),
       stateApiData.map((v) => (
         <tr>
-          <th scope="row">
-            <div className="std_id">
-              {v.s_name} <span>{v.s_email.split("@")[0]}</span>
-            </div>
-          </th>
+          <td>{v.s_retake}회</td>
+          <td>{v.eye_caution}회</td>
+          <td>{v.mic_caution}회</td>
           <td>
             {v.test_validation === 0 ? (
               <div className="test_status no_test">미응시</div>
@@ -24,23 +22,11 @@ const ScoreGradeLow = ({ apiDataFlag, stateApiDataFlag, stateApiData }) => {
               <div className="test_status complete">응시 완료</div>
             )}
           </td>
-          <td>{v.s_retake}회</td>
-          <td>{v.eye_caution}회</td>
-          <td>{v.mic_caution}회</td>
           <td>
-            <span className="mint">{v.compile_count}</span>/{v.question_count}
-          </td>
-          <td>
-            <span className="blue">{v.question_grade === null ? 0 : v.question_grade}</span>/ {v.total_score}
-          </td>
-          <td>
-            <Link
-              to={`/testscoringpage/${v.test_id}`}
-              className="score_grade_btn after"
-              onClick={() => setCookie("s_email", v.s_email)}
-            >
-              채점완료
-            </Link>
+            <span className="blue">
+              {v.student_score === null ? 0 : v.student_score}
+            </span>
+            / {v.total_score}
           </td>
         </tr>
       )))

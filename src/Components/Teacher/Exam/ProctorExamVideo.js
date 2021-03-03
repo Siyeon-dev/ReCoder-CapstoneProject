@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
-const ProctorExamVideo = ({ particStdFlag, particStdList }) => {
-  console.log(particStdList);
+const ProctorExamVideo = ({ particStdFlag, particStdList, highlightState }) => {
+  console.log("highlightState : " + highlightState);
+
+  // useEffect(() => {
+  //   BlinkingComponent(highlightState);
+  // }, [highlightState]);
+
   return particStdFlag ? (
     particStdList.map((v) => (
       <div className="std_video_area">
@@ -13,7 +18,9 @@ const ProctorExamVideo = ({ particStdFlag, particStdList }) => {
             <li>음성 {v.mic_caution}회</li>
           </ul>
         </div>
-        <div className="std_warning_area" id="test_warning_state"></div>
+        <div
+          className={`std_warning_area${highlightState ? " voice" : ""}`}
+        ></div>
         <div className="std_video_set">
           <div className="monitor_view">
             <video
