@@ -111,11 +111,11 @@ const ClassTestList = ({
                 시험대기
               </Link>
             ) : buttonStatus === 1 ? (
-              <Link to="/proctorexamview" className="tch_test_state complete">
+              <Link to={`/proctorexamview/${currElement.test_id}/${currElement.test_name}`} className="tch_test_state complete">
                 시험응시
               </Link>
             ) : buttonStatus === 2 ? (
-              <Link to="/proctorexamview" className="tch_test_state complete">
+              <Link to={`/proctorexamview/${currElement.test_id}/${currElement.test_name}`} className="tch_test_state complete">
               시험완료
               </Link>
             ) : null
