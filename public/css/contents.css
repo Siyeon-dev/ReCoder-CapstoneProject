@@ -464,13 +464,11 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 #test_warning_container .wrap .std_test_info ul li.time {font-family:'Lato', sans-serif; font-size:18px; padding-left:50px; background:#152842 url(../img/test_warning_time_ico.gif) no-repeat 18px 50%;}
 #test_warning_container .wrap .std_test_info ul li.start_test_btn {background:#dd3619; }
 #test_warning_container .wrap .std_test_info ul li.start_test_btn a {display:inline-block; font-size:15px; color:#fff;}
-#test_warning_container .wrap .std_test_info .test_tit {font-size:36px; color:#152842; letter-spacing:-0.02em; margin:40px 0 10px 0;}
-#test_warning_container .wrap .std_test_info .test_date {color:#6277f5; font-size:16px; font-family:'Lato', sans-serif; font-weight: 800; }
-#test_warning_container .wrap ul.std_test_info_tab {margin-top:50px; width:100%; overflow: hidden; height:50px; line-height:50px; background:#fff; border:1px solid #d6daed; border-radius: 5px; font-weight:600; font-size: 14px;
--webkit-box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);
--moz-box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);
-box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);}
-#test_warning_container .wrap ul.std_test_info_tab li {float:left; width:16.5%; text-align: center; border-left:1px solid #d6daed; color:#152842;}
+#test_warning_container .wrap .std_test_info .test_tit {font-size:36px;color:#152842;letter-spacing:-0.02em;margin: 40px 0 15px 0;position: relative;}
+#test_warning_container .wrap .std_test_info .test_tit span {font-family:'Lato', sans-serif; font-weight:800; letter-spacing:0px; font-size: 16px;display: inline-block;padding: 6px 12px;background: #dceaf6;border-radius: 10px;margin-left: 13px;/* border: 1px solid #a9c2d3; */position: absolute;bottom: 0;}
+#test_warning_container .wrap .std_test_info .test_date {color:#6277f5;font-size: 18px;font-family:'Lato', sans-serif;font-weight: 800;}
+#test_warning_container .wrap ul.std_test_info_tab {margin-top:50px;width: 100%;overflow: hidden;height:50px;line-height:50px;background:#fff;border:1px solid #d6daed;border-radius: 5px;font-weight:600;font-size: 14px;-webkit-box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);-moz-box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);}
+#test_warning_container .wrap ul.std_test_info_tab li {float:left;width: 16.5%;text-align: center;border-left:1px solid #d6daed;color:#152842;}
 #test_warning_container .wrap ul.std_test_info_tab li:first-child {border-left: none;}
 #test_warning_container .wrap ul.std_test_info_tab li:nth-child(2n) {background: #f7f9fb;}
 #test_warning_container .wrap .std_test_txt {width:100%; background:#fff; border:1px solid #d6daed; border-radius: 5px; margin-top:10px; padding:40px 100px; box-sizing: border-box; height: 390px; overflow-x: hidden; overflow-y: auto;
@@ -498,7 +496,7 @@ box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);}
 .std_video_view .view_area:first-child {margin-left:0;}
 
 /* Teacher :: 시험 진행시 감독 페이지 */
-.proctor_exam_container {width:100%; background:#152842; display: inline-block;}
+.proctor_exam_container {width:100%; background:#001c2e; display: inline-block;}
 .proctor_exam_container .side_list_area {position:fixed; top:0px; float:left; width: 350px; height:100%;  background: #fff; padding:0 40px; box-sizing:border-box;}
 .proctor_exam_container .side_list_area p.tit {position:absolute; height:60px; line-height:60px; z-index: 1; top:0px; left:0px; width:100%; border-bottom:1px solid #ddd; box-sizing:border-box;padding:0 30px; font-size:16px; color:#152842; font-weight:600;}
 .proctor_exam_container .side_list_area p.tit div {float: right; font-size:14px; color:#999;}
@@ -517,7 +515,7 @@ ul.status_desc {float:right; font-size:19px; overflow: hidden;}
 ul.status_desc li {float:left; padding-left:20px; margin-left:20px;}
 ul.status_desc li.voice {background:url(../img/voice_focus.gif) no-repeat 0 50%;}
 ul.status_desc li.cheating {background:url(../img/cheating_focus.gif) no-repeat 0 50%;}
-.video_area_align {display: inline-block;margin-left:-20px;/* height:630px; */overflow-x: hidden;overflow-y: auto;padding-right: 10px;}
+.video_area_align {width:100%; display: inline-block;margin-left:-20px;/* height:630px; */overflow-x: hidden;overflow-y: auto;padding-right: 10px;}
 .video_area_align::-webkit-scrollbar {
 	width: 5px;
 }
@@ -529,6 +527,7 @@ ul.status_desc li.cheating {background:url(../img/cheating_focus.gif) no-repeat 
 	background-color: #253e60;
 	border-radius: 10px;
 }
+.video_area_align .loading {width:800px; margin:0 auto;}
 
 .std_video_area {position: relative;display: inline-block; color:#fff;}
 .proctor_exam_container .video_area .std_video_set {position: relative; float:left; width:440px;height: 370px;border-radius:10px;border:1px solid #b0bdce;overflow:hidden; color:#fff; background:#fff;}

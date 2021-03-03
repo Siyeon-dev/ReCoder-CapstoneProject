@@ -104,7 +104,7 @@ const ClassTestList = ({
             (buttonStatus = compareTime(nowTime, currElement.test_start, currElement.test_end)),
             buttonStatus === 0 ? (  
               <Link
-                to={`/proctorexamview/${currElement.test_id}`}
+                to={`/proctorexamview/${currElement.test_id}/${currElement.test_name}`}
                 //onClick={() => ClassListSocket(currElement.test_id)}
                 className="tch_test_state start"
               >

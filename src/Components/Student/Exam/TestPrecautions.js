@@ -61,15 +61,19 @@ const TestPrecautions = () => {
                   to={`/testscreen/${TestCodeParams.testId}`}
                   onClick={() => {
                     // volumeMeter 매소드 호출
-                    VolumeMeter.getVolumeMeter(TestCodeParams.testId, studentNumber);
+                    VolumeMeter.getVolumeMeter(
+                      TestCodeParams.testId,
+                      studentNumber
+                    );
 
                     // 화면 전환 시 강제 리다이랙션
-                    window.onblur = function() {
-                      console.log('화면 전환 발생');
-                      /* 리다이랙션 로직 */
-                      alert('시험 도중 화면 전환을 시도하셨습니다.\n 시험 대기실로 강제 이동됩니다.');
-                      window.location.replace("http://localhost:3000/student");
-                    }
+                    // window.onblur = function() {
+                    //   console.log('화면 전환 발생');
+                    //   alert('시험 도중 화면 전환을 시도하셨습니다.\n 시험 대기실로 강제 이동됩니다.');
+
+                    //   /* 리다이랙션 로직 */
+                    //   redirect("/student");
+                    // }
 
                     // Keyboard Event 'alt" 막기
                     window.addEventListener("keydown", function(event) {
@@ -95,7 +99,10 @@ const TestPrecautions = () => {
                 </Link>
               </li>
             </ul>
-            <p className="test_tit">{cautionData[0].test_name}</p>
+            <p className="test_tit">
+              {cautionData[0].test_name}{" "}
+              <span>Number : {TestCodeParams.testId}</span>
+            </p>
             <p className="test_date">
               {cautionData[0].test_start} ~ {cautionData[0].test_end}
             </p>
