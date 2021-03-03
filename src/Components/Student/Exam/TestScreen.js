@@ -33,7 +33,7 @@ const TestScreen = () => {
   const [currentTestNum, setCurrentTestNum] = useState(1);
   const [testCompleteBtn, setTestCompleteBtn] = useState("제출하기")
   const [resultArray, setResultArray] = useState([]);
-  const [testLang, setTestLang] = useState([]);
+  const [testLang, setTestLang] = useState("");
     const socket = socketio.connect("http://3.89.30.234:3001");
   
   const ClassListSocket = () => {
@@ -134,6 +134,11 @@ const TestScreen = () => {
       });
   };
 
+  useEffect(() => {
+    console.log(testLang);
+    console.log(typeof testLang);
+  }, [testLang]);
+
   const SelectTestChange = (e) => {
     const selectTestNum = e.target.value;
     const data = Ace.codeEditor.getValue();
@@ -228,6 +233,14 @@ const TestScreen = () => {
     return testCompleteBtn;
   }
 
+  const SelectLang = (testLang) => {
+    return testLang === "JavaScript" ? <span>js</span> 
+      : testLang === "PHP" ? <span>php</span>
+      : testLang === "Java" ? <span>java</span>
+      : testLang === "Python" ? <span>py</span>
+      : null 
+  }
+
   return (
     <div className="test_screen_wrapper">
       <div className="test_screen_top">
@@ -281,9 +294,11 @@ const TestScreen = () => {
             <div id="overlay_div">
               <div className="std_coding_area">
                 <div className="coding_nav">
-                  <p className="file_name">Soulution.Java</p>
+                  <p className="file_name">Soulution.
+                    {testLang && SelectLang(testLang)}
+                  </p>
                   <ul>
-                    <li>JAVA</li>
+                    <li>{testLang}</li>
                     <li
                       className="compile_btn"
                       onClick={(e) => {
