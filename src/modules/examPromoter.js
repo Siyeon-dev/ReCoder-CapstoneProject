@@ -43,6 +43,7 @@ export function runJanusTeacher() {
 							var register = {
 								request: 'join',
 								room: room,
+								id: 7777,
 								ptype: 'publisher',
 							};
 							videoHandlerOnPC.send({ message: register });
@@ -55,6 +56,21 @@ export function runJanusTeacher() {
 								' ::: Got a message (publisher) :::',
 								msg
 							);
+							console.log("msg error_code !!!!! : ", msg['error_code']);
+
+							// 같은 아이디 접속 발견 시 해당 사용자 강제퇴장
+							if (msg['error_code'] == 436) {
+								const kick = {
+									"request" : "kick",
+									"secret" : "adminpwd",
+									"room" : 1234,
+									"id" : 7777
+								}
+
+								videoHandlerOnPC.send({ message: kick });
+								runJanusTeacher();
+							}
+
 							let event = msg['videoroom'];
 
 							if (event) {
@@ -121,7 +137,7 @@ export function runJanusTeacher() {
 						},
 						oncleanup: function () {},
 						error: function(error) {
-							runJanusTeacher();
+							console.log(error);
 						},
 					});
 				},
@@ -204,9 +220,9 @@ function newRemoteFeed(id, displayValue) {
 		},
 		onremotestream: function (stream) {
 			// div에 붙일 이름 규칙 정하기
-			console.log('test',remoteFeed.rfdisplay);
 			let video = document.getElementById('remote' + remoteFeed.rfdisplay);
 			// tag에 stream data 붙이기
+			console.log('온리모트스트림 피드 : remote',remoteFeed.rfdisplay);
 			
 			Janus.attachMediaStream(video, stream);
 		},
