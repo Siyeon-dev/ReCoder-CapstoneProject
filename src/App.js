@@ -27,9 +27,15 @@ function App() {
           <Route exact path="/teacher" component={Teacher} />
           <Route path="/teacher/:classCode" component={Teacher} />
           <Route path="/student/:classCode" component={Student} />
-          <Route path="/testprecautions/:testId" component={TestPrecautions} />
-          <Route path="/testscreen/:testId" component={TestScreen} />
-          <Route path="/proctorexamview/:testId/:testName" component={ProctorExamView} />
+          <Route
+            path="/testprecautions/:testId/:testName"
+            component={TestPrecautions}
+          />
+          <Route path="/testscreen/:testId/:testName" component={TestScreen} />
+          <Route
+            path="/proctorexamview/:testId/:testName"
+            component={ProctorExamView}
+          />
           <Route path="/testscoringpage/:testId" component={TestScoringPage} />
 
           <Route path="/createtestform/:classCode" component={CreateTestForm} />

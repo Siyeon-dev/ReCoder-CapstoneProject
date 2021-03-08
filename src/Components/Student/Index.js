@@ -23,6 +23,8 @@ const Index = () => {
   ] = useState(false);
   const [apiLoadingFlag, setApiLoadingFlag] = useState(false);
   const [noClassCodeFlag, setNoClassCodeFlag] = useState(false);
+  const [classJoinAppFlag, setClassJoinAppFlag] = useState(false)
+   const [classJoinAppRecognize, setClassJoinAppRecognize] = useState(false);
 
   const classCodeParams = useParams();
 
@@ -41,7 +43,6 @@ const Index = () => {
   const readClass = (apiEmailData) => {
     classListEmptyArrayCheckFlag === true &&
       setclassListEmptyArrayCheckFlag(false);
-    noClassCodeFlag === true && setNoClassCodeFlag(false);
 
     console.log(apiEmailData);
     console.log(apiEmailData.hasOwnProperty("s_email"));
@@ -55,9 +56,8 @@ const Index = () => {
             !classCodeParams.hasOwnProperty("classCode")
               ? setclassCode(res.data[0].class_code)
               : setclassCode(classCodeParams.classCode);
-            
-            console.log(userClassInfo);
-            
+
+            setClassJoinAppRecognize(res.data[0].recognize);
           })
           .catch((err) => {
             console.log(err);
@@ -67,6 +67,10 @@ const Index = () => {
 const MenuSelect = (apiEmailData, classCode) => {
   apiLoadingFlag === true && setApiLoadingFlag(false);
   emptyArrayCheckFlag === true && setEmptyArrayCheckFlag(false);
+  
+  // noClassCodeFlag === true && setNoClassCodeFlag(false);
+  
+  // !classCode && setNoClassCodeFlag(true);
 
   console.log(classCode);
 
@@ -100,7 +104,6 @@ const MenuSelect = (apiEmailData, classCode) => {
   };
 useEffect(() => {
   readClass(SelectEmail());
-  Object.keys(classCode).length === 0 && setNoClassCodeFlag(true);
 }, []);
 
 useEffect(() => {
@@ -118,6 +121,7 @@ useEffect(() => {
             setclassCode={setclassCode}
             userClassInfo={userClassInfo}
             readClass={readClass}
+            setClassJoinAppRecognize={setClassJoinAppRecognize}
           />
           <div id="contents">
             <div className="cont_visual">
@@ -142,25 +146,51 @@ useEffect(() => {
               </div> */}
             </div>
             <div className="cont_wrap">
-              <Tabs>
-                <TabList>
-                  <Tab>시험리스트</Tab>
-                  <Tab>시험통계</Tab>
-                </TabList>
-                <TabPanel>
-                  <TestList
-                    selectClassTestInfo={selectClassTestInfo}
-                    noClassCodeFlag={noClassCodeFlag}
-                  />
-                </TabPanel>
-                <TabPanel>
-                  <TestScoreGrade
-                    apiLoadingFlag={apiLoadingFlag}
-                    selectClassTestInfo={selectClassTestInfo}
-                    emptyArrayCheckFlag={emptyArrayCheckFlag}
-                  />
-                </TabPanel>
-              </Tabs>
+              {classListEmptyArrayCheckFlag === false ? (
+                <Tabs>
+                  <TabList>
+                    <Tab>시험리스트</Tab>
+                    <Tab>시험통계</Tab>
+                  </TabList>
+                  <TabPanel>
+                    <TestList
+                      selectClassTestInfo={selectClassTestInfo}
+                      noClassCodeFlag={noClassCodeFlag}
+                      apiLoadingFlag={apiLoadingFlag}
+                      classListEmptyArrayCheckFlag={
+                        classListEmptyArrayCheckFlag
+                      }
+                      emptyArrayCheckFlag={emptyArrayCheckFlag}
+                      userClassInfo={userClassInfo}
+                      classCode={classCode}
+                    />
+                  </TabPanel>
+                  <TabPanel>
+                    <TestScoreGrade
+                      apiLoadingFlag={apiLoadingFlag}
+                      selectClassTestInfo={selectClassTestInfo}
+                      emptyArrayCheckFlag={emptyArrayCheckFlag}
+                      classListEmptyArrayCheckFlag={
+                        classListEmptyArrayCheckFlag
+                      }
+                    />
+                  </TabPanel>
+                </Tabs>
+              ) : (
+                <div className="no_create_guide class">
+                  <p className="mb10">먼저 클래스에 가입해보세요!</p>
+                  <span>
+                    클래스 초대코드를 받아
+                    <img
+                      src="/img/first_class_plus.gif"
+                      alt="메뉴 클래스 추가 버튼 아이콘"
+                    />
+                    버튼을 누르면
+                    <br />
+                    클래스 가입을 신청 할 수 있습니다.
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -29,9 +29,11 @@ const ProctorExamView = () => {
   //   const socket = socketio.connect("http://3.89.30.234:3001");
   //   setSocketData({ socket : socket });
   // }, []);
+
+
   useEffect(() => {
-   janus.runJanusTeacher();
-  }, [particStdList]);
+    janus.runJanusTeacher();
+  }, []);
 
 
   useEffect(() => {
@@ -51,7 +53,8 @@ const ProctorExamView = () => {
     console.log(TestDataParams.testId);
     socket.on("student_join", (msg) => {
       particStdFlag === true && setParticStdFlag(false);
-      janus.runJanusTeacher();
+      //janus.runJanusTeacher();
+      console.log("야누스 student_join");
       
       const ddd = () => {
         // const vvv = particStdList.filter((v) => v.s_number === msg.s_number);
@@ -60,7 +63,8 @@ const ProctorExamView = () => {
         //   : console.log("중복된 학생입니다.");
         
         // console.log("들어온 학생 목록 : " + particStdList);
-        setStudent( msg)
+        setStudent(msg)
+        console.log(student);
         console.log(particStdList);
         Object.keys(msg).length !== 0 && setParticStdFlag(true);
       };
@@ -68,8 +72,11 @@ const ProctorExamView = () => {
       
     });
 
-    socket.on("volumeMeter", function (res) {
+    socket.on("volumeMeter", (res) => {
       console.log("volumeMeter : ", res);
+      
+    //janus.runJanusTeacher();
+    //console.log("야누스 volumeMeter");
 
       setMicStudent(res);
       setCurrentStdNumber(res.s_number);
@@ -77,43 +84,71 @@ const ProctorExamView = () => {
       setTimeout(() => {
         setHighlightStateVoice(false);
       }, 2000);
-    });
-    socket.on("eyetrackingcount", (msg) => {
-      console.log(msg);
-      setEyetrackingValue(msg);
-      
 
-      setEyeStudent(msg)
+      
+    });
+
+    socket.on("eyetrackingcount", (msg) => {
+      console.log("eyetrackingcount : ", msg);
+      
+      //janus.runJanusTeacher();
+      //console.log("야누스 eyetrackingcount");
+
+      setEyeStudent(msg);
       setCurrentStdNumber(msg.s_number);
       setHighlightStateEye(true);
       setTimeout(() => {
         setHighlightStateEye(false);
       }, 2000);
+
+      
     });
     
   }, []);
 
   useEffect(() => {
     student && setParticStdList([...particStdList, student])
-    janus.runJanusTeacher();
   }, [student])
   
   useEffect(() => {
     if (micStudent) {
-      const std = particStdList.find(v => v.s_number === micStudent.s_number);
-      std.mic_caution = micStudent.mic_caution;
-      setParticStdList([ std, ...particStdList.filter(v => v.s_number !== micStudent.s_number) ])
+      const indexNum = particStdList.findIndex((x) => x.s_number === micStudent.s_number); // 찾은 index
+      
+      console.log("particStdList", particStdList);
+      console.log("particStdList", micStudent);
+      console.log("isLargeNumber", indexNum);
+
+      const std1 = particStdList.find(v => v.s_number === micStudent.s_number);
+      std1.mic_caution = micStudent.mic_caution;
+      
+      const EmptyArray = particStdList;
+      EmptyArray[indexNum] = std1;
+
+      setParticStdList(EmptyArray);
     }
   }, [micStudent])
   
   useEffect(() => {
     if (eyeStudent) {
-      const std = particStdList.find((v) => v.s_number === eyeStudent.s_number);
-      std.eye_caution = eyeStudent.eye_caution;
-      setParticStdList([
-        std,
-        ...particStdList.filter((v) => v.s_number !== eyeStudent.s_number),
-      ]);
+      const indexNum = particStdList.findIndex(
+        (x) => x.s_number === eyeStudent.s_number
+      ); // 찾은 index
+
+      const std2 = particStdList.find(
+        (v) => v.s_number === eyeStudent.s_number
+      );
+      std2.eye_caution = eyeStudent.eye_caution;
+
+      const EmptyArray = particStdList;
+      EmptyArray[indexNum] = std2;
+
+      setParticStdList(EmptyArray);
+
+      // setParticStdList([
+      //   std2[0],
+      //   ...particStdList.filter((v) => v.s_number !== eyeStudent.s_number),
+      // ]);
+      //janus.runJanusTeacher();
     }
   },[eyeStudent])
 

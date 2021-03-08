@@ -43,7 +43,7 @@ export function runJanusTeacher() {
 							var register = {
 								request: 'join',
 								room: room,
-								id: 7777,
+								// id: 7777,
 								ptype: 'publisher',
 							};
 							videoHandlerOnPC.send({ message: register });
@@ -58,18 +58,18 @@ export function runJanusTeacher() {
 							);
 							console.log("msg error_code !!!!! : ", msg['error_code']);
 
-							// 같은 아이디 접속 발견 시 해당 사용자 강제퇴장
-							if (msg['error_code'] == 436) {
-								const kick = {
-									"request" : "kick",
-									"secret" : "adminpwd",
-									"room" : 1234,
-									"id" : 7777
-								}
+							// // 같은 아이디 접속 발견 시 해당 사용자 강제퇴장
+							// if (msg['error_code'] == 436) {
+							// 	const kick = {
+							// 		"request" : "kick",
+							// 		"secret" : "adminpwd",
+							// 		"room" : 1234,
+							// 		"id" : 7777
+							// 	}
 
-								videoHandlerOnPC.send({ message: kick });
-								runJanusTeacher();
-							}
+							// 	videoHandlerOnPC.send({ message: kick });
+							// 	runJanusTeacher();
+							// }
 
 							let event = msg['videoroom'];
 
@@ -191,7 +191,7 @@ function newRemoteFeed(id, displayValue) {
 					remoteFeed.rfdisplay = displayValue;
 
 					Janus.log(
-						'Successfully attached that Display Value is' +
+						'조상님ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ' +
 							' (' +
 							remoteFeed.rfdisplay +
 							') in room ' +
