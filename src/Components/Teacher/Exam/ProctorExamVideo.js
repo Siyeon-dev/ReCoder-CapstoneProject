@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import * as Janus from "../../../modules/examPromoter"
+
+var streamArr = null;
 
 const ProctorExamVideo = ({
   particStdFlag,
@@ -10,8 +13,12 @@ const ProctorExamVideo = ({
 }) => {
   useEffect(() => {
     console.log(particStdList)
+    streamArr = new Set(Janus.streamObjs)  
+    console.log(streamArr);
+    console.log("streamObj dis: " + Janus.streamObjs[0]['objDisplay']);
+    console.log("streamObj str: " + Janus.streamObjs[0]['objStream']);
   })
-  
+
   return Object.keys(particStdList).length !== 0 ? (
     particStdList.map((v) => (
       <div className="std_video_area">
@@ -37,9 +44,10 @@ const ProctorExamVideo = ({
         <div className="std_video_set">
           <div className="monitor_view">
             <video
+              srcObject={Janus.streamObjs[0]['objDisplay'] === String(v.s_number + 1) &&  Janus.streamObjs[0]['objStream']}
               id={"remote" + Number(v.s_number + 1)}
-              width="441"
-              height="248"
+              width="210"
+              height="238"
               autoPlay="autoplay"
               muted="muted"
               loop="loop"
@@ -51,7 +59,7 @@ const ProctorExamVideo = ({
           <div className="web_mobile_cam">
             <video
               id={"remote" + v.s_number}
-              width="219"
+              width="209"
               height="164"
               autoPlay="autoplay"
               muted="muted"
@@ -61,7 +69,7 @@ const ProctorExamVideo = ({
             </video>
             <video
               id={"remote" + Number(v.s_number + 2)}
-              width="219"
+              width="209"
               height="164"
               autoPlay="autoplay"
               muted="muted"

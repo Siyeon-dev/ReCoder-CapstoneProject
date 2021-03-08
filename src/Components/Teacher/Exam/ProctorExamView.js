@@ -30,7 +30,7 @@ const ProctorExamView = () => {
   //   setSocketData({ socket : socket });
   // }, []);
   useEffect(() => {
-   janus.runJanusTeacher();
+    janus.runJanusTeacher();
   }, [particStdList]);
 
 
@@ -51,7 +51,7 @@ const ProctorExamView = () => {
     console.log(TestDataParams.testId);
     socket.on("student_join", (msg) => {
       particStdFlag === true && setParticStdFlag(false);
-      janus.runJanusTeacher();
+      // janus.runJanusTeacher();
       
       const ddd = () => {
         // const vvv = particStdList.filter((v) => v.s_number === msg.s_number);
@@ -95,7 +95,7 @@ const ProctorExamView = () => {
 
   useEffect(() => {
     student && setParticStdList([...particStdList, student])
-    janus.runJanusTeacher();
+    // janus.runJanusTeacher();
   }, [student])
   
   useEffect(() => {

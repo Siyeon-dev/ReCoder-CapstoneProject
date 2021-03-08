@@ -1,8 +1,8 @@
+import React, { useEffect, useState } from "react";
 import Janus from './janus/janus'
 
 let server = null;
 let janus = null;
-
 
 let videoHandlerOnPC = null;
 
@@ -14,6 +14,8 @@ let room = 1234;
 var opaqueId = "teacher" + Janus.randomString(12); // opaqueId 값을 통해서 유저 구분을 한다.
 
 const TEST_CANDIDATE_NUM = 5;
+export let streamObjs = [];
+
 
 if (window.location.protocol === 'http:')
 	server = 'http://re-coder.net/janus';
@@ -43,7 +45,7 @@ export function runJanusTeacher() {
 							var register = {
 								request: 'join',
 								room: room,
-								id: 7777,
+								// id: 7777,
 								ptype: 'publisher',
 							};
 							videoHandlerOnPC.send({ message: register });
@@ -59,17 +61,20 @@ export function runJanusTeacher() {
 							console.log("msg error_code !!!!! : ", msg['error_code']);
 
 							// 같은 아이디 접속 발견 시 해당 사용자 강제퇴장
-							if (msg['error_code'] == 436) {
-								const kick = {
-									"request" : "kick",
-									"secret" : "adminpwd",
-									"room" : 1234,
-									"id" : 7777
-								}
+							// if (msg['error_code'] == 436) {
+							// 	const kick = {
+							// 		"request" : "kick",
+							// 		"secret" : "adminpwd",
+							// 		"room" : 1234,
+							// 		"id" : 7777
+							// 	}
 
-								videoHandlerOnPC.send({ message: kick });
-								runJanusTeacher();
-							}
+							// 	videoHandlerOnPC.send({ message: kick ,
+							// 		success:function(res) {
+							// 			// console.log("----------------------------------");
+							// 			// runJanusTeacher(); 
+							// 	}});
+							// }
 
 							let event = msg['videoroom'];
 
@@ -138,6 +143,7 @@ export function runJanusTeacher() {
 						oncleanup: function () {},
 						error: function(error) {
 							console.log(error);
+							runJanusTeacher();
 						},
 					});
 				},
@@ -191,7 +197,7 @@ function newRemoteFeed(id, displayValue) {
 					remoteFeed.rfdisplay = displayValue;
 
 					Janus.log(
-						'Successfully attached that Display Value is' +
+						' 조상님 도와주세요 도와주세요 도와주세요 도와주세요' +
 							' (' +
 							remoteFeed.rfdisplay +
 							') in room ' +
@@ -220,11 +226,16 @@ function newRemoteFeed(id, displayValue) {
 		},
 		onremotestream: function (stream) {
 			// div에 붙일 이름 규칙 정하기
-			let video = document.getElementById('remote' + remoteFeed.rfdisplay);
+			// let video = document.getElementById('remote' + remoteFeed.rfdisplay);
 			// tag에 stream data 붙이기
-			console.log('온리모트스트림 피드 : remote',remoteFeed.rfdisplay);
-			
-			Janus.attachMediaStream(video, stream);
+			// console.log('온리모트스트림 피드 : remote',remoteFeed.rfdisplay);
+
+			const obj = {
+				objDisplay : remoteFeed.rfdisplay,
+				objStream : stream
+			}
+			console.log("this is obj : !!!! " + JSON.stringify(obj));
+			streamObjs.push(obj);
 		},
 	});
 }
