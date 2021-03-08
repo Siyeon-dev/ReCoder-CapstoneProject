@@ -58,7 +58,7 @@ const TestPrecautions = () => {
               <li className="time">03:50</li>
               <li className="start_test_btn">
                 <Link
-                  to={`/testscreen/${TestCodeParams.testId}`}
+                  to={`/testscreen/${TestCodeParams.testId}/${TestCodeParams.testName}`}
                   onClick={() => {
                     // volumeMeter 매소드 호출
                     VolumeMeter.getVolumeMeter(
@@ -76,21 +76,24 @@ const TestPrecautions = () => {
                     // }
 
                     // Keyboard Event 'alt" 막기
-                    window.addEventListener("keydown", function(event) {
-                      let handled = false;
+                    window.addEventListener(
+                      "keydown",
+                      function (event) {
+                        let handled = false;
 
-                      if (event.defaultPrevented) {
+                        if (event.defaultPrevented) {
                           return;
-                      }
+                        }
 
-                      if (event.altKey)
-                          handled = true;
+                        if (event.altKey) handled = true;
 
-                      if(handled) {
+                        if (handled) {
                           console.log(event.keyCode);
                           event.preventDefault();
-                      }
-                    }, true);
+                        }
+                      },
+                      true
+                    );
 
                     document.documentElement.webkitRequestFullscreen();
                   }}

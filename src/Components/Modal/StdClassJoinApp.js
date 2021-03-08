@@ -4,7 +4,7 @@ import axios from "axios";
 
 const ClassJoinStdList = ({
   appllyStdListApi,
-  appllyStdList,
+  noStdList,
   classCode,
   setIsOpen,
 }) => {
@@ -28,7 +28,7 @@ const ClassJoinStdList = ({
       .catch((err) => {
         console.log(err);
       })
-      .then(() => setIsOpen(false));
+      .then(() => setIsOpen(false), () => appllyStdListApi);
   };
 
   useEffect(() => {
@@ -44,11 +44,10 @@ const ClassJoinStdList = ({
       }}
     >
       <div className="class_list_area">
-        {appllyStdList.length === 0 ? (
+        {noStdList.length === 0 ? (
           <p className="no_class_list">가입 신청한 학생이 없습니다.</p>
         ) : (
-          appllyStdList.map((v, index) =>
-            v.recognize === 0 ? (
+          noStdList.map((v, index) =>
               <div className="class_list_check">
                 <input
                   type="checkbox"
@@ -65,7 +64,6 @@ const ClassJoinStdList = ({
                   <span className="std_email">{v.s_email}</span>
                 </label>
               </div>
-            ) : null
           )
         )}
       </div>
@@ -74,14 +72,14 @@ const ClassJoinStdList = ({
   );
 };
 
-const StdClassJoinApp = ({ appllyStdList, classCode }) => {
+const StdClassJoinApp = ({ noStdList, classCode }) => {
   const [isOpen, setIsOpen, Modal] = useModal();
 
   const valueChecked = () => {
-    if (appllyStdList) {
+    if (noStdList) {
       const data = {
         class_code: classCode.classCode,
-        s_email: appllyStdList.s_email,
+        s_email: noStdList.s_email,
       };
       const ddd = [];
       ddd.push(data);
@@ -103,7 +101,7 @@ const StdClassJoinApp = ({ appllyStdList, classCode }) => {
               </p>
             </div>
             <ClassJoinStdList
-              appllyStdList={appllyStdList}
+              noStdList={noStdList}
               classCode={classCode}
               setIsOpen={setIsOpen}
             />

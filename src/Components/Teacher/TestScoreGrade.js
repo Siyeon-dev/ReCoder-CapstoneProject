@@ -57,7 +57,8 @@ const TestScoreGrade = ({
                     <li className="tit">{v.test_name}</li>
                     <li>{v.questioncount}문항</li>
                     <li>
-                      {v.test_start} ~ {v.test_end}
+                      {v.test_start.slice(0, v.test_start.length - 3)} ~
+                      {v.test_end.slice(0, v.test_end.length - 3)}
                     </li>
                   </ul>
                 </AccordionItemButton>

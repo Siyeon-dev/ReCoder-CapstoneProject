@@ -5,13 +5,25 @@ import axios from "axios";
 import JoinClass from "Components/Modal/JoinClass";
 import DeleteClass from "Components/Modal/DeleteClass";
 
-const ContSideMenu = ({ userClassInfo, setclassCode, readClass }) => {
+const ContSideMenu = ({
+  userClassInfo,
+  setclassCode,
+  readClass,
+  setClassJoinAppRecognize,
+}) => {
   const MenuState = useParams();
+  const [selectClassCode, setSelectClassCode] = useState("");
 
   const MenuSelectState =
     userClassInfo.length !== 0 && MenuState.classCode === undefined
       ? userClassInfo[0].class_code
       : MenuState.classCode;
+  
+  const MenuSelectClassCode = () => { 
+    userClassInfo.length !== 0 && MenuState.classCode === undefined
+      ? setSelectClassCode(userClassInfo[0].class_code)
+      : setSelectClassCode(MenuState.classCode);
+  }
 
   const classListUpdate = () => {
     if (userClassInfo.length === 0) {
@@ -20,12 +32,25 @@ const ContSideMenu = ({ userClassInfo, setclassCode, readClass }) => {
       const ListUpdate = userClassInfo.map((currElement) => (
         <li>
           <Link
-            className={currElement.class_code === MenuSelectState ? "on" : ""}
-            to={`/student/${currElement.class_code}`}
-            onClick={() => {
+            className={
+              currElement.recognize !== 0 &&
+              currElement.class_code === MenuSelectState
+                ? "on"
+                : ""
+            }
+            to={
               currElement.recognize !== 0
-                ? setclassCode(currElement.class_code)
-                : alert("아직 가입 승인중입니다.");
+                ? `/student/${currElement.class_code}`
+                : `/student/${selectClassCode.length !== 0 && selectClassCode}`
+            }
+            onClick={() => {
+              MenuSelectClassCode();
+              if (currElement.recognize !== 0) {
+                setclassCode(currElement.class_code);
+                setClassJoinAppRecognize(currElement.recognize);
+              } else {
+                alert("아직 가입 승인중입니다.");
+              }
             }}
           >
             {currElement.class_name}

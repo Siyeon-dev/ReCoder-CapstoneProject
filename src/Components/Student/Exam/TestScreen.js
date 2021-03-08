@@ -56,6 +56,7 @@ const TestScreen = () => {
     socket.on("m_room_out", (msg) => {
       console.log("room_out !!");
       console.log(msg);
+      history.push("/student");
     });
   }, []);
 
@@ -245,8 +246,7 @@ const TestScreen = () => {
           <img src="../img/test_screen_logo.gif" alt="Re:Coder" />
         </div>
         <ul>
-          <li>우당탕탕웹디제이</li>
-          <li>2020학년도 1학기 중간고사</li>
+          <li>{TestCodeParams.testName}</li>
         </ul>
       </div>
       <div className="test_scren_nav">
@@ -291,7 +291,8 @@ const TestScreen = () => {
             <div id="overlay_div">
               <div className="std_coding_area">
                 <div className="coding_nav">
-                  <p className="file_name">Soulution.
+                  <p className="file_name">
+                    Soulution.
                     {testLang && SelectLang(testLang)}
                   </p>
                   <ul>
@@ -299,8 +300,8 @@ const TestScreen = () => {
                     <li
                       className="compile_btn"
                       onClick={(e) => {
-                        runCompile()
-                        CompileApi()
+                        runCompile();
+                        CompileApi();
                       }}
                     >
                       컴파일 하기

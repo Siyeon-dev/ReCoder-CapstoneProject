@@ -4,11 +4,16 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link, useParams } from "react-router-dom";
 import socketio from "socket.io-client";
-import moment from "moment"
-import "moment/locale/en-au"
+import moment from "moment";
+import "moment/locale/en-au";
 
-const TestList = ({ selectClassTestInfo, noClassCodeFlag }) => {
-  const nowTime = moment().format('YYYY-MM-DD A HH:mm');
+const TestList = ({
+  selectClassTestInfo,
+  noClassCodeFlag,
+  apiLoadingFlag,
+  emptyArrayCheckFlag,
+}) => {
+  const nowTime = moment().format("YYYY-MM-DD A HH:mm");
   const [cookies, setCookie, removeCookie] = useCookies();
   let buttonStatus = null;
   let testStart = null;
@@ -16,7 +21,7 @@ const TestList = ({ selectClassTestInfo, noClassCodeFlag }) => {
 
   console.log(noClassCodeFlag);
 
-  const StateInsertData = (startData, endData, testId) => { 
+  const StateInsertData = (startData, endData, testId) => {
     console.log(startData, endData);
 
     const data = {
@@ -37,10 +42,10 @@ const TestList = ({ selectClassTestInfo, noClassCodeFlag }) => {
         .catch((err) => {
           console.log(err);
         });
-  }
+  };
 
   const StdTestInfoList = () => {
-    return noClassCodeFlag && Object.keys(selectClassTestInfo).length !== 0 ? (
+    return Object.keys(selectClassTestInfo).length !== 0 ? (
       selectClassTestInfo.map((v) => (
         <div className="my_test_box">
           <p className="test_name">{v.test_name}</p>
@@ -59,7 +64,7 @@ const TestList = ({ selectClassTestInfo, noClassCodeFlag }) => {
             console.log(buttonStatus),
             buttonStatus === 0 ? (
               <Link
-                to={`/testprecautions/${v.test_id}`}
+                to={`/testprecautions/${v.test_id}/${v.test_name}`}
                 className="test_btn yellow"
                 onClick={() =>
                   StateInsertData(v.test_start, v.test_end, v.test_id)
@@ -69,7 +74,7 @@ const TestList = ({ selectClassTestInfo, noClassCodeFlag }) => {
               </Link>
             ) : buttonStatus === 1 ? (
               <Link
-                to={`/testprecautions/${v.test_id}`}
+                to={`/testprecautions/${v.test_id}/${v.test_name}`}
                 className="test_btn mint"
                 onClick={() =>
                   StateInsertData(v.test_start, v.test_end, v.test_id)
@@ -79,7 +84,7 @@ const TestList = ({ selectClassTestInfo, noClassCodeFlag }) => {
               </Link>
             ) : buttonStatus === 2 ? (
               <Link
-                to={`/testprecautions/${v.test_id}`}
+                to={`/testprecautions/${v.test_id}/${v.test_name}`}
                 className="test_btn red"
                 onClick={() =>
                   StateInsertData(v.test_start, v.test_end, v.test_id)
@@ -89,7 +94,7 @@ const TestList = ({ selectClassTestInfo, noClassCodeFlag }) => {
               </Link>
             ) : buttonStatus === 3 ? (
               <Link
-                to={`/testprecautions/${v.test_id}`}
+                to={`/testprecautions/${v.test_id}/${v.test_name}`}
                 className="test_btn puple"
               >
                 결과보기
@@ -101,31 +106,25 @@ const TestList = ({ selectClassTestInfo, noClassCodeFlag }) => {
           }
         </div>
       ))
-    ) : noClassCodeFlag ? (
-      <div className="no_create_guide class">
-        <p className="mb10">먼저 클래스에 가입해보세요!</p>
-        <span>
-          클래스 초대코드를 받아
-          <img
-            src="/img/first_class_plus.gif"
-            alt="메뉴 클래스 추가 버튼 아이콘"
-          />
-          버튼을 누르면
-          <br />
-          클래스 가입을 신청 할 수 있습니다.
-        </span>
-      </div>
+    ) : emptyArrayCheckFlag === false ? ( // 클래스가 있을 때
+      apiLoadingFlag === true ? ( // 데이터를 받아왔을 때
+        <div className="no_create_guide member">
+          클래스 가입 요청중입니다.
+          <span>선생님이 확인 후 가입 승인을 진행됩니다.</span>
+        </div>
+      ) : (
+        <Loading />
+      )
     ) : (
-      <div className="no_create_guide member">
-        클래스 가입 요청중입니다.
-        <span>선생님이 확인 후 가입 승인을 진행됩니다.</span>
+      <div className="no_create_guide std_no_test">
+        현재 클래스에 생성된 클래스가 없습니다.
+        <span>클래스가 생성되면 리스트가 업데이트 됩니다.</span>
       </div>
     );
   };
 
   return <>{StdTestInfoList()}</>;
 };
-
 
 const compareTime = (nowTime, comTimeStart, comTimeEnd) => {
   if (nowTime < comTimeStart) {
@@ -142,6 +141,6 @@ const compareTime = (nowTime, comTimeStart, comTimeEnd) => {
   }
 
   return null;
-}
+};
 
 export default TestList;
