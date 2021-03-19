@@ -36,7 +36,7 @@ const Main = () => {
         console.log(data);
 
         axios
-        .post("http://3.89.30.234:3000/login", data)
+        .post("http://3.93.168.12:3000/login", data)
         .then((res)=> {
             localStorage.setItem("token", res.data.token);
 

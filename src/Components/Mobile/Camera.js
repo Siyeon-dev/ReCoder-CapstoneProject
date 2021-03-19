@@ -35,8 +35,6 @@ const Camera = () => {
     return (
         <div>
             <Header />
-            <p>{userNumber}</p>
-            <p>{userName}님 환영합니다!</p>
             <div className="MainBox">
                 <div className="CameraBox">
                 <span className="CameraTitle">
