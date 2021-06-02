@@ -52,7 +52,8 @@ const Camera = () => {
                 <TextField id="userId" variant="outlined" size="small" 
                             label="TEST ID" style={{width: "100%", margin: "20px -5px 0px 0px"}}
                             onChange={(e) => setTestId(e.target.value)}/>
-                <button className="TestButton" onClick={() => janus.runJanusMobile(userNumber, testId)}>
+                <button className="TestButton" 
+                onClick={() => janus.runJanusMobile(userNumber, testId)}>
                     연결 시작
                 </button>
                 <div>

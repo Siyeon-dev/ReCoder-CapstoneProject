@@ -22,6 +22,7 @@ const Main = () => {
         removeCookie("s_name");
         removeCookie("s_number");
         removeCookie("isLogin");
+        history.push("/");
     }, [])
 
     const getUserData = (e) => {
@@ -36,8 +37,9 @@ const Main = () => {
         console.log(data);
 
         axios
-        .post("http://3.93.168.12:3000/login", data)
+        .post("http://54.172.200.97:3000/login", data)
         .then((res)=> {
+            console.log(res);
             localStorage.setItem("token", res.data.token);
 
             const { accessToken } = res.data;
@@ -65,6 +67,12 @@ const Main = () => {
         })
     }
     
+    const onEnterPress = (e) => {
+        if(e.key === "Enter") {
+            getUserData();
+        }
+    }
+
     return (
         <div>
             <Header />
@@ -87,10 +95,12 @@ const Main = () => {
                     <div className="InputBox">
                         <TextField id="userId" variant="outlined" size="small" 
                             label="ID" style={{width: "100%", margin: "10px 0px"}}
-                            onChange={(e) => setUserId(e.target.value)}/>
+                            onChange={(e) => setUserId(e.target.value)}
+                            onKeyPress={onEnterPress}/>
                         <TextField id="userPw" variant="outlined" size="small" 
                             label="PW" style={{width: "100%"}} type="password"
-                            onChange={(e) => setUserPw(e.target.value)}/>
+                            onChange={(e) => setUserPw(e.target.value)}
+                            onKeyPress={onEnterPress}/>
                     </div>
                 </div>
                 <div>
