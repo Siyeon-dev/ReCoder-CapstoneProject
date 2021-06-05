@@ -11,15 +11,16 @@ import TestPrecautions from "./Components/Student/Exam/TestPrecautions";
 import ProctorExamView from "./Components/Teacher/Exam/ProctorExamView";
 import TestScreen from "Components/Student/Exam/TestScreen";
 import TestScoringPage from "Components/Teacher/TestScoringPage";
-
 import Test from "test";
+import Main from "Main";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
         <Switch>
-          <Route exact path="/" component={FormLogin} />
+          <Route exact path="/" component={Main} />
+          <Route exact path="/login" component={FormLogin} />
           <Route exact path="/test" component={Test} />
           <Route exact path="/signup" component={FormSignUpFir} />
           <Route exact path="/formSignUp" component={FormSignUp} />

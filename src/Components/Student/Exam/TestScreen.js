@@ -36,11 +36,7 @@ const TestScreen = () => {
   const [testLang, setTestLang] = useState("");
   const [questionCode, setQuestionCode] = useState("");
 
-  const socket = socketio.connect("http://3.89.30.234:3001");
-  
-  const ClassListSocket = () => {
-
-  };
+  const socket = socketio.connect("http://18.215.120.133:3001");
 
   useEffect(() => {
     
@@ -219,7 +215,7 @@ const TestScreen = () => {
 
   const testCompleteBtnState = () => {
     
-    const socket = socketio.connect("http://3.89.30.234:3001");
+    const socket = socketio.connect("http://18.215.120.133:3001");
 
     testCompleteBtn === "제출하기" && setTestCompleteBtn("제출완료");
     testCompleteBtn === "제출완료" &&
