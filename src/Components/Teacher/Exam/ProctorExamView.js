@@ -6,7 +6,7 @@ import ProctorExamVideo from "./ProctorExamVideo";
 import socketio from "socket.io-client";
 import { isArray } from "jquery";
 
-const socket = socketio.connect("http://3.89.30.234:3001");
+const socket = socketio.connect("http://18.215.120.133:3001");
 
 const ProctorExamView = () => {
   const TestDataParams = useParams();
@@ -24,7 +24,7 @@ const ProctorExamView = () => {
   const [micStudent, setMicStudent] = useState();
   const [eyeStudent, setEyeStudent] = useState();
 
-  const socket = socketio.connect("http://3.89.30.234:3001");
+  const socket = socketio.connect("http://18.215.120.133:3001");
   // useEffect(() => {
   //   const socket = socketio.connect("http://3.89.30.234:3001");
   //   setSocketData({ socket : socket });
@@ -112,10 +112,12 @@ const ProctorExamView = () => {
   
   useEffect(() => {
     if (micStudent) {
+      console.log("micStudent 115", micStudent);
+
       const indexNum = particStdList.findIndex((x) => x.s_number === micStudent.s_number); // 찾은 index
       
       console.log("particStdList", particStdList);
-      console.log("particStdList", micStudent);
+      console.log("micStudent", micStudent);
       console.log("isLargeNumber", indexNum);
 
       const std1 = particStdList.find(v => v.s_number === micStudent.s_number);

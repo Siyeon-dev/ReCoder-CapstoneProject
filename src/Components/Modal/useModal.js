@@ -33,9 +33,8 @@ const StyledModal = styled.div`
 
 const useModal = () => {
     const [isOpen, setIsOpen] = useState(false)
-    const Component = ({children}) => isOpen ?
-        <StyledModal>{children}</StyledModal> : <></>;
-
+    const Component = ({ children }) =>
+    isOpen ? <StyledModal>{children}</StyledModal> : <></>;
     return [isOpen, setIsOpen, Component];
 }
 

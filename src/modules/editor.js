@@ -31,7 +31,7 @@ export let editorLib = {
 			// newLogText.className = log.class; // log log--string
 			newLogText.textContent = `> ${log.message}`;
 
-			newLogItem.appendChild(newLogText);c
+			newLogItem.appendChild(newLogText);
 			consoleLogList.appendChild(newLogItem);
 		});
 	},

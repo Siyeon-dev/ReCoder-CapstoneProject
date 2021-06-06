@@ -3,8 +3,11 @@ import { useCookies } from "react-cookie";
 import useModal from "./useModal";
 
 const DeleteModal = ({ readClass, classListUpdate, userClassInfo }) => {
-  const [cookies, setCookie, removeCookie] = useCookies();
   const [isOpen, setIsOpen, Modal] = useModal();
+
+
+  const [cookies, setCookie, removeCookie] = useCookies();
+
   const handleCheckArray = [];
   const uniqueArr = [];
 
@@ -34,7 +37,6 @@ const DeleteModal = ({ readClass, classListUpdate, userClassInfo }) => {
       .post("/classdelete", ArrClassCode)
       .then((res) => {
         console.log(res);
-        //window.location.replace("/teacher");
         readClass(cookies.t_email);
       })
       .catch((err) => {

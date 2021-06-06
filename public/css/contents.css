@@ -208,7 +208,7 @@ button.sign_check_btn {background:#ef6d9b  url(../img/sgin_check_arrow.gif) no-r
 -moz-box-shadow: 1px 1px 5px 0px rgba(159,162,176,0.18);
 box-shadow: 1px 1px 5px 0px rgba(159,162,176,0.18);}
 #contents .my_test_box p {float:left;line-height:100%;font-weight:600;line-height: 80px;}
-#contents .my_test_box .test_name {ont-size:15px;color:#152842;width: 160px;overflow: hidden;text-overflow:ellipsis;white-space:nowrap;text-align: center;}
+#contents .my_test_box .test_name {font-size:15px;color:#152842;width: 160px;overflow: hidden;text-overflow:ellipsis;white-space:nowrap;text-align: center;}
 #contents .my_test_box .question {margin:0 25px; color:#53646e; font-size:13px;}
 #contents .my_test_box .infobox {border-radius:100px;font-size:13px; margin-top:23px; font-family:'Lato', sans-serif;font-weight:800;padding: 0 20px 0 45px;height: 32px;line-height: 35px;}
 #contents .my_test_box .infobox.date {background:#eff3f8 url(../img/testList_date_ico.gif) no-repeat 15px 50%;}

@@ -15,13 +15,18 @@ const CreateTestForm = () => {
   const history = useHistory();
   const [quizList, setQuizList] = useState([])
   const ParamsClassCode = useParams();
+  const [testTimeStartValue, setTestTimeStartValue] = useState();
+  const [testTimeEndValue, setTestTimeEndValue] = useState();
+
+  const [startTimeValue, setStartTimeValue] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
   }, [])
 
   // 시험지 정보
-  let TestFormInfo = {
+  const TestFormInfo = {
     class_code: "",
     test_name: "",
     test_start: "",
@@ -32,6 +37,15 @@ const CreateTestForm = () => {
     test_shuffle: "",
     test_escape: "",
     test_lang: "",
+  };
+
+  const TimeComparison = (ExamTime) => {
+    const todayTime = new Date();
+    let hours = todayTime.getHours(); // 시
+    let minutes = todayTime.getMinutes(); // 분
+
+    const currentTimeValue = `${hours}:${minutes}`;
+    console.log(currentTimeValue);
   };
 
   const CreateTestFormSubmit = e => {
@@ -61,6 +75,9 @@ const CreateTestForm = () => {
 
     console.log(TestFormInfo);
     console.log(quizList);
+
+    const ExamTime = e.target.test_start_time.value + ":" + e.target.test_start_min.value + ":00";
+    TimeComparison(ExamTime);
 
     const AllTestInfoArr = [];
 
@@ -136,7 +153,10 @@ const CreateTestForm = () => {
                 />
                 <div className="select_wrap">
                   <div className="select">
-                    <select name="test_start_time" id="slct">
+                    <select
+                      name="test_start_time"
+                      id="slct"
+                    >
                       <option selected disabled>
                         시작시간(시)
                       </option>
