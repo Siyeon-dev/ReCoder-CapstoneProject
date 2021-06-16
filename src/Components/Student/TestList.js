@@ -3,7 +3,6 @@ import Loading from "Components/User/Loading";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link, useParams } from "react-router-dom";
-import socketio from "socket.io-client";
 import moment from "moment";
 import "moment/locale/en-au";
 

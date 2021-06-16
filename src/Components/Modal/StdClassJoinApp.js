@@ -72,20 +72,8 @@ const ClassJoinStdList = ({
   );
 };
 
-const StdClassJoinApp = ({ noStdList, classCode }) => {
+const StdClassJoinApp = ({ noStdList, classCode, appllyStdListApi }) => {
   const [isOpen, setIsOpen, Modal] = useModal();
-
-  const valueChecked = () => {
-    if (noStdList) {
-      const data = {
-        class_code: classCode.classCode,
-        s_email: noStdList.s_email,
-      };
-      const ddd = [];
-      ddd.push(data);
-      return ddd;
-    }
-  };
 
   // classinfo API 완료 후 클래스 회원 가입 승인 작업
   return (
@@ -101,6 +89,7 @@ const StdClassJoinApp = ({ noStdList, classCode }) => {
               </p>
             </div>
             <ClassJoinStdList
+              appllyStdListApi={appllyStdListApi}
               noStdList={noStdList}
               classCode={classCode}
               setIsOpen={setIsOpen}

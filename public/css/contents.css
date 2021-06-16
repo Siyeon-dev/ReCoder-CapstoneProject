@@ -405,7 +405,7 @@ box-shadow: 1px 1px 10px 1px rgba(206,214,232,0.6);}
 .add_questions_list .questions_box .questions_modify {background:#37d4a8 url(../img/tch_test_start_ico.gif) no-repeat 90px 50%;-webkit-box-shadow: 3px 3px 10px 0px rgba(22,189,142,0.6);
 -moz-box-shadow: 3px 3px 10px 0px rgba(22,189,142,0.6);
 box-shadow: 3px 3px 10px 0px rgba(22,189,142,0.6);}
-.add_questions_list .questions_box .questions_delete {background:#fc5454;
+.add_questions_list .questions_box .questions_delete {background:#fc5454 url(../img/tch_test_del_ico.gif) no-repeat 90px 50%;
 -webkit-box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);
 -moz-box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);
 box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);} 
