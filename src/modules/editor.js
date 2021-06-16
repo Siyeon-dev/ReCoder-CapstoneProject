@@ -16,12 +16,12 @@ let statusModeEditor = null;
 
 export let editorLib = {
 	clearConsoleScreen(consoleMessages, consoleLogList) {
-		consoleMessages.length = 0;
-
 		// Remove all elements in the log list
 		while (consoleLogList.firstChild) {
 			consoleLogList.removeChild(consoleLogList.firstChild);
 		}
+
+		consoleMessages.length = 0;
 	},
 	printConsole(consoleMessages, consoleLogList) {
 		consoleMessages.forEach((log) => {
@@ -50,7 +50,10 @@ export let editorLib = {
 		codeEditor.setOptions({
 			fontSize: "16pt",
 			enableBasicAutocompletion: true,
+			enableSnippets: true,
 			enableLiveAutocompletion: true,
+			autoScrollEditorIntoView: true,
+			copyWithEmptySelection: true,
 		});
 
 		// Set Default
