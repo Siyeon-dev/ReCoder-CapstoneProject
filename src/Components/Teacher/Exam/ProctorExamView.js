@@ -24,7 +24,6 @@ const ProctorExamView = () => {
   const [micStudent, setMicStudent] = useState();
   const [eyeStudent, setEyeStudent] = useState();
 
-  const socket = socketio.connect("http://18.215.120.133:3001");
   // useEffect(() => {
   //   const socket = socketio.connect("http://3.89.30.234:3001");
   //   setSocketData({ socket : socket });
@@ -158,11 +157,13 @@ const ProctorExamView = () => {
     console.log(particStdList);
   }, []);
 
-  const SocketRoomOut = () => { 
+  const SocketRoomOut = () => {
+    console.log("TestDataParams.testId", TestDataParams.testId);
     socket.emit("m_room_out", {
       test_id: Number(TestDataParams.testId),
     });
     console.log("Room Out");
+    socket.disconnect();
   }
 
   return  (

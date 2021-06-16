@@ -31,16 +31,29 @@ const ScoreGradeLow = ({ apiDataFlag, stateApiDataFlag, stateApiData }) => {
             <span className="mint">{v.compile_count}</span>/{v.question_count}
           </td>
           <td>
-            <span className="blue">{v.question_grade === null ? 0 : v.question_grade}</span>/ {v.total_score}
+            <span className="blue">
+              {v.question_grade === null ? 0 : v.question_grade}
+            </span>
+            / {v.total_score}
           </td>
           <td>
-            <Link
-              to={`/testscoringpage/${v.test_id}`}
-              className="score_grade_btn after"
-              onClick={() => setCookie("s_email", v.s_email)}
-            >
-              채점완료
-            </Link>
+            {stateApiData.score_validation === 0 ? (
+              <Link
+                // to={`/testscoringpage/${v.test_id}`}
+                className="score_grade_btn after"
+                onClick={() => setCookie("s_email", v.s_email)}
+              >
+                채점완료
+              </Link>
+            ) : (
+              <Link
+                to={`/testscoringpage/${v.test_id}`}
+                className="score_grade_btn before"
+                onClick={() => setCookie("s_email", v.s_email)}
+              >
+                채점하기
+              </Link>
+            )}
           </td>
         </tr>
       )))

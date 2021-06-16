@@ -8,7 +8,7 @@ const CreateProblemInfo = ({ setIsOpen, quizList, setQuizList }) => {
   const [questionScore, setQuestionSocre] = useState("");
   const [questionCode, setQuestionCode] = useState("");
 
-  const CreateProblemList = e => {
+  const CreateProblemList = (e) => {
     e.preventDefault();
     console.log(e);
 
@@ -28,22 +28,27 @@ const CreateProblemInfo = ({ setIsOpen, quizList, setQuizList }) => {
   };
 
   const handleCreate = (e) => {
-    setQuizList([...quizList, {
-      question_name: questionName,
-      question_score:questionScore,
-      question_text:problemBoartHtml,
-      question_code:questionCode
-    }])
-  }
+    questionScore <= 100
+      ? setQuizList([
+          ...quizList,
+          {
+            question_name: questionName,
+            question_score: questionScore,
+            question_text: problemBoartHtml,
+            question_code: questionCode,
+          },
+        ])
+      : alert("배점은 100까지 가능합니다.");
+  };
 
   const handleChange = (e, setFunction) => {
     e.preventDefault();
     setFunction(e.target.value);
-  }
+  };
 
   useEffect(() => {
-    console.log(questionName, questionScore, problemBoartHtml, questionCode)
-  })
+    console.log(questionName, questionScore, problemBoartHtml, questionCode);
+  });
 
   return (
     <div className="create_problem_area">
@@ -54,6 +59,7 @@ const CreateProblemInfo = ({ setIsOpen, quizList, setQuizList }) => {
             type="text"
             name="newClassName"
             className="new_problem_name"
+            maxLength="20"
             onChange={(e) => {
               handleChange(e, setQuestionName);
             }}
@@ -102,8 +108,7 @@ const CreateProblemInfo = ({ setIsOpen, quizList, setQuizList }) => {
   );
 };
 
-
-const CreateProblem = ({quizList, setQuizList}) => {
+const CreateProblem = ({ quizList, setQuizList }) => {
   const [isOpen, setIsOpen, Modal] = useModal();
 
   console.log(isOpen);
@@ -117,7 +122,8 @@ const CreateProblem = ({quizList, setQuizList}) => {
           <div className="modal_area">
             <p className="tit">새로운 문제 추가하기</p>
 
-            <CreateProblemInfo setIsOpen={setIsOpen}
+            <CreateProblemInfo
+              setIsOpen={setIsOpen}
               setQuizList={setQuizList}
               quizList={quizList}
             />
