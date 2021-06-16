@@ -1,27 +1,19 @@
-import Janus from './janus/janus'
+import Janus from "./janus/janus";
 
 let server = null;
 let janus = null;
-
-
-let videoHandlerOnPC = null;
-
-let myId = 33;
+let myId = null;
 let mypvtid = null;
-
 let room = 1234;
+let videoHandlerOnPC = null;
+var opaqueId = "teacher" + Janus.randomString(12); // opaqueId 값을 통해서 유저 구분을 한다
 
-var opaqueId = "teacher" + Janus.randomString(12); // opaqueId 값을 통해서 유저 구분을 한다.
+if (window.location.protocol === "http:") server = "http://re-coder.net/janus";
+else server = "https://re-coder.net/janus";
 
-const TEST_CANDIDATE_NUM = 5;
-
-if (window.location.protocol === 'http:')
-	server = 'http://re-coder.net/janus';
-else server = 'https://re-coder.net/janus';
-
-export function runJanusTeacher() {
+export const runJanusTeacher = () => {
 	Janus.init({
-		debug: 'all',
+		debug: "all",
 		callback: function () {
 			janus = new Janus({
 				server: server,
@@ -30,7 +22,7 @@ export function runJanusTeacher() {
 				success: function () {
 					// VideoRoom plugin 지정
 					janus.attach({
-						plugin: 'janus.plugin.videoroom',
+						plugin: "janus.plugin.videoroom",
 						opaqueId: opaqueId,
 
 						success: function (pluginHandle) {
@@ -41,10 +33,10 @@ export function runJanusTeacher() {
 							);
 
 							var register = {
-								request: 'join',
+								request: "join",
 								room: room,
 								// id: 7777,
-								ptype: 'publisher',
+								ptype: "publisher",
 							};
 							videoHandlerOnPC.send({ message: register });
 						},
@@ -53,10 +45,13 @@ export function runJanusTeacher() {
 						// msg 값에 따라 event 처리 가능
 						onmessage: function (msg, jsep) {
 							Janus.debug(
-								' ::: Got a message (publisher) :::',
+								" ::: Got a message (publisher) :::",
 								msg
 							);
-							console.log("msg error_code !!!!! : ", msg['error_code']);
+							console.log(
+								"msg error_code !!!!! : ",
+								msg["error_code"]
+							);
 
 							// // 같은 아이디 접속 발견 시 해당 사용자 강제퇴장
 							// if (msg['error_code'] == 436) {
@@ -71,72 +66,76 @@ export function runJanusTeacher() {
 							// 	runJanusTeacher();
 							// }
 
-							let event = msg['videoroom'];
+							let event = msg["videoroom"];
 
 							if (event) {
-								if (event === 'joined') {
-									let list = msg['publishers'];
+								if (event === "joined") {
+									let list = msg["publishers"];
 
 									Janus.log(
-										'Got a list of available publishers/feeds:',
+										"Got a list of available publishers/feeds:",
 										list
 									);
 
 									for (var f in list) {
-										var id = list[f]['id'];
-										let display = list[f]['display'];
+										var id = list[f]["id"];
+										let display = list[f]["display"];
 
 										// Student list에서 display Name이 있는 publisher에 한해서 Feed 생성
 										if (display !== null) {
-											Janus.log(` --Janus-- Display Name : ${display} 님이 Feed를 생성하였습니다.`);
+											Janus.log(
+												` --Janus-- Display Name : ${display} 님이 Feed를 생성하였습니다.`
+											);
 											newRemoteFeed(id, display);
 										}
 									}
 
-									myId = msg['id'];
-									mypvtid = msg['private_id'];
+									myId = msg["id"];
+									mypvtid = msg["private_id"];
 
 									Janus.log(
-										`${msg['room']}에 성공적으로 접속하였습니다. ID = ${myId}`
+										`${msg["room"]}에 성공적으로 접속하였습니다. ID = ${myId}`
 									);
-								} else if (event === 'event') {
-									let list = msg['publishers'];
+								} else if (event === "event") {
+									let list = msg["publishers"];
 
 									Janus.log(
-										'Got a list of available publishers/feeds:',
+										"Got a list of available publishers/feeds:",
 										list
 									);
 									for (var f in list) {
-										var id = list[f]['id'];
-										let display = list[f]['display'];
+										var id = list[f]["id"];
+										let display = list[f]["display"];
 
 										if (display !== null) {
-											Janus.log(` --Janus-- Display Name : ${display} 님이 Feed를 생성하였습니다.`);
+											Janus.log(
+												` --Janus-- Display Name : ${display} 님이 Feed를 생성하였습니다.`
+											);
 											newRemoteFeed(id, display);
 										}
 									}
 								}
 							}
 							if (jsep) {
-								Janus.debug('Handling SDP as well...', jsep);
+								Janus.debug("Handling SDP as well...", jsep);
 								videoHandlerOnPC.handleRemoteJsep({
 									jsep: jsep,
 								});
 							}
 						},
 						iceState: function (state) {
-							Janus.log('ICE state changed to ' + state);
+							Janus.log("ICE state changed to " + state);
 						},
 						mediaState: function (medium, on) {
 							Janus.log(
-								'Janus ' +
-									(on ? 'started' : 'stopped') +
-									' receiving our ' +
+								"Janus " +
+									(on ? "started" : "stopped") +
+									" receiving our " +
 									medium
 							);
 						},
 						oncleanup: function () {},
-						error: function(error) {
+						error: function (error) {
 							console.log(error);
 						},
 					});
@@ -153,26 +152,26 @@ export function runJanusTeacher() {
 	});
 };
 
-function newRemoteFeed(id, displayValue) {
+const newRemoteFeed = (id, displayValue) => {
 	let remoteFeed = null;
 	janus.attach({
-		plugin: 'janus.plugin.videoroom',
+		plugin: "janus.plugin.videoroom",
 		opaqueId: opaqueId,
 		success: function (pluginHandle) {
 			remoteFeed = pluginHandle;
 
 			Janus.log(
-				'Plugin attached! (' +
+				"Plugin attached! (" +
 					remoteFeed.getPlugin() +
-					', id=' +
+					", id=" +
 					remoteFeed.getId() +
-					')'
+					")"
 			);
 
 			let subscribe = {
-				request: 'join',
+				request: "join",
 				room: room,
-				ptype: 'subscriber',
+				ptype: "subscriber",
 				feed: id,
 				private_id: mypvtid,
 			};
@@ -181,26 +180,21 @@ function newRemoteFeed(id, displayValue) {
 		},
 
 		onmessage: function (msg, jsep) {
-			Janus.debug(' ::: Got a message (subscriber) :::', msg);
-			let event = msg['videoroom'];
-			Janus.debug('Event: ' + event);
-			if (msg['error']) {
-
+			Janus.debug(" ::: Got a message (subscriber) :::", msg);
+			let event = msg["videoroom"];
+			Janus.debug("Event: " + event);
+			if (msg["error"]) {
 			} else if (event) {
-				if (event === 'attached') {
+				if (event === "attached") {
 					remoteFeed.rfdisplay = displayValue;
 
 					Janus.log(
-						'조상님ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ' +
-							' (' +
-							remoteFeed.rfdisplay +
-							') in room ' +
-							msg['room']
+						" (" + remoteFeed.rfdisplay + ") in room " + msg["room"]
 					);
 				}
 			}
 			if (jsep) {
-				Janus.debug('Handling SDP as well...', jsep);
+				Janus.debug("Handling SDP as well...", jsep);
 				// Answer and attach
 				remoteFeed.createAnswer({
 					jsep: jsep,
@@ -208,61 +202,63 @@ function newRemoteFeed(id, displayValue) {
 					// (obviously only works if the publisher offered them in the first place)
 					media: { audioSend: false, videoSend: false }, // We want recvonly audio/video
 					success: function (jsep) {
-						Janus.debug('Got SDP!', jsep);
-						var body = { request: 'start', room: room };
+						Janus.debug("Got SDP!", jsep);
+						var body = { request: "start", room: room };
 						remoteFeed.send({ message: body, jsep: jsep });
 					},
 					error: function (error) {
-						Janus.error('WebRTC error:', error);
+						Janus.error("WebRTC error:", error);
 					},
 				});
 			}
 		},
 		onremotestream: function (stream) {
 			// div에 붙일 이름 규칙 정하기
-			let video = document.getElementById('remote' + remoteFeed.rfdisplay);
+			let video = document.getElementById(
+				"remote" + remoteFeed.rfdisplay
+			);
 			// tag에 stream data 붙이기
-			console.log('온리모트스트림 피드 : remote',remoteFeed.rfdisplay);
-			
+			console.log("온리모트스트림 피드 : remote", remoteFeed.rfdisplay);
+
 			Janus.attachMediaStream(video, stream);
 		},
 	});
-}
+};
 
 /**
  * @description 방 접속
  * @param {접속할 방 번호} roomID
  */
-function joinTheRoom(roomID, userId) {
+const joinTheRoom = (roomID, userId) => {
 	let register = {
-		request: 'join',
+		request: "join",
 		room: roomID,
 		id: userId,
-		ptype: 'subscriber',
+		ptype: "subscriber",
 		// display: myUsername,
 	};
 
 	videoHandlerOnPC.send({
 		message: register,
 		success: function () {
-			Janus.log('방에 접속하였습니다 !');
+			Janus.log("방에 접속하였습니다 !");
 			return true;
 		},
 		error: function (error) {
-			Janus.error('WebRTC error:', error);
-			Janus.log('방에 접속하지 못했습니다 !');
+			Janus.error("WebRTC error:", error);
+			Janus.log("방에 접속하지 못했습니다 !");
 			return false;
 		},
 	});
-}
+};
 
 /**
  * @description 방 생성
  * @param {시험의 총 참가자 수} numOfCandidate
  */
-function createTheRoom(numOfCandidate) {
+const createTheRoom = (numOfCandidate) => {
 	let create = {
-		request: 'create',
+		request: "create",
 		bitrate: 500000,
 		// 참여 가능한 publisher 수 = (참가자 인원 * 3) + (eyetracker, promoter)
 		publishers: numOfCandidate * 3 + 2,
@@ -271,27 +267,27 @@ function createTheRoom(numOfCandidate) {
 	videoHandlerOnPC.send({
 		message: create,
 		success: function (result) {
-			Janus.log(`room = ${result['room']} 방이 생성되었습니다.`);
+			Janus.log(`room = ${result["room"]} 방이 생성되었습니다.`);
 			// 방 번호 return
-			joinTheRoom(result['room']);
+			joinTheRoom(result["room"]);
 		},
 		error: function (error) {
-			Janus.error('WebRTC error:', error);
-			Janus.log('방이 생성되지 않았습니다 !');
+			Janus.error("WebRTC error:", error);
+			Janus.log("방이 생성되지 않았습니다 !");
 			return false;
 		},
 	});
 
 	return null;
-}
+};
 
 /**
  * @description 방 존재 여부 체크
  * @param {시험 방 번호} roomNum
  */
-function isRoomExist(roomNum) {
+const isRoomExist = (roomNum) => {
 	let exists = {
-		request: 'exists',
+		request: "exists",
 		room: roomNum,
 	};
 
@@ -302,17 +298,17 @@ function isRoomExist(roomNum) {
 			return true;
 		},
 		error: function (error) {
-			Janus.error('WebRTC error:', error);
+			Janus.error("WebRTC error:", error);
 			Janus.log(`roomID = ${roomNum} 방이 존재하지 않습니다.`);
 			return false;
 		},
 	});
-}
+};
 
 /**
  * @description createOffer 를 통해서 webCamFeed 생성
  */
-function publishOwnFeed(msg) {
+const publishOwnFeed = (msg) => {
 	videoHandlerOnPC.createOffer({
 		media: {
 			audioRecv: false,
@@ -321,8 +317,8 @@ function publishOwnFeed(msg) {
 			videoSend: true,
 		},
 		success: function (jsep) {
-			Janus.log('Got publisher SDP!', jsep);
-			let publish = { request: 'configure', audio: false, video: true };
+			Janus.log("Got publisher SDP!", jsep);
+			let publish = { request: "configure", audio: false, video: true };
 			videoHandlerOnPC.send({ message: publish, jsep: jsep });
 
 			// localScreenFeed 생성
@@ -330,8 +326,8 @@ function publishOwnFeed(msg) {
 			// localScreenFeed(msg);
 		},
 		error: function (error) {
-			Janus.error('WebRTC error:', error);
+			Janus.error("WebRTC error:", error);
 			publishOwnFeed(msg);
 		},
 	});
-}
+};
