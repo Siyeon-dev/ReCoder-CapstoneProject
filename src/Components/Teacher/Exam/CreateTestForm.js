@@ -1,29 +1,25 @@
-
-import React, { useEffect, useState } from 'react'
-import BoardEditor from "../Editor/BoardEditor"
+import React, { useEffect, useState } from "react";
+import BoardEditor from "../Editor/BoardEditor";
 import CreateProblem from "Components/Modal/CreateProblem";
 import DatePicker from "react-date-picker";
 import "react-date-picker/dist/DatePicker.css";
-import { useHistory, useParams } from 'react-router';
-import axios from 'axios';
-import Header from 'Components/Layout/Header';
-import Footer from 'Components/Layout/Footer';
+import { useHistory, useParams } from "react-router";
+import axios from "axios";
+import Header from "Components/Layout/Header";
+import Footer from "Components/Layout/Footer";
+import { isEmptyObject } from "jquery";
 
 const CreateTestForm = () => {
   const [selectDate, setSelectDate] = useState(new Date());
   const [boardFormHtml, setBoardFormHtml] = useState(null);
   const history = useHistory();
-  const [quizList, setQuizList] = useState([])
+  const [quizList, setQuizList] = useState([]);
   const ParamsClassCode = useParams();
-  const [testTimeStartValue, setTestTimeStartValue] = useState();
-  const [testTimeEndValue, setTestTimeEndValue] = useState();
-
-  const [startTimeValue, setStartTimeValue] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
-  }, [])
+    TimeComparison();
+  }, []);
 
   // 시험지 정보
   const TestFormInfo = {
@@ -39,16 +35,44 @@ const CreateTestForm = () => {
     test_lang: "",
   };
 
-  const TimeComparison = (ExamTime) => {
-    const todayTime = new Date();
-    let hours = todayTime.getHours(); // 시
-    let minutes = todayTime.getMinutes(); // 분
+  const TimeComparison = (
+    examStartHours,
+    examStartMin,
+    examEndHours,
+    examEndMin
+  ) => {
 
-    const currentTimeValue = `${hours}:${minutes}`;
-    console.log(currentTimeValue);
+    console.log(examStartHours, examStartMin);
+    const todayTime = new Date();
+    let todayHours = todayTime.getHours();
+    let todayMinutes = todayTime.getMinutes();
+
+
+    return todayHours <= examStartHours && todayMinutes >= examStartMin
+      ? true
+      : false;
   };
 
-  const CreateTestFormSubmit = e => {
+  const CreateTestAxios = () => {
+    const AllTestInfoArr = [];
+    AllTestInfoArr.push(TestFormInfo);
+    quizList.map((v, index) => AllTestInfoArr.push(quizList[index]));
+
+    console.log(AllTestInfoArr);
+
+    quizList.length !== 0 ? axios
+      .post("/examcreate", AllTestInfoArr)
+      .then((res) => {
+        console.log(res.data);
+        !alert(`[${TestFormInfo.test_name}] 시험 생성이 완료되었습니다.`) &&
+          history.push(`/teacher/${ParamsClassCode.classCode}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      }) : alert("생성 된 문제가 없습니다.");
+  };
+
+  const CreateTestFormSubmit = (e) => {
     e.preventDefault();
     TestFormInfo.class_code = ParamsClassCode.classCode;
     TestFormInfo.test_name = e.target.text_name.value;
@@ -64,7 +88,7 @@ const CreateTestForm = () => {
       " " +
       e.target.test_end_time.value +
       ":" +
-      e.target.test_end_min.value+
+      e.target.test_end_min.value +
       ":00";
     TestFormInfo.test_wait = "00:" + e.target.test_wait.value + ":00";
     TestFormInfo.test_caution = boardFormHtml;
@@ -76,56 +100,43 @@ const CreateTestForm = () => {
     console.log(TestFormInfo);
     console.log(quizList);
 
-    const ExamTime = e.target.test_start_time.value + ":" + e.target.test_start_min.value + ":00";
-    TimeComparison(ExamTime);
+    TimeComparison(
+      e.target.test_start_time.value,
+      e.target.test_start_min.value,
+      e.target.test_end_time.value,
+      e.target.test_end_min.value
+    )
+      ? CreateTestAxios()
+      : alert("시험시작 시간이 현재 시간보다 전입니다. 시간을 확인해주세요. ");
+  };
 
-    const AllTestInfoArr = [];
+  const deleteQuiz = (v) => {
+    setQuizList(quizList.filter((el) => el.question_name !== v));
+  };
 
-    AllTestInfoArr.push(TestFormInfo);
-    quizList.map((v, index) => AllTestInfoArr.push(quizList[index]));
-
-    console.log(AllTestInfoArr);
-
-
-    axios.post("/examcreate", AllTestInfoArr)
-      .then((res) => {
-        console.log(res.data);
-        !alert(`[${TestFormInfo.test_name}] 시험 생성이 완료되었습니다.`) &&
-          history.push(`/teacher/${ParamsClassCode.classCode}`);
-        
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-      const deleteQuiz = (v) => {
-        setQuizList(quizList.filter((el) => el.question_name !== v));
-      };
-
-    const readQuizList = () => {
-      return quizList.length !== 0 ? (
-        quizList.map((v) => (
-          <div className="questions_box">
-            <p className="tit">{v.question_name}</p>
-            <p className="score">
-              <span>{v.question_score}</span>점
-            </p>
-            <div className="btn_wrap">
-              <div className="btn questions_modify">수정하기</div>
-              <div
-                className="btn questions_delete"
-                onClick={() => deleteQuiz(v.question_name)}
-              >
-                삭제하기
-              </div>
+  const readQuizList = () => {
+    return quizList.length !== 0 ? (
+      quizList.map((v) => (
+        <div className="questions_box">
+          <p className="tit">{v.question_name}</p>
+          <p className="score">
+            <span>{v.question_score}</span>점
+          </p>
+          <div className="btn_wrap">
+            <div className="btn questions_modify">수정하기</div>
+            <div
+              className="btn questions_delete"
+              onClick={() => deleteQuiz(v.question_name)}
+            >
+              삭제하기
             </div>
           </div>
-        ))
-      ) : (
-        <div className="questions_box">생성된 문제가 없습니다.</div>
-      );
-    };
+        </div>
+      ))
+    ) : (
+      <div className="questions_box">생성된 문제가 없습니다.</div>
+    );
+  };
 
   return (
     <>
@@ -139,6 +150,7 @@ const CreateTestForm = () => {
                   name="text_name"
                   autocomplete="off"
                   placeholder="시험명을 입력하세요."
+                  maxLength="18"
                 />
               </div>
               {/**/}
@@ -153,10 +165,7 @@ const CreateTestForm = () => {
                 />
                 <div className="select_wrap">
                   <div className="select">
-                    <select
-                      name="test_start_time"
-                      id="slct"
-                    >
+                    <select name="test_start_time" id="slct">
                       <option selected disabled>
                         시작시간(시)
                       </option>
@@ -378,6 +387,6 @@ const CreateTestForm = () => {
       <Footer />
     </>
   );
-}
+};
 
 export default CreateTestForm;

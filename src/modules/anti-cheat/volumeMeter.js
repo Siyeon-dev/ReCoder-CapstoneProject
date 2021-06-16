@@ -15,6 +15,7 @@ export function getVolumeMeter(test_id, s_number) {
     count = 0;
     try {
         socket = socketio.connect("http://18.215.120.133:3001");
+        console.log("VolumeMeter");
     } catch(error) {
         console.log('커넥션 실패');
     }

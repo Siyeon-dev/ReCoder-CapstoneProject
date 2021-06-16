@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
-import socketio from 'socket.io-client';
 import { useCookies } from 'react-cookie';
 
 import * as janus from '../../../modules/examCandidatePC'

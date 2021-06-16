@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useHistory, useParams } from "react-router-dom";
 import Loading from "Components/User/Loading";
-import socketio from "socket.io-client";
 import { useCookies } from "react-cookie";
 import moment from "moment";
 import "moment/locale/en-au"
@@ -21,8 +20,6 @@ const ClassTestList = ({
   const [realTime, setRealTime] = useState(Date.now());
   const [testStartTimeArray, setTestStartTimeArray] = useState([])
   const [testStartTimeFlag, setTestStartTimeFlag] = useState(false);
-  const [socketStdNumData, setsocketStdNumData] = useState([]);
-  const [socketStdNumDataArray, setsocketStdNumDataArray] = useState(0);
   let buttonStatus = null;
 
   // const ClassListSocket = (testData) => {
@@ -47,12 +44,6 @@ const ClassTestList = ({
     window.scrollTo(0, 0);
     console.log(selectClassTestInfo);
   }, []);
-
-
-  useEffect(() => {
-    console.log(cookies.std_data);
-  }, [socketStdNumData]);
-
 
 
   // const TestBtnTimeCheck = () => { 
@@ -154,7 +145,7 @@ const ClassTestList = ({
       .post("/examdelete", data)
       .then((res) => {
         console.log(res.data);
-        alert("삭제되었습니다.");
+        alert("시험이 삭제되었습니다.");
         window.location.replace(`/teacher/${classCode}`);
       })
       .catch((err) => {
