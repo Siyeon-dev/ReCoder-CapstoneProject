@@ -58,7 +58,7 @@ const SelectTestStatistics = ({
                     )}
                   </td>
                   <td className="score">
-                    <span>{v.question_grade}</span> / {v.total_score}
+                    <span>{v.question_grade === null ? 0 : v.question_grade}</span> / {v.total_score}
                   </td>
                 </tr>
               );

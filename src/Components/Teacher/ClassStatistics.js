@@ -55,10 +55,10 @@ const ClassStatistics = ({
             {v.test_end.slice(0, v.test_end.length - 3)}
           </td>
           <td className="person">
-            <span>28</span> / 30
+            <span>{v.complete_student}</span> / {v.total_student}
           </td>
           <td className="score">
-            <span>80</span> / 100
+            <span>{v.average_score}</span> / {v.total_score}
           </td>
         </tr>
       ))
