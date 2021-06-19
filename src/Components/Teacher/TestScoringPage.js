@@ -232,7 +232,7 @@ const TestScoringPage = () => {
 						<div id='overlay_div'>
 							<div className='std_coding_area'>
 								<div className='coding_nav'>
-									<p className='file_name'>Soulution.Java</p>
+									<p className='file_name'>Soulution.js</p>
 									<ul>
 										<li className='test_score_form'>
 											<form onSubmit={TestGradingApi}>
@@ -252,7 +252,7 @@ const TestScoringPage = () => {
 													.question_grade}
 											점 만점
 										</li>
-										<li>JAVA</li>
+										<li>JavaScript</li>
 										<li
 											className='compile_btn'
 											onClick={runCompile}
