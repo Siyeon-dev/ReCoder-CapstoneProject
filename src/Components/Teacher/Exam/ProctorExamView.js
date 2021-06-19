@@ -4,36 +4,34 @@ import { Link, useParams } from "react-router-dom";
 import * as janus from "../../../modules/examPromoter";
 import ProctorExamVideo from "./ProctorExamVideo";
 import socketio from "socket.io-client";
-import { isArray } from "jquery";
+import TeacherTestChatting from "Components/Modal/TeacherTestChatting";
+import useModal from "Components/Modal/useModal";
 
 const socket = socketio.connect("http://18.215.120.133:3001");
 
 const ProctorExamView = () => {
   const TestDataParams = useParams();
   const [cookies, setCookie, removeCookie] = useCookies();
-  const [stdDataCookies, setStdDataCookies] = useState([]);
   const [particStdList, setParticStdList] = useState([]);
   const [particStdFlag, setParticStdFlag] = useState(false);
-  const [tempParticStdList, setTempParticStdList] = useState([]);
-  const [volumeMeterValue, setVolumeMeterValue] = useState(0);
-  const [eyetrackingValue, setEyetrackingValue] = useState(0);
   const [highlightStateVoice, setHighlightStateVoice] = useState(false);
   const [highlightStateEye, setHighlightStateEye] = useState(false);
   const [currentStdNumber, setCurrentStdNumber] = useState(0);
   const [student, setStudent] = useState();
   const [micStudent, setMicStudent] = useState();
   const [eyeStudent, setEyeStudent] = useState();
-
-  // useEffect(() => {
-  //   const socket = socketio.connect("http://3.89.30.234:3001");
-  //   setSocketData({ socket : socket });
-  // }, []);
-
+  const [isOpen, setIsOpen, Modal] = useModal();
 
   useEffect(() => {
     janus.runJanusTeacher();
   }, []);
 
+  // const chattingSocket = () => {
+  //   socket.emit("send message", {
+  //     name: "gs28@naver.com",
+  //     message: "선생님 메세지 보냄",
+  //   });
+  // };
 
   useEffect(() => {
     socket.emit("create", {
@@ -54,81 +52,64 @@ const ProctorExamView = () => {
       particStdFlag === true && setParticStdFlag(false);
       //janus.runJanusTeacher();
       console.log("야누스 student_join");
-      
-      const ddd = () => {
-        // const vvv = particStdList.filter((v) => v.s_number === msg.s_number);
-        // Object.keys(vvv).length === 0
-        //   ? setParticStdList([...particStdList, msg])
-        //   : console.log("중복된 학생입니다.");
-        
-        // console.log("들어온 학생 목록 : " + particStdList);
-        setStudent(msg)
+
+      const StdDataSave = () => {
+        setStudent(msg);
         console.log(student);
         console.log(particStdList);
         Object.keys(msg).length !== 0 && setParticStdFlag(true);
       };
-      msg !== null && ddd();
-      
+      msg !== null && StdDataSave();
     });
 
     socket.on("volumeMeter", (res) => {
       console.log("volumeMeter : ", res);
-      
-    //janus.runJanusTeacher();
-    //console.log("야누스 volumeMeter");
-
       setMicStudent(res);
       setCurrentStdNumber(res.s_number);
       setHighlightStateVoice(true);
       setTimeout(() => {
         setHighlightStateVoice(false);
       }, 2000);
-
-      
     });
 
     socket.on("eyetrackingcount", (msg) => {
       console.log("eyetrackingcount : ", msg);
-      
-      //janus.runJanusTeacher();
-      //console.log("야누스 eyetrackingcount");
-
       setEyeStudent(msg);
       setCurrentStdNumber(msg.s_number);
       setHighlightStateEye(true);
       setTimeout(() => {
         setHighlightStateEye(false);
       }, 2000);
-
-      
     });
-    
   }, []);
 
   useEffect(() => {
-    student && setParticStdList([...particStdList, student])
-  }, [student])
-  
+    student && setParticStdList([...particStdList, student]);
+  }, [student]);
+
   useEffect(() => {
     if (micStudent) {
       console.log("micStudent 115", micStudent);
 
-      const indexNum = particStdList.findIndex((x) => x.s_number === micStudent.s_number); // 찾은 index
-      
+      const indexNum = particStdList.findIndex(
+        (x) => x.s_number === micStudent.s_number
+      ); // 찾은 index
       console.log("particStdList", particStdList);
       console.log("micStudent", micStudent);
       console.log("isLargeNumber", indexNum);
 
-      const std1 = particStdList.find(v => v.s_number === micStudent.s_number);
+      const std1 = particStdList.find(
+        (v) => v.s_number === micStudent.s_number
+      );
       std1.mic_caution = micStudent.mic_caution;
-      
+
       const EmptyArray = particStdList;
       EmptyArray[indexNum] = std1;
 
       setParticStdList(EmptyArray);
     }
-  }, [micStudent])
-  
+  }, [micStudent]);
+
   useEffect(() => {
     if (eyeStudent) {
       const indexNum = particStdList.findIndex(
@@ -144,14 +125,8 @@ const ProctorExamView = () => {
       EmptyArray[indexNum] = std2;
 
       setParticStdList(EmptyArray);
-
-      // setParticStdList([
-      //   std2[0],
-      //   ...particStdList.filter((v) => v.s_number !== eyeStudent.s_number),
-      // ]);
-      //janus.runJanusTeacher();
     }
-  },[eyeStudent])
+  }, [eyeStudent]);
 
   useEffect(() => {
     console.log(particStdList);
@@ -164,9 +139,9 @@ const ProctorExamView = () => {
     });
     console.log("Room Out");
     socket.disconnect();
-  }
-
-  return  (
+  };
+  
+  return (
     <div className="proctor_exam_container">
       <div className="side_list_area">
         <p className="tit">
@@ -176,10 +151,28 @@ const ProctorExamView = () => {
           </div>
         </p>
         <ul>
-          {particStdFlag && particStdList.map((v) => <li>{v.s_name}</li>)}
+          {particStdFlag &&
+            particStdList.map((v) => (
+              <li>
+                {v.s_name}
+                <button onClick={() => setIsOpen(!isOpen)}>
+                  <img
+                    src="../../img/test_chatting_ico.gif"
+                    alt={`학생에게 채팅하기`}
+                  />
+                </button>
+                <TeacherTestChatting
+                  socket={socket}
+                  StdName={v.s_name}
+                  StdEmail={v.s_email}
+                  Modal={Modal}
+                  setIsOpen={setIsOpen}
+                  isOpen={isOpen}
+                />
+              </li>
+            ))}
         </ul>
         <div className="btn_wrap">
-          {/* <div>경고주기</div> */}
           <Link
             to={`/teacher`}
             onClick={() => {
@@ -199,22 +192,26 @@ const ProctorExamView = () => {
           </ul>
         </div>
         <div className="video_area_align">
-          { particStdFlag ? <ProctorExamVideo
-            particStdFlag={particStdFlag}
-            particStdList={particStdList}
-            highlightStateVoice={highlightStateVoice}
-            highlightStateEye={highlightStateEye}
-            currentStdNumber={currentStdNumber}
-          /> : <div className="loading">
-            <img
-              src="../../img/test_proctor_loading.gif"
-              alt="시험 감독 페이지 로딩"
+          {particStdFlag ? (
+            <ProctorExamVideo
+              particStdFlag={particStdFlag}
+              particStdList={particStdList}
+              highlightStateVoice={highlightStateVoice}
+              highlightStateEye={highlightStateEye}
+              currentStdNumber={currentStdNumber}
             />
-          </div>}
+          ) : (
+            <div className="loading">
+              <img
+                src="../../img/test_proctor_loading.gif"
+                alt="시험 감독 페이지 로딩"
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default ProctorExamView;

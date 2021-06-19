@@ -25,9 +25,6 @@ const TestScreen = () => {
   const [userCodeData, setUserCodeData] = useState([]);
   const [userCodeResultData, setUserCodeResultData] = useState([]);
   const [commandDataList, setCommandDataList] = useState(0);
-
-  const [socketData, setSocketData] = useState([]);
-
   const [quizId, setQuizId] = useState();
   const [apiCount, setApiCount] = useState(0);
   const [currentTestNum, setCurrentTestNum] = useState(1);
@@ -46,6 +43,12 @@ const TestScreen = () => {
       s_email: cookies.s_email,
       test_id: Number(TestCodeParams.testId),
     });
+
+    socket.on(
+      "receive message", (message) => {
+        console.log(message);
+      }
+    );
 
     // socket.on("m_room_out", (msg) => {
     //   console.log("room_out !!");
@@ -243,7 +246,7 @@ const TestScreen = () => {
     <div className="test_screen_wrapper">
       <div className="test_screen_top">
         <div className="logo">
-          <img src="../img/test_screen_logo.gif" alt="Re:Coder" />
+          <img src="/img/test_screen_logo.gif" alt="Re:Coder" />
         </div>
         <ul>
           <li>{TestCodeParams.testName}</li>

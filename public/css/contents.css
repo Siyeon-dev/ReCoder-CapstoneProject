@@ -1,4 +1,5 @@
 @charset "utf-8";
+::selection { color:#000; background:#ffdb00; }
 
 /********************************* Header *********************************/
 #head {clear:both; width:100%; border-bottom:1px solid #dae0e6;}
@@ -18,9 +19,9 @@
 /********************************* SubMenu *********************************/
 #nav_menu {float:left;width:250px;text-align: left;}
 #nav_menu .nav_tit {text-align:left;width:100%;display: inline-block;margin: 15px 0 20px 0;}
-#nav_menu ul li {margin-bottom: 30px;display: inline-block;width: 100%;}
+#nav_menu > ul > li {margin-bottom: 30px;display: inline-block;width: 100%;}
 #nav_menu .nav_tit > p,
-#nav_menu ul li > a  {display: inline-block; font-weight:600; color:#232e3c; font-size:20px; line-height: 100%;}
+#nav_menu > ul > li > a  {display: inline-block; font-weight:600; color:#232e3c; font-size:20px; line-height: 100%;}
 #nav_menu .nav_tit_btn {float: right;}
 #nav_menu .nav_tit_btn a,
 #nav_menu .nav_tit_btn > button {margin-right:10px;}
@@ -498,18 +499,18 @@ box-shadow: 3px 10px 10px 0px rgba(211,223,234,0.6);}
 
 /* Teacher :: 시험 진행시 감독 페이지 */
 .proctor_exam_container {width:100%; background:#001c2e; display: inline-block;}
-.proctor_exam_container .side_list_area {position:fixed;top:0px;float:left;width: 295px;height:100%;background: #fff;padding:0 40px;box-sizing:border-box;}
+.proctor_exam_container .side_list_area {position:fixed;top:0px;float:left;width: 295px;height:100%;background: #fff;padding:0 40px;box-sizing:border-box;z-index: 2;}
 .proctor_exam_container .side_list_area p.tit {position:absolute; height:60px; line-height:60px; z-index: 1; top:0px; left:0px; width:100%; border-bottom:1px solid #ddd; box-sizing:border-box;padding:0 30px; font-size:16px; color:#152842; font-weight:600;}
 .proctor_exam_container .side_list_area p.tit div {float: right; font-size:14px; color:#999;}
 .proctor_exam_container .side_list_area p.tit div span {color:#ed3e3e; font-weight:800; font-size:18px;}
-.proctor_exam_container .side_list_area ul {margin-top:70px;}
-.proctor_exam_container .side_list_area ul li {width:100%; height:55px; line-height:55px; display:inline-block; font-size:16px; color:#152842; font-weight:600;}
-.proctor_exam_container .side_list_area ul li span {float:right; color:#4895ff; font-size:13px;}
+.proctor_exam_container .side_list_area > ul {margin-top:70px;}
+.proctor_exam_container .side_list_area > ul > li {width:100%;height:55px;line-height:55px;display:inline-block;font-size:16px;color:#152842;font-weight:600;position: relative;}
+.proctor_exam_container .side_list_area > ul > li > span {cursor:pointer; position: absolute; right: 0; top: 5px;}
 .proctor_exam_container .side_list_area .btn_wrap {position:absolute;bottom:0; left:0; width:100%; border-top:1px solid #ddd; height:60px; line-height:60px; text-align:right; padding:0 20px; box-sizing:border-box;}
 .proctor_exam_container .side_list_area .btn_wrap div,
 .proctor_exam_container .side_list_area .btn_wrap a {cursor:pointer; text-align:center; color:#fff; font-weight:600; font-size:15px; line-height:40px; height:40px; background:#ed3e3e; display:inline-block; border-radius:20px; padding:0 20px;}
 .proctor_exam_container .side_list_area .btn_wrap a {background:#333; margin-left:10px;}
-.proctor_exam_container .video_area {width: 80%;float:right;height: 100vh;box-sizing: border-box;padding-right: 40px;}
+.proctor_exam_container .video_area {width: 80%;float:right;height: 100vh;box-sizing: border-box;padding-right: 40px;position: relative;z-index: 1;}
 .proctor_exam_container .video_area .tit_area {width: 90%;display: inline-block;color:#fff;font-weight:600;margin:80px 0 70px 0;}
 .proctor_exam_container .video_area .tit_area p {display:inline-block; font-size:25px; padding-left:40px; line-height:30px; background:url(../img/proctor_exam_tit_ico.gif) no-repeat 0 50%;}
 ul.status_desc {float:right; font-size:19px; overflow: hidden;}
@@ -838,7 +839,7 @@ box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);}
 .modal .modal_area .modal_head {width:100%; margin-bottom:25px; padding-top:70px; background-position: left 0px;}
 .modal .modal_area .modal_head p.tit {font-size:23px; color:#000; font-weight:600; margin-bottom:4px;}
 .modal .modal_area .modal_head p.txt {font-size:13px; color:#868791;}
-.modal .modal_area .modal_close {cursor:pointer; position:absolute; right:15px; top:15px; background:none;}
+.modal .modal_area .modal_close {cursor:pointer; position:absolute; right:15px; top:15px; background:none; z-index:999;}
 /* 선생님 - 클래스 생성 */
 .create_class .modal_head {background:url(../img/modal_class_ico.gif) no-repeat;}
 .create_class input,
@@ -888,6 +889,34 @@ box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);}
 .std_class_app .class_list_check input[type="checkbox"]:checked + label {background:#fffdf9; border:1px solid #0eb582; color:#000; background:url(../img/classdel_check_on2.gif) no-repeat 305px 50%;}
 .std_class_app .class_list_check input[type="checkbox"]:checked + label .std_email {color:#444;}
 .std_class_app button[type="submit"] {width:350px; background:#0eb582; color:#fff; text-align: center; height:50px; line-height:50px; margin-top:20px; font-weight:600;}
+
+/* 선생님 - 채팅*/
+.tch_chatting {width:450px;position:relative;height: 500px;overflow: hidden; z-index:999;}
+.tch_chatting .modal_area {width:100%; padding:0; background:#ededed;}
+.tch_chatting .chatting_header {width:100%; border-bottom:1px solid #ddd; background:#fff; height:50px; border-radius: 10px 0 0 10px;}
+.tch_chatting .chatting_header p {font-size:15px; line-height:50px; text-align:center;;}
+.chatting_area {width:100%;height: 400px;box-sizing: border-box;padding:20px 0;overflow: hidden; overflow-y:scroll;}
+.chatting_area ul {width:100%;padding: 0 25px;box-sizing:border-box;}
+.chatting_area ul li {display:block;margin-bottom:15px;font-size:13px;line-height: 0;}
+.chatting_area ul li span {max-width:45%;word-break:keep-all;display: inline-block;padding: 10px 15px;color:#fff;line-height: 22px;}
+.chatting_area ul li.send {text-align:right;padding-right:14px;background: url(../img/chatting_bubble_send.png) no-repeat right bottom;}
+.chatting_area ul li.send span {text-align:left;border-radius: 10% 10% 0 10%;background:#3956e5;}
+.chatting_area ul li.receive {text-align:left; padding-left:14px; background: url(../img/chatting_bubble_receive.png) no-repeat left bottom;}
+.chatting_area ul li.receive span {border-radius:5% 5% 5% 0; background:#a6acce;}
+.chatting_send_input {position:absolute; bottom:0px; left:0px; width:100%; height:50px; background:#fff; border-top:1px solid #ededed;}
+.chatting_send_input input[type="text"] {float:left;height:50px;line-height:50px;width: 410px;padding:0 15px;box-sizing: border-box;}
+.chatting_send_input button {position:absolute; top:12px; right:12px; float:right;}
+
+.chatting_area::-webkit-scrollbar {
+	width: 5px;
+}
+.chatting_area::-webkit-scrollbar-thumb {
+	background-color: #afafaf;
+}
+.chatting_area::-webkit-scrollbar-track {
+	background-color: #e1e1ea;
+	border-radius: 10px;
+}
 
 /* 선생님 - 문제 생성 */
 .create_problem p.tit {text-align: center;font-size: 20px;padding-top:95px;margin-bottom: 30px;background:url(../img/create_problem_ico.gif) no-repeat 50% 0px;}

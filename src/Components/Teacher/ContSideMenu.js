@@ -5,7 +5,6 @@ import axios from "axios";
 import CreateClass from "Components/Modal/CreateClass";
 import DeleteClass from "Components/Modal/DeleteClass";
 
-
 const ContSideMenu = ({ userClassInfo, setclassCode, readClass }) => {
 
   const MenuState = useParams();
