@@ -220,8 +220,7 @@ const TestScoringPage = () => {
 									Object.keys(selectGradingDataArray)
 										.length !== 0
 									? String(
-											selectGradingDataArray[0]
-												.question_text
+											selectGradingDataArray[0].question_text
 									  )
 									: `<p>문제를 불러오는 중입니다.</p>`
 							)}
@@ -248,8 +247,7 @@ const TestScoringPage = () => {
 												Object.keys(
 													selectGradingDataArray
 												).length !== 0 &&
-												selectGradingDataArray[0]
-													.question_grade}
+												selectGradingDataArray[0].question_grade}
 											점 만점
 										</li>
 										<li>JavaScript</li>

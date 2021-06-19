@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const TeacherTestChatting = ({
   StdName,
@@ -9,7 +9,33 @@ const TeacherTestChatting = ({
   socket,
 }) => {
   const [messageDataArray, setMessageDataArray] = useState([]);
+  const [sendMessageText, setSendMessageText] = useState({});
   const [sendMessage, setSendMessage] = useState("");
+  const [receiveMessage, setReceiveMessage] = useState({});
+
+  useEffect(() => {
+    socket.on("receive message", (receiveMessage) => {
+      console.log(receiveMessage);
+      setReceiveMessage(
+        { type: "receive", message: receiveMessage.message });
+    });
+  }, []);
+
+  useEffect(() => {
+
+    console.log("sendMessage");
+    console.log(sendMessageText);
+
+    setMessageDataArray([...messageDataArray, sendMessageText]);
+  }, [sendMessageText, setMessageDataArray]);
+
+  useEffect(() => {
+  
+console.log("receiveMessage");
+console.log(receiveMessage);
+
+  setMessageDataArray([...messageDataArray, receiveMessage]);
+}, [receiveMessage, setMessageDataArray]);
 
   const handleChange = (e, setFunction) => {
     e.preventDefault();
@@ -24,11 +50,10 @@ const TeacherTestChatting = ({
     socket.emit("send message", {
       name: StdEmail,
       message: sendMessage,
+      teacher: true,
     });
-    setMessageDataArray([
-      ...messageDataArray,
-      { type: "send", message: sendMessage },
-    ]);
+    setSendMessageText({ type: "send", message: sendMessage });
+    setSendMessage("");
     console.log(messageDataArray);
   };
 
@@ -56,16 +81,18 @@ const TeacherTestChatting = ({
                     Iure totam voluptas iusto magni ipsum
                   </span>
                 </li> */}
-                {messageDataArray.length !== 0 && messageDataArray.map((v) => (
-                  <li className={v.type === "send" ? "send" : "receive"}>
-                    <span>{v.message}</span>
-                  </li>
-                ))}
+                {messageDataArray.length !== 0 &&
+                  messageDataArray.map((v) => (
+                    <li className={v.type === "send" ? "send" : "receive"}>
+                      <span>{v.message}</span>
+                    </li>
+                  ))}
               </ul>
               <div className="chatting_send_input">
                 <form onSubmit={chattingHandleSubmit}>
                   <input
                     type="text"
+                    value={sendMessage}
                     placeholder="메세지를 입력해주세요."
                     onChange={(e) => {
                       handleChange(e, setSendMessage);
