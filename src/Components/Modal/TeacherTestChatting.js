@@ -9,28 +9,33 @@ const TeacherTestChatting = ({
   socket,
 }) => {
   const [messageDataArray, setMessageDataArray] = useState([]);
+  const [sendMessageText, setSendMessageText] = useState({});
   const [sendMessage, setSendMessage] = useState("");
-  const [receiveMessage, setReceiveMessage] = useState([]);
+  const [receiveMessage, setReceiveMessage] = useState({});
 
   useEffect(() => {
     socket.on("receive message", (receiveMessage) => {
       console.log(receiveMessage);
-    //   console.log(messageDataArray) ;
-    //   receiveMessage.message.length !== 0 &&
-    //     setMessageDataArray([
-    //       ...messageDataArray,
-    //       { type: "receive", message: receiveMessage.message },
-    //     ]);
-     });
+      setReceiveMessage(
+        { type: "receive", message: receiveMessage.message });
+    });
   }, []);
 
-  // useEffect(() => {
-  //   setMessageDataArray([
-  //     ...messageDataArray,
-  //     { type: "receive", message: receiveMessage},
-  //   ]);
-  //   console.log(messageDataArray);
-  // }, [receiveMessage]);
+  useEffect(() => {
+
+    console.log("sendMessage");
+    console.log(sendMessageText);
+
+    setMessageDataArray([...messageDataArray, sendMessageText]);
+  }, [sendMessageText, setMessageDataArray]);
+
+  useEffect(() => {
+  
+console.log("receiveMessage");
+console.log(receiveMessage);
+
+  setMessageDataArray([...messageDataArray, receiveMessage]);
+}, [receiveMessage, setMessageDataArray]);
 
   const handleChange = (e, setFunction) => {
     e.preventDefault();
@@ -45,20 +50,12 @@ const TeacherTestChatting = ({
     socket.emit("send message", {
       name: StdEmail,
       message: sendMessage,
-      teacher : true
+      teacher: true,
     });
-    setMessageDataArray([
-      ...messageDataArray,
-      { type: "send", message: sendMessage },
-    ]);
+    setSendMessageText({ type: "send", message: sendMessage });
     setSendMessage("");
     console.log(messageDataArray);
   };
-
-  useEffect(() => {
-    console.log(`useEffect messageDataAarray`);
-    console.log(messageDataArray);
-  }, [ messageDataArray ] )
 
   return (
     <>
@@ -95,8 +92,8 @@ const TeacherTestChatting = ({
                 <form onSubmit={chattingHandleSubmit}>
                   <input
                     type="text"
-                    placeholder="메세지를 입력해주세요."
                     value={sendMessage}
+                    placeholder="메세지를 입력해주세요."
                     onChange={(e) => {
                       handleChange(e, setSendMessage);
                     }}
