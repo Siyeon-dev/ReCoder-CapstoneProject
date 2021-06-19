@@ -4,8 +4,6 @@ import { Cookies, useCookies } from "react-cookie";
 
 import Header from './MobileHeader';
 
-
-
 const Guide = () => {
     const [userId, setUserId]                   = useState();
     const [userName, setUserName]               = useState();
@@ -26,19 +24,9 @@ const Guide = () => {
         setUserNumber(cookies.s_number);    
     }, []);
 
-    const onClickLogout = () => {
-        localStorage.removeItem("token");
-        alert("로그아웃 되었습니다");
-        history.push("/");
-    }
-
     return (
         <div>
             <Header />
-            <p>{userName}님 환영합니다</p>
-            <div>
-                <button onClick={onClickLogout}>로그아웃</button>
-            </div>
             <div className="MainBox">
                 <span className="GuideTextTitle">
                     Re:coder 모바일 촬영 화면입니다.

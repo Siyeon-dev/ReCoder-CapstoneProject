@@ -8,6 +8,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@types/react-responsive": "^8.0.2",
+    "axios": "^0.21.1",
     "jquery": "^3.5.1",
     "react": "^17.0.1",
     "react-cookie": "^4.0.3",
@@ -44,5 +45,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://3.89.30.234:3000/login"
+  "proxy": "http://18.215.120.133:3000/login"
 }
