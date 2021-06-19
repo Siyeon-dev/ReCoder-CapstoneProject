@@ -28,7 +28,6 @@ export let editorLib = {
 			const newLogItem = document.createElement("li");
 			const newLogText = document.createElement("pre");
 
-			// newLogText.className = log.class; // log log--string
 			newLogText.textContent = `> ${log.message}`;
 
 			newLogItem.appendChild(newLogText);
@@ -44,16 +43,16 @@ export let editorLib = {
 		codeEditor.setTheme("ace/theme/github");
 		this.setModeEditor(argLangType);
 		// Set language
-		codeEditor.session.setMode(statusModeEditor);
+		codeEditor.session.setMode("ace/mode/javascript");
 
 		// Set Options
 		codeEditor.setOptions({
-			fontSize: "16pt",
 			enableBasicAutocompletion: true,
-			enableSnippets: true,
 			enableLiveAutocompletion: true,
 			autoScrollEditorIntoView: true,
 			copyWithEmptySelection: true,
+			enableSnippets: true,
+			fontSize: "16pt",
 		});
 
 		// Set Default

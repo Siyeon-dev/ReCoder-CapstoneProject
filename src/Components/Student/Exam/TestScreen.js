@@ -162,8 +162,6 @@ const TestScreen = () => {
     var console = (function (oldCons) {
       return {
         log: function (text) {
-          oldCons.log(text);
-
           consoleMessages.push({
             message: text,
           });
