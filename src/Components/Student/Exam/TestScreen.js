@@ -33,29 +33,33 @@ const TestScreen = () => {
   const [testLang, setTestLang] = useState("");
   const [questionCode, setQuestionCode] = useState("");
 
-
   useEffect(() => {
     console.log(cookies.s_email);
     console.log(TestCodeParams.testId);
-	  
+
     console.log("학생 참가 Socket 체크");
     socket.emit("join", {
       s_email: cookies.s_email,
       test_id: Number(TestCodeParams.testId),
     });
 
-    socket.on(
-      "receive message", (message) => {
-        console.log(message);
-      }
-    );
-
+    socket.on("receive message", (message) => {
+      console.log(message);
+    });
     // socket.on("m_room_out", (msg) => {
     //   console.log("room_out !!");
     //   console.log(msg);
     //   history.push("/student");
     // });
   }, []);
+
+  const StdChattingSend = () => {
+    socket.emit("send message", {
+      s_email: cookies.s_email,
+      message: "학생이 메세지 보낸다~",
+      teacher: false
+    });  
+  }
 
   const TestTimeOur = () => {
     alert("제출 시간이 다되어 시험이 종료됩니다.");
@@ -125,6 +129,7 @@ const TestScreen = () => {
         setQuizId(String(res.data[0].question_id));
         setMinutes(res.data[0].time_diff);
         setIsLoading(true);
+        // 선생님 이메일 들어옴
       })
       .catch((err) => {
         console.log(err);
@@ -221,12 +226,27 @@ const TestScreen = () => {
     testCompleteBtn === "제출하기" && setTestCompleteBtn("제출완료");
     testCompleteBtn === "제출완료" &&
       alert("시험 최종 제출이 완료되어 시험이 종료되었습니다.");
+
+    const data = {
+      s_email: cookies.s_email,
+      test_id: TestCodeParams.testId,
+    };
+
+    axios
+      .post("/testvalidation", data) // 이메일, 시험 아이디
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     socket.emit("room_out", {
       test_id: Number(TestCodeParams.testId),
     });
     history.push("/student");
     socket.disconnect();
-    
+
     return testCompleteBtn;
   };
 
@@ -250,6 +270,7 @@ const TestScreen = () => {
         </div>
         <ul>
           <li>{TestCodeParams.testName}</li>
+          <li onClick={StdChattingSend}>문의하기</li>
         </ul>
       </div>
       <div className="test_scren_nav">
