@@ -14,7 +14,7 @@ const Camera = () => {
     const [userId, setUserId]                   = useState();
     const [userName, setUserName]               = useState();
     const [userNumber, setUserNumber]           = useState();
-    const [testId, setTestId]                   = useState();
+    const [testId, setTestId]                   = useState(1234);
     const [cookies, setCookie, removeCookie]    = useCookies(["token"]);
     const [isLogin, setLogin]                   = useState(cookies.isLogin);
     const [data, setData]                       = useState();
@@ -49,9 +49,7 @@ const Camera = () => {
                     PC 화면의 시험 대기 페이지에 나와있는 시험 번호를 입력 후, 연결 시작 버튼을 눌러주세요.
                 </span>
                 </div>
-                <TextField id="userId" variant="outlined" size="small" 
-                            label="TEST ID" style={{width: "100%", margin: "20px -5px 0px 0px"}}
-                            onChange={(e) => setTestId(e.target.value)}/>
+                
                 <button className="TestButton" 
                 onClick={() => janus.runJanusMobile(userNumber, testId)}>
                     연결 시작
