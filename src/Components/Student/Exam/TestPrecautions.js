@@ -1,6 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+<<<<<<< HEAD
+import { Link, useParams } from "react-router-dom";
+=======
 import { Link, useParams, useHistory } from "react-router-dom";
+>>>>>>> beeafc0adac4a93d53606377d45d8fca724970e2
 import { useCookies } from "react-cookie";
 
 import * as janus from "../../../modules/examCandidatePC";
@@ -13,6 +17,27 @@ const TestPrecautions = () => {
 	const [studentNumber, setStudentNumber] = useState([]);
 	const history = useHistory();
 
+<<<<<<< HEAD
+  const data = {
+    test_id: TestCodeParams.testId,
+    s_email: cookies.s_email,
+  };
+  console.log(data);
+  const CautionDataApi = () => {
+    axios
+      .post("/cautionpage", data)
+      .then((res) => {
+        console.log("s_number : ", res.data[0].s_number);
+        setStudentNumber(res.data[0].s_number);
+        setCautionData(res.data);
+        res.data && janus.runJanusPC(res.data[0].s_number); // 0 => s_num
+        res.data && console.log(res.data.s_number);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+=======
 	const data = {
 		test_id: TestCodeParams.testId,
 		s_email: cookies.s_email,
@@ -32,6 +57,7 @@ const TestPrecautions = () => {
 				console.log(err);
 			});
 	};
+>>>>>>> beeafc0adac4a93d53606377d45d8fca724970e2
 
 	useEffect(() => {
 		CautionDataApi();
@@ -42,93 +68,113 @@ const TestPrecautions = () => {
 		return <div dangerouslySetInnerHTML={{ __html: codes }}></div>;
 	};
 
-	return (
-		cautionData.length !== 0 && (
-			<div id='test_warning_container'>
-				<div className='wrap'>
-					<div className='std_test_info'>
-						<ul>
-							{/* <li>
+  const TestRetakeApi = () => {
+    const data = {
+      test_id: String(TestCodeParams.testId),
+      s_email: cookies.s_email,
+    };
+  console.log(data);
+    axios
+      .post("/retake", data)
+      .then((res) => {
+        //
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  return (
+    cautionData.length !== 0 && (
+      <div id="test_warning_container">
+        <div className="wrap">
+          <div className="std_test_info">
+            <ul>
+              {/* <li>
                 대기인원 :
                 <div className="eng">
                   <span>10</span>/30
                 </div>
               </li> */}
-							<li className='time'>03:50</li>
-							<li className='start_test_btn'>
-								<Link
-									to={`/testscreen/${TestCodeParams.testId}/${TestCodeParams.testName}`}
-									onClick={() => {
-										// volumeMeter 매소드 호출
-										VolumeMeter.getVolumeMeter(
-											TestCodeParams.testId,
-											studentNumber
-										);
+              <li className="time">03:50</li>
+              <li className="start_test_btn red">
+                {cautionData[0].retake ? (
+                  <Link
+                    to={`/testscreen/${TestCodeParams.testId}/${TestCodeParams.testName}`}
+                    onClick={() => {
+                      // volumeMeter 매소드 호출
+                      VolumeMeter.getVolumeMeter(
+                        TestCodeParams.testId,
+                        studentNumber
+                      );
 
-										// 화면 전환 시 강제 리다이랙션
-										window.onblur = function () {
-											/* 리다이랙션 로직 */
-											window.location.replace("/student");
+                      // 화면 전환 시 강제 리다이랙션
+                      // window.onblur = function() {
+                      //   console.log('화면 전환 발생');
+                      //   alert('시험 도중 화면 전환을 시도하셨습니다.\n 시험 대기실로 강제 이동됩니다.');
 
-											console.log("화면 전환 발생");
-											alert(
-												"시험 도중 화면 전환을 시도하셨습니다.\n 시험 대기실로 강제 이동됩니다."
-											);
-										};
+                      //   /* 리다이랙션 로직 */
+                      //   redirect("/student");
+                      // }
 
-										// Keyboard Event 'alt" 막기
-										window.addEventListener(
-											"keydown",
-											function (event) {
-												let handled = false;
+                      // Keyboard Event 'alt" 막기
+                      window.addEventListener(
+                        "keydown",
+                        function (event) {
+                          let handled = false;
 
-												if (event.defaultPrevented) {
-													return;
-												}
+                          if (event.defaultPrevented) {
+                            return;
+                          }
 
-												if (event.altKey)
-													handled = true;
+                          if (event.altKey) handled = true;
 
-												if (handled) {
-													console.log(event.keyCode);
-													event.preventDefault();
-												}
-											},
-											true
-										);
+                          if (handled) {
+                            console.log(event.keyCode);
+                            event.preventDefault();
+                          }
+                        },
+                        true
+                      );
 
-										document.documentElement.webkitRequestFullscreen();
-									}}
-								>
-									시험시작
-								</Link>
-							</li>
-						</ul>
-						<p className='test_tit'>
-							{cautionData[0].test_name}{" "}
-							<span>Number : {TestCodeParams.testId}</span>
-						</p>
-						<p className='test_date'>
-							{cautionData[0].test_start} ~{" "}
-							{cautionData[0].test_end}
-						</p>
-					</div>
-					<ul className='std_test_info_tab'>
-						<li>문항수</li>
-						<li>{cautionData[0].questioncount}문항</li>
-						<li>점수</li>
-						<li>{cautionData[0].total_score}점 만점</li>
-						<li>제한시간</li>
-						<li>{cautionData[0].time_diff}분</li>
-					</ul>
-					<div className='std_test_txt'>
-						<div className='txt_area'>
-							<p className='tit'>시험 시 주의사항</p>
-							{PrecautionTextAreaHtml()}
-						</div>
-					</div>
-					<div className='std_video_view'>
-						{/*
+                      document.documentElement.webkitRequestFullscreen();
+
+                      TestRetakeApi();
+                    }}
+                  >
+                    시험시작
+                  </Link>
+                ) : (
+                  <Link className="start_test_btn gray">
+                    재응시 횟수 초과로 더이상 시험진행 불가능
+                  </Link>
+                )}
+              </li>
+            </ul>
+            <p className="test_tit">
+              {cautionData[0].test_name}{" "}
+              <span>Number : {TestCodeParams.testId}</span>
+            </p>
+            <p className="test_date">
+              {cautionData[0].test_start} ~ {cautionData[0].test_end}
+            </p>
+          </div>
+          <ul className="std_test_info_tab">
+            <li>문항수</li>
+            <li>{cautionData[0].questioncount}문항</li>
+            <li>점수</li>
+            <li>{cautionData[0].total_score}점 만점</li>
+            <li>제한시간</li>
+            <li>{cautionData[0].time_diff}분</li>
+          </ul>
+          <div className="std_test_txt">
+            <div className="txt_area">
+              <p className="tit">시험 시 주의사항</p>
+              {PrecautionTextAreaHtml()}
+            </div>
+          </div>
+          <div className="std_video_view">
+            {/*
             src : 비디오 파일의 주소
             controls : 컨트롤러 표시
             autoplay : 자동 재생

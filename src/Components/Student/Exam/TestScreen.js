@@ -32,6 +32,7 @@ const TestScreen = () => {
   const [resultArray, setResultArray] = useState([]);
   const [testLang, setTestLang] = useState("");
   const [questionCode, setQuestionCode] = useState("");
+  const [testCompleteState, setTestCompleteState] = useState(false);
 
   useEffect(() => {
     console.log(cookies.s_email);
@@ -46,20 +47,20 @@ const TestScreen = () => {
     socket.on("receive message", (message) => {
       console.log(message);
     });
-    // socket.on("m_room_out", (msg) => {
-    //   console.log("room_out !!");
-    //   console.log(msg);
-    //   history.push("/student");
-    // });
+
+     socket.on("m_room_out", (res) => {
+       console.log("Student Room Out");
+       console.log(res);
+     });
   }, []);
 
   const StdChattingSend = () => {
     socket.emit("send message", {
       s_email: cookies.s_email,
       message: "학생이 메세지 보낸다~",
-      teacher: false
-    });  
-  }
+      teacher: false,
+    });
+  };
 
   const TestTimeOur = () => {
     alert("제출 시간이 다되어 시험이 종료됩니다.");
@@ -107,10 +108,6 @@ const TestScreen = () => {
 
     // Object.keys(userCodeData).length !== 0 && CompileApi();
   };
-
-  // useEffect(() => {
-  //   console.log(Ace.codeEditor.getValue());
-  // },[userCodeData])
 
   const StdTestInfoApi = () => {
     const data = {
@@ -221,32 +218,38 @@ const TestScreen = () => {
   };
 
   const testCompleteBtnState = () => {
-    testCompleteBtn === "제출하기" && setTestCompleteBtn("제출완료");
-    testCompleteBtn === "제출완료" &&
-      alert("시험 최종 제출이 완료되어 시험이 종료되었습니다.");
+    setTestCompleteBtn("제출완료");
+    if (
+      window.confirm(
+        "정말 시험을 제출하시겠습니까? 제출 후 수정은 불가능 합니다."
+      )
+    ) {
+      const data = {
+        s_email: cookies.s_email,
+        test_id: TestCodeParams.testId,
+      };
 
-    const data = {
-      s_email: cookies.s_email,
-      test_id: TestCodeParams.testId,
-    };
+      axios
+        .post("/testvalidation", data) // 이메일, 시험 아이디
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-    axios
-      .post("/testvalidation", data) // 이메일, 시험 아이디
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
+      socket.emit("room_out", {
+        s_email: cookies.s_email,
+        test_id: Number(TestCodeParams.testId),
       });
 
-    socket.emit("room_out", {
-      test_id: Number(TestCodeParams.testId),
-    });
-    history.push("/student");
-    socket.disconnect();
+      history.push("/student");
+      socket.disconnect();
+    }
 
     return testCompleteBtn;
   };
+
 
   const SelectLang = (testLang) => {
     return testLang === "JavaScript" ? (

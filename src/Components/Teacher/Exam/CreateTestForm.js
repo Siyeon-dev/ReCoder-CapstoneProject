@@ -41,16 +41,29 @@ const CreateTestForm = () => {
     examEndHours,
     examEndMin
   ) => {
-
     console.log(examStartHours, examStartMin);
     const todayTime = new Date();
     let todayHours = todayTime.getHours();
     let todayMinutes = todayTime.getMinutes();
+    let DateState;
 
+    console.log(DateState);
+    if (selectDate.toDateString === todayTime.toDateString) {
+      if (todayHours <= examStartHours) {
+        DateState = true;
+      } else {
+        DateState = false;
+      }
+    } else if (selectDate.toDateString > todayTime.toDateString) {
+      DateState = true;
+    } else {
+      DateState = false;
+    }
 
-    return todayHours <= examStartHours && todayMinutes >= examStartMin
-      ? true
-      : false;
+    console.log(selectDate);
+    console.log(DateState);
+    console.log(todayTime);
+    return DateState;
   };
 
   const CreateTestAxios = () => {
@@ -60,16 +73,18 @@ const CreateTestForm = () => {
 
     console.log(AllTestInfoArr);
 
-    quizList.length !== 0 ? axios
-      .post("/examcreate", AllTestInfoArr)
-      .then((res) => {
-        console.log(res.data);
-        !alert(`[${TestFormInfo.test_name}] 시험 생성이 완료되었습니다.`) &&
-          history.push(`/teacher/${ParamsClassCode.classCode}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      }) : alert("생성 된 문제가 없습니다.");
+    quizList.length !== 0
+      ? axios
+          .post("/examcreate", AllTestInfoArr)
+          .then((res) => {
+            console.log(res.data);
+            !alert(`[${TestFormInfo.test_name}] 시험 생성이 완료되었습니다.`) &&
+              history.push(`/teacher/${ParamsClassCode.classCode}`);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      : alert("생성 된 문제가 없습니다.");
   };
 
   const CreateTestFormSubmit = (e) => {
@@ -107,7 +122,7 @@ const CreateTestForm = () => {
       e.target.test_end_min.value
     )
       ? CreateTestAxios()
-      : alert("시험시작 시간이 현재 시간보다 전입니다. 시간을 확인해주세요. ");
+      : alert("시험 시간을 확인해주세요. 당일 최소 1시간 전 시험 생성이 가능합니다.");
   };
 
   const deleteQuiz = (v) => {
