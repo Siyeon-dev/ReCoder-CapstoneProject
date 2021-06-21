@@ -32,7 +32,7 @@ const TestScreen = () => {
   const [resultArray, setResultArray] = useState([]);
   const [testLang, setTestLang] = useState("");
   const [questionCode, setQuestionCode] = useState("");
-  const [testCompleteState, setTestCompleteState] = useState(false);
+  const [insertUpdateState, setInsertUpdateState] = useState([]);
 
   useEffect(() => {
     console.log(cookies.s_email);
@@ -48,11 +48,13 @@ const TestScreen = () => {
       console.log(message);
     });
 
-     socket.on("m_room_out", (res) => {
-       console.log("Student Room Out");
-       console.log(res);
-     });
+    socket.on("m_room_out", (res) => {
+      console.log("Student Room Out");
+      console.log(res);
+    });
   }, []);
+
+  useEffect(() => {console.log(insertUpdateState) },[insertUpdateState])
 
   const StdChattingSend = () => {
     socket.emit("send message", {
@@ -188,11 +190,15 @@ const TestScreen = () => {
   }, [questionCode]);
 
   const CompileApi = () => {
-    const ApiCommand = commandDataList === 0 ? "insert" : "update";
+    const ApiCommandFilter = insertUpdateState.filter((v) => v == quizId);
+    const ApiCommand = ApiCommandFilter.length === 0 ? "insert" : "update";
+    setInsertUpdateState([...insertUpdateState, quizId]);
 
+    console.log(ApiCommand);
+    console.log(quizId)
     const data = {
       s_email: cookies.s_email,
-      question_id: quizId,
+      question_id: String(quizId),
       test_id: TestCodeParams.testId,
       compile_code: Ace.codeEditor.getValue(),
       //compile_result: userCodeResultData,
@@ -243,13 +249,13 @@ const TestScreen = () => {
         test_id: Number(TestCodeParams.testId),
       });
 
-      history.push("/student");
+      // history.push("/student");
+      window.location.replace("/student");
       socket.disconnect();
     }
 
     return testCompleteBtn;
   };
-
 
   const SelectLang = (testLang) => {
     return testLang === "JavaScript" ? (

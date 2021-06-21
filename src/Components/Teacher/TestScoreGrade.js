@@ -69,7 +69,7 @@ const TestScoreGrade = ({
                     <tr>
                       <th scope="col">학생이름</th>
                       <th scope="col">응시여부</th>
-                      <th scope="col">재응시횟수</th>
+                      <th scope="col">응시횟수</th>
                       <th scope="col">시선경고</th>
                       <th scope="col">음성경고</th>
                       <th scope="col">시도한 문제 / 총 문제</th>
