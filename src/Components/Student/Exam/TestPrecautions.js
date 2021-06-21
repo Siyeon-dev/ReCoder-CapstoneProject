@@ -1,10 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-<<<<<<< HEAD
-import { Link, useParams } from "react-router-dom";
-=======
 import { Link, useParams, useHistory } from "react-router-dom";
->>>>>>> beeafc0adac4a93d53606377d45d8fca724970e2
 import { useCookies } from "react-cookie";
 
 import * as janus from "../../../modules/examCandidatePC";
@@ -17,7 +13,6 @@ const TestPrecautions = () => {
 	const [studentNumber, setStudentNumber] = useState([]);
 	const history = useHistory();
 
-<<<<<<< HEAD
   const data = {
     test_id: TestCodeParams.testId,
     s_email: cookies.s_email,
@@ -37,27 +32,6 @@ const TestPrecautions = () => {
         console.log(err);
       });
   };
-=======
-	const data = {
-		test_id: TestCodeParams.testId,
-		s_email: cookies.s_email,
-	};
-	console.log(data);
-	const CautionDataApi = () => {
-		axios
-			.post("/cautionpage", data)
-			.then((res) => {
-				console.log("s_number : ", res.data[0].s_number);
-				setStudentNumber(res.data[0].s_number);
-				setCautionData(res.data);
-				res.data && janus.runJanusPC(res.data[0].s_number); // 0 => s_num
-				res.data && console.log(res.data.s_number);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
->>>>>>> beeafc0adac4a93d53606377d45d8fca724970e2
 
 	useEffect(() => {
 		CautionDataApi();
