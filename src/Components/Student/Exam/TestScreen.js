@@ -47,6 +47,11 @@ const TestScreen = () => {
     socket.on("receive message", (message) => {
       console.log(message);
     });
+
+     socket.on("m_room_out", (res) => {
+       console.log("Student Room Out");
+       console.log(res);
+     });
   }, []);
 
   const StdChattingSend = () => {
@@ -103,10 +108,6 @@ const TestScreen = () => {
 
     // Object.keys(userCodeData).length !== 0 && CompileApi();
   };
-
-  // useEffect(() => {
-  //   console.log(Ace.codeEditor.getValue());
-  // },[userCodeData])
 
   const StdTestInfoApi = () => {
     const data = {
@@ -248,10 +249,7 @@ const TestScreen = () => {
 
     return testCompleteBtn;
   };
-  
-  socket.on("m_room_out", (res) => {
-    console.log(res);
-  });
+
 
   const SelectLang = (testLang) => {
     return testLang === "JavaScript" ? (

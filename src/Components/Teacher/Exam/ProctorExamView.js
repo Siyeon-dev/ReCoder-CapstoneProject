@@ -25,7 +25,7 @@ const ProctorExamView = () => {
   useEffect(() => {
     janus.runJanusTeacher();
   }, []);
-  
+
   useEffect(() => {
     socket.emit("create", {
       t_email: cookies.t_email,
@@ -132,10 +132,10 @@ const ProctorExamView = () => {
   const SocketRoomOut = () => {
     console.log("TestDataParams.testId", TestDataParams.testId);
     socket.emit("m_room_out", {
+      t_email: cookies.t_email,
       test_id: Number(TestDataParams.testId),
     });
     console.log("Room Out");
-    socket.disconnect();
   };
   
   return (
