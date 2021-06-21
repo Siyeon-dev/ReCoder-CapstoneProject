@@ -123,7 +123,7 @@ const Index = () => {
             readClass={readClass}
           />
           <div id="contents">
-            <div className="cont_visual">
+            <div className="cont_visual teacher">
               {classListEmptyArrayCheckFlag === false && (
                 <div className="clipboard_copy">
                   <CodeClipboardCopy classCode={classCode} />

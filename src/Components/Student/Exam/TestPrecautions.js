@@ -1,11 +1,10 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
-import * as janus from '../../../modules/examCandidatePC'
-import * as VolumeMeter from "../../../modules/anti-cheat/volumeMeter"
-
+import * as janus from "../../../modules/examCandidatePC";
+import * as VolumeMeter from "../../../modules/anti-cheat/volumeMeter";
 
 const TestPrecautions = () => {
   const TestCodeParams = useParams();
@@ -23,7 +22,7 @@ const TestPrecautions = () => {
       .post("/cautionpage", data)
       .then((res) => {
         console.log("s_number : ", res.data[0].s_number);
-        setStudentNumber(res.data[0].s_number)
+        setStudentNumber(res.data[0].s_number);
         setCautionData(res.data);
         res.data && janus.runJanusPC(res.data[0].s_number); // 0 => s_num
         res.data && console.log(res.data.s_number);
@@ -42,6 +41,22 @@ const TestPrecautions = () => {
     return <div dangerouslySetInnerHTML={{ __html: codes }}></div>;
   };
 
+  const TestRetakeApi = () => {
+    const data = {
+      test_id: String(TestCodeParams.testId),
+      s_email: cookies.s_email,
+    };
+  console.log(data);
+    axios
+      .post("/retake", data)
+      .then((res) => {
+        //
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     cautionData.length !== 0 && (
       <div id="test_warning_container">
@@ -55,50 +70,58 @@ const TestPrecautions = () => {
                 </div>
               </li> */}
               <li className="time">03:50</li>
-              <li className="start_test_btn">
-                <Link
-                  to={`/testscreen/${TestCodeParams.testId}/${TestCodeParams.testName}`}
-                  onClick={() => {
-                    // volumeMeter 매소드 호출
-                    VolumeMeter.getVolumeMeter(
-                      TestCodeParams.testId,
-                      studentNumber
-                    );
+              <li className="start_test_btn red">
+                {cautionData[0].retake ? (
+                  <Link
+                    to={`/testscreen/${TestCodeParams.testId}/${TestCodeParams.testName}`}
+                    onClick={() => {
+                      // volumeMeter 매소드 호출
+                      VolumeMeter.getVolumeMeter(
+                        TestCodeParams.testId,
+                        studentNumber
+                      );
 
-                    // 화면 전환 시 강제 리다이랙션
-                    // window.onblur = function() {
-                    //   console.log('화면 전환 발생');
-                    //   alert('시험 도중 화면 전환을 시도하셨습니다.\n 시험 대기실로 강제 이동됩니다.');
+                      // 화면 전환 시 강제 리다이랙션
+                      // window.onblur = function() {
+                      //   console.log('화면 전환 발생');
+                      //   alert('시험 도중 화면 전환을 시도하셨습니다.\n 시험 대기실로 강제 이동됩니다.');
 
-                    //   /* 리다이랙션 로직 */
-                    //   redirect("/student");
-                    // }
+                      //   /* 리다이랙션 로직 */
+                      //   redirect("/student");
+                      // }
 
-                    // Keyboard Event 'alt" 막기
-                    window.addEventListener(
-                      "keydown",
-                      function (event) {
-                        let handled = false;
+                      // Keyboard Event 'alt" 막기
+                      window.addEventListener(
+                        "keydown",
+                        function (event) {
+                          let handled = false;
 
-                        if (event.defaultPrevented) {
-                          return;
-                        }
+                          if (event.defaultPrevented) {
+                            return;
+                          }
 
-                        if (event.altKey) handled = true;
+                          if (event.altKey) handled = true;
 
-                        if (handled) {
-                          console.log(event.keyCode);
-                          event.preventDefault();
-                        }
-                      },
-                      true
-                    );
+                          if (handled) {
+                            console.log(event.keyCode);
+                            event.preventDefault();
+                          }
+                        },
+                        true
+                      );
 
-                    document.documentElement.webkitRequestFullscreen();
-                  }}
-                >
-                  시험시작
-                </Link>
+                      document.documentElement.webkitRequestFullscreen();
+
+                      TestRetakeApi();
+                    }}
+                  >
+                    시험시작
+                  </Link>
+                ) : (
+                  <Link className="start_test_btn gray">
+                    재응시 횟수 초과로 더이상 시험진행 불가능
+                  </Link>
+                )}
               </li>
             </ul>
             <p className="test_tit">

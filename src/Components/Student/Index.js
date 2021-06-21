@@ -124,7 +124,7 @@ useEffect(() => {
             setClassJoinAppRecognize={setClassJoinAppRecognize}
           />
           <div id="contents">
-            <div className="cont_visual">
+            <div className="cont_visual student">
               <p className="eng small">Welcome.</p>
               <p className="eng big">Re:Coder</p>
               <p className="kor">

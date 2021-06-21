@@ -13,8 +13,8 @@ const ScoreGradeLow = ({ apiDataFlag, stateApiDataFlag, stateApiData }) => {
       stateApiData.map((v) => (
         <tr>
           <td>{v.s_retake}회</td>
-          <td>{v.eye_caution}회</td>
           <td>{v.mic_caution}회</td>
+          <td>{v.eye_caution}회</td>
           <td>
             {v.test_validation === 0 ? (
               <div className="test_status no_test">미응시</div>

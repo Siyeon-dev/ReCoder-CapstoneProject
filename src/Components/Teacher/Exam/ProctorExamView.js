@@ -25,14 +25,7 @@ const ProctorExamView = () => {
   useEffect(() => {
     janus.runJanusTeacher();
   }, []);
-
-  // const chattingSocket = () => {
-  //   socket.emit("send message", {
-  //     name: "gs28@naver.com",
-  //     message: "선생님 메세지 보냄",
-  //   });
-  // };
-
+  
   useEffect(() => {
     socket.emit("create", {
       t_email: cookies.t_email,
@@ -60,6 +53,10 @@ const ProctorExamView = () => {
         Object.keys(msg).length !== 0 && setParticStdFlag(true);
       };
       msg !== null && StdDataSave();
+    });
+
+    socket.on("room_out", (res) => {
+      console.log(res);
     });
 
     socket.on("volumeMeter", (res) => {
