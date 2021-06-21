@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams, redirect } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 import * as janus from "../../../modules/examCandidatePC";
@@ -11,6 +11,7 @@ const TestPrecautions = () => {
 	const [cookies, setCookie, removeCookie] = useCookies();
 	const [cautionData, setCautionData] = useState([]);
 	const [studentNumber, setStudentNumber] = useState([]);
+	const history = useHistory();
 
 	const data = {
 		test_id: TestCodeParams.testId,
@@ -66,13 +67,13 @@ const TestPrecautions = () => {
 
 										// 화면 전환 시 강제 리다이랙션
 										window.onblur = function () {
+											/* 리다이랙션 로직 */
+											window.location.replace("/student");
+
 											console.log("화면 전환 발생");
 											alert(
 												"시험 도중 화면 전환을 시도하셨습니다.\n 시험 대기실로 강제 이동됩니다."
 											);
-
-											/* 리다이랙션 로직 */
-											// redirect("/student");
 										};
 
 										// Keyboard Event 'alt" 막기
