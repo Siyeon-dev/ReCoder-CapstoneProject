@@ -1,17 +1,23 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+<<<<<<< HEAD
 import { Link, useParams } from "react-router-dom";
+=======
+import { Link, useParams, useHistory } from "react-router-dom";
+>>>>>>> beeafc0adac4a93d53606377d45d8fca724970e2
 import { useCookies } from "react-cookie";
 
 import * as janus from "../../../modules/examCandidatePC";
 import * as VolumeMeter from "../../../modules/anti-cheat/volumeMeter";
 
 const TestPrecautions = () => {
-  const TestCodeParams = useParams();
-  const [cookies, setCookie, removeCookie] = useCookies();
-  const [cautionData, setCautionData] = useState([]);
-  const [studentNumber, setStudentNumber] = useState([]);
+	const TestCodeParams = useParams();
+	const [cookies, setCookie, removeCookie] = useCookies();
+	const [cautionData, setCautionData] = useState([]);
+	const [studentNumber, setStudentNumber] = useState([]);
+	const history = useHistory();
 
+<<<<<<< HEAD
   const data = {
     test_id: TestCodeParams.testId,
     s_email: cookies.s_email,
@@ -31,15 +37,36 @@ const TestPrecautions = () => {
         console.log(err);
       });
   };
+=======
+	const data = {
+		test_id: TestCodeParams.testId,
+		s_email: cookies.s_email,
+	};
+	console.log(data);
+	const CautionDataApi = () => {
+		axios
+			.post("/cautionpage", data)
+			.then((res) => {
+				console.log("s_number : ", res.data[0].s_number);
+				setStudentNumber(res.data[0].s_number);
+				setCautionData(res.data);
+				res.data && janus.runJanusPC(res.data[0].s_number); // 0 => s_num
+				res.data && console.log(res.data.s_number);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+>>>>>>> beeafc0adac4a93d53606377d45d8fca724970e2
 
-  useEffect(() => {
-    CautionDataApi();
-  }, []);
+	useEffect(() => {
+		CautionDataApi();
+	}, []);
 
-  const PrecautionTextAreaHtml = () => {
-    let codes = cautionData && cautionData[0].test_caution;
-    return <div dangerouslySetInnerHTML={{ __html: codes }}></div>;
-  };
+	const PrecautionTextAreaHtml = () => {
+		let codes = cautionData && cautionData[0].test_caution;
+		return <div dangerouslySetInnerHTML={{ __html: codes }}></div>;
+	};
 
   const TestRetakeApi = () => {
     const data = {
@@ -156,47 +183,47 @@ const TestPrecautions = () => {
             height : 영상의 세로길이
             muted : 음소거
             */}
-            <div className="view_area">
-              <video
-                id="myvideo"
-                width="300px"
-                height="200px"
-                autoPlay
-                playsInline
-                muted="muted"
-              >
-                해당 브라우저는 video 태그를 지원하지 않습니다.
-              </video>
-            </div>
-            <div className="view_area">
-              <video
-                id="myVideoScreen"
-                width="300px"
-                height="200px"
-                autoPlay
-                playsInline
-                muted="muted"
-              >
-                해당 브라우저는 video 태그를 지원하지 않습니다.
-              </video>
-            </div>
-            <div className="view_area">
-              <video
-                id="myVideoMobile"
-                width="300px"
-                height="200px"
-                autoPlay
-                playsInline
-                muted="muted"
-              >
-                해당 브라우저는 video 태그를 지원하지 않습니다.
-              </video>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  );
+						<div className='view_area'>
+							<video
+								id='myvideo'
+								width='300px'
+								height='200px'
+								autoPlay
+								playsInline
+								muted='muted'
+							>
+								해당 브라우저는 video 태그를 지원하지 않습니다.
+							</video>
+						</div>
+						<div className='view_area'>
+							<video
+								id='myVideoScreen'
+								width='300px'
+								height='200px'
+								autoPlay
+								playsInline
+								muted='muted'
+							>
+								해당 브라우저는 video 태그를 지원하지 않습니다.
+							</video>
+						</div>
+						<div className='view_area'>
+							<video
+								id='myVideoMobile'
+								width='300px'
+								height='200px'
+								autoPlay
+								playsInline
+								muted='muted'
+							>
+								해당 브라우저는 video 태그를 지원하지 않습니다.
+							</video>
+						</div>
+					</div>
+				</div>
+			</div>
+		)
+	);
 };
 
 export default TestPrecautions;
