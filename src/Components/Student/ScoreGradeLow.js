@@ -22,9 +22,9 @@ const ScoreGradeLow = ({ apiDataFlag, stateApiDataFlag, stateApiData }) => {
               <div className="test_status complete">응시 완료</div>
             )}
           </td> */}
-          <td>
+          {/* <td>
             <div className="test_status complete">응시 완료</div>
-          </td>
+          </td> */}
           <td>
             <span className="blue">
               {v.student_score === null ? 0 : v.student_score}
