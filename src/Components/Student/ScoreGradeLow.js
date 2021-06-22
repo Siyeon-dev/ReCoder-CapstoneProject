@@ -15,12 +15,15 @@ const ScoreGradeLow = ({ apiDataFlag, stateApiDataFlag, stateApiData }) => {
           <td>{v.s_retake}회</td>
           <td>{v.mic_caution}회</td>
           <td>{v.eye_caution}회</td>
-          <td>
+          {/* <td>
             {v.test_validation === 0 ? (
               <div className="test_status no_test">미응시</div>
             ) : (
               <div className="test_status complete">응시 완료</div>
             )}
+          </td> */}
+          <td>
+            <div className="test_status complete">응시 완료</div>
           </td>
           <td>
             <span className="blue">

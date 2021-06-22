@@ -70,7 +70,7 @@ const TestPrecautions = () => {
                   <span>10</span>/30
                 </div>
               </li> */}
-              <li className="time">03:50</li>
+              <li className="time">03:00</li>
               <li className="start_test_btn red">
                 {cautionData[0].retake ? (
                   <Link

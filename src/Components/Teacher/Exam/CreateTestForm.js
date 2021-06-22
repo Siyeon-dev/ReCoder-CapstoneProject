@@ -139,7 +139,7 @@ const CreateTestForm = () => {
             <span>{v.question_score}</span>점
           </p>
           <div className="btn_wrap">
-            <div className="btn questions_modify">수정하기</div>
+            {/* <div className="btn questions_modify">수정하기</div> */}
             <div
               className="btn questions_delete"
               onClick={() => deleteQuiz(v.question_name)}
@@ -265,7 +265,7 @@ const CreateTestForm = () => {
                 <p className="width_input_tit">시험대기시간</p>
                 <div className="select">
                   <select name="test_wait" id="slct">
-                    <option value="10">10분</option>
+                    <option value="10">3분</option>
                     <option value="20">20분</option>
                     <option value="30">30분</option>
                     <option value="40">40분</option>
@@ -325,15 +325,7 @@ const CreateTestForm = () => {
                 <div className="radio_wrap">
                   <div className="light">
                     <label>
-                      <input
-                        type="radio"
-                        name="test_retake"
-                        value="3"
-                        defaultChecked
-                      />
-                      <span class="design"></span>
-                      <span class="text">무제한</span>
-                    </label>
+                      
                     <label>
                       <input type="radio" name="test_retake" value="1" />
                       <span class="design"></span>
@@ -343,6 +335,15 @@ const CreateTestForm = () => {
                       <input type="radio" name="test_retake" value="2" />
                       <span class="design"></span>
                       <span class="text">2회</span>
+                      </label>
+                      <input
+                        type="radio"
+                        name="test_retake"
+                        value="3"
+                        defaultChecked
+                      />
+                      <span class="design"></span>
+                      <span class="text">3회</span>
                     </label>
                     <label>
                       <input type="radio" name="test_retake" value="4" />
