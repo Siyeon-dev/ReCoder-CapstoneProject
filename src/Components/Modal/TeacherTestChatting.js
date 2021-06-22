@@ -63,7 +63,7 @@ console.log(receiveMessage);
         <div className="modal tch_chatting">
           <div className="modal_area">
             <div className="chatting_header">
-              <p>{`${StdName}의 메세지`}</p>
+              <p>{`${StdName}학생의 공지내역`}</p>
             </div>
             <div className="chatting_area">
               <ul>

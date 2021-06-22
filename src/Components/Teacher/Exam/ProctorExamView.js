@@ -136,6 +136,7 @@ const ProctorExamView = () => {
       test_id: Number(TestDataParams.testId),
     });
     console.log("Room Out");
+    window.location.replace("/teacher");
   };
   
   return (
@@ -171,7 +172,6 @@ const ProctorExamView = () => {
         </ul>
         <div className="btn_wrap">
           <Link
-            to={`/teacher`}
             onClick={() => {
               SocketRoomOut();
             }}

@@ -33,6 +33,7 @@ const TestScreen = () => {
   const [testLang, setTestLang] = useState("");
   const [questionCode, setQuestionCode] = useState("");
   const [insertUpdateState, setInsertUpdateState] = useState([]);
+  const [receiveMessageString, setReceiveMessageString] = useState("");
 
   useEffect(() => {
     console.log(cookies.s_email);
@@ -44,13 +45,15 @@ const TestScreen = () => {
       test_id: Number(TestCodeParams.testId),
     });
 
-    socket.on("receive message", (message) => {
-      console.log(message);
+    socket.on("receive message", (receiveMessage) => {
+      console.log(receiveMessage);
+      setReceiveMessageString(receiveMessage.message);
     });
 
     socket.on("m_room_out", (res) => {
       console.log("Student Room Out");
       console.log(res);
+    window.location.replace("/student");
     });
   }, []);
 
@@ -63,7 +66,6 @@ const TestScreen = () => {
       teacher: false,
     });
   };
-
   const TestTimeOur = () => {
     alert("제출 시간이 다되어 시험이 종료됩니다.");
     history.push("/student");
@@ -250,7 +252,9 @@ const TestScreen = () => {
       });
 
       // history.push("/student");
-      window.location.replace("/student");
+      if (window.confirm("선생님이 시험을 종료하여 시험이 종료됩니다.")) {
+        window.location.replace("/student");
+      }
       socket.disconnect();
     }
 
@@ -277,7 +281,8 @@ const TestScreen = () => {
         </div>
         <ul>
           <li>{TestCodeParams.testName}</li>
-          <li onClick={StdChattingSend}>문의하기</li>
+          <li className="tch_notice">선생님 공지 : {receiveMessageString}</li>
+          {/* <li onClick={StdChattingSend}>문의하기</li> */}
         </ul>
       </div>
       <div className="test_scren_nav">

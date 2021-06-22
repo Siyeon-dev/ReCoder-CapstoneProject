@@ -115,14 +115,15 @@ const CreateTestForm = () => {
     console.log(TestFormInfo);
     console.log(quizList);
 
-    TimeComparison(
-      e.target.test_start_time.value,
-      e.target.test_start_min.value,
-      e.target.test_end_time.value,
-      e.target.test_end_min.value
-    )
-      ? CreateTestAxios()
-      : alert("시험 시간을 확인해주세요. 당일 최소 1시간 전 시험 생성이 가능합니다.");
+    // TimeComparison(
+    //   e.target.test_start_time.value,
+    //   e.target.test_start_min.value,
+    //   e.target.test_end_time.value,
+    //   e.target.test_end_min.value
+    // )
+    //   ? CreateTestAxios()
+    //   : alert("시험 시간을 확인해주세요. 당일 최소 1시간 전 시험 생성이 가능합니다.");
+    CreateTestAxios();
   };
 
   const deleteQuiz = (v) => {
