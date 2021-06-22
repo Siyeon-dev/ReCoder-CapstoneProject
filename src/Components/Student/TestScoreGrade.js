@@ -73,10 +73,10 @@ const TestScoreGrade = ({
               <table>
                 <thead>
                   <tr>
-                    <th scope="col">재응시횟수</th>
+                    <th scope="col">응시횟수</th>
                     <th scope="col">음성경고횟수</th>
                     <th scope="col">시선경고횟수</th>
-                    <th scope="col">응시여부</th>
+                    {/* <th scope="col">응시여부</th> */}
                     <th scope="col">총점</th>
                   </tr>
                 </thead>
