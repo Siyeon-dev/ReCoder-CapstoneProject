@@ -31,8 +31,7 @@ const TestScoringPage = () => {
 		};
 
 		console.log(data);
-		data &&
-			axios
+		data && axios
 				.post("/testgradingpage", data)
 				.then((res) => {
 					setApiDataFlag(true);
@@ -179,7 +178,10 @@ const TestScoringPage = () => {
           <img src="../img/test_screen_logo.gif" alt="Re:Coder" />
         </div>
         <ul>
-          <li>{selectGradingDataArray[0].test_name}</li>
+          <li>
+            {selectGradingDataArray.length !== 0 &&
+              selectGradingDataArray[0].test_name}
+          </li>
         </ul>
       </div>
       <div className="test_scren_nav">
@@ -200,7 +202,9 @@ const TestScoringPage = () => {
         </div>
         <ul>
           <li className="std_name">
-            학생 : {selectGradingDataArray[0].s_name}
+            학생 :{" "}
+            {selectGradingDataArray.length !== 0 &&
+               selectGradingDataArray[0].s_name}
           </li>
           <li>
             <input

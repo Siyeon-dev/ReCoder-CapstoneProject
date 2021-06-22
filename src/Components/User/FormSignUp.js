@@ -37,7 +37,7 @@ const FormSignUp = ({ SignUpSuccessForm }, props) => {
                 alt="로그인, 회원가입 페이지 로고"
               />
             </div>
-            <p className="txt">Teacher Membership Window</p>
+            <p className="txt">Coding Test Membership Window</p>
             <form onSubmit={handleSubmit}>
               <input
                 type="text"
