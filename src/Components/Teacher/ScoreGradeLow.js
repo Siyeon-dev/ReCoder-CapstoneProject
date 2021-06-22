@@ -17,13 +17,13 @@ const ScoreGradeLow = ({ apiDataFlag, stateApiDataFlag, stateApiData }) => {
               {v.s_name} <span>{v.s_email.split("@")[0]}</span>
             </div>
           </th>
-          <td>
+          {/* <td>
             {v.test_validation === 0 ? (
               <div className="test_status no_test">미응시</div>
             ) : (
               <div className="test_status complete">응시 완료</div>
             )}
-          </td>
+          </td> */}
           <td>{v.s_retake}회</td>
           <td>{v.eye_caution}회</td>
           <td>{v.mic_caution}회</td>

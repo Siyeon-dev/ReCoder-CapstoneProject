@@ -173,115 +173,102 @@ const TestScoringPage = () => {
 	};
 
 	return (
-		<div className='test_screen_wrapper'>
-			<div className='test_screen_top'>
-				<div className='logo'>
-					<img src='../img/test_screen_logo.gif' alt='Re:Coder' />
-				</div>
-				<ul>
-					<li>우당탕탕웹디제이</li>
-					<li>2020학년도 1학기 중간고사</li>
-				</ul>
-			</div>
-			<div className='test_scren_nav'>
-				<p className='quiz_num'>문제1</p>
-				<div className='test_select'>
-					<select
-						name='test_start_time'
-						id='slct'
-						onChange={selectTestNumFunction}
-					>
-						{apiDataFlag &&
-							gradingDataArray.map((v, index) => (
-								<option value={index} selected={index === 0}>
-									문제 {index + 1}
-								</option>
-							))}
-					</select>
-				</div>
-				<ul>
-					<li className='std_name'>학생 : 이구슬</li>
-					<li>
-						<input
-							type='button'
-							value='채점 종료'
-							onClick={() => ScoreExit()}
-						/>
-					</li>
-				</ul>
-			</div>
+    <div className="test_screen_wrapper">
+      <div className="test_screen_top">
+        <div className="logo">
+          <img src="../img/test_screen_logo.gif" alt="Re:Coder" />
+        </div>
+        <ul>
+          <li>{selectGradingDataArray[0].test_name}</li>
+        </ul>
+      </div>
+      <div className="test_scren_nav">
+        <p className="quiz_num">문제</p>
+        <div className="test_select">
+          <select
+            name="test_start_time"
+            id="slct"
+            onChange={selectTestNumFunction}
+          >
+            {apiDataFlag &&
+              gradingDataArray.map((v, index) => (
+                <option value={index} selected={index === 0}>
+                  문제 {index + 1}
+                </option>
+              ))}
+          </select>
+        </div>
+        <ul>
+          <li className="std_name">
+            학생 : {selectGradingDataArray[0].s_name}
+          </li>
+          <li>
+            <input
+              type="button"
+              value="채점 종료"
+              onClick={() => ScoreExit()}
+            />
+          </li>
+        </ul>
+      </div>
 
-			<div className='std_test_area'>
-				<div className='std_test_wrapper'>
-					<div className='test_guide_section'>
-						<div className='scroll_area'>
-							{parse(
-								apiDataFlag &&
-									Object.keys(selectGradingDataArray)
-										.length !== 0
-									? String(
-											selectGradingDataArray[0].question_text
-									  )
-									: `<p>문제를 불러오는 중입니다.</p>`
-							)}
-						</div>
-					</div>
-					<div className='middle_bar'></div>
-					<div className='code_editor_section'>
-						<div id='overlay_div'>
-							<div className='std_coding_area'>
-								<div className='coding_nav'>
-									<p className='file_name'>Soulution.js</p>
-									<ul>
-										<li className='test_score_form'>
-											<form onSubmit={TestGradingApi}>
-												<input
-													ref={inputScore}
-													type='text'
-												/>
-												<button>점수입력</button>
-											</form>
-										</li>
-										<li>
-											{apiDataFlag &&
-												Object.keys(
-													selectGradingDataArray
-												).length !== 0 &&
-												selectGradingDataArray[0].question_grade}
-											점 만점
-										</li>
-										<li>JavaScript</li>
-										<li
-											className='compile_btn'
-											onClick={runCompile}
-										>
-											컴파일 하기
-										</li>
-									</ul>
-								</div>
-								<div
-									className='code_compiler_area'
-									id='editorCode'
-								></div>
-								<div className='code_compiler_result'>
-									<p className='tit'>실행결과</p>
-									<div className='scroll_area'>
-										{
-											/* 코드 실행 결과 */
-											<ul
-												className='editor__console-logs'
-												id='editor__console-logs'
-											></ul>
-										}
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+      <div className="std_test_area">
+        <div className="std_test_wrapper">
+          <div className="test_guide_section">
+            <div className="scroll_area">
+              {parse(
+                apiDataFlag && selectGradingDataArray.length !== 0
+                  ? String(selectGradingDataArray[0].question_text)
+                  : `<p>문제를 불러오는 중입니다.</p>`
+              )}
+            </div>
+          </div>
+          <div className="middle_bar"></div>
+          <div className="code_editor_section">
+            <div id="overlay_div">
+              <div className="std_coding_area">
+                <div className="coding_nav">
+                  <p className="file_name">Soulution.js</p>
+                  <ul>
+                    <li className="test_score_form">
+                      <form onSubmit={TestGradingApi}>
+                        <input ref={inputScore} type="text" />
+                        <button>점수입력</button>
+                      </form>
+                    </li>
+                    <li>
+                      {/* {apiDataFlag &&
+                        Object.keys(selectGradingDataArray).length !== 0 &&
+                        selectGradingDataArray[0].question_grade}
+                      점 만점 */}
+                      100점 만점
+                    </li>
+                    <li>JavaScript</li>
+                    <li className="compile_btn" onClick={runCompile}>
+                      컴파일 하기
+                    </li>
+                  </ul>
+                </div>
+                <div className="code_compiler_area" id="editorCode"></div>
+                <div className="code_compiler_result">
+                  <p className="tit">실행결과</p>
+                  <div className="scroll_area">
+                    {
+                      /* 코드 실행 결과 */
+                      <ul
+                        className="editor__console-logs"
+                        id="editor__console-logs"
+                      ></ul>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default TestScoringPage;
