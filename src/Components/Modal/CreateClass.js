@@ -37,15 +37,15 @@ const CreateClass = ({ readClass, classListUpdate }) => {
   return (
     <>
       <button onClick={() => setIsOpen(!isOpen)}>
-        <img src="/img/nav_plus_btn.gif" alt="클래스 추가" />
+        <img src="/img/nav_plus_btn.gif" alt="クラス追加" />
       </button>
       <Modal>
         <div className="modal create_class">
           <div className="modal_area">
             <div className="modal_head">
-              <p className="tit">클래스 생성하기</p>
+              <p className="tit">クラス作り</p>
               <p className="txt">
-                학생 및 시험을 생성한 클래스별로 관리할 수 있습니다.{" "}
+                学生と作った試験はクラス別に管理することができます。
               </p>
             </div>
             <form onSubmit={handleSubmit}>
@@ -54,12 +54,12 @@ const CreateClass = ({ readClass, classListUpdate }) => {
                 type="text"
                 name="newClassName"
                 maxlength="15"
-                placeholder="클래스명을 입력해주세요."
+                placeholder="クラス名を入力してください。"
               />
-              <button type="submit">생성하기</button>
+              <button type="submit">生成する</button>
             </form>
             <button onClick={() => setIsOpen(false)} className="modal_close">
-              <img src="/img/modal_close.gif" alt="모달 닫기" />
+              <img src="/img/modal_close.gif" alt="Modal Close" />
             </button>
           </div>
         </div>

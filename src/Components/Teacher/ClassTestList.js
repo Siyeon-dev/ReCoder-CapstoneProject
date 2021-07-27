@@ -85,7 +85,7 @@ const ClassTestList = ({
       selectClassTestInfo.map((currElement) => (
         <tr>
           <th scope="row">{currElement.test_name}</th>
-          <td>{currElement.questioncount}문항</td>
+          <td>{currElement.questioncount}問題</td>
           <td>
             {currElement.test_start} ~{currElement.test_end}
           </td>
@@ -103,21 +103,21 @@ const ClassTestList = ({
                   //onClick={() => ClassListSocket(currElement.test_id)}
                   className="tch_test_state start"
                 >
-                  시험대기
+                  試験待ち
                 </Link>
               ) : buttonStatus === 1 ? (
                 <Link
                   to={`/proctorexamview/${currElement.test_id}/${currElement.test_name}`}
                   className="tch_test_state complete"
                 >
-                  시험응시
+                  試験を受ける
                 </Link>
               ) : buttonStatus === 2 ? (
                 <Link
                   to={`/proctorexamview/${currElement.test_id}/${currElement.test_name}`}
                   className="tch_test_state complete"
                 >
-                  시험완료
+                  試験完了
                 </Link>
               ) : null)
             }
@@ -125,7 +125,7 @@ const ClassTestList = ({
           </td>
           <td>
             <button onClick={() => TestListDelete(currElement.test_id)}>
-              <img src="/img/tch_test_delete_btn.png" alt="시험 삭제 버튼" />
+              <img src="/img/tch_test_delete_btn.png" alt="試験削除" />
             </button>
           </td>
         </tr>
@@ -145,7 +145,7 @@ const ClassTestList = ({
       .post("/examdelete", data)
       .then((res) => {
         console.log(res.data);
-        alert("시험이 삭제되었습니다.");
+        alert("試験が削除されました。");
         window.location.replace(`/teacher/${classCode}`);
       })
       .catch((err) => {
@@ -156,8 +156,8 @@ const ClassTestList = ({
   return apiLoadingFlag === true ? ( // api 값을 받아 왔는지
     emptyArrayCheckFlag === true ? ( // 값이 있는지 없는지
       <div className="no_create_guide test">
-        생성된 시험이 없습니다. <span>먼저 시험을 생성해주세요.</span>
-        <Link to={`/createtestform/${classCode}`}>시험 생성하기</Link>
+        作られた試験がありません。 <span>まず、試験を作ってください。</span>
+        <Link to={`/createtestform/${classCode}`}>試験生成</Link>
       </div>
     ) : (
       <div className="tch_test_area">
@@ -171,11 +171,11 @@ const ClassTestList = ({
           </colgroup>
           <thead>
             <tr>
-              <th scope="col">시험명</th>
-              <th scope="col">문항수</th>
-              <th scope="col">시험일시</th>
-              <th scope="col">상태</th>
-              <th scope="col">삭제</th>
+              <th scope="col">試験名</th>
+              <th scope="col">問題数</th>
+              <th scope="col">試験日</th>
+              <th scope="col">状態</th>
+              <th scope="col">削除</th>
             </tr>
           </thead>
           <tbody>{ListUpdate()}</tbody>
@@ -184,7 +184,7 @@ const ClassTestList = ({
           to={`/createtestform/${classCodeParams.classCode}`}
           className="create_test_btn"
         >
-          <span>시험 생성하기</span>
+          <span>試験生成</span>
         </Link>
       </div>
     )

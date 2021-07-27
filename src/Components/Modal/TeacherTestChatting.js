@@ -63,7 +63,7 @@ console.log(receiveMessage);
         <div className="modal tch_chatting">
           <div className="modal_area">
             <div className="chatting_header">
-              <p>{`${StdName}학생의 공지내역`}</p>
+              <p>{`${StdName}学生のお知らせリスト`}</p>
             </div>
             <div className="chatting_area">
               <ul>
@@ -93,20 +93,23 @@ console.log(receiveMessage);
                   <input
                     type="text"
                     value={sendMessage}
-                    placeholder="메세지를 입력해주세요."
+                    placeholder="メッセージを入力してください。"
                     onChange={(e) => {
                       handleChange(e, setSendMessage);
                     }}
                   />
                   <button type="submit">
-                    <img src="/img/chatting_send_ico.gif" alt="메세지 보내기" />
+                    <img
+                      src="/img/chatting_send_ico.gif"
+                      alt="メッセージを送る"
+                    />
                   </button>
                 </form>
               </div>
             </div>
 
             <button onClick={() => setIsOpen(false)} className="modal_close">
-              <img src="/img/modal_close.gif" alt="모달 닫기" />
+              <img src="/img/modal_close.gif" alt="Modal Close" />
             </button>
           </div>
         </div>

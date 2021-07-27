@@ -44,7 +44,7 @@
 #contents .cont_visual p.eng.big {font-weight:800; font-size:70px; letter-spacing: -0.01em;}
 #contents .cont_visual p.kor {margin-top:20px; font-weight:600; font-size:18px; color:#138c6a;}
 #contents .cont_visual .clipboard_copy {position:absolute;top: 16px;right: 19px;padding: 8px 10px;background: #25c598;border-radius: 7px;line-height: 0;}
-#contents .cont_visual .clipboard_copy button {font-family:'Noto Sans KR', sans-serif;color:#fff;font-size: 13px;font-weight:600;text-align: left;}
+#contents .cont_visual .clipboard_copy button {font-family:'Noto Sans JP', sans-serif;color:#fff;font-size: 13px;font-weight:600;text-align: left;}
 #contents .cont_visual .clipboard_copy button span {display: inline-block;width: 53px;padding-right: 18px;font-size:14px;font-family:'Lato', sans-serif;background: url(../img/code_copy_ico.gif) no-repeat right 50%;margin-left: 5px;}
 
 /* SubTitle */
@@ -73,7 +73,7 @@
 /* SubContent */
 #contents .cont_wrap {width:100%; min-height: 400px; padding-bottom:50px;}
 .cont_top_btn {float:right;overflow: hidden;margin-bottom: 15px;}
-.cont_top_btn button {cursor:pointer;font-size: 13px;float:left;color:#3956e5;line-height: 21px;font-weight:500;margin-left: 5px;background:none;font-family:'Noto Sans KR', sans-serif;}
+.cont_top_btn button {cursor:pointer;font-size: 13px;float:left;color:#3956e5;line-height: 21px;font-weight:500;margin-left: 5px;background:none;font-family:'Noto Sans JP', sans-serif;}
 .cont_top_btn button:hover {text-decoration: underline;}
 .app_std_info {float:left;font-size:12px;background:#3956e5 url(../img/app_std_info_ico.png) no-repeat 7px center; border-radius: 20px;height: 25px;line-height: 25px;color:#fff;padding: 0 10px 0 27px;}
 
@@ -276,7 +276,7 @@ box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);}
 .create_class_container {width:100%;text-align: center;background:url(../img/create_test_form_bg.jpg) no-repeat 50% 0px;padding-bottom: 90px;}
 .create_class_container .form_contents {width:1200px; display:inline-block; text-align: left;}
 .exam_name_form {margin:72px 0;}
-.exam_name_form input {width:100%; height:95px; line-height:95px; font-size:13px; background:none; border:none; outline:0; border-bottom:1px solid rgba(255, 255, 255, 0.5); font-size:48px; color:#fff; letter-spacing: -0.05em; box-sizing: border-box; background:url(../img/create_test_form_search.png) no-repeat left 50%; padding-left:70px; font-family: 'Noto Sans KR', sans-serif;}
+.exam_name_form input {width:100%; height:95px; line-height:95px; font-size:13px; background:none; border:none; outline:0; border-bottom:1px solid rgba(255, 255, 255, 0.5); font-size:48px; color:#fff; letter-spacing: -0.05em; box-sizing: border-box; background:url(../img/create_test_form_search.png) no-repeat left 50%; padding-left:70px; font-family: 'Noto Sans JP', sans-serif;}
 .exam_name_form input::placeholder  {font-size:48px; color:#fff; font-weight:100; letter-spacing: -0.05em;}
 select {-webkit-appearance: none; -moz-appearance: none; -ms-appearance: none; appearance: none; outline: 0; box-shadow: none; border: 0 !important;  background-image: none;}
 select::-ms-expand {display: none;}
@@ -581,7 +581,7 @@ box-shadow: 0px 1px 6px 0px rgba(159,162,176,0.18);}
 .class_statistic_wrap table td {font-size:13px;}
 .class_statistic_wrap table thead th {background:#f4f8fb;  padding:50px 0 15px 0; font-weight:600;}
 .class_statistic_wrap table tbody td {border-bottom:1px solid #f1f3f6;/* height:70px; *//* line-height:70px; */font-weight:500;padding: 30px 0;}
-.class_statistic_wrap table tbody td .test_name {display: inline-block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor: pointer;line-height:40px;border:1px solid #ddd;border-radius: 40px;width: 235px;padding:0 50px 0 20px;font-family: 'Noto Sans KR', sans-serif;height:40px;font-weight:600;background: url(../img/statistic_test_icon.png) no-repeat 98% 50%;-webkit-box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);-moz-box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);}
+.class_statistic_wrap table tbody td .test_name {display: inline-block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor: pointer;line-height:40px;border:1px solid #ddd;border-radius: 40px;width: 235px;padding:0 50px 0 20px;font-family: 'Noto Sans JP', sans-serif;height:40px;font-weight:600;background: url(../img/statistic_test_icon.png) no-repeat 98% 50%;-webkit-box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);-moz-box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);}
 .class_statistic_wrap table tbody td .test_name:hover {color:#445df2; border:1px solid #445df2; transition-duration:0.3s;}
 .class_statistic_wrap table tbody td.date {font-weight:600;}
 .class_statistic_wrap table tbody td.date,
@@ -631,7 +631,7 @@ box-shadow: 0px 1px 6px 0px rgba(167, 179, 226, 0.3);}
 .test_scren_nav .quiz_num {float:left;height:35px;line-height:35px;padding:0 25px;border-radius: 35px;border: 2px solid #c4c4c4;color: #152842;font-size:15px;font-weight:600;margin-top: 15px;}
 .test_scren_nav ul {overflow: hidden; float:right; margin-top:15px; color:#fff; line-height:35px;}
 .test_scren_nav ul li {cursor: pointer; float:left; font-weight:600; margin-left:20px; }
-.test_scren_nav ul li input[type="button"] {color: #7358df; font-size:17px; font-weight:600; font-family: 'Noto Sans KR', sans-serif; cursor:pointer;}
+.test_scren_nav ul li input[type="button"] {color: #7358df; font-size:17px; font-weight:600; font-family: 'Noto Sans JP', sans-serif; cursor:pointer;}
 .test_scren_nav ul li:hover {color:#ffd615;}
 .test_scren_nav ul li.test_time_limit {cursor:auto;height:35px;padding:0 25px;border-radius: 35px;background: #7358df;}
 .test_scren_nav ul li.test_time_limit:hover {color:#fff;}

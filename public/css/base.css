@@ -30,7 +30,7 @@ caption{height:0; width:0; font-size:0; line-height:0;text-indent:-5000px;}
 
 /*INPUT*/
 textarea {border:1px solid #dfdfdf; font-size: 1em; width:98%;}
-select, textarea {vertical-align: middle; font-size:1em; font-family:'Noto Sans KR', sans-serif;}
+select, textarea {vertical-align: middle; font-size:1em; font-family:'Noto Sans JP', sans-serif;}
 
 a, a:link {text-decoration:none; color:#000;}
 a:hover, a:active, a:focus {text-decoration:none;}
@@ -41,4 +41,4 @@ input[type="submit"]{-webkit-border-radius:5px; -webkit-appearance:none; border:
 input[type="password"]{-webkit-border-radius:5px; -webkit-appearance:none; border:none; outline: none; text-decoration:none;}
 input[type="email"]{-webkit-border-radius:5px; -webkit-appearance:none; border:none; outline: none; text-decoration:none;}
 button{-webkit-border-radius:5px; -webkit-appearance:none; border:none; outline: none; cursor: pointer; background: none; text-decoration:none;}
-body {font-family:'Noto Sans KR', sans-serif;}
+body {font-family:'Noto Sans JP', sans-serif;}

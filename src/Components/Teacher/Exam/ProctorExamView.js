@@ -143,7 +143,7 @@ const ProctorExamView = () => {
     <div className="proctor_exam_container">
       <div className="side_list_area">
         <p className="tit">
-          학생 목록
+          学生目録
           <div>
             <span>{particStdFlag ? particStdList.length : 0}</span>/30
           </div>
@@ -156,7 +156,7 @@ const ProctorExamView = () => {
                 <button onClick={() => setIsOpen(!isOpen)}>
                   <img
                     src="../../img/test_chatting_ico.gif"
-                    alt={`학생에게 채팅하기`}
+                    alt={`学生にチャットする`}
                   />
                 </button>
                 <TeacherTestChatting
@@ -184,8 +184,8 @@ const ProctorExamView = () => {
         <div className="tit_area">
           <p>{TestDataParams.testName}</p>
           <ul className="status_desc">
-            <li className="voice">음성 포커싱</li>
-            <li className="cheating">부정행위경고</li>
+            <li className="voice">音声フォーカシング</li>
+            <li className="cheating">不正行為警告</li>
           </ul>
         </div>
         <div className="video_area_align">
@@ -201,7 +201,7 @@ const ProctorExamView = () => {
             <div className="loading">
               <img
                 src="../../img/test_proctor_loading.gif"
-                alt="시험 감독 페이지 로딩"
+                alt="試験監督ページのロード"
               />
             </div>
           )}

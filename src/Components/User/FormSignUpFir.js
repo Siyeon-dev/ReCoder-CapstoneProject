@@ -28,11 +28,11 @@ const FormSignUpFir = (props) => {
       <div id="wrapper" className="bg">
         <div id="container">
           <div className="top_txt">
-            <p className="tit">온라인 시험 감독 서비스 리코더</p>
+            <p className="tit">オンライン試験監督サービス Re:Coder</p>
             <p>
-              부정행위 걱정 없이
+              不正行為の心配なく
               <br />
-              온라인 시험을 운영, 감독하세요.
+              オンライン試験を運営、監督できます。
             </p>
           </div>
           <div className="login_input_wrap">
@@ -42,7 +42,7 @@ const FormSignUpFir = (props) => {
                 alt="로그인, 회원가입 페이지 로고"
               />
             </div>
-            <p className="txt">홈페이지에 오신 것을 환영합니다.</p>
+            <p className="txt">ホームページへようこそ。</p>
             <form onSubmit={handleFormSubmit}>
               <div className="sign_check">
                 <div className="checks">
@@ -55,7 +55,7 @@ const FormSignUpFir = (props) => {
                     onChange={handleOptionChange}
                   />
                   <label for="ex_rd" className="teacher">
-                    <span>선생님으로 회원가입</span>
+                    <span>先生として 加入する</span>
                   </label>
                 </div>
 
@@ -69,7 +69,7 @@ const FormSignUpFir = (props) => {
                     onChange={handleOptionChange}
                   />
                   <label for="ex_rd2" className="student">
-                    <span>학생으로 회원가입</span>
+                    <span>学生として 加入する</span>
                   </label>
                 </div>
               </div>

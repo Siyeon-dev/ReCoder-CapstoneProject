@@ -24,9 +24,9 @@ const ScoreGradeLow = ({ apiDataFlag, stateApiDataFlag, stateApiData }) => {
               <div className="test_status complete">응시 완료</div>
             )}
           </td> */}
-          <td>{v.s_retake}회</td>
-          <td>{v.eye_caution}회</td>
-          <td>{v.mic_caution}회</td>
+          <td>{v.s_retake}回</td>
+          <td>{v.eye_caution}回</td>
+          <td>{v.mic_caution}回</td>
           <td>
             <span className="mint">{v.compile_count}</span>/{v.question_count}
           </td>
@@ -43,7 +43,7 @@ const ScoreGradeLow = ({ apiDataFlag, stateApiDataFlag, stateApiData }) => {
                 className="score_grade_btn after"
                 onClick={() => setCookie("s_email", v.s_email)}
               >
-                채점완료
+                採点完了
               </Link>
             ) : (
               <Link
@@ -51,7 +51,7 @@ const ScoreGradeLow = ({ apiDataFlag, stateApiDataFlag, stateApiData }) => {
                 className="score_grade_btn before"
                 onClick={() => setCookie("s_email", v.s_email)}
               >
-                채점하기
+                採点する
               </Link>
             )}
           </td>
@@ -59,7 +59,7 @@ const ScoreGradeLow = ({ apiDataFlag, stateApiDataFlag, stateApiData }) => {
       )))
     ) : (
       <tr>
-        <td colSpan="8">아직 진행 되지 않은 시험입니다.</td>
+        <td colSpan="8">まだ進行されていない試験です。</td>
       </tr>
     )
   ) : (

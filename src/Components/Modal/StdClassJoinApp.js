@@ -45,29 +45,29 @@ const ClassJoinStdList = ({
     >
       <div className="class_list_area">
         {noStdList.length === 0 ? (
-          <p className="no_class_list">가입 신청한 학생이 없습니다.</p>
+          <p className="no_class_list">加入を申し込んだ学生はいません。</p>
         ) : (
-          noStdList.map((v, index) =>
-              <div className="class_list_check">
-                <input
-                  type="checkbox"
-                  id={`stdLikt-${index}`}
-                  name={v.s_email}
-                  onChange={(e) => {
-                    e.target.checked
-                      ? setStdList([...stdList, v])
-                      : setStdList(stdList.filter((value) => value !== v));
-                  }}
-                />
-                <label for={`stdLikt-${index}`}>
-                  {v.s_name}
-                  <span className="std_email">{v.s_email}</span>
-                </label>
-              </div>
-          )
+          noStdList.map((v, index) => (
+            <div className="class_list_check">
+              <input
+                type="checkbox"
+                id={`stdLikt-${index}`}
+                name={v.s_email}
+                onChange={(e) => {
+                  e.target.checked
+                    ? setStdList([...stdList, v])
+                    : setStdList(stdList.filter((value) => value !== v));
+                }}
+              />
+              <label for={`stdLikt-${index}`}>
+                {v.s_name}
+                <span className="std_email">{v.s_email}</span>
+              </label>
+            </div>
+          ))
         )}
       </div>
-      <button type="submit">가입승인</button>
+      <button type="submit">加入承認</button>
     </form>
   );
 };
@@ -78,14 +78,16 @@ const StdClassJoinApp = ({ noStdList, classCode, appllyStdListApi }) => {
   // classinfo API 완료 후 클래스 회원 가입 승인 작업
   return (
     <>
-      <button onClick={() => setIsOpen(!isOpen)}>신청학생승인</button>
+      <button onClick={() => setIsOpen(!isOpen)}>
+        申し込んだ学生承認
+      </button>
       <Modal>
         <div className="modal std_class_app">
           <div className="modal_area">
             <div className="modal_head">
-              <p className="tit">클래스 신청학생승인</p>
+              <p className="tit">クラスに申し込んだ学生承認</p>
               <p className="txt">
-                클래스 가입을 신청한 학생들을 확인 및 승인을 할 수 있습니다.
+                加入を申し込んだ学生の確認と承認をすることができます。
               </p>
             </div>
             <ClassJoinStdList
@@ -95,7 +97,7 @@ const StdClassJoinApp = ({ noStdList, classCode, appllyStdListApi }) => {
               setIsOpen={setIsOpen}
             />
             <button onClick={() => setIsOpen(false)} className="modal_close">
-              <img src="/img/modal_close.gif" alt="모달 닫기" />
+              <img src="/img/modal_close.gif" alt="Modal Close" />
             </button>
           </div>
         </div>

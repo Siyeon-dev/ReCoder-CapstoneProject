@@ -22,12 +22,12 @@ const FormSignUp = ({ SignUpSuccessForm }, props) => {
         <div id="container">
           <div className="top_txt">
             <p className="tit">
-              온라인 시험 감독 서비스 리코더 회원가입을 환영합니다.
+              オンライン試験監督サービスRe:Coder会員登録を歓迎いたします。
             </p>
             <p>
-              부정행위 걱정 없이
+              不正行為の心配なく
               <br />
-              온라인 시험을 운영, 감독하세요.
+              オンライン試験を運営、監督できます。
             </p>
           </div>
           <div className="login_input_wrap">
@@ -42,7 +42,7 @@ const FormSignUp = ({ SignUpSuccessForm }, props) => {
               <input
                 type="text"
                 name="userName"
-                placeholder="이름 입력"
+                placeholder="名前入力"
                 value={values.userName}
                 onChange={handleChange}
               />
@@ -52,7 +52,7 @@ const FormSignUp = ({ SignUpSuccessForm }, props) => {
               <input
                 type="email"
                 name="userEmail"
-                placeholder="아이디(이메일) 입력"
+                placeholder="ID(メール)入力"
                 value={values.userEmail}
                 onChange={handleChange}
               />
@@ -62,7 +62,7 @@ const FormSignUp = ({ SignUpSuccessForm }, props) => {
               <input
                 type="password"
                 name="userPasswd"
-                placeholder="비밀번호 입력"
+                placeholder="パスワード入力"
                 value={values.userPasswd}
                 onChange={handleChange}
               />
@@ -72,7 +72,7 @@ const FormSignUp = ({ SignUpSuccessForm }, props) => {
               <input
                 type="password"
                 name="userPasswdConfirm"
-                placeholder="비밀번호 입력확인"
+                placeholder="パスワード入力確認"
                 value={values.userPasswdConfirm}
                 onChange={handleChange}
               />
@@ -82,14 +82,14 @@ const FormSignUp = ({ SignUpSuccessForm }, props) => {
               <input
                 type="text"
                 name="userTel"
-                placeholder="전화번호 입력"
+                placeholder="電話番号入力"
                 value={values.userTel}
                 onChange={handleChange}
               />
               {errors.userTel && (
                 <p className="sign_required">{errors.userTel}</p>
               )}
-              <input type="submit" value="회원가입" />
+              <input type="submit" value="加入する" />
             </form>
           </div>
         </div>

@@ -27,7 +27,7 @@ const ContSideMenu = ({
 
   const classListUpdate = () => {
     if (userClassInfo.length === 0) {
-      return <li className="no_class_list">가입된 클래스가 없습니다.</li>;
+      return <li className="no_class_list">加入したクラスがありません。</li>;
     } else {
       const ListUpdate = userClassInfo.map((currElement) => (
         <li>
@@ -49,12 +49,12 @@ const ContSideMenu = ({
                 setclassCode(currElement.class_code);
                 setClassJoinAppRecognize(currElement.recognize);
               } else {
-                alert("아직 가입 승인중입니다.");
+                alert("まだ加入承認中です。");
               }
             }}
           >
             {currElement.class_name}
-            <span>{currElement.recognize === 0 ? "(가입승인중)" : ""} </span>
+            <span>{currElement.recognize === 0 ? "(加入承認中)" : ""} </span>
           </Link>
         </li>
       ));
@@ -67,7 +67,7 @@ const ContSideMenu = ({
       <ul>
         <li>
           <div className="nav_tit">
-            <p>나의 클래스</p>
+            <p>私のクラス</p>
             <div className="nav_tit_btn">
               <JoinClass
                 readClass={readClass}
@@ -84,7 +84,7 @@ const ContSideMenu = ({
           <ul className="dep2">{classListUpdate()}</ul>
         </li>
         <li>
-          <Link to="/studentcasssatistics">시험 통계</Link>
+          <Link to="/studentcasssatistics">試験統計</Link>
         </li>
       </ul>
     </div>

@@ -64,7 +64,7 @@ const ClassStatistics = ({
       ))
     ) : (
       <tr>
-        <td colSpan="5">개설된 시험이 없습니다.</td>
+        <td colSpan="5">作られた試験がありません。</td>
       </tr>
     );
   };
@@ -77,7 +77,7 @@ const ClassStatistics = ({
   return (
     <div className="class_statistic_wrap">
       <div className="top_test_list_area">
-        <p className="tit">시험 출제 리스트</p>
+        <p className="tit">試験出題リスト</p>
         <table>
           <colgroup>
             <col width="10%" />
@@ -88,11 +88,11 @@ const ClassStatistics = ({
           </colgroup>
           <thead>
             <tr>
-              <th scope="col">순번 </th>
-              <th scope="col">시험명칭</th>
-              <th scope="col">응시기간</th>
-              <th scope="col">응시인원 / 총 인원</th>
-              <th scope="col">평균 점수</th>
+              <th scope="col">順番 </th>
+              <th scope="col">試験名</th>
+              <th scope="col">受験期間</th>
+              <th scope="col">受験者数 / 総人数</th>
+              <th scope="col">平均点</th>
             </tr>
           </thead>
           <tbody>{TopTableTestData()}</tbody>
@@ -102,8 +102,8 @@ const ClassStatistics = ({
         <div className="bottom_std_list_area">
           <p className="tit">
             {selectTestName
-              ? "[" + selectTestName + "] 시험의 응시자 목록"
-              : "시험 출제 리스트에서 시험을 선택해 주세요."}
+              ? "[" + selectTestName + "] 試験の受験者目録"
+              : "試験出題リストから試験を選択してください。"}
           </p>
           <SelectTestStatistics
             selectClassTestInfo={selectClassTestInfo}

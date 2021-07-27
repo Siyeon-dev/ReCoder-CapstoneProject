@@ -52,7 +52,7 @@ const FormLogin = () => {
       };
       setData(data);
     } else {
-      alert("선생님과 학생 중 선택해주세요.");
+      alert("先生と学生を選択してください。");
     }
 
     console.log(data);
@@ -71,7 +71,7 @@ const FormLogin = () => {
 
         if (res.data.login === "success" && res.data.token) {
           console.log(res.data);
-          alert("로그인되었습니다.");
+          alert("ログインされました。");
           setStatus(res.status);
 
           if (loginType === "teacher") {
@@ -86,7 +86,7 @@ const FormLogin = () => {
 
           setCookie("isLogin", true);
         } else {
-          alert("로그인에 실패하였습니다.\n아이디와 비밀번호를 확인해 주세요.");
+          alert("ログインに失敗しました。\nIDとパスワードを確認してください。");
           history.push("/login");
         }
       })
@@ -104,11 +104,11 @@ const FormLogin = () => {
       <div id="wrapper" className="bg">
         <div id="container">
           <div className="top_txt">
-            <p className="tit">온라인 시험 감독 서비스 리코더</p>
+            <p className="tit">オンライン試験監督サービス Re:Coder</p>
             <p>
-              부정행위 걱정 없이
+              不正行為の心配なく
               <br />
-              온라인 시험을 운영, 감독하세요.
+              オンライン試験を運営、監督できます。
             </p>
           </div>
           <div className="login_input_wrap">
@@ -118,7 +118,7 @@ const FormLogin = () => {
                 alt="로그인, 회원가입 페이지 로고"
               />
             </div>
-            <p className="txt">홈페이지에 오신 것을 환영합니다.</p>
+            <p className="txt">ホームページへようこそ。</p>
             <form action="" onSubmit={handleSubmit}>
               {/**/}
               <div className="login_radio_area">

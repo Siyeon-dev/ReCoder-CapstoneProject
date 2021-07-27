@@ -28,7 +28,7 @@ const TestScreen = () => {
   const [quizId, setQuizId] = useState();
   const [apiCount, setApiCount] = useState(0);
   const [currentTestNum, setCurrentTestNum] = useState(1);
-  const [testCompleteBtn, setTestCompleteBtn] = useState("제출하기");
+  const [testCompleteBtn, setTestCompleteBtn] = useState("提出する");
   const [resultArray, setResultArray] = useState([]);
   const [testLang, setTestLang] = useState("");
   const [questionCode, setQuestionCode] = useState("");
@@ -67,7 +67,7 @@ const TestScreen = () => {
     });
   };
   const TestTimeOur = () => {
-    alert("제출 시간이 다되어 시험이 종료됩니다.");
+    alert("提出時間が終わり、試験が終了します。");
     history.push("/student");
   };
 
@@ -226,11 +226,9 @@ const TestScreen = () => {
   };
 
   const testCompleteBtnState = () => {
-    setTestCompleteBtn("제출완료");
+    setTestCompleteBtn("提出完了");
     if (
-      window.confirm(
-        "정말 시험을 제출하시겠습니까? 제출 후 수정은 불가능 합니다."
-      )
+      window.confirm("本当に試験を提出しますか。 提出後の修正はできません。")
     ) {
       const data = {
         s_email: cookies.s_email,
@@ -252,7 +250,7 @@ const TestScreen = () => {
       });
 
       // history.push("/student");
-      if (window.confirm("선생님이 시험을 종료하여 시험이 종료됩니다.")) {
+      if (window.confirm("先生が試験を終了して試験が終了します。")) {
         window.location.replace("/student");
       }
       socket.disconnect();
@@ -281,17 +279,19 @@ const TestScreen = () => {
         </div>
         <ul>
           <li>{TestCodeParams.testName}</li>
-          <li className="tch_notice">선생님 공지 : {receiveMessageString}</li>
+          <li className="tch_notice">
+            先生のお知らせ : {receiveMessageString}
+          </li>
           {/* <li onClick={StdChattingSend}>문의하기</li> */}
         </ul>
       </div>
       <div className="test_scren_nav">
-        <p className="quiz_num">문제 {currentTestNum}</p>
+        <p className="quiz_num">問題 {currentTestNum}</p>
         <div className="test_select">
           <select name="test_start_time" id="slct" onChange={SelectTestChange}>
             {testListData.map((v, index) => (
               <option value={index} selected={index === 0}>
-                문제 {index + 1}
+                問題 {index + 1}
               </option>
             ))}
           </select>
@@ -318,7 +318,7 @@ const TestScreen = () => {
               {parse(
                 isLoding
                   ? selectTestListData[0].question_text
-                  : `<p>문제를 불러오는 중입니다.</p>`
+                  : `<p>問題を呼んでいます。</p>`
               )}
             </div>
           </div>
@@ -340,13 +340,13 @@ const TestScreen = () => {
                         CompileApi();
                       }}
                     >
-                      컴파일 하기
+                      コンパイルする
                     </li>
                   </ul>
                 </div>
                 <div className="code_compiler_area" id="editorCode"></div>
                 <div className="code_compiler_result">
-                  <p className="tit">실행결과</p>
+                  <p className="tit">実行結果</p>
                   <div className="scroll_area">
                     {
                       /* 코드 실행 결과 */

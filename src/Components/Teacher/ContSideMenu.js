@@ -16,7 +16,7 @@ const ContSideMenu = ({ userClassInfo, setclassCode, readClass }) => {
 
   const classListUpdate = () => {
     if (userClassInfo.length === 0) {
-      return <li className="no_class_list">생성된 클래스가 없습니다.</li>;
+      return <li className="no_class_list">作られたクラスはありません。</li>;
     } else {
       const ListUpdate = userClassInfo.map((currElement) => (
         <li>
@@ -40,7 +40,7 @@ const ContSideMenu = ({ userClassInfo, setclassCode, readClass }) => {
       <ul>
         <li>
           <div className="nav_tit">
-            <p>나의 클래스</p>
+            <p>私のクラス</p>
             <div className="nav_tit_btn">
               <CreateClass
                 readClass={readClass}

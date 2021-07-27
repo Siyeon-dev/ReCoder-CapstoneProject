@@ -40,15 +40,15 @@ const JoinClass = ({ readClass, classListUpdate, userClassInfo }) => {
   return (
     <>
       <button onClick={() => setIsOpen(!isOpen)}>
-        <img src="/img/nav_plus_btn.gif" alt="클래스 가입하기" />
+        <img src="/img/nav_plus_btn.gif" alt="クラスに加入する" />
       </button>
       <Modal>
         <div className="modal create_class">
           <div className="modal_area">
             <div className="modal_head">
-              <p className="tit">클래스 가입하기</p>
+              <p className="tit">クラスに加入する</p>
               <p className="txt">
-                클래스 초대번호를 입력하시면 해당 클래스에 가입하실 수 있습니다.
+                クラスの招待番号を入力すると、加入申し込みができます。
               </p>
             </div>
             <form onSubmit={handleSubmit}>
@@ -56,12 +56,12 @@ const JoinClass = ({ readClass, classListUpdate, userClassInfo }) => {
                 ref={inputTag}
                 type="text"
                 name="newClassName"
-                placeholder="초대코드를 입력해주세요."
+                placeholder="招待コードを入力してください。"
               />
-              <button type="submit">가입하기</button>
+              <button type="submit">加入する</button>
             </form>
             <button onClick={() => setIsOpen(false)} className="modal_close">
-              <img src="/img/modal_close.gif" alt="모달 닫기" />
+              <img src="/img/modal_close.gif" alt="Modal Close" />
             </button>
           </div>
         </div>

@@ -159,7 +159,7 @@ const TestScoringPage = () => {
 				.post("/testgrading", data)
 				.then((res) => {
 					console.log(res.data);
-					alert("점수 저장이 완료되었습니다.");
+					alert("点数を入力しました。");
 				})
 				.catch((err) => {
 					console.log(err);
@@ -185,7 +185,7 @@ const TestScoringPage = () => {
         </ul>
       </div>
       <div className="test_scren_nav">
-        <p className="quiz_num">문제</p>
+        <p className="quiz_num">問題</p>
         <div className="test_select">
           <select
             name="test_start_time"
@@ -195,23 +195,19 @@ const TestScoringPage = () => {
             {apiDataFlag &&
               gradingDataArray.map((v, index) => (
                 <option value={index} selected={index === 0}>
-                  문제 {index + 1}
+                  問題 {index + 1}
                 </option>
               ))}
           </select>
         </div>
         <ul>
           <li className="std_name">
-            학생 :{" "}
+            学生 :{" "}
             {selectGradingDataArray.length !== 0 &&
-               selectGradingDataArray[0].s_name}
+              selectGradingDataArray[0].s_name}
           </li>
           <li>
-            <input
-              type="button"
-              value="채점 종료"
-              onClick={() => ScoreExit()}
-            />
+            <input type="button" value="採点終了" onClick={() => ScoreExit()} />
           </li>
         </ul>
       </div>
@@ -223,7 +219,7 @@ const TestScoringPage = () => {
               {parse(
                 apiDataFlag && selectGradingDataArray.length !== 0
                   ? String(selectGradingDataArray[0].question_text)
-                  : `<p>문제를 불러오는 중입니다.</p>`
+                  : `<p>問題を呼んでいます。</p>`
               )}
             </div>
           </div>
@@ -237,7 +233,7 @@ const TestScoringPage = () => {
                     <li className="test_score_form">
                       <form onSubmit={TestGradingApi}>
                         <input ref={inputScore} type="text" />
-                        <button>점수입력</button>
+                        <button>点数を入力</button>
                       </form>
                     </li>
                     <li>
@@ -245,17 +241,17 @@ const TestScoringPage = () => {
                         Object.keys(selectGradingDataArray).length !== 0 &&
                         selectGradingDataArray[0].question_grade}
                       점 만점 */}
-                      100점 만점
+                      100点満点
                     </li>
                     <li>JavaScript</li>
                     <li className="compile_btn" onClick={runCompile}>
-                      컴파일 하기
+                      コンパイルする
                     </li>
                   </ul>
                 </div>
                 <div className="code_compiler_area" id="editorCode"></div>
                 <div className="code_compiler_result">
-                  <p className="tit">실행결과</p>
+                  <p className="tit">実行結果</p>
                   <div className="scroll_area">
                     {
                       /* 코드 실행 결과 */

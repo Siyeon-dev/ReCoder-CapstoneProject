@@ -62,7 +62,7 @@ const useForm = (callback, validate) => {
         axios.post('signup', datas).then(res => {
             console.log(res.data.mes);
                 if(res.data.mes === "success" && res.status === 200){
-                    alert("회원가입 되었습니다.");
+                    alert("ホームページ加入が完了しました。");
                     history.push("/")
                 }
         })

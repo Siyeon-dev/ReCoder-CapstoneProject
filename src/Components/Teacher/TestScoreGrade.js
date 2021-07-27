@@ -55,7 +55,7 @@ const TestScoreGrade = ({
                 <AccordionItemButton>
                   <ul>
                     <li className="tit">{v.test_name}</li>
-                    <li>{v.questioncount}문항</li>
+                    <li>{v.questioncount}問題</li>
                     <li>
                       {v.test_start.slice(0, v.test_start.length - 3)} ~
                       {v.test_end.slice(0, v.test_end.length - 3)}
@@ -67,14 +67,14 @@ const TestScoreGrade = ({
                 <table>
                   <thead>
                     <tr>
-                      <th scope="col">학생이름</th>
+                      <th scope="col">学生の名前</th>
                       {/* <th scope="col">응시여부</th> */}
-                      <th scope="col">응시횟수</th>
-                      <th scope="col">시선경고</th>
-                      <th scope="col">음성경고</th>
-                      <th scope="col">시도한 문제 / 총 문제</th>
-                      <th scope="col">총점</th>
-                      <th scope="col">채점여부</th>
+                      <th scope="col">受験回数</th>
+                      <th scope="col">視線警告回数</th>
+                      <th scope="col">音声警告回数</th>
+                      <th scope="col">解こうとした問題 / 全問題</th>
+                      <th scope="col">総点</th>
+                      <th scope="col">採点状況</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -90,9 +90,10 @@ const TestScoreGrade = ({
           ))
         ) : (
           <div className="no_create_guide test">
-            생성된 시험이 없습니다. <span>먼저 시험을 생성해주세요.</span>
+            生成された試験がありません。
+            <span>まず、試験を作ってください。</span>
             <Link to={`/createtestform/${classCodeParams.classCode}`}>
-              시험 생성하기
+              試験生成
             </Link>
           </div>
         )

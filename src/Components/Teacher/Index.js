@@ -33,7 +33,7 @@ const Index = () => {
     let UserEmail = {};
 
     const MultiLogin = () => { 
-      alert("이미 로그인 된 상태입니다.")
+      alert("すでにログインされた状態です。");
       history.push("/");
     }
 
@@ -132,7 +132,7 @@ const Index = () => {
               <p className="eng small">Welcome.</p>
               <p className="eng big">Re:Coder</p>
               <p className="kor">
-                공정한 시험 문화를 위한 코딩 테스트 프로그램
+                公正な試験文化のためのコーディングテスト
               </p>
             </div>
             <div className="cont_tit">
@@ -142,15 +142,15 @@ const Index = () => {
                   ? userClassInfo.map((v) =>
                       v.class_code === classCode ? v.class_name : ""
                     )
-                  : "클래스를 먼저 생성해주세요."}
+                  : "まず、クラスを作ってください。"}
               </p>
               {classListEmptyArrayCheckFlag === false && (
                 <div className="test_info">
                   <p className="test_num">
-                    전체 시험 수 <span className="mint">{classTestNum}</span>개
+                    全試験数 <span className="mint">{classTestNum}</span>個
                   </p>
                   <p className="test_std">
-                    전체 학생 수 <span className="blue">{classStdNum}</span>명
+                    全学生数 <span className="blue">{classStdNum}</span>人
                   </p>
                 </div>
               )}
@@ -160,10 +160,10 @@ const Index = () => {
                 <div className="reload_area">
                   <Tabs>
                     <TabList>
-                      <Tab>시험관리</Tab>
-                      <Tab>시험채점</Tab>
-                      <Tab>회원관리</Tab>
-                      <Tab>클래스 통계</Tab>
+                      <Tab>試験管理</Tab>
+                      <Tab>試験採点</Tab>
+                      <Tab>会員管理</Tab>
+                      <Tab>クラスの統計</Tab>
                     </TabList>
                     <TabPanel>
                       <ClassTestList
@@ -199,14 +199,14 @@ const Index = () => {
               </div>
             ) : (
               <div className="no_create_guide class">
-                먼저 클래스를 생성해보세요!
+                まず、クラスを作ることができます。
                 <span>
                   메뉴
                   <img
                     src="/img/first_class_plus.gif"
-                    alt="메뉴 클래스 추가 버튼 아이콘"
+                    alt="メニュークラスの追加ボタンアイコン"
                   />
-                  버튼을 눌러 클래스를 생성할 수 있습니다.
+                  ボタンを押してクラスを作ることができます
                 </span>
               </div>
             )}

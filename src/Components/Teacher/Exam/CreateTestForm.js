@@ -78,13 +78,13 @@ const CreateTestForm = () => {
           .post("/examcreate", AllTestInfoArr)
           .then((res) => {
             console.log(res.data);
-            !alert(`[${TestFormInfo.test_name}] 시험 생성이 완료되었습니다.`) &&
+            !alert(`[${TestFormInfo.test_name}] 試験が完成しました。`) &&
               history.push(`/teacher/${ParamsClassCode.classCode}`);
           })
           .catch((err) => {
             console.log(err);
           })
-      : alert("생성 된 문제가 없습니다.");
+      : alert("生成された問題がありません。");
   };
 
   const CreateTestFormSubmit = (e) => {
@@ -136,7 +136,7 @@ const CreateTestForm = () => {
         <div className="questions_box">
           <p className="tit">{v.question_name}</p>
           <p className="score">
-            <span>{v.question_score}</span>점
+            <span>{v.question_score}</span>点
           </p>
           <div className="btn_wrap">
             {/* <div className="btn questions_modify">수정하기</div> */}
@@ -144,13 +144,13 @@ const CreateTestForm = () => {
               className="btn questions_delete"
               onClick={() => deleteQuiz(v.question_name)}
             >
-              삭제하기
+              削除する
             </div>
           </div>
         </div>
       ))
     ) : (
-      <div className="questions_box">생성된 문제가 없습니다.</div>
+      <div className="questions_box">生成された問題がありません。</div>
     );
   };
 
@@ -165,13 +165,13 @@ const CreateTestForm = () => {
                 <input
                   name="text_name"
                   autocomplete="off"
-                  placeholder="시험명을 입력하세요."
+                  placeholder="試験名を入力してください。"
                   maxLength="18"
                 />
               </div>
               {/**/}
               <div className="test_width_input">
-                <p className="width_input_tit">응시기간</p>
+                <p className="width_input_tit">受験期間</p>
                 <DatePicker
                   name="test_date"
                   onChange={(date) => setSelectDate(date)}
@@ -183,39 +183,39 @@ const CreateTestForm = () => {
                   <div className="select">
                     <select name="test_start_time" id="slct">
                       <option selected disabled>
-                        시작시간(시)
+                        開始時間(時)
                       </option>
-                      <option value="09">9시</option>
-                      <option value="10">10시</option>
-                      <option value="11">11시</option>
-                      <option value="12">12시</option>
-                      <option value="13">13시</option>
-                      <option value="14">14시</option>
-                      <option value="15">15시</option>
-                      <option value="16">16시</option>
-                      <option value="17">17시</option>
-                      <option value="18">18시</option>
-                      <option value="19">19시</option>
-                      <option value="20">20시</option>
+                      <option value="09">9時</option>
+                      <option value="10">10時</option>
+                      <option value="11">11時</option>
+                      <option value="12">12時</option>
+                      <option value="13">13時</option>
+                      <option value="14">14時</option>
+                      <option value="15">15時</option>
+                      <option value="16">16時</option>
+                      <option value="17">17時</option>
+                      <option value="18">18時</option>
+                      <option value="19">19時</option>
+                      <option value="20">20時</option>
                     </select>
                   </div>
                   <div className="select">
                     <select name="test_start_min" id="slct">
                       <option selected disabled>
-                        시작시간(분)
+                        開始時間(分)
                       </option>
-                      <option value="00">00분</option>
-                      <option value="00">05분</option>
-                      <option value="10">10분</option>
-                      <option value="10">15분</option>
-                      <option value="20">20분</option>
-                      <option value="20">25분</option>
-                      <option value="30">30분</option>
-                      <option value="30">35분</option>
-                      <option value="40">40분</option>
-                      <option value="40">45분</option>
-                      <option value="50">50분</option>
-                      <option value="50">55분</option>
+                      <option value="00">00分</option>
+                      <option value="00">05分</option>
+                      <option value="10">10分</option>
+                      <option value="10">15分</option>
+                      <option value="20">20分</option>
+                      <option value="20">25分</option>
+                      <option value="30">30分</option>
+                      <option value="30">35分</option>
+                      <option value="40">40分</option>
+                      <option value="40">45分</option>
+                      <option value="50">50分</option>
+                      <option value="50">55分</option>
                     </select>
                   </div>
                 </div>
@@ -224,58 +224,64 @@ const CreateTestForm = () => {
                   <div className="select">
                     <select name="test_end_time" id="slct">
                       <option selected disabled>
-                        종료시간(시)
+                        終了時間(時)
                       </option>
-                      <option value="09">9시</option>
-                      <option value="10">10시</option>
-                      <option value="11">11시</option>
-                      <option value="12">12시</option>
-                      <option value="13">13시</option>
-                      <option value="14">14시</option>
-                      <option value="15">15시</option>
-                      <option value="16">16시</option>
-                      <option value="17">17시</option>
-                      <option value="18">18시</option>
-                      <option value="19">19시</option>
-                      <option value="20">20시</option>
+                      <option value="09">9時</option>
+                      <option value="10">10時</option>
+                      <option value="11">11時</option>
+                      <option value="12">12時</option>
+                      <option value="13">13時</option>
+                      <option value="14">14時</option>
+                      <option value="15">15時</option>
+                      <option value="16">16時</option>
+                      <option value="17">17時</option>
+                      <option value="18">18時</option>
+                      <option value="19">19時</option>
+                      <option value="20">20時</option>
                     </select>
                   </div>
                   <div className="select">
                     <select name="test_end_min" id="slct">
                       <option selected disabled>
-                        종료시간(분)
+                        終了時間(分)
                       </option>
-                      <option value="00">00분</option>
-                      <option value="10">10분</option>
-                      <option value="20">20분</option>
-                      <option value="30">30분</option>
-                      <option value="40">40분</option>
-                      <option value="50">50분</option>
+                      <option value="00">00分</option>
+                      <option value="00">05分</option>
+                      <option value="10">10分</option>
+                      <option value="10">15分</option>
+                      <option value="20">20分</option>
+                      <option value="20">25分</option>
+                      <option value="30">30分</option>
+                      <option value="30">35分</option>
+                      <option value="40">40分</option>
+                      <option value="40">45分</option>
+                      <option value="50">50分</option>
+                      <option value="50">55分</option>
                     </select>
                   </div>
                 </div>
               </div>
               {/**/}
               <div className="test_width_input">
-                <p className="width_input_tit">주의사항</p>
+                <p className="width_input_tit">注意事項</p>
                 <BoardEditor setBoardFormHtml={setBoardFormHtml} />
               </div>
               {/**/}
               <div className="test_width_input">
-                <p className="width_input_tit">시험대기시간</p>
+                <p className="width_input_tit">試験待ち時間</p>
                 <div className="select">
                   <select name="test_wait" id="slct">
-                    <option value="10">3분</option>
-                    <option value="20">20분</option>
-                    <option value="30">30분</option>
-                    <option value="40">40분</option>
-                    <option value="50">50분</option>
+                    <option value="10">3分</option>
+                    <option value="20">20分</option>
+                    <option value="30">30分</option>
+                    <option value="40">40分</option>
+                    <option value="50">50分</option>
                   </select>
                 </div>
               </div>
               {/**/}
               <div className="test_width_input">
-                <p className="width_input_tit">문제섞기</p>
+                <p className="width_input_tit">問題順番ランダム</p>
                 <div className="radio_wrap">
                   <div className="light">
                     <label>
@@ -286,19 +292,19 @@ const CreateTestForm = () => {
                         defaultChecked
                       />
                       <span class="design"></span>
-                      <span class="text">허용</span>
+                      <span class="text">On</span>
                     </label>
                     <label>
                       <input type="radio" name="test_shuffle" value="0" />
                       <span class="design"></span>
-                      <span class="text">비허용</span>
+                      <span class="text">Off</span>
                     </label>
                   </div>
                 </div>
               </div>
               {/**/}
               <div className="test_width_input">
-                <p className="width_input_tit">시험창 이탈허용</p>
+                <p className="width_input_tit">試験離脱許可</p>
                 <div className="radio_wrap">
                   <div className="light">
                     <label>
@@ -309,32 +315,31 @@ const CreateTestForm = () => {
                         defaultChecked
                       />
                       <span class="design"></span>
-                      <span class="text">허용</span>
+                      <span class="text">On</span>
                     </label>
                     <label>
                       <input type="radio" name="test_escape" value="0" />
                       <span class="design"></span>
-                      <span class="text">비허용</span>
+                      <span class="text">Off</span>
                     </label>
                   </div>
                 </div>
               </div>
               {/**/}
               <div className="test_width_input">
-                <p className="width_input_tit">이어보기 설정</p>
+                <p className="width_input_tit">再受験できる回数</p>
                 <div className="radio_wrap">
                   <div className="light">
                     <label>
-                      
-                    <label>
-                      <input type="radio" name="test_retake" value="1" />
-                      <span class="design"></span>
-                      <span class="text">1회</span>
-                    </label>
-                    <label>
-                      <input type="radio" name="test_retake" value="2" />
-                      <span class="design"></span>
-                      <span class="text">2회</span>
+                      <label>
+                        <input type="radio" name="test_retake" value="1" />
+                        <span class="design"></span>
+                        <span class="text">1回</span>
+                      </label>
+                      <label>
+                        <input type="radio" name="test_retake" value="2" />
+                        <span class="design"></span>
+                        <span class="text">2回</span>
                       </label>
                       <input
                         type="radio"
@@ -343,19 +348,19 @@ const CreateTestForm = () => {
                         defaultChecked
                       />
                       <span class="design"></span>
-                      <span class="text">3회</span>
+                      <span class="text">3回</span>
                     </label>
                     <label>
                       <input type="radio" name="test_retake" value="4" />
                       <span class="design"></span>
-                      <span class="text">비허용</span>
+                      <span class="text">できない</span>
                     </label>
                   </div>
                 </div>
               </div>
               {/**/}
               <div className="test_width_input">
-                <p className="width_input_tit">개발언어</p>
+                <p className="width_input_tit">開発言語</p>
                 <div className="select">
                   <select name="test_lang" id="slct">
                     <option value="PHP">PHP</option>
@@ -368,7 +373,7 @@ const CreateTestForm = () => {
 
               <div className="questions_list">
                 <div className="add_questions">
-                  <p className="tit">추가된 문제</p>
+                  <p className="tit">追加された問題</p>
                   <CreateProblem
                     quizList={quizList}
                     setQuizList={setQuizList}
@@ -395,7 +400,7 @@ const CreateTestForm = () => {
                 </div>
               </div>
               <div className="test_save_btn">
-                <button type="submit">시험 저장하기</button>
+                <button type="submit">試験保存</button>
               </div>
             </form>
           </div>

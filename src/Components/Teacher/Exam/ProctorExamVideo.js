@@ -365,8 +365,8 @@ const ProctorExamVideo = ({
         <div className="std_test_info">
           <p>{v.s_name}</p>
           <ul>
-            <li>경고 {v.eye_caution}회</li>
-            <li>음성 {v.mic_caution}회</li>
+            <li>警告 {v.eye_caution}回</li>
+            <li>音声 {v.mic_caution}回</li>
           </ul>
         </div>
         <div
@@ -393,7 +393,7 @@ const ProctorExamVideo = ({
               loop="loop"
               border-radius="20px"
             >
-              해당 브라우저는 video 태그를 지원하지 않습니다.
+              このブラウザは、videoタグに対応しません。
             </video>
           </div>
           <div className="web_mobile_cam">
@@ -406,7 +406,7 @@ const ProctorExamVideo = ({
               muted="muted"
               loop="loop"
             >
-              해당 브라우저는 video 태그를 지원하지 않습니다.
+              このブラウザは、videoタグに対応しません。
             </video>
             <video
               srcObject={streamDataId === Number(v.s_number + 2) && streamData}
@@ -417,14 +417,14 @@ const ProctorExamVideo = ({
               muted="muted"
               loop="loop"
             >
-              해당 브라우저는 video 태그를 지원하지 않습니다.
+              このブラウザは、videoタグに対応しません。
             </video>
           </div>
         </div>
       </div>
     ))
   ) : (
-    <p>접속중</p>
+    <p>接続中</p>
   );
 };
 

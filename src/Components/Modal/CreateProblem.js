@@ -38,7 +38,7 @@ const CreateProblemInfo = ({ setIsOpen, quizList, setQuizList }) => {
             question_code: questionCode,
           },
         ])
-      : alert("배점은 100까지 가능합니다.");
+      : alert("点数は100点まで可能です。");
   };
 
   const handleChange = (e, setFunction) => {
@@ -54,7 +54,7 @@ const CreateProblemInfo = ({ setIsOpen, quizList, setQuizList }) => {
     <div className="create_problem_area">
       <form onSubmit={CreateProblemList}>
         <div className="input_area">
-          <label>문제명</label>
+          <label>問題名</label>
           <input
             type="text"
             name="newClassName"
@@ -66,7 +66,7 @@ const CreateProblemInfo = ({ setIsOpen, quizList, setQuizList }) => {
           />
         </div>
         <div className="input_area">
-          <label>배점</label>
+          <label>配点</label>
           <input
             type="text"
             name="newClassScore"
@@ -77,16 +77,16 @@ const CreateProblemInfo = ({ setIsOpen, quizList, setQuizList }) => {
           />
         </div>
         <div className="text_area">
-          <p>문제지문입력</p>
+          <p>問題説明入力</p>
           <QuizEditor setProblemBoartHtml={setProblemBoartHtml} />
         </div>
         <div className="text_area">
-          <p>기본제공코드</p>
+          <p>基本提供コード</p>
           <textarea
             name="new_problem_default_code"
             cols="30"
             rows="10"
-            placeholder="시험에 제공되는 기본 코드를 입력해주세요."
+            placeholder="試験に基本的に提供されるコードを入力してください。"
             onChange={(e) => {
               handleChange(e, setQuestionCode);
             }}
@@ -99,7 +99,7 @@ const CreateProblemInfo = ({ setIsOpen, quizList, setQuizList }) => {
                 setIsOpen(false);
               }}
             >
-              생성하기
+              生成する
             </button>
           </div>
         </div>
@@ -115,12 +115,12 @@ const CreateProblem = ({ quizList, setQuizList }) => {
   return (
     <>
       <div className="add_questions_btn" onClick={() => setIsOpen(!isOpen)}>
-        문제 추가하기
+        問題を追加
       </div>
       <Modal>
         <div className="modal create_problem ">
           <div className="modal_area">
-            <p className="tit">새로운 문제 추가하기</p>
+            <p className="tit">新しい問題を追加する</p>
 
             <CreateProblemInfo
               setIsOpen={setIsOpen}
@@ -129,7 +129,7 @@ const CreateProblem = ({ quizList, setQuizList }) => {
             />
 
             <button onClick={() => setIsOpen(false)} className="modal_close">
-              <img src="/img/modal_close.gif" alt="모달 닫기" />
+              <img src="/img/modal_close.gif" alt="Modal Close" />
             </button>
           </div>
         </div>

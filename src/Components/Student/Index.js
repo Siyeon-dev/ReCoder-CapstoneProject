@@ -127,9 +127,7 @@ useEffect(() => {
             <div className="cont_visual student">
               <p className="eng small">Welcome.</p>
               <p className="eng big">Re:Coder</p>
-              <p className="kor">
-                공정한 시험 문화를 위한 코딩 테스트 프로그램
-              </p>
+              <p className="kor">公正な試験文化のためのコーディングテスト</p>
             </div>
             <div className="cont_tit">
               <p className="eng_txt">className :</p>
@@ -138,7 +136,7 @@ useEffect(() => {
                   ? userClassInfo.map((v) =>
                       v.class_code === classCode ? v.class_name : ""
                     )
-                  : "현재 가입된 클래스가 없습니다."}
+                  : "現在、加入しているクラスはありません。"}
               </p>
               {/* ㅜㅜ <div className="teacher_info">
                 <p className="eng_txt">Teacher : </p>
@@ -149,8 +147,8 @@ useEffect(() => {
               {classListEmptyArrayCheckFlag === false ? (
                 <Tabs>
                   <TabList>
-                    <Tab>시험리스트</Tab>
-                    <Tab>시험통계</Tab>
+                    <Tab>試験リスト</Tab>
+                    <Tab>試験統計</Tab>
                   </TabList>
                   <TabPanel>
                     <TestList
@@ -178,16 +176,16 @@ useEffect(() => {
                 </Tabs>
               ) : (
                 <div className="no_create_guide class">
-                  <p className="mb10">먼저 클래스에 가입해보세요!</p>
+                  <p className="mb10">まず、クラスに加入してください。</p>
                   <span>
-                    클래스 초대코드를 받아
+                    クラス招待コードをもらって
                     <img
                       src="/img/first_class_plus.gif"
                       alt="메뉴 클래스 추가 버튼 아이콘"
                     />
-                    버튼을 누르면
+                    ボタンを押すと、
                     <br />
-                    클래스 가입을 신청 할 수 있습니다.
+                    クラス加入を申し込むことができます。
                   </span>
                 </div>
               )}

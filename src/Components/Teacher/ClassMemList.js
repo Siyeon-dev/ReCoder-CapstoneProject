@@ -91,7 +91,7 @@ const ClassMemList = ({ classCode }) => {
       .then((res) => {
         console.log(res.data);
 
-        !alert("회원 삭제가 완료되었습니다.") && appllyStdListApi();
+        !alert("会員削除が完了しました。") && appllyStdListApi();
       })
       .catch((err) => {
         console.log(err);
@@ -123,8 +123,8 @@ const ClassMemList = ({ classCode }) => {
         ))
       ) : (
         <div className="no_create_guide member">
-          가입된 회원이 없습니다.
-          <span>초대코드로 클래스에 초대할 수 있습니다.</span>
+          クラスに登録された会員はいません。
+          <span>招待コードでクラスに招待することができます。</span>
           <CodeClipboardCopy classCode={classCode} />
         </div>
       )
@@ -148,7 +148,7 @@ const ClassMemList = ({ classCode }) => {
           noStdList={noStdList}
           classCode={classCode}
         />
-        <button onClick={() => DeleteStdApi()}>학생삭제</button>
+        <button onClick={() => DeleteStdApi()}>学生削除</button>
       </div>
       <div className="class_member_list" id="reload_div">
         <div className="all_member">{AppllyStdList(appllyStdList)}</div>

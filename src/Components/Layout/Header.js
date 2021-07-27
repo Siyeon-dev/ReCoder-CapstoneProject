@@ -9,15 +9,15 @@ const Header = () => {
   const history = useHistory();
 
   useEffect(() => {
-    localStorage.getItem('token')
-      ? setLoginText("로그아웃")
-      : setLoginText("로그인");
+    localStorage.getItem("token")
+      ? setLoginText("Logout")
+      : setLoginText("Login");
   }, [])
 
   //임시
   const loginState = (props) => {
     if (localStorage.getItem("token")) {
-      alert("로그아웃 되었습니다.");
+      alert("ログアウトされました。");
       localStorage.removeItem("token");
 
       removeCookie("t_email");
@@ -26,9 +26,9 @@ const Header = () => {
       removeCookie("s_name");
       removeCookie("isLogin");
       history.push("/");
-      localStorage.getItem('token')
-        ? setLoginText("로그아웃")
-        : setLoginText("로그인");
+      localStorage.getItem("token")
+        ? setLoginText("Logout")
+        : setLoginText("Login");
     }
   };
 
@@ -47,7 +47,7 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link to="/signup">회원가입</Link>
+            <Link to="/signup">Join</Link>
           </li>
         </ul>
       </div>

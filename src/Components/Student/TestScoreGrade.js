@@ -50,8 +50,8 @@ const TestScoreGrade = ({
     <Accordion>
       {classListEmptyArrayCheckFlag === true ? (
         <div className="no_create_guide std_no_test">
-          아직 클래스에 생성된 시험이 없습니다.
-          <span>시험이 생성되면 시험리스트가 업데이트됩니다.</span>
+          まだ、クラスに生成された試験がありません。
+          <span>試験を作るとリストがアップデートされます。</span>
         </div>
       ) : emptyArrayCheckFlag === false && selectClassTestInfo ? (
         selectClassTestInfo.map((v) => (
@@ -62,7 +62,7 @@ const TestScoreGrade = ({
               <AccordionItemButton>
                 <ul>
                   <li className="tit">{v.test_name}</li>
-                  <li>{v.questioncount}문항</li>
+                  <li>{v.questioncount}問題</li>
                   <li>
                     {v.test_start} ~ {v.test_end}
                   </li>
@@ -73,11 +73,11 @@ const TestScoreGrade = ({
               <table>
                 <thead>
                   <tr>
-                    <th scope="col">응시횟수</th>
-                    <th scope="col">음성경고횟수</th>
-                    <th scope="col">시선경고횟수</th>
+                    <th scope="col">受験回数</th>
+                    <th scope="col">音声警告回数</th>
+                    <th scope="col">視線警告回数</th>
                     {/* <th scope="col">응시여부</th> */}
-                    <th scope="col">총점</th>
+                    <th scope="col">総点</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -93,8 +93,8 @@ const TestScoreGrade = ({
         ))
       ) : (
         <div className="no_create_guide std_no_test">
-          아직 클래스에 생성된 시험이 없습니다.
-          <span>시험이 생성되면 시험리스트가 업데이트됩니다.</span>
+          まだ、クラスに生成された試験がありません。
+          <span>試験を作るとリストがアップデートされます。</span>
         </div>
       )}
     </Accordion>

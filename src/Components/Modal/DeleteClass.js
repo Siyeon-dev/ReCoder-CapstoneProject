@@ -64,23 +64,27 @@ const DeleteModal = ({ readClass, classListUpdate, userClassInfo }) => {
   return (
     <>
       <button onClick={() => setIsOpen(!isOpen)}>
-        <img src="/img/nav_setting_btn.gif" alt="클래스 삭제" />
+        <img src="/img/nav_setting_btn.gif" alt="クラスを削除" />
       </button>
       <Modal>
         <div className="modal delete_class">
           <div className="modal_area">
             <div className="modal_head">
-              <p className="tit">클래스 삭제하기</p>
-              <p className="txt">클래스 삭제 시 복구하실 수 없습니다.</p>
+              <p className="tit">クラスを削除する</p>
+              <p className="txt">クラスを削除すると復元できません。</p>
             </div>
             <form onSubmit={delClassListSubmit}>
               <div className="class_list_area">
-                {userClassInfo.length === 0 ? <p className="no_class_list">생성된 클래스가 없습니다.</p> : delClassListSetUp}
+                {userClassInfo.length === 0 ? (
+                  <p className="no_class_list">作られたクラスがありません。</p>
+                ) : (
+                  delClassListSetUp
+                )}
               </div>
-              <button type="submit">삭제하기</button>
+              <button type="submit">削除する</button>
             </form>
             <button onClick={() => setIsOpen(false)} className="modal_close">
-              <img src="/img/modal_close.gif" alt="모달 닫기" />
+              <img src="/img/modal_close.gif" alt="Modal Close" />
             </button>
           </div>
         </div>

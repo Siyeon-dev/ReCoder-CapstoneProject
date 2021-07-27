@@ -12,9 +12,9 @@ const ScoreGradeLow = ({ apiDataFlag, stateApiDataFlag, stateApiData }) => {
       (console.log(stateApiData),
       stateApiData.map((v) => (
         <tr>
-          <td>{v.s_retake}회</td>
-          <td>{v.mic_caution}회</td>
-          <td>{v.eye_caution}회</td>
+          <td>{v.s_retake}回</td>
+          <td>{v.mic_caution}回</td>
+          <td>{v.eye_caution}回</td>
           {/* <td>
             {v.test_validation === 0 ? (
               <div className="test_status no_test">미응시</div>
@@ -35,7 +35,7 @@ const ScoreGradeLow = ({ apiDataFlag, stateApiDataFlag, stateApiData }) => {
       )))
     ) : (
       <tr>
-        <td colSpan="8">아직 진행 되지 않은 시험입니다.</td>
+        <td colSpan="8">まだ進行されていない試験です。</td>
       </tr>
     )
   ) : (

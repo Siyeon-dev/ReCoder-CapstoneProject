@@ -48,7 +48,7 @@ const TestList = ({
       selectClassTestInfo.map((v) => (
         <div className="my_test_box">
           <p className="test_name">{v.test_name}</p>
-          <p className="question">{v.questioncount}문항</p>
+          <p className="question">{v.questioncount}問題</p>
           <p className="infobox date">{v.date}</p>
           <p className="infobox time">
             {v.test_start} ~ {v.test_end}
@@ -69,7 +69,7 @@ const TestList = ({
                   StateInsertData(v.test_start, v.test_end, v.test_id)
                 }
               >
-                <span>시험대기</span>
+                <span>試験待機</span>
               </Link>
             ) : buttonStatus === 1 ? (
               <Link
@@ -79,7 +79,7 @@ const TestList = ({
                   StateInsertData(v.test_start, v.test_end, v.test_id)
                 }
               >
-                <span>시험응시</span>
+                <span>試験を受ける</span>
               </Link>
             ) : buttonStatus === 2 ? (
               <Link
@@ -89,14 +89,14 @@ const TestList = ({
                   StateInsertData(v.test_start, v.test_end, v.test_id)
                 }
               >
-                <span>시험종료</span>
+                <span>試験終了</span>
               </Link>
             ) : buttonStatus === 3 ? (
               <Link
                 to={`/testprecautions/${v.test_id}/${v.test_name}`}
                 className="test_btn puple"
               >
-                결과보기
+                結果を見る
                 <div className="score">
                   80 / <span>100</span>
                 </div>
@@ -108,16 +108,16 @@ const TestList = ({
     ) : emptyArrayCheckFlag === false ? ( // 클래스가 있을 때
       apiLoadingFlag === true ? ( // 데이터를 받아왔을 때
         <div className="no_create_guide member">
-          클래스 가입 요청중입니다.
-          <span>선생님이 확인 후 가입 승인을 진행됩니다.</span>
+          クラスの加入承認を待っています。
+          <span>先生が確認した後、加入承認を行います。</span>
         </div>
       ) : (
         <Loading />
       )
     ) : (
       <div className="no_create_guide std_no_test">
-        현재 클래스에 생성된 클래스가 없습니다.
-        <span>클래스가 생성되면 리스트가 업데이트 됩니다.</span>
+        現在、クラスに作られた試験がありません。
+        <span>試験を作るとリストがアップデートされます。</span>
       </div>
     );
   };
