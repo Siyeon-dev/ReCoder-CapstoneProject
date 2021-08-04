@@ -119,19 +119,16 @@ export const runJanusPC = (studentId) => {
 										list
 									);
 
-									for (var f in list) {
-										var display = list[f]["display"];
-										var id = list[f]["id"];
-										let mobileId = myId + 2;
+									for (let f in list) {
+										let display = list[f]["display"];
+										let id = list[f]["id"];
+										let mobileid = myId + 2;
 
 										Janus.log(
-											`Display Value : ${display}, Mobile Display Value : ${mobileId}`
+											`Value: ${display}, Mobile Display Value : ${mobileid}`
 										);
 
-										if (
-											display === String(mobileId) &&
-											!isNaN(display)
-										) {
+										if (display === String(mobileid) && !isNaN(display)) {
 											// createAnswer 제작
 											mobileFeed(id);
 										}

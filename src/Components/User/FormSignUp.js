@@ -22,7 +22,7 @@ const FormSignUp = ({ SignUpSuccessForm }, props) => {
         <div id="container">
           <div className="top_txt">
             <p className="tit">
-              オンライン試験監督サービスRe:Coder会員登録を歓迎いたします。
+              オンライン試験監督サービスRe:Coder<br />会員登録を歓迎いたします。
             </p>
             <p>
               不正行為の心配なく
