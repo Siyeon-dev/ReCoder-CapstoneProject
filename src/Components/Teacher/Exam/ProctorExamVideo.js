@@ -365,8 +365,8 @@ const ProctorExamVideo = ({
         <div className="std_test_info">
           <p>{v.s_name}</p>
           <ul>
-            <li>警告 {v.eye_caution}回</li>
-            <li>音声 {v.mic_caution}回</li>
+            <li>視線警告 {v.eye_caution}回</li>
+            <li>音声警告 {v.mic_caution}回</li>
           </ul>
         </div>
         <div
